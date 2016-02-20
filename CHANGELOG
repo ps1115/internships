@@ -9,6 +9,19 @@
 
 /* V1.0 */
 
+@HEXACODE>LM - 19/02/2016
+
+#TODO 
+- Arreglar el dise#o del layout.
+
+#DONE
+- Creada aplicacion SPE para el proyecto.
+- Primera version de layout.html con la estructura de la interfaz.
+- Agregado directorio static/images/home con imagenes relacionadas al layout.
+- Modificado archivo menu.py en el directorio models para las entradas necesarias del menu de navegacion.
+- Creados directorios estudiante, profesor, empresa y admin en views para organizar las vistas.
+- Modificado index.html para mostrar el layout de ejemplo.
+
 @TG - 08/02/2016
 
 #TODO
