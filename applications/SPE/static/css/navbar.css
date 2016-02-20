@@ -1,0 +1,14 @@
+ul{
+	font-size: 13px !important;
+	padding-left: % !important;
+}
+.navbar-style{
+	margin-top: 10px;
+	position: relative;
+	height: 40px;
+}
+
+.navbar-content-style{
+	position: relative;
+	top: -10px;
+}
