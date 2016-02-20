@@ -46,7 +46,7 @@ def _():
             ]),
         ('Estudiante',False,"#",[
             ('Agregar Preinscripcion',False,"#"),
-            ('Retirar Pasantía',False,"#")
+            ('Retirar Pasantía',False,URL('default','retirar_pasantia'))
             ])
         ]
 

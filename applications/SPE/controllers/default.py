@@ -56,3 +56,6 @@ def call():
     supports xml, json, xmlrpc, jsonrpc, amfrpc, rss, csv
     """
     return service()
+
+def retirar_pasantia():
+    return response.render('default/retirar_pasantia.html')
