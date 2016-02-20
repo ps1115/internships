@@ -45,7 +45,8 @@ def _():
             ('Empresa',False,'#')
             ]),
         ('Estudiante',False,"#",[
-            ('Agregar Preinscripcion',False,"#")
+            ('Agregar Preinscripcion',False,"#"),
+            ('Retirar Pasantía',False,"#")
             ])
         ]
 

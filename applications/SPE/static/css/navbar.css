@@ -2,13 +2,41 @@ ul{
 	font-size: 13px !important;
 	padding-left: % !important;
 }
+
+ul.dropdown-menu.dropdown-menu-style{
+	height: 194%;
+} 
+
+li a{
+	color: #ffffff !important;
+	position: relative;
+}
+
+li.dropdown.open{
+	position: relative;
+	background-color: !important;
+	top: 10px;
+	bottom: -100px;
+	height: 40px;
+}
+
 .navbar-style{
 	margin-top: 10px;
 	position: relative;
 	height: 40px;
+	background-color: rgba(63,93,93,0.50);
+
 }
 
 .navbar-content-style{
 	position: relative;
 	top: -10px;
+}
+
+.dropdown-menu-style li{
+	position: relative;
+	top: -5px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	background-color: rgba(63,93,93,0.50);
 }
