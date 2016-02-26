@@ -7,6 +7,18 @@
 *  El documento debe ser llenado en forma de pila (LIFO) / tipo entradas de blog ultimo post primero
 */
 
+/* V1.0.3.1*/
+@Sist+->GT 26/02/16
+#TODO
+- Implementar los formularios y las bases de datos para la configuración.
+- Mejorar el estilo.
+- Reunirse con el cliente.
+#DONE
+- Se implementaron los formularios para crear elementos de los catálogos.
+- Se implementó el modelo para guardar los elementos creados.
+#DOING
+- Documentación.
+
 /* V1.0 */
 
 @TG - 08/02/2016
