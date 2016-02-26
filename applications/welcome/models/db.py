@@ -90,3 +90,58 @@ auth.settings.reset_password_requires_verification = True
 
 ## after defining tables, uncomment below to enable auditing
 # auth.enable_record_versioning(db)
+
+db = DAL('sqlite://storage.sqlite')
+
+db.define_table('usuario_estudiante', 
+                Field('usbid_usuario', requires=IS_NOT_EMPTY()), 
+                Field('carnet', requires=IS_NOT_EMPTY()),
+                Field('carrera', requires=IS_NOT_EMPTY()),
+                Field('cohorte', requires=IS_NOT_EMPTY()),
+                Field('estudiante_sede', requires=IS_NOT_EMPTY()),
+                Field('email_sec', requires=IS_NOT_EMPTY()),
+                Field('telf_hab', requires=IS_NOT_EMPTY()),
+                Field('telf_cel', requires=IS_NOT_EMPTY()),
+                Field('direccion', requires=IS_NOT_EMPTY()),
+                Field('sexo', requires=IS_NOT_EMPTY()))
+
+db.define_table('carrera', 
+                Field('codigo', requires=IS_NOT_EMPTY()), 
+                Field('nombre', requires=IS_NOT_EMPTY()),
+                Field('duracion', requires=IS_NOT_EMPTY()),
+                Field('sede', requires=IS_NOT_EMPTY()),
+                Field('coordinacion', requires=IS_NOT_EMPTY()),
+                Field('id', requires=IS_NOT_EMPTY()))
+
+db.define_table('departamento', 
+                Field('id', requires=IS_NOT_EMPTY()), 
+                Field('nombre', requires=IS_NOT_EMPTY()),
+                Field('id_division', requires=IS_NOT_EMPTY()),
+                Field('email_dep', requires=IS_NOT_EMPTY()),
+                Field('sede', requires=IS_NOT_EMPTY()))
+
+db.define_table('usuario_profesor', 
+                Field('usbid_usuario', requires=IS_NOT_EMPTY()), 
+                Field('dependencia', requires=IS_NOT_EMPTY()),
+                Field('dedicacion', requires=IS_NOT_EMPTY()),
+                Field('categoria', requires=IS_NOT_EMPTY()),
+                Field('email_sec', requires=IS_NOT_EMPTY()),
+                Field('telf', requires=IS_NOT_EMPTY()),
+                Field('celular', requires=IS_NOT_EMPTY()),
+                Field('activo', requires=IS_NOT_EMPTY()))
+
+db.define_table('empresa', 
+                Field('login', requires=IS_NOT_EMPTY()), 
+                Field('password', requires=IS_NOT_EMPTY()),
+                Field('pregunta_secreta', requires=IS_NOT_EMPTY()),
+                Field('respuesta_pregunta_secreta', requires=IS_NOT_EMPTY()),
+                Field('nombre', requires=IS_NOT_EMPTY()),
+                Field('direccion', requires=IS_NOT_EMPTY()),
+                Field('pag_web', requires=IS_NOT_EMPTY()),
+                Field('descripcion', requires=IS_NOT_EMPTY()),
+                Field('telefono', requires=IS_NOT_EMPTY()),
+                Field('contacto_RRHH', requires=IS_NOT_EMPTY()),
+                Field('intentos', requires=IS_NOT_EMPTY()),
+                Field('habilitado', requires=IS_NOT_EMPTY()),
+                Field('fechaCreacion', requires=IS_NOT_EMPTY()),
+                Field('ultimaModificacion', requires=IS_NOT_EMPTY()))

@@ -57,4 +57,66 @@ def call():
     """
     return service()
 
+def gestion_cct():
+    return dict()
 
+
+def crear_estudiante():
+    form = SQLFORM(db.usuario_estudiante)
+    if form.process().accepted:
+        response.flash = 'form accepted'
+    elif form.errors:
+        response.flash = 'form has errors'
+    else:
+        response.flash = 'please fill out the form'
+    
+    return form
+
+
+
+def crear_profesor():
+    form = SQLFORM(db.usuario_profesor)
+    if form.process().accepted:
+        response.flash = 'form accepted'
+    elif form.errors:
+        response.flash = 'form has errors'
+    else:
+        response.flash = 'please fill out the form'
+    
+    return form
+
+
+def crear_empresa():
+    form = SQLFORM(db.empresa)
+    if form.process().accepted:
+        response.flash = 'form accepted'
+    elif form.errors:
+        response.flash = 'form has errors'
+    else:
+        response.flash = 'please fill out the form'
+    
+    return form
+
+
+def crear_departamento():
+    form = SQLFORM(db.departamento)
+    if form.process().accepted:
+        response.flash = 'form accepted'
+    elif form.errors:
+        response.flash = 'form has errors'
+    else:
+        response.flash = 'please fill out the form'
+    
+    return form
+
+
+def crear_carrera():
+    form = SQLFORM(db.carrera)
+    if form.process().accepted:
+        response.flash = 'form accepted'
+    elif form.errors:
+        response.flash = 'form has errors'
+    else:
+        response.flash = 'please fill out the form'
+    
+    return form

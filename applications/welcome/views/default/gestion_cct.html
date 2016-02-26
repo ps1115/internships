@@ -1,0 +1,168 @@
+{{extend 'layout.html'}}
+
+
+
+<div class="container">
+<div id="imagen_usb">
+     <img src={{=URL('static',"images/emblema.jpg")}} alt="banner" class="img-responsive"> 
+</div>
+
+<div class="container-fluid">
+<dov class="row-fluid">
+    
+<div id="grupo_botones_horizontales">
+ <div class="btn-group btn-group-justified">
+  <a href="#" class="btn btn-primary">Inicio</a>
+  <a href="#" class="btn btn-primary">Perfil</a>
+  <a href="#" class="btn btn-primary">Salir</a>
+</div>
+</div>
+
+</div>
+</div>
+    
+<div id="contenidos">
+    
+    <div class="container">
+    <div class="row-fluid">
+     
+    <div class="col-md-3 pull-left">
+    <div id="menu_vertical_izquierda">
+        <div class="panel panel-default">
+          <div class="panel-heading">Opciones</div>
+          <div class="panel-body" >
+               <div class="btn-group-vertical-left" >
+                  <a href="#" class="btn btn-link" id="espec_config">Especificar Configuración</a>
+                  <a href="#" class="btn btn-link" id="gest_catal">Gestionar Catálogos</a>
+               </div>
+          </div>
+        </div>
+    </div>  
+    </div>
+    
+    <div class="col-md-9 pull-left">
+    <div id="panel_opciones">
+        
+        <div id="panel_gestionar_catalogos" class="panel panel-default">
+          <div class="panel-heading">
+              <div class="row">
+               <div class="col-md-9">
+               <ul class="nav nav-tabs">
+                <li class="active" id="Carreras"><a href="#">Carreras</a></li>
+                <li id="Estudiantes"><a href="#">Estudiantes</a></li>
+                <li id="Departamentos"><a href="#">Departamentos</a></li>
+                <li id="Profesores"><a href="#">Profesores</a></li>
+                <li id="Empresas"><a href="#">Empresas</a></li>
+              </ul>
+              </div>
+              <div class="col-md-3">
+              <div class="btn-group-up" >
+                  <a href="#" class="btn btn-link" id="catalogo_crear">Crear</a>
+                  <a href="#" class="btn btn-link" id="catalogo_listar">Listar</a>
+               </div>
+              </div>
+              </div>
+          </div>
+          
+          <div class="panel-body">
+              <div id="tablas_gestionar">
+                  <div id="crear_estudiante">{{=LOAD('default', 'crear_estudiante.load', ajax=True)}}</div>
+                  <div id="crear_empresa">{{=LOAD('default', 'crear_empresa.load', ajax=True)}}</div>
+                  <div id="crear_profesor">{{=LOAD('default', 'crear_profesor.load', ajax=True)}}</div>
+                  <div id="crear_carrera">{{=LOAD('default', 'crear_carrera.load', ajax=True)}}</div>
+                  <div id="crear_departamento">{{=LOAD('default', 'crear_departamento.load', ajax=True)}}</div>
+              </div>
+          </div>
+            
+        </div>
+        
+        <div id="panel_especificar_configuracion" class="panel panel-default">
+          <div class="panel-heading">
+               <ul class="nav nav-tabs">
+                <li class="active" id="Fechas"><a href="#">Fechas</a></li>
+                <li><a href="#" id="Montos">Montos</a></li>
+                <li><a href="#" id="Roles">Roles</a></li>
+              </ul>
+          </div>
+          
+          <div class="panel-body">
+              <div id="tablas_especificar"></div>
+          </div>
+            
+        </div>
+        
+    </div>
+    </div>
+        
+    </div>
+    </div>
+        
+</div>
+
+<div id="fin">
+    <p style="text-align:center">
+        Hecho por estudiantes de la Universidad Simón Bolívar.
+    </p>
+</div>
+</div>
+</div>
+
+<script>
+$(document).ready(function(){
+    $('#panel_especificar_configuracion').hide();
+    $("#gest_catal").click(function () {
+        $('#panel_especificar_configuracion').hide();
+        $('#panel_gestionar_catalogos').show();
+        $(".nav").find(".active").removeClass("active");
+        $("#Carreras").addClass("active");
+        $("#tablas_gestionar").children().each(function (indice) {$(this).hide();});
+    });
+    $("#espec_config").click(function () {
+        $('#panel_gestionar_catalogos').hide();
+        $('#panel_especificar_configuracion').show();
+        $(".nav").find(".active").removeClass("active");
+        $("#Fechas").addClass("active");
+        $("#tablas_gestionar").children().each(function (indice) {$(this).hide();});
+    });
+    $(".nav a").on("click", function(){
+       $("#tablas_gestionar").children().each(function (indice) {$(this).hide();});
+       $(".nav").find(".active").removeClass("active");
+       $(this).parent().addClass("active");
+    });
+    $("#tablas_gestionar").children().each(function (indice) {$(this).hide();});
+    $("#catalogo_crear").on("click", function () {
+        
+        $("#tablas_gestionar").children().each(function (indice) {$(this).hide();});
+        
+        var catalogo_seleccionado = $(".nav").find(".active").attr("id");
+        console.log(catalogo_seleccionado);
+        var formulario_a_mostrar;
+        switch(catalogo_seleccionado) {
+            case "Estudiantes":
+                formulario_a_mostrar = '#crear_estudiante';
+                break;
+            case "Empresas":
+                formulario_a_mostrar = '#crear_empresa';
+                break;
+            case "Profesores":
+                formulario_a_mostrar = '#crear_profesor';
+                break;
+            case "Departamentos":
+                formulario_a_mostrar = '#crear_departamento';
+                break;
+            case "Carreras":
+                formulario_a_mostrar = '#crear_carrera';
+                break;
+        }
+        console.log(formulario_a_mostrar);
+        $(formulario_a_mostrar).show();
+
+        });
+    $("#catalogo_listar").on("click", function () {
+        $("#tablas_gestionar").children().each(function (indice) {$(this).hide();});
+    });
+});
+
+</script>
+
+{{=BEAUTIFY(response._vars)}}
