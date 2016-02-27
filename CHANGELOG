@@ -7,6 +7,22 @@
 *  El documento debe ser llenado en forma de pila (LIFO) / tipo entradas de blog ultimo post primero
 */
 
+
+/* V1.0.3.2*/
+@Sist+->GT 27/02/16
+#TODO
+- Implementar los formularios y las bases de datos para la configuración.
+- Mejorar el estilo.
+- Reunirse con el cliente.
+- Eliminar la implementación anterior de los create y usar en su lugar la que trae SQLFORM.grid
+#DONE
+ - Se mejoró el modelo de la base de datos.
+ - Los formularios detectan errores del lado del cliente.
+ - Se implementaron los casos de uso listar, modificar, eliminar con SQLFORM.grid
+#DOING
+- Documentación.
+
+
 /* V1.0.3.1*/
 @Sist+->GT 26/02/16
 #TODO

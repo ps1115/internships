@@ -120,3 +120,24 @@ def crear_carrera():
         response.flash = 'please fill out the form'
     
     return form
+
+
+def estudiantes():
+    grid = SQLFORM.grid(db.usuario_estudiante,user_signature=False)
+    return grid
+
+def carreras():
+    grid = SQLFORM.grid(db.carrera,user_signature=False)
+    return grid
+
+def empresas():
+    grid = SQLFORM.grid(db.empresa,user_signature=False)
+    return grid
+
+def profesores():
+    grid = SQLFORM.grid(db.usuario_profesor,user_signature=False)
+    return grid
+
+def departamentos():
+    grid = SQLFORM.grid(db.departamento,user_signature=False)
+    return grid

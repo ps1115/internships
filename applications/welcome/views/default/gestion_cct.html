@@ -48,11 +48,11 @@
               <div class="row">
                <div class="col-md-9">
                <ul class="nav nav-tabs">
-                <li class="active" id="Carreras"><a href="#">Carreras</a></li>
-                <li id="Estudiantes"><a href="#">Estudiantes</a></li>
-                <li id="Departamentos"><a href="#">Departamentos</a></li>
-                <li id="Profesores"><a href="#">Profesores</a></li>
-                <li id="Empresas"><a href="#">Empresas</a></li>
+                <li class="active" id="Carreras" data-url="{{=URL('default', 'carreras')}}" data-target="tablas_gestionar_listar"><a href="#">Carreras</a></li>
+                <li id="Estudiantes" data-url="{{=URL('default', 'estudiantes')}}" data-target="tablas_gestionar_listar"><a href="#">Estudiantes</a></li>
+                <li id="Departamentos" data-url="{{=URL('default', 'departamentos')}}" data-target="tablas_gestionar_listar"><a href="#">Departamentos</a></li>
+                <li id="Profesores" data-url="{{=URL('default', 'profesores')}}" data-target="tablas_gestionar_listar"><a href="#">Profesores</a></li>
+                <li id="Empresas" data-url="{{=URL('default', 'empresas')}}" data-target="tablas_gestionar_listar"><a href="#">Empresas</a></li>
               </ul>
               </div>
               <div class="col-md-3">
@@ -72,6 +72,7 @@
                   <div id="crear_carrera">{{=LOAD('default', 'crear_carrera.load', ajax=True)}}</div>
                   <div id="crear_departamento">{{=LOAD('default', 'crear_departamento.load', ajax=True)}}</div>
               </div>
+              <div id="tablas_gestionar_listar"></div>
           </div>
             
         </div>
@@ -118,6 +119,7 @@ $(document).ready(function(){
         $("#tablas_gestionar").children().each(function (indice) {$(this).hide();});
     });
     $("#espec_config").click(function () {
+        $("#tablas_gestionar_listar").empty();
         $('#panel_gestionar_catalogos').hide();
         $('#panel_especificar_configuracion').show();
         $(".nav").find(".active").removeClass("active");
@@ -132,6 +134,7 @@ $(document).ready(function(){
     $("#tablas_gestionar").children().each(function (indice) {$(this).hide();});
     $("#catalogo_crear").on("click", function () {
         
+        $("#tablas_gestionar_listar").empty();
         $("#tablas_gestionar").children().each(function (indice) {$(this).hide();});
         
         var catalogo_seleccionado = $(".nav").find(".active").attr("id");
@@ -159,7 +162,13 @@ $(document).ready(function(){
 
         });
     $("#catalogo_listar").on("click", function () {
+        
         $("#tablas_gestionar").children().each(function (indice) {$(this).hide();});
+        var catalogo_seleccionado = $(".nav").find(".active");
+        var url = catalogo_seleccionado.attr("data-url");
+        var target = catalogo_seleccionado.attr("data-target")
+        web2py_ajax_page("GET", url, "", target);
+        
     });
 });
 
