@@ -8,6 +8,17 @@
 */
 
 
+@Sist+->GT 27/02/16
+#TODO
+- Implementar los formularios y las bases de datos para la configuración.
+- Mejorar el estilo.
+- Reunirse con el cliente.
+#DONE
+- Se agregó otra propuesta para el cliente gestion_cct2.html.
+#DOING
+- Documentación.
+
+
 /* V1.0.3.2*/
 @Sist+->GT 27/02/16
 #TODO
