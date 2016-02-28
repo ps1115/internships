@@ -141,3 +141,6 @@ def profesores():
 def departamentos():
     grid = SQLFORM.grid(db.departamento,user_signature=False)
     return grid
+
+def gestion_cct2():
+    return dict()
