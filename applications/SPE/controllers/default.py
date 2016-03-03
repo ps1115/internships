@@ -59,3 +59,15 @@ def call():
 
 def retirar_pasantia():
     return response.render('default/retirar_pasantia.html')
+
+def permiso_inscripcion_extratemporaneo():
+    return response.render('default/permiso_inscripcion_extratemporaneo.html')
+
+def permiso_evaluacion_extratemporaneo():
+    return response.render('default/permiso_evaluacion_extratemporaneo.html')
+
+def justificar_retiro_profesor():
+    return response.render('default/justificar_retiro_profesor.html')
+
+def justificar_retiro_empresa():
+    return response.render('default/justificar_retiro_empresa.html')

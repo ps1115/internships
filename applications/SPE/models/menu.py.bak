@@ -47,14 +47,14 @@ def _():
         (T('Estudiante'),False,"#",[
             (T('Agregar Preinscripcion'),False,"#"),
             (T('Justificar Retiro Pasantia'),False,URL('default','retirar_pasantia')),
-            (T('Solicitar permiso de inscripción extemporánea'),False,"#"),
-            (T('Solicitar permiso de evaluación extemporánea'),False,"#")
+            (T('Solicitar permiso de inscripción extemporánea'),False,URL('default','permiso_inscripcion_extratemporaneo')),
+            (T('Solicitar permiso de evaluación extemporánea'),False,URL('default','permiso_evaluacion_extratemporaneo'))
             ]),
         (T('Profesor'),False,'#',[
-            (T('Justificar Retiro Pasante'),False,URL('default','retirar_pasantia'))
+            (T('Justificar Retiro Pasante'),False,URL('default','justificar_retiro_profesor'))
             ]),
         (T('Empresa'),False,'#',[
-            (T('Justificar Retiro Pasante'),False,URL('default','retirar_pasantia'))
+            (T('Justificar Retiro Pasante'),False,URL('default','justificar_retiro_empresa'))
             ])
         ]
 

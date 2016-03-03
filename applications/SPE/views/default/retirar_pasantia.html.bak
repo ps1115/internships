@@ -10,7 +10,7 @@
           <div class="form-group">
             <label for="exampleInputFile">File input</label>
             <input type="file" accept="application/pdf "id="exampleInputFile">
-            <p class="help-block"> Seleccione un documento con extensión .pdf</p>
+            <p class="help-block"> Seleccione un docoumento con extensión .pdf</p>
           </div>
           <button type="submit" class="btn btn-default">Subir carta motivo</button>
         </form>
