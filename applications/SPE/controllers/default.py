@@ -59,3 +59,12 @@ def call():
 
 def retirar_pasantia():
     return response.render('default/retirar_pasantia.html')
+
+def registrar_profesor():
+    return response.render('default/registrar_profesor.html')
+
+def registrar_empresa():
+    return response.render('default/registrar_empresa.html')
+
+def registrar_tutor_industrial():
+    return response.render('default/registrar_tutor_industrial.html')

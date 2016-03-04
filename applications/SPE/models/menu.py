@@ -49,6 +49,17 @@ def _():
             ('Retirar Pasantía',False,URL('default','retirar_pasantia')),
             ('Solicitar permiso de inscripción extemporánea',False,"#"),
             ('Solicitar permiso de evaluación extemporánea',False,"#")
+            ]),
+        ('Profesor',False,"#",[
+            ('Registrarse',False,URL('default','registrar_profesor')),
+            ('Consultar pasantías',False,"#"),
+            ('Evaluar Pasantía',False,"#")
+            ]),
+        ('Empresa',False,"#",[
+            ('Registrarse',False,URL('default','registrar_empresa')),
+            ('Solicitudes de pasantes',False,"#"),
+            ('Registrar tutor industrial',False,URL('default','registrar_tutor_industrial')),
+            ('Gestionar Registro Empresarial',False,"#")
             ])
         ]
 
