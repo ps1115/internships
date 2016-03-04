@@ -8,13 +8,15 @@ ul{
 }
 
 ul.dropdown-menu.dropdown-menu-style{
-	height: 385%;
+	height: 100;
+    background-color: rgba(63,93,93,0.50);
 } 
 
 li a{
 	color: #ffffff !important;
 	position: relative;
 }
+
 
 li.dropdown.open{
 	position: relative;
@@ -43,4 +45,8 @@ li.dropdown.open{
 	padding-top: 5px;
 	padding-bottom: 5px;
 	background-color: rgba(63,93,93,0.50);
+}
+
+.dropdown-menu-style li a:hover{
+        background-color: #c2d6d6;
 }
