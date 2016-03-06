@@ -8,13 +8,6 @@
         padding-right:2em;
     }
 
-    .menu-izquierda2 {
-        display:block;
-        position:fixed;
-        margin-top:17em;
-        width:inherit;
-        padding-right:2em;
-    }
     
     .tabla-grid{
         display:block;
@@ -35,11 +28,7 @@
                 <button type="button" class="btn btn-primary" data-url="{{=URL('default', 'estudiantes')}}" data-target="tablas">Gestionar Estudiantes</button>
                 <button type="button" class="btn btn-primary" data-url="{{=URL('default', 'profesores')}}" data-target="tablas">Gestionar Profesores</button>
             </div>
-            <div class="btn-group-vertical  menu-izquierda2">
-                <button type="button" class="btn btn-primary">Especificar Eventos</button>
-                <button type="button" class="btn btn-primary">Especificar Montos</button>
-                <button type="button" class="btn btn-primary">Especificar Roles</button>
-            </div>
+
         </div>
         <div class="col-md-10">
             <div id="tablas" class="tablas-grid"></div>

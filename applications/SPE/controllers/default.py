@@ -144,3 +144,18 @@ def departamentos():
 
 def gestion_cct2():
     return dict()
+
+def especificar_configuraciones():
+    return dict()
+
+def roles():
+    grid = SQLFORM.grid(db.rol_sistema,user_signature=False)
+    return grid
+
+def montos():
+    grid = SQLFORM.grid(db.calculo_pago,user_signature=False)
+    return grid
+
+def eventos():
+    grid = SQLFORM.grid(db.evento,user_signature=False)
+    return grid

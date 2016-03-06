@@ -147,4 +147,28 @@ db.define_table('empresa',
                 Field('ultimaModificacion', type='datetime',requires=IS_NOT_EMPTY(), readable=False, writable=False, default='0000-00-00 00:00:00'))
 
 
+
+db.define_table("evento"
+               ,Field("codigo", label="Código", type="integer", readable=False, writable=False,  requires=IS_NOT_EMPTY())
+               ,Field("nombre", label="Nombre del Evento", requires=IS_NOT_EMPTY())
+               ,Field("fecha_inicio", label="Fecha de Inicio", type="date", requires=IS_NOT_EMPTY())
+               ,Field("fecha_fin", label="Fecha de Finalización", type="date", requires=IS_NOT_EMPTY())
+               ,Field("nombre_trimestre_actual", label="Nombre del Trimestre Actual", requires=IS_NOT_EMPTY()))
+
+
+db.define_table("rol_sistema"
+               ,Field("usbid", label="USBID", requires=[IS_NOT_EMPTY()], unique=True)
+               ,Field("nombre", label="Nombre del Usuario", requires=IS_NOT_EMPTY())
+               ,Field("apellido", label="Apellido del Usuario",requires=IS_NOT_EMPTY())
+               ,Field("rol", label="Nombre del Rol", requires=IS_NOT_EMPTY(), unique=True)
+               ,Field("sede", label="Sede", requires=[IS_NOT_EMPTY(), IS_IN_SET(['Sartenejas','Litoral'],error_message='Sede Inválida')], default="Sartenejas")
+               ,Field("longitudCarnet", type="integer",label="Longitud del Carnet" ,requires=IS_NOT_EMPTY()))
+
+
+db.define_table("calculo_pago"
+               , Field("id_categoria", requires=IS_NOT_EMPTY(),type="integer")
+               , Field("id_tipo_pasantia",requires=IS_NOT_EMPTY())
+               , Field("id_zona",requires=IS_NOT_EMPTY(),type="integer")
+               , Field("monto",requires=IS_NOT_EMPTY(),type="double", label="Monto de Pago"))
+
 ###### FIN GESTION COORDINADOR #####

@@ -8,6 +8,17 @@
 */
 
 
+/* V1.0.3.3*/
+@Sist+->GT 07/03/16
+#TODO
+-Implementar el create de las configuraciones
+#DONE
+-Reunirse con el cliente. No desea ser el encargado de la gestión de catálogos.
+-Se ha separado la vista de gestión de catálogos de la vista de configuración.
+#DOING
+-Implementar la funcionalidad de cada configuración.
+
+
 @Sist+->GT 28/02/16
 #TODO
 - Implementar los formularios y las bases de datos para la configuración.
