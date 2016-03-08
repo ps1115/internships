@@ -509,8 +509,10 @@ CREATE TABLE IF NOT EXISTS 'trimestre_periodo' (
 --
 
 CREATE TABLE IF NOT EXISTS 'tutor_academico' (
-    'usbid' varchar(254) NOT NULL DEFAULT '',
+    'usbid'         varchar(254) NOT NULL DEFAULT '',
+    'motivo_retiro' text         NOT NULL,
     PRIMARY KEY ('usbid')
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -537,6 +539,7 @@ CREATE TABLE IF NOT EXISTS 'tutor_industrial' (
     'id_estado'                 int(2)          DEFAULT NULL,
     'telefono'                  varchar(20)     NOT NULL,
     'contactoRRHH'              varchar(20)     DEFAULT NULL,
+    'motivo_retiro'             text            NOT NULL,
     PRIMARY KEY ('email'),
     KEY 'fk_tutor_industrial_id_estado_estado_nombre' ('id_estado')
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -560,6 +563,7 @@ CREATE TABLE IF NOT EXISTS 'tutor_industrial_temp' (
     'estado'        varchar(20)     NOT NULL,
     'direccion'     varchar(200)    NOT NULL,
     'codSeg'        varchar(100)    NOT NULL,
+    'motivo_retiro' text            NOT NULL,
     PRIMARY KEY ('id')
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1915 ;
 
@@ -595,6 +599,7 @@ CREATE TABLE IF NOT EXISTS 'usuario_estudiante' (
     'telf_cel'          varchar(20)     DEFAULT NULL,
     'direccion'         text,
     'sexo'              varchar(1)      DEFAULT NULL,
+    'motivo_retiro'     text            NOT NULL,
     PRIMARY KEY ('usbid_usuario'),
     KEY 'fk_usuario_estudiante_carrera_carrera_codigo' ('carrera')
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
