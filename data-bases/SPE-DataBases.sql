@@ -37,15 +37,16 @@ CREATE TABLE IF NOT EXISTS `actividad` (
 
 -- --------------------------------------------------------
 
---
+---------------------------------------------------
 -- Estructura de tabla para la tabla `calculo_pago`
---
+---------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `calculo_pago` (
   `id_categoria` int(11) NOT NULL,
   `id_tipo_pasantia` varchar(8) NOT NULL,
   `id_zona` int(11) NOT NULL,
   `monto` double NOT NULL,
+  `fecha_cambio` date NOT NULL,
   PRIMARY KEY (`id_categoria`,`id_tipo_pasantia`,`id_zona`),
   KEY `fk_calculo_pago_id_tipo_pasantia_tipo_pasantia_codigo` (`id_tipo_pasantia`),
   KEY `fk_calculo_pago_id_zona_zona_id` (`id_zona`)
@@ -231,9 +232,9 @@ CREATE TABLE IF NOT EXISTS `estado` (
 
 -- --------------------------------------------------------
 
---
+------------------------------------------
 -- Estructura de tabla para la tabla `evento`
---
+-------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `evento` (
   `codigo` int(11) NOT NULL AUTO_INCREMENT,
@@ -243,6 +244,37 @@ CREATE TABLE IF NOT EXISTS `evento` (
   `nombre_trimestre_actual` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`codigo`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
+
+-- --------------------------------------------------------
+
+------------------------------------
+-- Eventos que pueden componer otros.
+-------------------------------------
+
+CREATE TABLE IF NOT EXISTS `sub_evento` (
+  `codigo_supra_evento` int(11) NOT NULL,
+  `codigo_sub_evento` int(11) NOT NULL,
+  `fecha_inicio` date NOT NULL,
+  `fecha_fin` date NOT NULL,
+  `nombre_sub_evento` varchar(254) NOT NULL,
+  PRIMARY KEY (`codigo_supra_evento`, `codigo_sub_evento`),
+  FOREIGN KEY (`codigo_supra_evento`) REFERENCES evento(`codigo`)
+)
+
+-- --------------------------------------------------------
+
+-------------------------------
+-- Semanas Muertas en un evento
+-------------------------------
+
+CREATE TABLE IF NOT EXISTS `semana_muerta` (
+  `codigo_sub_evento_afectado` int(11) NOT NULL,
+  `fecha_ini` date NOT NULL,
+  `fecha_fini` date NOT NULL,
+  `numero_semana` int(5) NOT NULL,
+  PRIMARY KEY (`numero_semana`,`codigo_sub_evento_afectado`),
+  FOREIGN KEY (`codigo_sub_evento_afectado`) REFERENCES sub_evento(`codigo_sub_evento`)
+)
 
 -- --------------------------------------------------------
 
@@ -416,9 +448,9 @@ CREATE TABLE IF NOT EXISTS `region` (
 
 -- --------------------------------------------------------
 
---
+------------------------------------------------
 -- Estructura de tabla para la tabla `rol_sistema`
---
+-------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `rol_sistema` (
   `usbid` varchar(254) NOT NULL DEFAULT '',
@@ -427,7 +459,8 @@ CREATE TABLE IF NOT EXISTS `rol_sistema` (
   `rol` varchar(254) NOT NULL,
   `sede` varchar(20) NOT NULL,
   `longitudCarnet` int(11) NOT NULL,
-  PRIMARY KEY (`usbid`)
+  PRIMARY KEY (`usbid`,`rol`),
+  FOREIGN KEY `usbid` REFERENCES usuario(`usbid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -567,9 +600,9 @@ CREATE TABLE IF NOT EXISTS `tutor_industrial_temp` (
 
 -- --------------------------------------------------------
 
---
+---------------------------------------------
 -- Estructura de tabla para la tabla `usuario`
---
+---------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `usuario` (
   `usbid` varchar(254) NOT NULL,
