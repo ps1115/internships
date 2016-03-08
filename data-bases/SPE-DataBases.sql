@@ -30,6 +30,8 @@ CREATE TABLE IF NOT EXISTS 'actividad' (
     'codigo_fase'       int(11)     DEFAULT NULL,
     'descripcion'       text        NOT NULL,
     'tiempo_estimado'   varchar(20) NOT NULL,
+    'fecha_inicio'      date        NOT NULL,
+    'fecha_fin'         date        NOT NULL,
     PRIMARY KEY ('id'),
     KEY 'fk_actividad_codigo_fase_fase_codigo' ('codigo_fase')
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=103942 ;
