@@ -232,17 +232,17 @@ CREATE TABLE IF NOT EXISTS 'estado' (
 
 -- --------------------------------------------------------
 
---
+------------------------------------------
 -- Estructura de tabla para la tabla 'evento'
---
+-------------------------------------------
 
 CREATE TABLE IF NOT EXISTS 'evento' (
-    'codigo'                    int(11)         NOT NULL AUTO_INCREMENT,
-    'nombre'                    varchar(254)    NOT NULL,
-    'fecha_inicio'              date            NOT NULL,
-    'fecha_fin'                 date            NOT NULL,
-    'nombre_trimestre_actual'   varchar(50)     DEFAULT NULL,
-    PRIMARY KEY ('codigo')
+  'codigo' int(11) NOT NULL AUTO_INCREMENT,
+  'nombre' varchar(254) NOT NULL,
+  'fecha_inicio' date NOT NULL,
+  'fecha_fin' date NOT NULL,
+  'nombre_trimestre_actual' varchar(50) DEFAULT NULL,
+  PRIMARY KEY ('codigo')
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
 
 -- --------------------------------------------------------
@@ -467,6 +467,35 @@ CREATE TABLE IF NOT EXISTS 'solicitud_pasante' (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1227 ;
 
 -- --------------------------------------------------------
+
+------------------------------------
+-- Eventos que pueden componer otros.
+-------------------------------------
+
+CREATE TABLE IF NOT EXISTS 'sub_evento' (
+  'codigo_supra_evento' int(11) NOT NULL,
+  'codigo_sub_evento' int(11) NOT NULL,
+  'fecha_inicio' date NOT NULL,
+  'fecha_fin' date NOT NULL,
+  'nombre_sub_evento' varchar(254) NOT NULL,
+  PRIMARY KEY ('codigo_supra_evento', 'codigo_sub_evento'),
+  FOREIGN KEY ('codigo_supra_evento') REFERENCES evento('codigo')
+)
+
+-- --------------------------------------------------------
+
+-------------------------------
+-- Semanas Muertas en un evento
+-------------------------------
+
+CREATE TABLE IF NOT EXISTS 'semana_muerta' (
+  'codigo_sub_evento_afectado' int(11) NOT NULL,
+  'fecha_ini' date NOT NULL,
+  'fecha_fini' date NOT NULL,
+  'numero_semana' int(5) NOT NULL,
+  PRIMARY KEY ('numero_semana','codigo_sub_evento_afectado'),
+  FOREIGN KEY ('codigo_sub_evento_afectado') REFERENCES sub_evento('codigo_sub_evento')
+)
 
 --
 -- Estructura de tabla para la tabla 'tipo_pasantia'
@@ -756,6 +785,19 @@ ALTER TABLE 'solicita_permiso'
 ALTER TABLE 'solicitud_pasante'
     ADD CONSTRAINT 'fk_solicitud_pasante_carrera_carrea_codigo' FOREIGN KEY ('id_carrera') REFERENCES 'carrera' ('codigo') ON UPDATE CASCADE,
     ADD CONSTRAINT 'fk_solicitud_pasante_id_empresa_empresa_login' FOREIGN KEY ('id_empresa') REFERENCES 'empresa' ('login') ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla 'semana_muerta'
+--
+ALTER TABLE 'semana_muerta'
+    ADD CONSTRAINT 'fk_semana_muerta_codigo_sub_evento_afectado_sub_evento_codigo_sub_evento' FOREIGN KEY ('codigo_sub_evento_afectado') REFERENCES sub_evento('codigo_sub_evento') ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla 'sub_evento'
+--
+ALTER TABLE 'sub_evento'
+    ADD CONSTRAINT 'fk_sub_eventos_codigo_supra_evento_eventos_codigo' FOREIGN KEY ('codigo_supra_evento') REFERENCES evento('codigo') ON UPDATE CASCADE;
+
 
 --
 -- Filtros para la tabla 'tutor_academico'
