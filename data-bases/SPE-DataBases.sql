@@ -32,8 +32,10 @@ CREATE TABLE IF NOT EXISTS 'actividad' (
     'tiempo_estimado'   varchar(20) NOT NULL,
     'fecha_inicio'      date        NOT NULL,
     'fecha_fin'         date        NOT NULL,
+    'id_plan_de_trab'   int(11)     NOT NULL,
     PRIMARY KEY ('id'),
     KEY 'fk_actividad_codigo_fase_fase_codigo' ('codigo_fase')
+    KEY 'fk_actividad_id_plan_de_trab_plan_de_trabajo_id' ('id_plan_de_trab')
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=103942 ;
 
 -- --------------------------------------------------------
@@ -168,7 +170,7 @@ CREATE TABLE IF NOT EXISTS 'division' (
 --
 
 CREATE TABLE IF NOT EXISTS 'empresa' (
-    'login'                     varchar(254)    NOT NULL,
+    'log'                       varchar(254)    NOT NULL,
     'password'                  varchar(254)    NOT NULL,
     'pregunta_secreta'          varchar(254)    NOT NULL,
     'respuesta_pregunta_secreta'varchar(254)    NOT NULL,
@@ -182,7 +184,7 @@ CREATE TABLE IF NOT EXISTS 'empresa' (
     'habilitado'                int(2)          DEFAULT '1',
     'fechaCreacion'             timestamp       NOT NULL DEFAULT '0000-00-00 00:00:00',
     'ultimaModificacion'        timestamp       NOT NULL DEFAULT '0000-00-00 00:00:00',
-    PRIMARY KEY ('login')
+    PRIMARY KEY ('log')
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -266,7 +268,7 @@ CREATE TABLE IF NOT EXISTS 'extemp' (
 CREATE TABLE IF NOT EXISTS 'fase' (
     'codigo'                int(11)         NOT NULL AUTO_INCREMENT,
     'id_periodo'            int(10)         NOT NULL,
-    'anho'                  int(11)         NOT NULL,
+    'anio'                  int(11)         NOT NULL,
     'id_estudiante'         varchar(254)    NOT NULL,
     'codigo_pasantia'       varchar(8)      NOT NULL,
     'nombre_fase'           varchar(100)    NOT NULL,
@@ -312,7 +314,7 @@ CREATE TABLE IF NOT EXISTS 'log' (
 CREATE TABLE IF NOT EXISTS 'pasantia' (
     'codigo'                        varchar(8)      NOT NULL DEFAULT '',
     'periodo'                       int(10)         NOT NULL,
-    'anho'                          int(11)         NOT NULL,
+    'anio'                          int(11)         NOT NULL,
     'fecha'                         date            NOT NULL,
     'cod_seguridad'                 varchar(10)     NOT NULL,
     'titulo'                        varchar(100)    NOT NULL,
@@ -325,7 +327,7 @@ CREATE TABLE IF NOT EXISTS 'pasantia' (
     'calificacion_tutor_industrial' int(1)          DEFAULT '0',
     'fecha_acta_evaluacion'         date            DEFAULT NULL,
     'periodo_finaliza'              int(11)         NOT NULL,
-    'anho_finaliza'                 int(11)         NOT NULL,
+    'anio_finaliza'                 int(11)         NOT NULL,
     'tiene_mencion'                 tinyint(1)      DEFAULT '0',
     'observacion_mencion'           text,
     'fecha_validacion'              date            DEFAULT NULL,
@@ -336,7 +338,7 @@ CREATE TABLE IF NOT EXISTS 'pasantia' (
     'id_tutor_academico'            varchar(254)    NOT NULL,
     'retirar'                       varchar(15)     DEFAULT NULL,
     'obtencion_pasantia'            tinyint(1)      DEFAULT NULL,
-    PRIMARY KEY ('codigo','id_estudiante','anho','periodo'),
+    PRIMARY KEY ('codigo','id_estudiante','anio','periodo'),
     KEY 'fk_pasantia_periodo_periodo_id' ('periodo'),
     KEY 'fk_pasantia_id_tutor_industrial_tutor_industrial_email' ('id_tutor_industrial'),
     KEY 'fk_pasantia_id_tutor_academico_usuario_usbid' ('id_tutor_academico'),
@@ -379,7 +381,7 @@ CREATE TABLE IF NOT EXISTS 'permiso' (
 
 --
 -- Estructura de tabla para la tabla 'preinscripcion'
--- #####################################################################################################################################################3
+-- 
 CREATE TABLE IF NOT EXISTS 'preinscripcion' (
     'id'                int(10)         NOT NULL AUTO_INCREMENT,
     'id_periodo'        int(10)         NOT NULL,
@@ -441,8 +443,8 @@ CREATE TABLE IF NOT EXISTS 'solicita_permiso' (
     'codigo_permiso'    int(11)     NOT NULL,
     'codigo_pasantia'   varchar(8)  NOT NULL DEFAULT '',
     'id_periodo'        int(10)     NOT NULL DEFAULT '0',
-    'anho'              int(11)     NOT NULL DEFAULT '0',
-    PRIMARY KEY ('usbid_estudiante','codigo_permiso','codigo_pasantia','id_periodo','anho'),
+    'anio'              int(11)     NOT NULL DEFAULT '0',
+    PRIMARY KEY ('usbid_estudiante','codigo_permiso','codigo_pasantia','id_periodo','anio'),
     KEY 'fk_solicita_permiso_codigo_pasantia_tipo_pasantia_codigo' ('codigo_pasantia'),
     KEY 'fk_solicita_permiso_id_periodo_periodo_id' ('id_periodo'),
     KEY 'fk_solicita_permiso_codigo_permiso_permiso_codigo' ('codigo_permiso')
@@ -463,7 +465,7 @@ CREATE TABLE IF NOT EXISTS 'solicitud_pasante' (
     'status'        varchar(10)     DEFAULT 'Pendiente',
     PRIMARY KEY ('codigo'),
     KEY 'fk_solicitud_pasante_carrera_carrea_codigo' ('id_carrera'),
-    KEY 'fk_solicitud_pasante_id_empresa_empresa_login' ('id_empresa')
+    KEY 'fk_solicitud_pasante_id_empresa_empresa_log' ('id_empresa')
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1227 ;
 
 -- --------------------------------------------------------
@@ -473,13 +475,13 @@ CREATE TABLE IF NOT EXISTS 'solicitud_pasante' (
 -------------------------------------
 
 CREATE TABLE IF NOT EXISTS 'sub_evento' (
-  'codigo_supra_evento' int(11) NOT NULL,
-  'codigo_sub_evento' int(11) NOT NULL,
-  'fecha_inicio' date NOT NULL,
-  'fecha_fin' date NOT NULL,
-  'nombre_sub_evento' varchar(254) NOT NULL,
-  PRIMARY KEY ('codigo_supra_evento', 'codigo_sub_evento'),
-  FOREIGN KEY ('codigo_supra_evento') REFERENCES evento('codigo')
+    'codigo_supra_evento'   int(11)         NOT NULL,
+    'codigo_sub_evento'     int(11)         NOT NULL,
+    'fecha_inicio'          date            NOT NULL,
+    'fecha_fin'             date            NOT NULL,
+    'nombre_sub_evento'     varchar(254)    NOT NULL,
+    PRIMARY KEY ('codigo_supra_evento', 'codigo_sub_evento'),
+    FOREIGN KEY ('codigo_supra_evento') REFERENCES evento('codigo')
 )
 
 -- --------------------------------------------------------
@@ -489,12 +491,12 @@ CREATE TABLE IF NOT EXISTS 'sub_evento' (
 -------------------------------
 
 CREATE TABLE IF NOT EXISTS 'semana_muerta' (
-  'codigo_sub_evento_afectado' int(11) NOT NULL,
-  'fecha_ini' date NOT NULL,
-  'fecha_fini' date NOT NULL,
-  'numero_semana' int(5) NOT NULL,
-  PRIMARY KEY ('numero_semana','codigo_sub_evento_afectado'),
-  FOREIGN KEY ('codigo_sub_evento_afectado') REFERENCES sub_evento('codigo_sub_evento')
+    'codigo_sub_evento_afectado'    int(11) NOT NULL,
+    'fecha_ini'                     date    NOT NULL,
+    'fecha_fini'                    date    NOT NULL,
+    'numero_semana'                 int(5)  NOT NULL,
+    PRIMARY KEY ('numero_semana','codigo_sub_evento_afectado'),
+    FOREIGN KEY ('codigo_sub_evento_afectado') REFERENCES sub_evento('codigo_sub_evento')
 )
 
 --
@@ -526,7 +528,7 @@ CREATE TABLE IF NOT EXISTS 'trimestre' (
 --
 
 CREATE TABLE IF NOT EXISTS 'trimestre_periodo' (
-    'codigo_trimestre'  int(4)  NOT NULL,
+    'codigo_trimestre'      int(4)  NOT NULL,
     'id_periodo'            int(10) NOT NULL,
     PRIMARY KEY ('codigo_trimestre','id_periodo'),
     KEY 'fk_codigo_trimestre_trimestre_codigo' ('codigo_trimestre'),
@@ -690,7 +692,7 @@ CREATE TABLE IF NOT EXISTS 'curriculum' (
     'conocimientos' text,
     'idiomas'       text,
     'aficiones'     text,
-    -- 'foto'
+    'foto'          blob            NOT NULL,
     PRIMARY KEY ('usbid'),
     KEY 'fk_curriculum_usbid_usuario_estudiante_usbid' ('usbid'),
     KEY 'fk_curriculum_nombre_usuario_estudiante_nombre' ('nombre'),
@@ -701,6 +703,34 @@ CREATE TABLE IF NOT EXISTS 'curriculum' (
     KEY 'fk_curriculum_nombre_usuario_estudiante_telf_hab' ('telf_hab'),
     KEY 'fk_curriculum_nombre_usuario_estudiante_email' ('email'),
     KEY 'fk_curriculum_nombre_usuario_estudiante_direccion' ('direccion'),
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla 'curriculum'
+--
+
+CREATE TABLE IF NOT EXISTS 'plan_de_trabajo' (
+    'id'                    int(11)         NOT NULL AUTO_INCREMENT,
+    'id_estudiante'         varchar(8)      NOT NULL,
+    'id_tutor_industrial'   varchar(254)    NOT NULL,
+    'id_tutor_academico'    varchar(254)    NOT NULL,
+    'periodo_pasantia'      int(10)         NOT NULL,
+    'anio_pasantia'         int(11)         NOT NULL,
+    'log_empresa'           varchar(254)    NOT NULL,
+    'periodo_pasantia_fin'  int(10)         NOT NULL,
+    'anio_pasantia_fin'     int(11)         NOT NULL,
+    'codigo_pasantia'       varchar(8)      NOT NULL,
+    PRIMARY KEY ('id'),
+    KEY 'fk_plan_de_trabajo_id_estudiante_usuario_usbid' ('id_estudiante')
+    KEY 'fk_plan_de_trabajo_id_tutor_industrial_tutor_industrial_email' ('id_tutor_industrial')
+    KEY 'fk_plan_de_trabajo_id_tutor_academico_usuario_usbid' ('id_tutor_academico')
+    KEY 'fk_plan_de_trabajo_log_empresa_empresa_log' ('log_empresa')
+    KEY 'fk_plan_de_trabajo_periodo_periodo_id' ('id_periodo'),
+    KEY 'fk_plan_de_trabajo_periodo_fin_periodo_id' ('id_periodo'),
+    KEY 'fk_fase_codigo_pasantia_tipo_pasantia_codigo' ('codigo_pasantia')
+    
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -784,19 +814,19 @@ ALTER TABLE 'solicita_permiso'
 --
 ALTER TABLE 'solicitud_pasante'
     ADD CONSTRAINT 'fk_solicitud_pasante_carrera_carrea_codigo' FOREIGN KEY ('id_carrera') REFERENCES 'carrera' ('codigo') ON UPDATE CASCADE,
-    ADD CONSTRAINT 'fk_solicitud_pasante_id_empresa_empresa_login' FOREIGN KEY ('id_empresa') REFERENCES 'empresa' ('login') ON DELETE CASCADE ON UPDATE CASCADE;
+    ADD CONSTRAINT 'fk_solicitud_pasante_id_empresa_empresa_log' FOREIGN KEY ('id_empresa') REFERENCES 'empresa' ('log') ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla 'semana_muerta'
 --
 ALTER TABLE 'semana_muerta'
-    ADD CONSTRAINT 'fk_semana_muerta_codigo_sub_evento_afectado_sub_evento_codigo_sub_evento' FOREIGN KEY ('codigo_sub_evento_afectado') REFERENCES sub_evento('codigo_sub_evento') ON UPDATE CASCADE;
+    ADD CONSTRAINT 'fk_semana_muerta_codigo_sub_evento_afectado_sub_evento_codigo_sub_evento' FOREIGN KEY ('codigo_sub_evento_afectado') REFERENCES 'sub_evento' ('codigo_sub_evento') ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla 'sub_evento'
 --
 ALTER TABLE 'sub_evento'
-    ADD CONSTRAINT 'fk_sub_eventos_codigo_supra_evento_eventos_codigo' FOREIGN KEY ('codigo_supra_evento') REFERENCES evento('codigo') ON UPDATE CASCADE;
+    ADD CONSTRAINT 'fk_sub_eventos_codigo_supra_evento_eventos_codigo' FOREIGN KEY ('codigo_supra_evento') REFERENCES 'evento' ('codigo') ON UPDATE CASCADE;
 
 
 --
@@ -840,6 +870,18 @@ ALTER TABLE 'curriculum'
     ADD CONSTRAINT 'fk_curriculum_nombre_usuario_estudiante_telf_hab' FOREIGN KEY ('telf_hab') REFERENCES 'usuario_estudiante' ('telf_hab') ON UPDATE CASCADE;
     ADD CONSTRAINT 'fk_curriculum_nombre_usuario_estudiante_email' FOREIGN KEY ('email') REFERENCES 'usuario_estudiante' ('email_sec') ON UPDATE CASCADE;
     ADD CONSTRAINT 'fk_curriculum_nombre_usuario_estudiante_direccion' FOREIGN KEY ('direccion') REFERENCES 'usuario_estudiante' ('direccion') ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla 'curriculum'
+--
+ALTER TABLE 'plan_de_trabajo'
+    ADD CONSTRAINT 'fk_plan_de_trabajo_id_estudiante_usuario_usbid' FOREIGN KEY ('id_estudiante') REFERENCES 'usuario' ('usbid');
+    ADD CONSTRAINT 'fk_plan_de_trabajo_id_tutor_industrial_tutor_industrial_email' FOREIGN KEY ('id_tutor_industrial') REFERENCES 'tutor_industrial' ('email');
+    ADD CONSTRAINT 'fk_plan_de_trabajo_id_tutor_academico_usuario_usbid' FOREIGN KEY ('id_tutor_academico') REFERENCES 'usuario'('usbid');
+    ADD CONSTRAINT 'fk_plan_de_trabajo_log_empresa_empresa_log' FOREIGN KEY ('log_empresa') REFERENCES 'empresa' ('log');
+    ADD CONSTRAINT 'fk_plan_de_trabajo_periodo_periodo_id' FOREIGN KEY ('id_periodo') REFERENCES 'periodo' ('id');
+    ADD CONSTRAINT 'fk_plan_de_trabajo_periodo_fin_periodo_id' FOREIGN KEY ('id_periodo') REFERENCES 'periodo' ('id');
+    ADD CONSTRAINT 'fk_fase_codigo_pasantia_tipo_pasantia_codigo' FOREIGN KEY ('codigo_pasantia') REFERENCES 'tipo_pasantia' ('codigo');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
