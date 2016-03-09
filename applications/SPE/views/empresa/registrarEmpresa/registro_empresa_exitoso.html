@@ -17,21 +17,21 @@
     <p><br><b>Datos De La Empresa</b><br></p>
     <p>Login : {{=loginID}} </p>
     <p>nombre : {{=nombre}} </p>
-    {{if 'direccion' != "":}}
+    {{if 'direccion':}}
         <p>direccion : {{=direccion}} </p>
     {{pass}}
-    {{if 'pag_web' != "":}}
+    {{if 'pag_web':}}
         <p>pag_web : {{=pag_web}} </p>
     {{pass}}
-    {{if 'descripcion' != "":}}
+    {{if 'descripcion':}}
         <p>descripcion : {{=descripcion}} </p>
     {{pass}}
-    {{if 'telefono' != "":}}
+    {{if 'telefono':}}
         <p>telefono : {{=telefono}} </p>
     {{pass}}
     <p>contacto_RRHH : {{=contacto_RRHH}} </p>
-    <p></p>
-    <p></p>
+    <p><br></p>
+    <p><br></p>
 </div>
 
 {{elif 'content' in globals():}}
