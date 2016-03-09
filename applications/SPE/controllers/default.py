@@ -64,7 +64,24 @@ def registrar_profesor():
     return response.render('default/registrar_profesor.html')
 
 def registrar_empresa():
-    return response.render('default/registrar_empresa.html')
+
+    form = SQLFORM.factory(
+                           Field(('Login'), rname='login',requires=IS_NOT_EMPTY(T('Campo Obligatorio'))),
+                           Field(('Contrasena'),rname='contrasena' ,requires=IS_NOT_EMPTY(T('Campo Obligatorio'))),
+                           Field(('Comfirmar Contrasena'),rname='Comfirmar_contrasena', requires=IS_NOT_EMPTY(T('Campo Obligatorio'))),
+                           Field(('Pregunta Secreta'), requires=IS_NOT_EMPTY(T('Campo Obligatorio'))),
+                           Field(('Respuesta A Pregunta Secreta'), requires=IS_NOT_EMPTY(T('Campo Obligatorio'))),
+                           Field(('Nombre'), requires=IS_NOT_EMPTY(T('Campo Obligatorio'))),
+                           Field(('Direccion'), requires=IS_NOT_EMPTY()),
+                           Field(('Pagina Web'), requires=IS_NOT_EMPTY()),
+                           Field(('Descripcion'), requires=IS_NOT_EMPTY()),
+                           Field(('Telefono'), requires=IS_NOT_EMPTY()),
+                           Field(('Contacto RRHH'), requires=[IS_NOT_EMPTY(error_message=T('Campo Obligatorio')),IS_EMAIL(error_message=T('Correo Invalido'))])
+                          )
+    # Aqui ira el proceso de crear a la empresa
+    if form.process().accepted:
+        pass
+    return response.render('default/registrar_empresa.html',message=T("Registrar Empresa"),form=form)
 
 def registrar_tutor_industrial():
     return response.render('default/registrar_tutor_industrial.html')
