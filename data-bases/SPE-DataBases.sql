@@ -563,9 +563,7 @@ CREATE TABLE IF NOT EXISTS `tutor_industrial` (
     `password`                  varchar(254)    DEFAULT NULL,
     `pregunta_secreta`          varchar(254)    NOT NULL,
     `respuesta_pregunta_secreta`varchar(254)    NOT NULL,
-    `empresa`                   varchar(254)    DEFAULT NULL,
-    `pagWeb_empresa`            varchar(254)    DEFAULT NULL,
-    `descripcion_empresa`       varchar(254)    DEFAULT NULL,
+    `id_empresa`                varchar(254)    NOT NULL,
     `profesion`                 varchar(50)     NOT NULL,
     `cargo`                     varchar(50)     NOT NULL,
     `departamento`              varchar(50)     NOT NULL,
@@ -576,32 +574,8 @@ CREATE TABLE IF NOT EXISTS `tutor_industrial` (
     `motivo_retiro`             text            NOT NULL,
     PRIMARY KEY (`email`),
     KEY `fk_tutor_industrial_id_estado_estado_nombre` (`id_estado`)
+    KEY `fk_tutor_industrial_id_empresa_empresa_log` (`id_empresa`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `tutor_industrial_temp`
---
-
-CREATE TABLE IF NOT EXISTS `tutor_industrial_temp` (
-    `id`            int(11)         NOT NULL AUTO_INCREMENT,
-    `email`         varchar(50)     NOT NULL,
-    `nombre`        varchar(50)     NOT NULL,
-    `apellido`      varchar(50)     NOT NULL,
-    `profesion`     varchar(50)     NOT NULL,
-    `empresa`       varchar(50)     NOT NULL,
-    `cargo`         varchar(100)    NOT NULL,
-    `departamento`  varchar(100)    NOT NULL,
-    `telefono`      varchar(20)     NOT NULL,
-    `estado`        varchar(20)     NOT NULL,
-    `direccion`     varchar(200)    NOT NULL,
-    `codSeg`        varchar(100)    NOT NULL,
-    `motivo_retiro` text            NOT NULL,
-    PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1915 ;
-
--- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `usuario`
@@ -841,6 +815,7 @@ ALTER TABLE `tutor_academico`
 --
 ALTER TABLE `tutor_industrial`
     ADD CONSTRAINT `fk_tutor_industrial_id_estado_estado_nombre` FOREIGN KEY (`id_estado`) REFERENCES `estado` (`id`) ON UPDATE CASCADE;
+    ADD CONSTRAINT `fk_tutor_industrial_id_empresa_empresa_log` FOREIGN KEY (`id_empresa`) REFERENCES `empresa` (`log`) ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `usuario_estudiante`
