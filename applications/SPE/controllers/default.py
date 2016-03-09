@@ -98,7 +98,16 @@ def registrar_empresa():
                              descripcion = request.vars.descripcion,
                              telefono = request.vars.telefono,
                              contacto_RRHH = request.vars.contacto_RRHH)
-        dbSPE.commit()
+        response.flash = T("Registro Exitoso")
+        return response.render('default/registro_empresa_exitoso.html',message=T("El registro de su empresa ha sido exitoso!"),
+                               result=T("El registro de su empresa ha sido exitoso!"),
+                               loginID=request.vars.loginID,
+                               nombre=request.vars.nombre,
+                               direccion=request.vars.direccion,
+                               pag_web=request.vars.pag_web,
+                               descripcion=request.vars.descripcion,
+                               telefono=request.vars.telefono,
+                               contacto_RRHH=request.vars.contacto_RRHH)
     return response.render('default/registrar_empresa.html',message=T("Registrar Empresa"),form=form)
 
 def registrar_tutor_industrial():
