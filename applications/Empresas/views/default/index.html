@@ -1,0 +1,39 @@
+{{left_sidebar_enabled,right_sidebar_enabled=False,('message' in globals())}}
+{{extend 'layout.html'}}
+
+{{if 'message' in globals():}}
+<p class='title'>{{=message}}</p>
+<div class='content'>
+  <p class='subtitle'>Bienvenido</p>
+  <p><b>Empresa pública o privada</b> si es primera vez que visita el sistema debe completar el formulario de Registro
+        <a {{=URL("empresa","registro")}}>aqui.</a></p>
+</div>
+
+{{elif 'content' in globals():}}
+{{=content}}
+{{else:}}
+{{=BEAUTIFY(response._vars)}}
+{{pass}}
+
+{{block right_sidebar}}
+  <div class='title'> Iniciar Sesión</div>
+  <form role="form">
+    <div class="form-group">
+      <label for="email">Correo Electrónico:</label>
+      <input type="email" class="form-control" id="email">
+    </div>
+    <div class="form-group">
+      <label for="pwd">Contraseña:</label>
+      <input type="password" class="form-control" id="pwd">
+    </div>
+    <div class="checkbox">
+      <label><input type="checkbox"> Recordar mis datos</label>
+    </div>
+    <div class=img>
+      {{=IMG(_src=URL('static','images/captcha.png'),alt="captcha")}}
+    <div>
+    <br>
+    <button type="submit" class="btn btn-default">Enviar</button>
+  </form>
+</div>
+{{end}}

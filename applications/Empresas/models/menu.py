@@ -25,7 +25,7 @@ response.google_analytics_id = None
 #########################################################################
 
 response.menu = [
-    (T('Home'), False, URL('default', 'index'), [])
+    ('Inicio', False, "http://127.0.0.1:8000/SPE", [])
 ]
 
 DEVELOPMENT_MENU = True
@@ -40,14 +40,11 @@ def _():
     ctr = request.controller
     # useful links to internal and external resources
     response.menu += [
-        ('Iniciar Sesion',False,'#',[
-            ('Miembro USB',False,"#"),
-            ('Empresa',False,'#')
-            ]),
-        ('Estudiante',False,"#",[
-            ('Agregar Preinscripcion',False,"#")
+        ('Empresas',False,'#',[
+            ('Registro',False,"#"),
+            ('Iniciar Sesion',False,'#')
             ])
-        ]
+    ]
 
 if DEVELOPMENT_MENU: _()
 
