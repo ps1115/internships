@@ -194,7 +194,7 @@ CREATE TABLE IF NOT EXISTS `empresa` (
 DROP TRIGGER IF EXISTS `empresainsert`;
 DELIMITER //
 CREATE TRIGGER `empresainsert` BEFORE INSERT ON `empresa`
- FOR EACH ROW BEGIN SET NEW.fechaCreacion=IF(ISNULL(NEW.fechaCreacion) OR NEW.fechaCreacion=`0000-00-00 00:00:00`, CURRENT_TIMESTAMP, IF(NEW.fechaCreacion<CURRENT_TIMESTAMP, NEW.fechaCreacion, CURRENT_TIMESTAMP));SET NEW.ultimaModificacion=NEW.fechaCreacion; END
+ FOR EACH ROW BEGIN SET NEW.fechaCreacion=IF(ISNULL(NEW.fechaCreacion), CURRENT_TIMESTAMP, IF(NEW.fechaCreacion<CURRENT_TIMESTAMP, NEW.fechaCreacion, CURRENT_TIMESTAMP));SET NEW.ultimaModificacion=NEW.fechaCreacion; END
 //
 DELIMITER ;
 DROP TRIGGER IF EXISTS `empresaupdate`;
