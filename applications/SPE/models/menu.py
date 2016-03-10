@@ -51,7 +51,7 @@ def _():
             (T('Solicitar permiso de evaluación extemporánea'),False,URL('default','permiso_evaluacion_extratemporaneo'))
             ]),
         (T('Profesor'),False,'#',[
-            (T('Justificar Retiro Pasante'),False,URL('default','justificar_retiro_profesor'))
+            (T('Justificar Retiro Pasante'),False,URL('profesor','justificar_retiro_pasante'))
             ]),
         (T('Empresa'),False,'#',[
             (T('Justificar Retiro Pasante'),False,URL('default','justificar_retiro_empresa'))
