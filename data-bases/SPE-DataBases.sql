@@ -339,6 +339,9 @@ CREATE TABLE IF NOT EXISTS `pasantia` (
     `id_tutor_academico`            varchar(254)    NOT NULL,
     `retirar`                       varchar(15)     DEFAULT NULL,
     `obtencion_pasantia`            tinyint(1)      DEFAULT NULL,
+    `motivo_retiro_tutor_industrial`text CHARACTER  SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+    `motivo_retiro_tutor_academico` text CHARACTER  SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+    `motivo_retiro_estudiante`      text CHARACTER  SET utf8 COLLATE utf8_spanish_ci NOT NULL,
     PRIMARY KEY (`codigo`,`id_estudiante`,`anio`,`periodo`),
     KEY `fk_pasantia_periodo_periodo_id` (`periodo`),
     KEY `fk_pasantia_id_tutor_industrial_tutor_industrial_email` (`id_tutor_industrial`),
@@ -547,7 +550,6 @@ CREATE TABLE IF NOT EXISTS `trimestre_periodo` (
 
 CREATE TABLE IF NOT EXISTS `tutor_academico` (
     `usbid`         varchar(254) NOT NULL DEFAULT '',
-    `motivo_retiro` text         NOT NULL,
     PRIMARY KEY (`usbid`)
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -574,7 +576,6 @@ CREATE TABLE IF NOT EXISTS `tutor_industrial` (
     `id_estado`                 int(2)          DEFAULT NULL,
     `telefono`                  varchar(20)     NOT NULL,
     `contactoRRHH`              varchar(20)     DEFAULT NULL,
-    `motivo_retiro`             text            NOT NULL,
     PRIMARY KEY (`email`),
     KEY `fk_tutor_industrial_id_estado_estado_nombre` (`id_estado`),
     KEY `fk_tutor_industrial_id_empresa_empresa_log` (`log_empresa`)
@@ -610,7 +611,6 @@ CREATE TABLE IF NOT EXISTS `usuario_estudiante` (
     `telf_cel`          varchar(20)     DEFAULT NULL,
     `direccion`         text,
     `sexo`              varchar(1)      DEFAULT NULL,
-    `motivo_retiro`     text            NOT NULL,
     PRIMARY KEY (`usbid_usuario`),
     KEY `fk_usuario_estudiante_carrera_carrera_codigo` (`carrera`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
