@@ -27,9 +27,10 @@ dbSPE.define_table('tutor_industrial',
             IS_NOT_EMPTY(error_message=T('Campo Obligatorio')),
             IS_IN_DB(dbSPE,dbSPE.empresa.id,'%(log)s')
                       ],writable = False,readable=False),
-                Field('profesion','string',label=T('Profesion que ejerce')),
-                Field('departamento','string',label=T('Departamento Donde Trabaja')),
-                Field('direccion','text',label=T('Descripcion De La Empresa')),
+                Field('profesion','string',label=T('Profesion')),
+                Field('cargo','string',label=T('Cargo')),
+                Field('departamento','string',label=T('Departamento')),
+                Field('direccion','text',label=T('Direccion Del tutor')),
                 Field('id_estado','integer',label=T('Estado')),
                 Field('telefono','string',label=T('Telefono'), requires=[IS_MATCH('^\+[0-9]*$|^[0-9]*$',error_message=T('Solo se permiten numeros y el signo +'))]),
                 format='%(email)s %(nombre)s %(apellido)s')

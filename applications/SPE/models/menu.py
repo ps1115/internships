@@ -56,9 +56,9 @@ def _():
             ('Evaluar Pasantía',False,"#")
             ]),
         ('Empresa',False,"#",[
-            ('Registrarse',False,URL(c='empresa', f='registrar_empresa')),
+            ('Registrarse',False,URL(a= 'SPE',c='empresa', f='registrar_empresa')),
             ('Solicitudes de pasantes',False,"#"),
-            ('Registrar tutor industrial',False,URL('default','registrar_tutor_industrial')),
+            ('Registrar tutor industrial',False,URL(a= 'SPE',c='empresa', f='registrar_tutor_industrial')),
             ('Gestionar Registro Empresarial',False,"#")
             ])
         ]
