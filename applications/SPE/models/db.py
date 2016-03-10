@@ -150,10 +150,27 @@ db.define_table('empresa',
 
 db.define_table("evento"
                ,Field("codigo", label="Código", type="integer", readable=False, writable=False,  requires=IS_NOT_EMPTY())
-               ,Field("nombre", label="Nombre del Evento", requires=IS_NOT_EMPTY())
-               ,Field("fecha_inicio", label="Fecha de Inicio", type="date", requires=IS_NOT_EMPTY())
-               ,Field("fecha_fin", label="Fecha de Finalización", type="date", requires=IS_NOT_EMPTY())
+               ,Field("nombre", label="Nombre del Evento", requires=IS_NOT_EMPTY(),unique=True)
+               ,Field("fecha_inicio", label="Fecha de Inicio", type="date", requires=[IS_NOT_EMPTY(),IS_DATE(format='%d/%m/%Y')])
+               ,Field("fecha_fin", label="Fecha de Finalización", type="date", requires=[IS_NOT_EMPTY(),IS_DATE(format='%d/%m/%Y')])
                ,Field("nombre_trimestre_actual", label="Nombre del Trimestre Actual", requires=IS_NOT_EMPTY()))
+
+
+db.define_table("sub_evento"
+               ,Field("codigo_supra_evento", type="integer",label="Código Supra Evento", readable=False, writable=False,  requires=IS_NOT_EMPTY())
+               ,Field("codigo_sub_evento", label="Código Sub Evento", type="integer", readable=False, writable=False,  requires=IS_NOT_EMPTY())
+               ,Field("nombre_supra_evento", type="string",label="Nombre del Supra Evento", 
+                      requires=IS_IN_DB(db,'evento.nombre', error_message='Evento no Existe'))
+               ,Field("nombre_sub_evento", label="Nombre del Sub Evento", requires=IS_NOT_EMPTY())
+               ,Field("fecha_inicio", label="Fecha de Inicio", type="date", requires=[IS_NOT_EMPTY(),IS_DATE(format='%d/%m/%Y')])
+               ,Field("fecha_fin", label="Fecha de Finalización", type="date", requires=[IS_NOT_EMPTY(),IS_DATE(format='%d/%m/%Y')]))
+
+db.define_table("semana_muerta"
+               ,Field("nombre_supra_evento_afectado", label="Nombre de Evento", type="string",  requires=IS_IN_DB(db,'sub_evento.nombre_supra_evento', error_message='Evento no Existe'))
+               ,Field("nombre_sub_evento_afectado", label="Nombre de Sub Evento", type="string",  requires=IS_IN_DB(db,'sub_evento.nombre_sub_evento', error_message='Evento no Existe'))
+               ,Field("numero_semana", type="integer",label="Numero de Semana", requires=IS_NOT_EMPTY())
+               ,Field("fecha_ini", label="Fecha de Inicio", type="date", requires=[IS_NOT_EMPTY()])
+               ,Field("fecha_fini", label="Fecha de Finalización", type="date", requires=[IS_NOT_EMPTY(),IS_DATE(format='%d/%m/%Y')]))
 
 
 db.define_table("rol_sistema"

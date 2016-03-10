@@ -157,5 +157,19 @@ def montos():
     return grid
 
 def eventos():
-    grid = SQLFORM.grid(db.evento,user_signature=False)
+    grid = SQLFORM.grid(db.evento,user_signature=False,
+                        deletable=False,searchable=False,
+                       csv=False)
+    return grid
+
+def sub_evento():
+    grid = SQLFORM.grid(db.sub_evento,user_signature=False,
+                        deletable=False,searchable=False,
+                       csv=False)
+    return grid
+
+def semana_muerta():
+    grid = SQLFORM.grid(db.semana_muerta,user_signature=False,
+                        deletable=False,searchable=False,
+                       csv=False)
     return grid
