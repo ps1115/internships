@@ -174,12 +174,11 @@ db.define_table("semana_muerta"
 
 
 db.define_table("rol_sistema"
-               ,Field("usbid", label="USBID", requires=[IS_NOT_EMPTY()], unique=True)
+               ,Field("usbid", label="USBID", requires=[IS_NOT_EMPTY(),IS_MATCH('[0-9][0-9]-[0-9]{5}','USBID Inválido')], unique=True)
                ,Field("nombre", label="Nombre del Usuario", requires=IS_NOT_EMPTY())
                ,Field("apellido", label="Apellido del Usuario",requires=IS_NOT_EMPTY())
                ,Field("rol", label="Nombre del Rol", requires=IS_NOT_EMPTY(), unique=True)
-               ,Field("sede", label="Sede", requires=[IS_NOT_EMPTY(), IS_IN_SET(['Sartenejas','Litoral'],error_message='Sede Inválida')], default="Sartenejas")
-               ,Field("longitudCarnet", type="integer",label="Longitud del Carnet" ,requires=IS_NOT_EMPTY()))
+               ,Field("sede", label="Sede", requires=[IS_NOT_EMPTY(), IS_IN_SET(['Sartenejas','Litoral'],error_message='Sede Inválida')], default="Sartenejas"))
 
 
 db.define_table("calculo_pago"

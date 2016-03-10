@@ -123,23 +123,23 @@ def crear_carrera():
 
 
 def estudiantes():
-    grid = SQLFORM.grid(db.usuario_estudiante,user_signature=False)
+    grid = SQLFORM.grid(db.usuario_estudiante,user_signature=False, csv=False)
     return grid
 
 def carreras():
-    grid = SQLFORM.grid(db.carrera,user_signature=False)
+    grid = SQLFORM.grid(db.carrera,user_signature=False,csv=False)
     return grid
 
 def empresas():
-    grid = SQLFORM.grid(db.empresa,user_signature=False)
+    grid = SQLFORM.grid(db.empresa,user_signature=False,csv=False)
     return grid
 
 def profesores():
-    grid = SQLFORM.grid(db.usuario_profesor,user_signature=False)
+    grid = SQLFORM.grid(db.usuario_profesor,user_signature=False, csv=False)
     return grid
 
 def departamentos():
-    grid = SQLFORM.grid(db.departamento,user_signature=False)
+    grid = SQLFORM.grid(db.departamento,user_signature=False, csv=False)
     return grid
 
 def gestion_cct2():
@@ -149,27 +149,27 @@ def especificar_configuraciones():
     return dict()
 
 def roles():
-    grid = SQLFORM.grid(db.rol_sistema,user_signature=False)
+    grid = SQLFORM.grid(db.rol_sistema,user_signature=False, deletable=False, csv=False)
     return grid
 
 def montos():
-    grid = SQLFORM.grid(db.calculo_pago, deletable=False, editable=False, user_signature=False)
+    grid = SQLFORM.grid(db.calculo_pago, deletable=False,  csv=False, user_signature=False)
     return grid
 
 def eventos():
     grid = SQLFORM.grid(db.evento,user_signature=False,
-                        deletable=False,searchable=False,
+                        deletable=False,
                        csv=False)
     return grid
 
 def sub_evento():
     grid = SQLFORM.grid(db.sub_evento,user_signature=False,
-                        deletable=False,searchable=False,
+                        deletable=False,
                        csv=False)
     return grid
 
 def semana_muerta():
     grid = SQLFORM.grid(db.semana_muerta,user_signature=False,
-                        deletable=False,searchable=False,
+                        deletable=False,
                        csv=False)
     return grid

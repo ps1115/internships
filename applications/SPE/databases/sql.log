@@ -1,4 +1,4 @@
-timestamp: 2016-03-10T03:21:36.243719
+timestamp: 2016-03-10T15:39:02.439875
 CREATE TABLE auth_user(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     first_name CHAR(128),
@@ -10,21 +10,21 @@ CREATE TABLE auth_user(
     registration_id CHAR(512)
 );
 success!
-timestamp: 2016-03-10T03:21:36.262782
+timestamp: 2016-03-10T15:39:02.454317
 CREATE TABLE auth_group(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     role CHAR(512),
     description TEXT
 );
 success!
-timestamp: 2016-03-10T03:21:36.273957
+timestamp: 2016-03-10T15:39:02.465695
 CREATE TABLE auth_membership(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
     group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  
 );
 success!
-timestamp: 2016-03-10T03:21:36.286322
+timestamp: 2016-03-10T15:39:02.477987
 CREATE TABLE auth_permission(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  ,
@@ -33,7 +33,7 @@ CREATE TABLE auth_permission(
     record_id INTEGER
 );
 success!
-timestamp: 2016-03-10T03:21:36.405452
+timestamp: 2016-03-10T15:39:02.488725
 CREATE TABLE auth_event(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     time_stamp TIMESTAMP,
@@ -43,7 +43,7 @@ CREATE TABLE auth_event(
     description TEXT
 );
 success!
-timestamp: 2016-03-10T03:21:36.422522
+timestamp: 2016-03-10T15:39:02.497939
 CREATE TABLE auth_cas(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
@@ -53,7 +53,7 @@ CREATE TABLE auth_cas(
     renew CHAR(1)
 );
 success!
-timestamp: 2016-03-10T03:21:36.434456
+timestamp: 2016-03-10T15:39:02.510625
 CREATE TABLE usuario_estudiante(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     usbid_usuario CHAR(512) UNIQUE,
@@ -67,7 +67,7 @@ CREATE TABLE usuario_estudiante(
     sexo CHAR(512)
 );
 success!
-timestamp: 2016-03-10T03:21:36.446617
+timestamp: 2016-03-10T15:39:02.522069
 CREATE TABLE carrera(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     codigo CHAR(512),
@@ -77,7 +77,7 @@ CREATE TABLE carrera(
     coordinacion CHAR(512)
 );
 success!
-timestamp: 2016-03-10T03:21:36.457651
+timestamp: 2016-03-10T15:39:02.606846
 CREATE TABLE departamento(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nombre CHAR(512),
@@ -86,7 +86,7 @@ CREATE TABLE departamento(
     sede CHAR(512)
 );
 success!
-timestamp: 2016-03-10T03:21:36.468692
+timestamp: 2016-03-10T15:39:02.618226
 CREATE TABLE usuario_profesor(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     usbid_usuario CHAR(512) UNIQUE,
@@ -99,7 +99,7 @@ CREATE TABLE usuario_profesor(
     activo CHAR(512)
 );
 success!
-timestamp: 2016-03-10T03:21:36.478171
+timestamp: 2016-03-10T15:39:02.631208
 CREATE TABLE empresa(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     login CHAR(512) UNIQUE,
@@ -118,39 +118,17 @@ CREATE TABLE empresa(
     ultimaModificacion TIMESTAMP
 );
 success!
-timestamp: 2016-03-10T03:21:36.489367
+timestamp: 2016-03-10T15:39:02.643227
 CREATE TABLE evento(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     codigo INTEGER,
-    nombre CHAR(512),
+    nombre CHAR(512) UNIQUE,
     fecha_inicio DATE,
     fecha_fin DATE,
     nombre_trimestre_actual CHAR(512)
 );
 success!
-timestamp: 2016-03-10T03:21:36.502329
-CREATE TABLE rol_sistema(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    usbid CHAR(512) UNIQUE,
-    nombre CHAR(512),
-    apellido CHAR(512),
-    rol CHAR(512) UNIQUE,
-    sede CHAR(512),
-    longitudCarnet INTEGER
-);
-success!
-timestamp: 2016-03-10T03:21:36.513846
-CREATE TABLE calculo_pago(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    id_categoria INTEGER,
-    id_tipo_pasantia CHAR(512),
-    id_zona INTEGER,
-    monto DOUBLE,
-    fecha DATE
-);
-success!
-success!
-timestamp: 2016-03-10T05:34:03.959319
+timestamp: 2016-03-10T15:39:02.656584
 CREATE TABLE sub_evento(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     codigo_supra_evento INTEGER,
@@ -161,7 +139,7 @@ CREATE TABLE sub_evento(
     fecha_fin DATE
 );
 success!
-timestamp: 2016-03-10T05:34:03.974121
+timestamp: 2016-03-10T15:39:02.666654
 CREATE TABLE semana_muerta(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nombre_supra_evento_afectado CHAR(512),
@@ -169,5 +147,25 @@ CREATE TABLE semana_muerta(
     numero_semana INTEGER,
     fecha_ini DATE,
     fecha_fini DATE
+);
+success!
+timestamp: 2016-03-10T15:39:02.677105
+CREATE TABLE rol_sistema(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    usbid CHAR(512) UNIQUE,
+    nombre CHAR(512),
+    apellido CHAR(512),
+    rol CHAR(512) UNIQUE,
+    sede CHAR(512)
+);
+success!
+timestamp: 2016-03-10T15:39:02.689854
+CREATE TABLE calculo_pago(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id_categoria INTEGER,
+    id_tipo_pasantia CHAR(512),
+    id_zona INTEGER,
+    monto DOUBLE,
+    fecha DATE
 );
 success!
