@@ -1,13 +1,5 @@
-{{left_sidebar_enabled=False,('message' in globals())}}
+{{('message' in globals())}}
 {{extend 'layout.html'}}
-
-{{block left_sidebar}}
-<div class="container">
-  <div class='subtitle'> Esta es la columna izquierda.</div>
-    <p>Aqui ira informacion adicional de navegacion.</p>
-    <p>Funcionalidades comunes, etc.</p>
-</div>
-{{end}}
 
 
 {{if 'message' in globals():}}

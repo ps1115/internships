@@ -16,6 +16,5 @@ dbSPE.define_table('empresa',
                 Field('habilitado','integer',default=1,requires = [IS_INT_IN_RANGE(0, 2)],label='Habilitado'),
                 Field('fechaCreacion','datetime',label=T('Fecha De Creacion')),
                 Field('ultimaModificacion','datetime',label=T('Fecha De Ultima Modificacion')),
-                format='%(nombre)s %(log)s',
-                primarykey=['log']
+                format='%(nombre)s %(log)s'
                )
