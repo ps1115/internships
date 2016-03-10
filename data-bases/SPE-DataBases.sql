@@ -183,8 +183,8 @@ CREATE TABLE IF NOT EXISTS `empresa` (
     `contacto_RRHH`             varchar(20)     DEFAULT NULL,
     `intentos`                  int(4)          DEFAULT '0',
     `habilitado`                int(2)          DEFAULT '1',
-    `fechaCreacion`             timestamp       NOT NULL DEFAULT '0000-00-00 00:00:00',
-    `ultimaModificacion`        timestamp       NOT NULL DEFAULT '0000-00-00 00:00:00',
+    `fechaCreacion`             timestamp       NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `ultimaModificacion`        timestamp       NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`log`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
