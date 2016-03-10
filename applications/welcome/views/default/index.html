@@ -26,8 +26,8 @@
     A('web2py/applications/%(application)s/views/%(controller)s/index.html' % request,
     _href=URL('admin','default','peek',args=(request.application,'views',request.controller,'index.html')))))}}</li>
   <li>{{=T('You can modify this application and adapt it to your needs')}}</li>
-  <li>{{=A(T("Puede ver el prototipo de la aplicación para el coordinador aquí."), _href=URL('SPE','default','especificar_configuraciones'))}}</li>
-  <li>{{=A(T("Puede ver el prototipo de la aplicación para el administrador aquí."), _href=URL('SPE','default','gestion_cct2'))}}</li>
+  <li>{{=A(T("Puede ver el prototipo de la aplicación para el coordinador aquí."), _href=URL('SPE','catalogos_grid','especificar_configuraciones'))}}</li>
+  <li>{{=A(T("Puede ver el prototipo de la aplicación para el administrador aquí."), _href=URL('SPE','catalogos_grid','gestion_cct2'))}}</li>
 </ol>
 {{elif 'content' in globals():}}
 {{=content}}
