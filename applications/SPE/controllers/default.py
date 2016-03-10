@@ -45,7 +45,7 @@ def download():
     allows downloading of uploaded files
     http://..../[app]/default/download/[filename]
     """
-    return response.download(request, dbSPE)
+    return response.download(request, db)
 
 
 def call():
@@ -114,5 +114,5 @@ def justificar_retiro_empresa():
     return dict(formulario1=formulario1,formulario2=formulario2,formulario3=formulario3,formulario4=formulario4)
 
 def permiso_inscripcion_extratemporaneo():
-    grid=SQLFORM.grid(dbSPE.actividad, user_signature=False)
+    grid=SQLFORM(db.contact, user_signature=False)
     return locals()
