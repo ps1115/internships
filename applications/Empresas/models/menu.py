@@ -25,7 +25,7 @@ response.google_analytics_id = None
 #########################################################################
 
 response.menu = [
-    ('Inicio', False, "http://127.0.0.1:8000/SPE", [])
+    ('Inicio', False, URL(a= 'SPE',c='default', f='index'), [])
 ]
 
 DEVELOPMENT_MENU = True
@@ -40,9 +40,11 @@ def _():
     ctr = request.controller
     # useful links to internal and external resources
     response.menu += [
-        ('Empresas',False,'#',[
-            ('Registro',False,"#"),
-            ('Iniciar Sesion',False,'#')
+        ('Empresa',False,"#",[
+            ('Registrarse',False,URL(c='empresa', f='registrar_empresa')),
+            ('Solicitudes de pasantes',False,"#"),
+            ('Registrar tutor industrial',False,URL(c='empresa', f='registrar_tutor_industrial')),
+            ('Gestionar Registro Empresarial',False,"#")
             ])
     ]
 

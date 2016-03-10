@@ -46,9 +46,16 @@ def _():
             ]),
         ('Estudiante',False,"#",[
             ('Agregar Preinscripcion',False,URL('estudiante','agregar_preinscripcion')),
-            ('Retirar Pasantía',False,URL('default','retirar_pasantia')),
+            ('Llenar Curriculum',False,URL('estudiante','llenar_curriculum')),
             ('Plan de Trabajo',False,URL('estudiante','plan_trabajo')),
-            ('LLenar Curriculum',False,URL('estudiante','llenar_curriculum'))
+            ('Retirar Pasantía',False,URL('default','retirar_pasantia')),
+            ('Solicitar permiso de inscripción extemporánea',False,"#"),
+            ('Solicitar permiso de evaluación extemporánea',False,"#")
+            ]),
+        ('Profesor',False,"#",[
+            ('Registrarse',False,URL('default','registrar_profesor')),
+            ('Consultar pasantías',False,"#"),
+            ('Evaluar Pasantía',False,"#")
             ])
         ]
 

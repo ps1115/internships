@@ -1,0 +1,33 @@
+{{('message' in globals())}}
+{{extend 'layout.html'}}
+
+
+{{if 'message' in globals():}}
+<p class='title'>{{=message}}</p>
+<div class='content'>
+    <p class='title'>{{=result}}</p>
+    <p><br><b>Datos De La Empresa</b><br></p>
+    <p>Login : {{=log}} </p>
+    <p>nombre : {{=nombre}} </p>
+    {{if 'direccion':}}
+        <p>direccion : {{=direccion}} </p>
+    {{pass}}
+    {{if 'pag_web':}}
+        <p>pag_web : {{=pag_web}} </p>
+    {{pass}}
+    {{if 'descripcion':}}
+        <p>descripcion : {{=descripcion}} </p>
+    {{pass}}
+    {{if 'telefono':}}
+        <p>telefono : {{=telefono}} </p>
+    {{pass}}
+    <p>contacto_RRHH : {{=contacto_RRHH}} </p>
+    <p><br></p>
+    <p><br></p>
+</div>
+
+{{elif 'content' in globals():}}
+{{=content}}
+{{else:}}
+{{=BEAUTIFY(response._vars)}}
+{{pass}}

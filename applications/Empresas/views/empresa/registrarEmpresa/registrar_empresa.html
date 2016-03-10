@@ -1,0 +1,13 @@
+{{('message' in globals())}}
+{{extend 'layout.html'}}
+
+
+{{if 'message' in globals():}}
+<p class='title'>{{=message}}</p>
+<div class='content'>
+    {{=form}}
+    <p><br></p>
+    <p><br></p>
+</div>
+
+{{pass}}
