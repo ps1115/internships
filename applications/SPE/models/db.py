@@ -169,7 +169,7 @@ db.define_table("semana_muerta"
                ,Field("nombre_supra_evento_afectado", label="Nombre de Evento", type="string",  requires=IS_IN_DB(db,'sub_evento.nombre_supra_evento', error_message='Evento no Existe'))
                ,Field("nombre_sub_evento_afectado", label="Nombre de Sub Evento", type="string",  requires=IS_IN_DB(db,'sub_evento.nombre_sub_evento', error_message='Evento no Existe'))
                ,Field("numero_semana", type="integer",label="Numero de Semana", requires=IS_NOT_EMPTY())
-               ,Field("fecha_ini", label="Fecha de Inicio", type="date", requires=[IS_NOT_EMPTY()])
+               ,Field("fecha_ini", label="Fecha de Inicio", type="date", requires=[IS_NOT_EMPTY(),IS_DATE(format='%d/%m/%Y')])
                ,Field("fecha_fini", label="Fecha de Finalización", type="date", requires=[IS_NOT_EMPTY(),IS_DATE(format='%d/%m/%Y')]))
 
 
