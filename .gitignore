@@ -1,1 +1,7 @@
 gluon/
+applications/__init__.pyc
+applications/admin/__init__.pyc
+applications/admin/modules/__init__.pyc
+applications/welcome/__init__.pyc
+applications/welcome/modules/__init__.pyc
+
