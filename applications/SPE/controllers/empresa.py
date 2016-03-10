@@ -55,3 +55,6 @@ def registrar_empresa():
     # Caso 2: El form no se lleno de manera correcta asi que recargamos la pagina
     else:
         return response.render('empresa/registrarEmpresa/registrar_empresa.html',message=T("Registrar Empresa"),form=form)
+
+def registrar_tutor_industrial():
+    pass
