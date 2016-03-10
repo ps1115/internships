@@ -1,4 +1,4 @@
-{{left_sidebar_enabled=False,right_sidebar_enabled=False,('message' in globals())}}
+{{left_sidebar_enabled=False,('message' in globals())}}
 {{extend 'layout.html'}}
 
 {{block left_sidebar}}
@@ -39,14 +39,3 @@
 {{else:}}
 {{=BEAUTIFY(response._vars)}}
 {{pass}}
-
-{{block right_sidebar}}
-<div class="container">
-  <div class='subtitle'> Esta es la columna derecha</div>
-    <p>Aqui ira informacion importante o a resaltar.</p>
-    <p>El inicio de sesion ira en esta parte, etc.</p>
-    <br>
-    <p>Ejemplo de boton </p>
-    <button class='success'>Ejemplo</button>
-</div>
-{{end}}

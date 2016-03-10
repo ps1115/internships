@@ -30,7 +30,7 @@ def registrar_empresa():
     # Caso 1: El form se lleno de manera correcta asi que registramos la empresa y procedemos a la pagina de exito
     if form.process().accepted:
         # Registramos la empresa
-        dbSPE.empresa.insert(loginID = request.vars.log,
+        dbSPE.empresa.insert(log = request.vars.log,
                              password = request.vars.password,
                              pregunta_secreta = request.vars.pregunta_secreta,
                              respuesta_pregunta_secreta = request.vars.respuesta_pregunta_secreta,
@@ -43,7 +43,7 @@ def registrar_empresa():
         # Mensaje de exito
         response.flash = T("Registro Exitoso")
         # Nos dirigimos a la pagina de exito
-        return response.render('default/registro_empresa_exitoso.html',message=T("Registrar Empresa"),
+        return response.render('empresa/registrarEmpresa/registro_empresa_exitoso.html',message=T("Registrar Empresa"),
                                result=T("El registro de su empresa ha sido exitoso!"),
                                log=request.vars.log,
                                nombre=request.vars.nombre,
@@ -54,4 +54,4 @@ def registrar_empresa():
                                contacto_RRHH=request.vars.contacto_RRHH)
     # Caso 2: El form no se lleno de manera correcta asi que recargamos la pagina
     else:
-        return response.render('empresa/registrar_empresa.html',message=T("Registrar Empresa"),form=form)
+        return response.render('empresa/registrarEmpresa/registrar_empresa.html',message=T("Registrar Empresa"),form=form)
