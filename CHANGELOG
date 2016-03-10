@@ -1,4 +1,4 @@
-/* 
+/*
 *  CHANGELOG del sistema de pasantias (internships)
 *  Registrar aca todos los cambios realizados tanto a nivel del sistema operativo
 *  como a nivel del sistema de pasantías, los registros deben contener
@@ -9,8 +9,18 @@
 
 /* V1.0 */
 
+@HEXACODE>LM - 10/03/2016
+#TODO
+- Linkear bases de datos.
+- Agregar inicio sesion de Empresas.
+- Agregar inicio sesion de CAS.
+- Linkear vistas y formularios con la BD.
+
+#DONE
+- Modelos de interfaz para la funcionalidades de estudiante.
+
 @HEXACODE>LM - 09/03/2016
-#TODO 
+#TODO
 - Linkear bases de datos.
 - Agregar inicio sesion de Empresas.
 - Agregar inicio sesion de CAS.
@@ -21,7 +31,7 @@
 
 @HEXACODE>LM - 19/02/2016
 
-#TODO 
+#TODO
 - Arreglar el dise#o del layout.
 
 #DONE
