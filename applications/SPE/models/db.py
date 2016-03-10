@@ -187,6 +187,6 @@ db.define_table("calculo_pago"
                , Field("id_tipo_pasantia",requires=IS_NOT_EMPTY())
                , Field("id_zona",requires=IS_NOT_EMPTY(),type="integer")
                , Field("monto",requires=IS_NOT_EMPTY(),type="double", label="Monto de Pago")
-               ,Field("fecha", label="Fecha", type="date",requires= IS_DATE(format='%d/%m/%Y')))
+               ,Field("fecha", label="Fecha", type="date",requires=[IS_NOT_EMPTY(),IS_DATE(format='%d/%m/%Y')]))
 
 ###### FIN GESTION COORDINADOR #####
