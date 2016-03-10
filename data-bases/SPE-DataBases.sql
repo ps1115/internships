@@ -47,12 +47,12 @@ CREATE TABLE IF NOT EXISTS `actividad` (
 CREATE TABLE IF NOT EXISTS `calculo_pago` (
     `id_categoria`      int(11)     NOT NULL,
     `id_tipo_pasantia`  varchar(8)  NOT NULL,
-    `id_zona`           int(11)     NOT NULL,
+    `id_pais`           int(11)     NOT NULL,
     `monto`             double      NOT NULL,
     `fecha`             date        NOT NULL,
-    PRIMARY KEY (`id_categoria`,`id_tipo_pasantia`,`id_zona`),
+    PRIMARY KEY (`id_categoria`,`id_tipo_pasantia`,`id_pais`),
     KEY `fk_calculo_pago_id_tipo_pasantia_tipo_pasantia_codigo` (`id_tipo_pasantia`),
-    KEY `fk_calculo_pago_id_zona_zona_id` (`id_zona`)
+    KEY `fk_calculo_pago_id_pais_pais_id` (`id_pais`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -171,7 +171,8 @@ CREATE TABLE IF NOT EXISTS `division` (
 --
 
 CREATE TABLE IF NOT EXISTS `empresa` (
-    `log`                       varchar(254)    NOT NULL,
+	`id`        				int(11)     NOT NULL AUTO_INCREMENT,
+    `log`                       varchar(254)    NOT NULL UNIQUE,
     `password`                  varchar(254)    NOT NULL,
     `pregunta_secreta`          varchar(254)    NOT NULL,
     `respuesta_pregunta_secreta`varchar(254)    NOT NULL,
@@ -183,9 +184,9 @@ CREATE TABLE IF NOT EXISTS `empresa` (
     `contacto_RRHH`             varchar(20)     DEFAULT NULL,
     `intentos`                  int(4)          DEFAULT '0',
     `habilitado`                int(2)          DEFAULT '1',
-    `fechaCreacion`             timestamp       NOT NULL DEFAULT '0000-00-00 00:00:00',
-    `ultimaModificacion`        timestamp       NOT NULL DEFAULT '0000-00-00 00:00:00',
-    PRIMARY KEY (`log`)
+    `fechaCreacion`             timestamp       NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `ultimaModificacion`        timestamp       NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -194,7 +195,7 @@ CREATE TABLE IF NOT EXISTS `empresa` (
 DROP TRIGGER IF EXISTS `empresainsert`;
 DELIMITER //
 CREATE TRIGGER `empresainsert` BEFORE INSERT ON `empresa`
- FOR EACH ROW BEGIN SET NEW.fechaCreacion=IF(ISNULL(NEW.fechaCreacion) OR NEW.fechaCreacion=`0000-00-00 00:00:00`, CURRENT_TIMESTAMP, IF(NEW.fechaCreacion<CURRENT_TIMESTAMP, NEW.fechaCreacion, CURRENT_TIMESTAMP));SET NEW.ultimaModificacion=NEW.fechaCreacion; END
+ FOR EACH ROW BEGIN SET NEW.fechaCreacion=IF(ISNULL(NEW.fechaCreacion), CURRENT_TIMESTAMP, IF(NEW.fechaCreacion<CURRENT_TIMESTAMP, NEW.fechaCreacion, CURRENT_TIMESTAMP));SET NEW.ultimaModificacion=NEW.fechaCreacion; END
 //
 DELIMITER ;
 DROP TRIGGER IF EXISTS `empresaupdate`;
@@ -228,9 +229,9 @@ CREATE TABLE IF NOT EXISTS `error` (
 CREATE TABLE IF NOT EXISTS `estado` (
     `id`        int(2)      NOT NULL AUTO_INCREMENT,
     `nombre`    varchar(40) NOT NULL,
-    `id_zona`   int(11)     NOT NULL,
+    `id_pais`   int(11)     NOT NULL,
     PRIMARY KEY (`id`),
-    KEY `fk_estado_id_zona_zona_id` (`id_zona`)
+    KEY `fk_estado_id_pais_pais_id` (`id_pais`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=25 ;
 
 -- --------------------------------------------------------
@@ -339,6 +340,9 @@ CREATE TABLE IF NOT EXISTS `pasantia` (
     `id_tutor_academico`            varchar(254)    NOT NULL,
     `retirar`                       varchar(15)     DEFAULT NULL,
     `obtencion_pasantia`            tinyint(1)      DEFAULT NULL,
+    `motivo_retiro_tutor_industrial`text CHARACTER  SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+    `motivo_retiro_tutor_academico` text CHARACTER  SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+    `motivo_retiro_estudiante`      text CHARACTER  SET utf8 COLLATE utf8_spanish_ci NOT NULL,
     PRIMARY KEY (`codigo`,`id_estudiante`,`anio`,`periodo`),
     KEY `fk_pasantia_periodo_periodo_id` (`periodo`),
     KEY `fk_pasantia_id_tutor_industrial_tutor_industrial_email` (`id_tutor_industrial`),
@@ -492,12 +496,15 @@ CREATE TABLE IF NOT EXISTS `sub_evento` (
 --
 
 CREATE TABLE IF NOT EXISTS `semana_muerta` (
+    `codigo_supra_evento_afectado`    int(11) NOT NULL,
     `codigo_sub_evento_afectado`    int(11) NOT NULL,
     `fecha_ini`                     date    NOT NULL,
     `fecha_fini`                    date    NOT NULL,
     `numero_semana`                 int(5)  NOT NULL,
     PRIMARY KEY (`numero_semana`,`codigo_sub_evento_afectado`),
-    FOREIGN KEY (`codigo_sub_evento_afectado`) REFERENCES sub_evento(`codigo_sub_evento`)
+    FOREIGN KEY (`codigo_supra_evento_afectado`,`codigo_sub_evento_afectado`) 
+    REFERENCES sub_evento(`codigo_supra_evento`,`codigo_sub_evento`)
+    
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 --
@@ -544,7 +551,6 @@ CREATE TABLE IF NOT EXISTS `trimestre_periodo` (
 
 CREATE TABLE IF NOT EXISTS `tutor_academico` (
     `usbid`         varchar(254) NOT NULL DEFAULT '',
-    `motivo_retiro` text         NOT NULL,
     PRIMARY KEY (`usbid`)
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -554,54 +560,26 @@ CREATE TABLE IF NOT EXISTS `tutor_academico` (
 --
 -- Estructura de tabla para la tabla `tutor_industrial`
 --
-
 CREATE TABLE IF NOT EXISTS `tutor_industrial` (
-    `email`                     varchar(254)    NOT NULL,
+	`id`        				int(11)     NOT NULL AUTO_INCREMENT,
+    `email`                     varchar(254)    NOT NULL UNIQUE,
     `nombre`                    varchar(254)    DEFAULT NULL,
     `apellido`                  varchar(254)    DEFAULT NULL,
     `ci`                        varchar(8)      DEFAULT NULL,
     `password`                  varchar(254)    DEFAULT NULL,
     `pregunta_secreta`          varchar(254)    NOT NULL,
     `respuesta_pregunta_secreta`varchar(254)    NOT NULL,
-    `empresa`                   varchar(254)    DEFAULT NULL,
-    `pagWeb_empresa`            varchar(254)    DEFAULT NULL,
-    `descripcion_empresa`       varchar(254)    DEFAULT NULL,
+    `id_empresa`                integer		    NOT NULL,
     `profesion`                 varchar(50)     NOT NULL,
     `cargo`                     varchar(50)     NOT NULL,
     `departamento`              varchar(50)     NOT NULL,
     `direccion`                 varchar(254)    NOT NULL,
     `id_estado`                 int(2)          DEFAULT NULL,
     `telefono`                  varchar(20)     NOT NULL,
-    `contactoRRHH`              varchar(20)     DEFAULT NULL,
-    `motivo_retiro`             text            NOT NULL,
-    PRIMARY KEY (`email`),
-    KEY `fk_tutor_industrial_id_estado_estado_nombre` (`id_estado`)
+    PRIMARY KEY (`id`),
+    KEY `fk_tutor_industrial_id_estado_estado_nombre` (`id_estado`),
+    KEY `fk_tutor_industrial_id_empresa_empresa_log` (`id_empresa`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `tutor_industrial_temp`
---
-
-CREATE TABLE IF NOT EXISTS `tutor_industrial_temp` (
-    `id`            int(11)         NOT NULL AUTO_INCREMENT,
-    `email`         varchar(50)     NOT NULL,
-    `nombre`        varchar(50)     NOT NULL,
-    `apellido`      varchar(50)     NOT NULL,
-    `profesion`     varchar(50)     NOT NULL,
-    `empresa`       varchar(50)     NOT NULL,
-    `cargo`         varchar(100)    NOT NULL,
-    `departamento`  varchar(100)    NOT NULL,
-    `telefono`      varchar(20)     NOT NULL,
-    `estado`        varchar(20)     NOT NULL,
-    `direccion`     varchar(200)    NOT NULL,
-    `codSeg`        varchar(100)    NOT NULL,
-    `motivo_retiro` text            NOT NULL,
-    PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1915 ;
-
--- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `usuario`
@@ -633,7 +611,6 @@ CREATE TABLE IF NOT EXISTS `usuario_estudiante` (
     `telf_cel`          varchar(20)     DEFAULT NULL,
     `direccion`         text,
     `sexo`              varchar(1)      DEFAULT NULL,
-    `motivo_retiro`     text            NOT NULL,
     PRIMARY KEY (`usbid_usuario`),
     KEY `fk_usuario_estudiante_carrera_carrera_codigo` (`carrera`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -662,10 +639,10 @@ CREATE TABLE IF NOT EXISTS `usuario_profesor` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `zona`
+-- Estructura de tabla para la tabla `pais`
 --
 
-CREATE TABLE IF NOT EXISTS `zona` (
+CREATE TABLE IF NOT EXISTS `pais` (
     `id`        int(11)     NOT NULL AUTO_INCREMENT,
     `nombre`    varchar(10) NOT NULL,
     PRIMARY KEY (`id`)
@@ -679,15 +656,6 @@ CREATE TABLE IF NOT EXISTS `zona` (
 
 CREATE TABLE IF NOT EXISTS `curriculum` (
     `usbid`         varchar(254)    NOT NULL,
-    `nombre`        varchar(254)    NOT NULL,
-    `apellido`      varchar(254)    NOT NULL,
-    `ci`            varchar(8)      DEFAULT NULL,
-    `carrera`       varchar(4)      DEFAULT NULL,
-    `anio_ingreso`  varchar(2)      DEFAULT NULL,
-    `telf_cel`      varchar(20)     DEFAULT NULL,
-    `telf_hab`      varchar(20)     DEFAULT NULL,
-    `email`         varchar(254)    NOT NULL,
-    `direccion`     text,
     `electiva`      text,
     `cursos`        text,
     `conocimientos` text,
@@ -695,15 +663,7 @@ CREATE TABLE IF NOT EXISTS `curriculum` (
     `aficiones`     text,
     `foto`          blob            NOT NULL,
     PRIMARY KEY (`usbid`),
-    KEY `fk_curriculum_usbid_usuario_estudiante_usbid` (`usbid`),
-    KEY `fk_curriculum_nombre_usuario_estudiante_nombre` (`nombre`),
-    KEY `fk_curriculum_nombre_usuario_estudiante_apellido` (`apellido`),
-    KEY `fk_curriculum_nombre_usuario_estudiante_ci` (`ci`),
-    KEY `fk_curriculum_nombre_usuario_estudiante_cohorte` (`anio_ingreso`),
-    KEY `fk_curriculum_nombre_usuario_estudiante_telf_cel` (`telf_cel`),
-    KEY `fk_curriculum_nombre_usuario_estudiante_telf_hab` (`telf_hab`),
-    KEY `fk_curriculum_nombre_usuario_estudiante_email` (`email`),
-    KEY `fk_curriculum_nombre_usuario_estudiante_direccion` (`direccion`)
+    KEY `fk_curriculum_usbid_usuario_estudiante_usbid` (`usbid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -717,20 +677,14 @@ CREATE TABLE IF NOT EXISTS `plan_de_trabajo` (
     `id_estudiante`         varchar(8)      NOT NULL,
     `id_tutor_industrial`   varchar(254)    NOT NULL,
     `id_tutor_academico`    varchar(254)    NOT NULL,
-    `periodo_pasantia`      int(10)         NOT NULL,
-    `anio_pasantia`         int(11)         NOT NULL,
     `log_empresa`           varchar(254)    NOT NULL,
-    `periodo_pasantia_fin`  int(10)         NOT NULL,
-    `anio_pasantia_fin`     int(11)         NOT NULL,
     `codigo_pasantia`       varchar(8)      NOT NULL,
     PRIMARY KEY (`id`),
     KEY `fk_plan_de_trabajo_id_estudiante_usuario_usbid` (`id_estudiante`),
     KEY `fk_plan_de_trabajo_id_tutor_industrial_tutor_industrial_email` (`id_tutor_industrial`),
     KEY `fk_plan_de_trabajo_id_tutor_academico_usuario_usbid` (`id_tutor_academico`),
     KEY `fk_plan_de_trabajo_log_empresa_empresa_log` (`log_empresa`),
-    KEY `fk_plan_de_trabajo_periodo_periodo_id` (`periodo_pasantia`),
-    KEY `fk_plan_de_trabajo_periodo_fin_periodo_id` (`periodo_pasantia_fin`),
-    KEY `fk_fase_codigo_pasantia_tipo_pasantia_codigo` (`codigo_pasantia`)
+    KEY `fk_plan_de_trabajo_codigo_pasantia_tipo_pasantia_codigo` (`codigo_pasantia`)
     
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -752,7 +706,7 @@ ALTER TABLE `actividad`
 ALTER TABLE `calculo_pago`
     ADD CONSTRAINT `fk_calculo_pago_id_categoria_categoria_id` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
     ADD CONSTRAINT `fk_calculo_pago_id_tipo_pasantia_tipo_pasantia_codigo` FOREIGN KEY (`id_tipo_pasantia`) REFERENCES `tipo_pasantia` (`codigo`) ON DELETE CASCADE ON UPDATE CASCADE,
-    ADD CONSTRAINT `fk_calculo_pago_id_zona_zona_id` FOREIGN KEY (`id_zona`) REFERENCES `zona` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+    ADD CONSTRAINT `fk_calculo_pago_id_pais_pais_id` FOREIGN KEY (`id_pais`) REFERENCES `pais` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `departamento`
@@ -764,7 +718,7 @@ ALTER TABLE `departamento`
 -- Filtros para la tabla `estado`
 --
 ALTER TABLE `estado`
-    ADD CONSTRAINT `fk_estado_id_zona_zona_id` FOREIGN KEY (`id_zona`) REFERENCES `zona` (`id`) ON UPDATE CASCADE;
+    ADD CONSTRAINT `fk_estado_id_pais_pais_id` FOREIGN KEY (`id_pais`) REFERENCES `pais` (`id`) ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `fase`
@@ -820,9 +774,8 @@ ALTER TABLE `solicitud_pasante`
 --
 -- Filtros para la tabla `semana_muerta`
 --
-ALTER TABLE `semana_muerta`
-    ADD CONSTRAINT `fk_semana_muerta_codigo_sub_evento_afectado_sub_evento_codigo_sub_evento` FOREIGN KEY (`codigo_sub_evento_afectado`) REFERENCES `sub_evento` (`codigo_sub_evento`) ON UPDATE CASCADE;
-
+-- ALTER TABLE `semana_muerta`
+	
 --
 -- Filtros para la tabla `sub_evento`
 --
@@ -840,7 +793,8 @@ ALTER TABLE `tutor_academico`
 -- Filtros para la tabla `tutor_industrial`
 --
 ALTER TABLE `tutor_industrial`
-    ADD CONSTRAINT `fk_tutor_industrial_id_estado_estado_nombre` FOREIGN KEY (`id_estado`) REFERENCES `estado` (`id`) ON UPDATE CASCADE;
+    ADD CONSTRAINT `fk_tutor_industrial_id_estado_estado_nombre` FOREIGN KEY (`id_estado`) REFERENCES `estado` (`id`) ON UPDATE CASCADE,
+    ADD CONSTRAINT `fk_tutor_industrial_id_empresa_empresa_log` FOREIGN KEY (`id_empresa`) REFERENCES `empresa` (`id`) ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `usuario_estudiante`
@@ -862,27 +816,18 @@ ALTER TABLE `usuario_profesor`
 -- Filtros para la tabla `curriculum`
 --
 ALTER TABLE `curriculum`
-    ADD CONSTRAINT `fk_curriculum_usbid_usuario_estudiante_usbid` FOREIGN KEY (`usbid`) REFERENCES `usuario` (`usbid`), 
-    ADD CONSTRAINT `fk_curriculum_nombre_usuario_estudiante_nombre` FOREIGN KEY (`nombre`) REFERENCES `usuario` (`nombre`),
-    ADD CONSTRAINT `fk_curriculum_nombre_usuario_estudiante_apellido` FOREIGN KEY (`apellido`) REFERENCES `usuario` (`apellido`),
-    ADD CONSTRAINT `fk_curriculum_nombre_usuario_estudiante_ci` FOREIGN KEY (`ci`) REFERENCES `usuario` (`ci`),
-    ADD CONSTRAINT `fk_curriculum_nombre_usuario_estudiante_cohorte` FOREIGN KEY (`anio_ingreso`) REFERENCES `usuario_estudiante` (`cohorte`),
-    ADD CONSTRAINT `fk_curriculum_nombre_usuario_estudiante_telf_cel` FOREIGN KEY (`telf_cel`) REFERENCES `usuario_estudiante` (`telf_cel`) ON UPDATE CASCADE,
-    ADD CONSTRAINT `fk_curriculum_nombre_usuario_estudiante_telf_hab` FOREIGN KEY (`telf_hab`) REFERENCES `usuario_estudiante` (`telf_hab`) ON UPDATE CASCADE,
-    ADD CONSTRAINT `fk_curriculum_nombre_usuario_estudiante_email` FOREIGN KEY (`email`) REFERENCES `usuario_estudiante` (`email_sec`) ON UPDATE CASCADE,
-    ADD CONSTRAINT `fk_curriculum_nombre_usuario_estudiante_direccion` FOREIGN KEY (`direccion`) REFERENCES `usuario_estudiante` (`direccion`) ON UPDATE CASCADE;
+    ADD CONSTRAINT `fk_curriculum_usbid_usuario_estudiante_usbid` FOREIGN KEY (`usbid`) REFERENCES `usuario` (`usbid`);
 
 --
 -- Filtros para la tabla `curriculum`
 --
 ALTER TABLE `plan_de_trabajo`
+
     ADD CONSTRAINT `fk_plan_de_trabajo_id_estudiante_usuario_usbid` FOREIGN KEY (`id_estudiante`) REFERENCES `usuario` (`usbid`),
     ADD CONSTRAINT `fk_plan_de_trabajo_id_tutor_industrial_tutor_industrial_email` FOREIGN KEY (`id_tutor_industrial`) REFERENCES `tutor_industrial` (`email`),
     ADD CONSTRAINT `fk_plan_de_trabajo_id_tutor_academico_usuario_usbid` FOREIGN KEY (`id_tutor_academico`) REFERENCES `usuario`(`usbid`),
     ADD CONSTRAINT `fk_plan_de_trabajo_log_empresa_empresa_log` FOREIGN KEY (`log_empresa`) REFERENCES `empresa` (`log`),
-    ADD CONSTRAINT `fk_plan_de_trabajo_periodo_periodo_id` FOREIGN KEY (`periodo_pasantia`) REFERENCES `periodo` (`id`),
-    ADD CONSTRAINT `fk_plan_de_trabajo_periodo_fin_periodo_id` FOREIGN KEY (`periodo_pasantia_fin`) REFERENCES `periodo` (`id`),
-    ADD CONSTRAINT `fk_fase_codigo_pasantia_tipo_pasantia_codigo` FOREIGN KEY (`codigo_pasantia`) REFERENCES `tipo_pasantia` (`codigo`);
+    ADD CONSTRAINT `fk_plan_de_trabajo_codigo_pasantia_tipo_pasantia_codigo` FOREIGN KEY (`codigo_pasantia`) REFERENCES `tipo_pasantia` (`codigo`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
