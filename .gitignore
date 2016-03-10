@@ -1,1 +1,7 @@
 *.pyc
+parameters_*
+httpserver.log
+gluon/
+logs/
+applications/SPE/errors/
+applications/admin/sessions/
