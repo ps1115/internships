@@ -153,7 +153,7 @@ def roles():
     return grid
 
 def montos():
-    grid = SQLFORM.grid(db.calculo_pago,user_signature=False)
+    grid = SQLFORM.grid(db.calculo_pago, deletable=False, editable=False, user_signature=False)
     return grid
 
 def eventos():

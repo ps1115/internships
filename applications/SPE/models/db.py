@@ -143,8 +143,8 @@ db.define_table('empresa',
                 Field('contacto_RRHH', requires=IS_NOT_EMPTY(), label='Teléfono de la Sección de Recursos Humanos'),
                 Field('intentos', type='integer', default='0',readable=False, writable=False, requires=IS_NOT_EMPTY()),
                 Field('habilitado', type='integer', default='1',readable=False, writable=False, requires=IS_NOT_EMPTY()),
-                Field('fechaCreacion', type='datetime',requires=IS_NOT_EMPTY(), readable=False, writable=False, default='0000-00-00 00:00:00'),
-                Field('ultimaModificacion', type='datetime',requires=IS_NOT_EMPTY(), readable=False, writable=False, default='0000-00-00 00:00:00'))
+                Field('fechaCreacion', type='datetime',requires=[IS_NOT_EMPTY(),IS_DATETIME(format='%d/%m/%Y %H:%M:%S')], readable=False, writable=False, default='0000-00-00 00:00:00'),
+                Field('ultimaModificacion', type='datetime',requires=[IS_NOT_EMPTY(),IS_DATETIME(format='%d/%m/%Y %H:%M:%S')], readable=False, writable=False, default='0000-00-00 00:00:00'))
 
 
 
@@ -186,6 +186,7 @@ db.define_table("calculo_pago"
                , Field("id_categoria", requires=IS_NOT_EMPTY(),type="integer")
                , Field("id_tipo_pasantia",requires=IS_NOT_EMPTY())
                , Field("id_zona",requires=IS_NOT_EMPTY(),type="integer")
-               , Field("monto",requires=IS_NOT_EMPTY(),type="double", label="Monto de Pago"))
+               , Field("monto",requires=IS_NOT_EMPTY(),type="double", label="Monto de Pago")
+               ,Field("fecha", label="Fecha", type="date",requires= IS_DATE(format='%d/%m/%Y')))
 
 ###### FIN GESTION COORDINADOR #####

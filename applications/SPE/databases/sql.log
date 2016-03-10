@@ -1,4 +1,4 @@
-timestamp: 2016-02-08T20:58:41.551180
+timestamp: 2016-03-10T03:21:36.243719
 CREATE TABLE auth_user(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     first_name CHAR(128),
@@ -10,21 +10,21 @@ CREATE TABLE auth_user(
     registration_id CHAR(512)
 );
 success!
-timestamp: 2016-02-08T20:58:41.669889
+timestamp: 2016-03-10T03:21:36.262782
 CREATE TABLE auth_group(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     role CHAR(512),
     description TEXT
 );
 success!
-timestamp: 2016-02-08T20:58:41.846409
+timestamp: 2016-03-10T03:21:36.273957
 CREATE TABLE auth_membership(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
     group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  
 );
 success!
-timestamp: 2016-02-08T20:58:42.013587
+timestamp: 2016-03-10T03:21:36.286322
 CREATE TABLE auth_permission(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  ,
@@ -33,7 +33,7 @@ CREATE TABLE auth_permission(
     record_id INTEGER
 );
 success!
-timestamp: 2016-02-08T20:58:42.147687
+timestamp: 2016-03-10T03:21:36.405452
 CREATE TABLE auth_event(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     time_stamp TIMESTAMP,
@@ -43,7 +43,7 @@ CREATE TABLE auth_event(
     description TEXT
 );
 success!
-timestamp: 2016-02-08T20:58:42.277409
+timestamp: 2016-03-10T03:21:36.422522
 CREATE TABLE auth_cas(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
@@ -51,5 +51,123 @@ CREATE TABLE auth_cas(
     service CHAR(512),
     ticket CHAR(512),
     renew CHAR(1)
+);
+success!
+timestamp: 2016-03-10T03:21:36.434456
+CREATE TABLE usuario_estudiante(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    usbid_usuario CHAR(512) UNIQUE,
+    carrera CHAR(512),
+    cohorte INTEGER,
+    estudiante_sede CHAR(512),
+    email_sec CHAR(512),
+    telf_hab CHAR(512),
+    telf_cel CHAR(512),
+    direccion CHAR(512),
+    sexo CHAR(512)
+);
+success!
+timestamp: 2016-03-10T03:21:36.446617
+CREATE TABLE carrera(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    codigo CHAR(512),
+    nombre CHAR(512),
+    duracion CHAR(512),
+    sede CHAR(512),
+    coordinacion CHAR(512)
+);
+success!
+timestamp: 2016-03-10T03:21:36.457651
+CREATE TABLE departamento(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre CHAR(512),
+    id_division CHAR(512),
+    email_dep CHAR(512),
+    sede CHAR(512)
+);
+success!
+timestamp: 2016-03-10T03:21:36.468692
+CREATE TABLE usuario_profesor(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    usbid_usuario CHAR(512) UNIQUE,
+    dependencia CHAR(512),
+    dedicacion CHAR(512),
+    categoria CHAR(512),
+    email_sec CHAR(512),
+    telf CHAR(512),
+    celular CHAR(512),
+    activo CHAR(512)
+);
+success!
+timestamp: 2016-03-10T03:21:36.478171
+CREATE TABLE empresa(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    login CHAR(512) UNIQUE,
+    password CHAR(512),
+    pregunta_secreta CHAR(512),
+    respuesta_pregunta_secreta CHAR(512),
+    nombre CHAR(512),
+    direccion CHAR(512),
+    pag_web CHAR(512),
+    descripcion CHAR(512),
+    telefono CHAR(512),
+    contacto_RRHH CHAR(512),
+    intentos INTEGER,
+    habilitado INTEGER,
+    fechaCreacion TIMESTAMP,
+    ultimaModificacion TIMESTAMP
+);
+success!
+timestamp: 2016-03-10T03:21:36.489367
+CREATE TABLE evento(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    codigo INTEGER,
+    nombre CHAR(512),
+    fecha_inicio DATE,
+    fecha_fin DATE,
+    nombre_trimestre_actual CHAR(512)
+);
+success!
+timestamp: 2016-03-10T03:21:36.502329
+CREATE TABLE rol_sistema(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    usbid CHAR(512) UNIQUE,
+    nombre CHAR(512),
+    apellido CHAR(512),
+    rol CHAR(512) UNIQUE,
+    sede CHAR(512),
+    longitudCarnet INTEGER
+);
+success!
+timestamp: 2016-03-10T03:21:36.513846
+CREATE TABLE calculo_pago(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id_categoria INTEGER,
+    id_tipo_pasantia CHAR(512),
+    id_zona INTEGER,
+    monto DOUBLE,
+    fecha DATE
+);
+success!
+success!
+timestamp: 2016-03-10T05:34:03.959319
+CREATE TABLE sub_evento(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    codigo_supra_evento INTEGER,
+    codigo_sub_evento INTEGER,
+    nombre_supra_evento CHAR(512),
+    nombre_sub_evento CHAR(512),
+    fecha_inicio DATE,
+    fecha_fin DATE
+);
+success!
+timestamp: 2016-03-10T05:34:03.974121
+CREATE TABLE semana_muerta(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre_supra_evento_afectado CHAR(512),
+    nombre_sub_evento_afectado CHAR(512),
+    numero_semana INTEGER,
+    fecha_ini DATE,
+    fecha_fini DATE
 );
 success!
