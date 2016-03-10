@@ -492,12 +492,15 @@ CREATE TABLE IF NOT EXISTS `sub_evento` (
 --
 
 CREATE TABLE IF NOT EXISTS `semana_muerta` (
+    `codigo_supra_evento_afectado`    int(11) NOT NULL,
     `codigo_sub_evento_afectado`    int(11) NOT NULL,
     `fecha_ini`                     date    NOT NULL,
     `fecha_fini`                    date    NOT NULL,
     `numero_semana`                 int(5)  NOT NULL,
     PRIMARY KEY (`numero_semana`,`codigo_sub_evento_afectado`),
-    FOREIGN KEY (`codigo_sub_evento_afectado`) REFERENCES sub_evento(`codigo_sub_evento`)
+    FOREIGN KEY (`codigo_supra_evento_afectado`,`codigo_sub_evento_afectado`) 
+    REFERENCES sub_evento(`codigo_supra_evento`,`codigo_sub_evento`)
+    
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 --
@@ -563,7 +566,7 @@ CREATE TABLE IF NOT EXISTS `tutor_industrial` (
     `password`                  varchar(254)    DEFAULT NULL,
     `pregunta_secreta`          varchar(254)    NOT NULL,
     `respuesta_pregunta_secreta`varchar(254)    NOT NULL,
-    `id_empresa`                varchar(254)    NOT NULL,
+    `log_empresa`                varchar(254)    NOT NULL,
     `profesion`                 varchar(50)     NOT NULL,
     `cargo`                     varchar(50)     NOT NULL,
     `departamento`              varchar(50)     NOT NULL,
@@ -573,8 +576,8 @@ CREATE TABLE IF NOT EXISTS `tutor_industrial` (
     `contactoRRHH`              varchar(20)     DEFAULT NULL,
     `motivo_retiro`             text            NOT NULL,
     PRIMARY KEY (`email`),
-    KEY `fk_tutor_industrial_id_estado_estado_nombre` (`id_estado`)
-    KEY `fk_tutor_industrial_id_empresa_empresa_log` (`id_empresa`)
+    KEY `fk_tutor_industrial_id_estado_estado_nombre` (`id_estado`),
+    KEY `fk_tutor_industrial_id_empresa_empresa_log` (`log_empresa`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -653,15 +656,6 @@ CREATE TABLE IF NOT EXISTS `zona` (
 
 CREATE TABLE IF NOT EXISTS `curriculum` (
     `usbid`         varchar(254)    NOT NULL,
-    `nombre`        varchar(254)    NOT NULL,
-    `apellido`      varchar(254)    NOT NULL,
-    `ci`            varchar(8)      DEFAULT NULL,
-    `carrera`       varchar(4)      DEFAULT NULL,
-    `anio_ingreso`  varchar(2)      DEFAULT NULL,
-    `telf_cel`      varchar(20)     DEFAULT NULL,
-    `telf_hab`      varchar(20)     DEFAULT NULL,
-    `email`         varchar(254)    NOT NULL,
-    `direccion`     text,
     `electiva`      text,
     `cursos`        text,
     `conocimientos` text,
@@ -669,15 +663,7 @@ CREATE TABLE IF NOT EXISTS `curriculum` (
     `aficiones`     text,
     `foto`          blob            NOT NULL,
     PRIMARY KEY (`usbid`),
-    KEY `fk_curriculum_usbid_usuario_estudiante_usbid` (`usbid`),
-    KEY `fk_curriculum_nombre_usuario_estudiante_nombre` (`nombre`),
-    KEY `fk_curriculum_nombre_usuario_estudiante_apellido` (`apellido`),
-    KEY `fk_curriculum_nombre_usuario_estudiante_ci` (`ci`),
-    KEY `fk_curriculum_nombre_usuario_estudiante_cohorte` (`anio_ingreso`),
-    KEY `fk_curriculum_nombre_usuario_estudiante_telf_cel` (`telf_cel`),
-    KEY `fk_curriculum_nombre_usuario_estudiante_telf_hab` (`telf_hab`),
-    KEY `fk_curriculum_nombre_usuario_estudiante_email` (`email`),
-    KEY `fk_curriculum_nombre_usuario_estudiante_direccion` (`direccion`)
+    KEY `fk_curriculum_usbid_usuario_estudiante_usbid` (`usbid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -691,20 +677,14 @@ CREATE TABLE IF NOT EXISTS `plan_de_trabajo` (
     `id_estudiante`         varchar(8)      NOT NULL,
     `id_tutor_industrial`   varchar(254)    NOT NULL,
     `id_tutor_academico`    varchar(254)    NOT NULL,
-    `periodo_pasantia`      int(10)         NOT NULL,
-    `anio_pasantia`         int(11)         NOT NULL,
     `log_empresa`           varchar(254)    NOT NULL,
-    `periodo_pasantia_fin`  int(10)         NOT NULL,
-    `anio_pasantia_fin`     int(11)         NOT NULL,
     `codigo_pasantia`       varchar(8)      NOT NULL,
     PRIMARY KEY (`id`),
     KEY `fk_plan_de_trabajo_id_estudiante_usuario_usbid` (`id_estudiante`),
     KEY `fk_plan_de_trabajo_id_tutor_industrial_tutor_industrial_email` (`id_tutor_industrial`),
     KEY `fk_plan_de_trabajo_id_tutor_academico_usuario_usbid` (`id_tutor_academico`),
     KEY `fk_plan_de_trabajo_log_empresa_empresa_log` (`log_empresa`),
-    KEY `fk_plan_de_trabajo_periodo_periodo_id` (`periodo_pasantia`),
-    KEY `fk_plan_de_trabajo_periodo_fin_periodo_id` (`periodo_pasantia_fin`),
-    KEY `fk_fase_codigo_pasantia_tipo_pasantia_codigo` (`codigo_pasantia`)
+    KEY `fk_plan_de_trabajo_codigo_pasantia_tipo_pasantia_codigo` (`codigo_pasantia`)
     
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -794,9 +774,8 @@ ALTER TABLE `solicitud_pasante`
 --
 -- Filtros para la tabla `semana_muerta`
 --
-ALTER TABLE `semana_muerta`
-    ADD CONSTRAINT `fk_semana_muerta_codigo_sub_evento_afectado_sub_evento_codigo_sub_evento` FOREIGN KEY (`codigo_sub_evento_afectado`) REFERENCES `sub_evento` (`codigo_sub_evento`) ON UPDATE CASCADE;
-
+-- ALTER TABLE `semana_muerta`
+	
 --
 -- Filtros para la tabla `sub_evento`
 --
@@ -814,8 +793,8 @@ ALTER TABLE `tutor_academico`
 -- Filtros para la tabla `tutor_industrial`
 --
 ALTER TABLE `tutor_industrial`
-    ADD CONSTRAINT `fk_tutor_industrial_id_estado_estado_nombre` FOREIGN KEY (`id_estado`) REFERENCES `estado` (`id`) ON UPDATE CASCADE;
-    ADD CONSTRAINT `fk_tutor_industrial_id_empresa_empresa_log` FOREIGN KEY (`id_empresa`) REFERENCES `empresa` (`log`) ON UPDATE CASCADE;
+    ADD CONSTRAINT `fk_tutor_industrial_id_estado_estado_nombre` FOREIGN KEY (`id_estado`) REFERENCES `estado` (`id`) ON UPDATE CASCADE,
+    ADD CONSTRAINT `fk_tutor_industrial_id_empresa_empresa_log` FOREIGN KEY (`log_empresa`) REFERENCES `empresa` (`log`) ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `usuario_estudiante`
@@ -837,27 +816,18 @@ ALTER TABLE `usuario_profesor`
 -- Filtros para la tabla `curriculum`
 --
 ALTER TABLE `curriculum`
-    ADD CONSTRAINT `fk_curriculum_usbid_usuario_estudiante_usbid` FOREIGN KEY (`usbid`) REFERENCES `usuario` (`usbid`), 
-    ADD CONSTRAINT `fk_curriculum_nombre_usuario_estudiante_nombre` FOREIGN KEY (`nombre`) REFERENCES `usuario` (`nombre`),
-    ADD CONSTRAINT `fk_curriculum_nombre_usuario_estudiante_apellido` FOREIGN KEY (`apellido`) REFERENCES `usuario` (`apellido`),
-    ADD CONSTRAINT `fk_curriculum_nombre_usuario_estudiante_ci` FOREIGN KEY (`ci`) REFERENCES `usuario` (`ci`),
-    ADD CONSTRAINT `fk_curriculum_nombre_usuario_estudiante_cohorte` FOREIGN KEY (`anio_ingreso`) REFERENCES `usuario_estudiante` (`cohorte`),
-    ADD CONSTRAINT `fk_curriculum_nombre_usuario_estudiante_telf_cel` FOREIGN KEY (`telf_cel`) REFERENCES `usuario_estudiante` (`telf_cel`) ON UPDATE CASCADE,
-    ADD CONSTRAINT `fk_curriculum_nombre_usuario_estudiante_telf_hab` FOREIGN KEY (`telf_hab`) REFERENCES `usuario_estudiante` (`telf_hab`) ON UPDATE CASCADE,
-    ADD CONSTRAINT `fk_curriculum_nombre_usuario_estudiante_email` FOREIGN KEY (`email`) REFERENCES `usuario_estudiante` (`email_sec`) ON UPDATE CASCADE,
-    ADD CONSTRAINT `fk_curriculum_nombre_usuario_estudiante_direccion` FOREIGN KEY (`direccion`) REFERENCES `usuario_estudiante` (`direccion`) ON UPDATE CASCADE;
+    ADD CONSTRAINT `fk_curriculum_usbid_usuario_estudiante_usbid` FOREIGN KEY (`usbid`) REFERENCES `usuario` (`usbid`);
 
 --
 -- Filtros para la tabla `curriculum`
 --
 ALTER TABLE `plan_de_trabajo`
+
     ADD CONSTRAINT `fk_plan_de_trabajo_id_estudiante_usuario_usbid` FOREIGN KEY (`id_estudiante`) REFERENCES `usuario` (`usbid`),
     ADD CONSTRAINT `fk_plan_de_trabajo_id_tutor_industrial_tutor_industrial_email` FOREIGN KEY (`id_tutor_industrial`) REFERENCES `tutor_industrial` (`email`),
     ADD CONSTRAINT `fk_plan_de_trabajo_id_tutor_academico_usuario_usbid` FOREIGN KEY (`id_tutor_academico`) REFERENCES `usuario`(`usbid`),
     ADD CONSTRAINT `fk_plan_de_trabajo_log_empresa_empresa_log` FOREIGN KEY (`log_empresa`) REFERENCES `empresa` (`log`),
-    ADD CONSTRAINT `fk_plan_de_trabajo_periodo_periodo_id` FOREIGN KEY (`periodo_pasantia`) REFERENCES `periodo` (`id`),
-    ADD CONSTRAINT `fk_plan_de_trabajo_periodo_fin_periodo_id` FOREIGN KEY (`periodo_pasantia_fin`) REFERENCES `periodo` (`id`),
-    ADD CONSTRAINT `fk_fase_codigo_pasantia_tipo_pasantia_codigo` FOREIGN KEY (`codigo_pasantia`) REFERENCES `tipo_pasantia` (`codigo`);
+    ADD CONSTRAINT `fk_plan_de_trabajo_codigo_pasantia_tipo_pasantia_codigo` FOREIGN KEY (`codigo_pasantia`) REFERENCES `tipo_pasantia` (`codigo`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
