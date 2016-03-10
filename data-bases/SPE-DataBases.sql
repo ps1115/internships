@@ -47,12 +47,12 @@ CREATE TABLE IF NOT EXISTS `actividad` (
 CREATE TABLE IF NOT EXISTS `calculo_pago` (
     `id_categoria`      int(11)     NOT NULL,
     `id_tipo_pasantia`  varchar(8)  NOT NULL,
-    `id_zona`           int(11)     NOT NULL,
+    `id_pais`           int(11)     NOT NULL,
     `monto`             double      NOT NULL,
     `fecha`             date        NOT NULL,
-    PRIMARY KEY (`id_categoria`,`id_tipo_pasantia`,`id_zona`),
+    PRIMARY KEY (`id_categoria`,`id_tipo_pasantia`,`id_pais`),
     KEY `fk_calculo_pago_id_tipo_pasantia_tipo_pasantia_codigo` (`id_tipo_pasantia`),
-    KEY `fk_calculo_pago_id_zona_zona_id` (`id_zona`)
+    KEY `fk_calculo_pago_id_pais_pais_id` (`id_pais`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -229,9 +229,9 @@ CREATE TABLE IF NOT EXISTS `error` (
 CREATE TABLE IF NOT EXISTS `estado` (
     `id`        int(2)      NOT NULL AUTO_INCREMENT,
     `nombre`    varchar(40) NOT NULL,
-    `id_zona`   int(11)     NOT NULL,
+    `id_pais`   int(11)     NOT NULL,
     PRIMARY KEY (`id`),
-    KEY `fk_estado_id_zona_zona_id` (`id_zona`)
+    KEY `fk_estado_id_pais_pais_id` (`id_pais`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=25 ;
 
 -- --------------------------------------------------------
@@ -639,10 +639,10 @@ CREATE TABLE IF NOT EXISTS `usuario_profesor` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `zona`
+-- Estructura de tabla para la tabla `pais`
 --
 
-CREATE TABLE IF NOT EXISTS `zona` (
+CREATE TABLE IF NOT EXISTS `pais` (
     `id`        int(11)     NOT NULL AUTO_INCREMENT,
     `nombre`    varchar(10) NOT NULL,
     PRIMARY KEY (`id`)
@@ -706,7 +706,7 @@ ALTER TABLE `actividad`
 ALTER TABLE `calculo_pago`
     ADD CONSTRAINT `fk_calculo_pago_id_categoria_categoria_id` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
     ADD CONSTRAINT `fk_calculo_pago_id_tipo_pasantia_tipo_pasantia_codigo` FOREIGN KEY (`id_tipo_pasantia`) REFERENCES `tipo_pasantia` (`codigo`) ON DELETE CASCADE ON UPDATE CASCADE,
-    ADD CONSTRAINT `fk_calculo_pago_id_zona_zona_id` FOREIGN KEY (`id_zona`) REFERENCES `zona` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+    ADD CONSTRAINT `fk_calculo_pago_id_pais_pais_id` FOREIGN KEY (`id_pais`) REFERENCES `pais` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `departamento`
@@ -718,7 +718,7 @@ ALTER TABLE `departamento`
 -- Filtros para la tabla `estado`
 --
 ALTER TABLE `estado`
-    ADD CONSTRAINT `fk_estado_id_zona_zona_id` FOREIGN KEY (`id_zona`) REFERENCES `zona` (`id`) ON UPDATE CASCADE;
+    ADD CONSTRAINT `fk_estado_id_pais_pais_id` FOREIGN KEY (`id_pais`) REFERENCES `pais` (`id`) ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `fase`
