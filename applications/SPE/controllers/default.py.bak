@@ -86,7 +86,7 @@ def permiso_evaluacion_extratemporaneo():
     formulario4=FORM(TEXTAREA(_name='Motivo'))
     return dict(formulario1=formulario1,formulario2=formulario2,formulario3=formulario3,formulario4=formulario4)
 
-def permiso_inscripcion_extratemporaneo():
+def cc():
     formulario1=FORM(INPUT(_name='Nombre'))
     formulario2=FORM(INPUT(_name='Carnet'))
     formulario3=FORM(INPUT(_name='Fecha'))
@@ -112,3 +112,7 @@ def justificar_retiro_empresa():
     formulario3=FORM(INPUT(_name='Fecha'))
     formulario4=FORM(TEXTAREA(_name='Motivo'))
     return dict(formulario1=formulario1,formulario2=formulario2,formulario3=formulario3,formulario4=formulario4)
+
+def permiso_inscripcion_extratemporaneo():
+    grid=SQLFORM.grid(dbSPE.actividad, user_signature=False)
+    return locals()

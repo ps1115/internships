@@ -153,3 +153,11 @@
 [2016-03-04 01:45:33] EDIT SPE/views/default/retirar_pasantia.html: 0
 [2016-03-04 01:45:40] EDIT SPE/views/default/justificar_retiro_empresa.html: 0
 >>>>>>> 8fb17984f6bd8ebcb61f8d19150ab55cbee81bf2
+[2016-03-09 22:21:02] EDIT SPE/models/db-syq.py: -28
+[2016-03-09 22:28:10] EDIT SPE/models/db-syq.py: 0
+[2016-03-09 22:34:20] EDIT SPE/controllers/default.py: 3
+[2016-03-09 22:35:17] EDIT SPE/views/default/permiso_inscripcion_extratemporaneo.html: -12
+[2016-03-09 22:35:32] EDIT SPE/models/db-syq.py: 0
+[2016-03-09 22:36:20] EDIT SPE/controllers/default.py: 0
+[2016-03-09 22:36:27] EDIT SPE/controllers/default.py: 0
+[2016-03-09 22:38:31] EDIT SPE/controllers/default.py: 0
