@@ -16,8 +16,8 @@ def index():
     if you need a simple wiki simply replace the two lines below with:
     return auth.wiki()
     """
-    response.flash = T("Bienvenido a SPE!")
-    return dict(message=T('Pagina modelo'))
+    response.flash = T("¡Bienvenido!")
+    return dict(message=T('Sistema de Pasantías Empresariales'))
 
 
 def user():
@@ -62,6 +62,3 @@ def retirar_pasantia():
 
 def registrar_profesor():
     return response.render('default/registrar_profesor.html')
-
-def registrar_tutor_industrial():
-    return response.render('default/registrar_tutor_industrial.html')

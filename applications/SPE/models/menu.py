@@ -45,7 +45,9 @@ def _():
             ('Empresa',False,'#')
             ]),
         ('Estudiante',False,"#",[
-            ('Agregar Preinscripcion',False,"#"),
+            ('Agregar Preinscripcion',False,URL('estudiante','agregar_preinscripcion')),
+            ('Llenar Curriculum',False,URL('estudiante','llenar_curriculum')),
+            ('Plan de Trabajo',False,URL('estudiante','plan_trabajo')),
             ('Retirar Pasantía',False,URL('default','retirar_pasantia')),
             ('Solicitar permiso de inscripción extemporánea',False,"#"),
             ('Solicitar permiso de evaluación extemporánea',False,"#")
@@ -54,12 +56,6 @@ def _():
             ('Registrarse',False,URL('default','registrar_profesor')),
             ('Consultar pasantías',False,"#"),
             ('Evaluar Pasantía',False,"#")
-            ]),
-        ('Empresa',False,"#",[
-            ('Registrarse',False,URL(a= 'SPE',c='empresa', f='registrar_empresa')),
-            ('Solicitudes de pasantes',False,"#"),
-            ('Registrar tutor industrial',False,URL(a= 'SPE',c='empresa', f='registrar_tutor_industrial')),
-            ('Gestionar Registro Empresarial',False,"#")
             ])
         ]
 

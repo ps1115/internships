@@ -1,0 +1,73 @@
+{{('message' in globals())}}
+{{extend 'layout.html'}}
+
+<p class='title'>{{=message}}</p>
+
+<form role="form">
+  <div class="container col-md-4 form-group">
+    <p class="subtitle">Electivas Cursadas:</p>
+    <div class="input-group">
+       <input type="text" class="form-control">
+       <span class="input-group-btn">
+            <button class="btn btn-default" type="button">Agregar</button>
+       </span>
+    </div>
+    <br>
+    <ul class="list">
+      <li class="list-item">Electiva 1</li>
+      <li class="list-item">Electiva 2</li>
+      <li class="list-item">Electiva 3</li>
+    </ul>
+    <br>
+    <p class="subtitle">Cursos Realizados:</p>
+    <div class="input-group">
+       <input type="text" class="form-control">
+       <span class="input-group-btn">
+            <button class="btn btn-default" type="button">Agregar</button>
+       </span>
+    </div>
+    <br>
+    <ul class="list">
+      <li class="list-item">Curso 1</li>
+      <li class="list-item">Curso 2</li>
+      <li class="list-item">Curso 3</li>
+    </ul>
+    <br>
+
+  </div>
+  <div class="container col-md-4 form-group">
+    <p class="subtitle">Idiomas que maneja:</p>
+    <div class="input-group">
+       <input type="text" class="form-control">
+       <span class="input-group-btn">
+            <button class="btn btn-default" type="button">Agregar</button>
+       </span>
+    </div>
+    <br>
+    <ul class="list">
+      <li class="list-item">Idioma 1</li>
+      <li class="list-item">Idioma 2</li>
+      <li class="list-item">Idioma 3</li>
+    </ul>
+
+    <br>
+    <p class="subtitle">Aficiones:</p>
+    <div class="input-group">
+       <input type="text" class="form-control">
+       <span class="input-group-btn">
+            <button class="btn btn-default" type="button">Agregar</button>
+       </span>
+    </div>
+    <br>
+    <ul class="list">
+      <li class="list-item">Aficion 1</li>
+      <li class="list-item">Aficion 2</li>
+      <li class="list-item">Aficion 3</li>
+    </ul>
+    <br><br>
+  </div>
+  <div class="container col-md-2 form-group">
+      <br><br>
+      <button type="submit" class="btn btn-default">Guardar Curriculum</button>
+  </div>
+</form>

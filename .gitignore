@@ -1,1 +1,7 @@
+<<<<<<< HEAD
+__pycache__/
+*.py[cod]
 *.pyc
+=======
+*.pyc
+>>>>>>> origin/Branch_TestBranch

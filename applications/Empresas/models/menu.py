@@ -25,7 +25,7 @@ response.google_analytics_id = None
 #########################################################################
 
 response.menu = [
-    (T('Home'), False, URL('default', 'index'), [])
+    ('Inicio', False, URL(a= 'SPE',c='default', f='index'), [])
 ]
 
 DEVELOPMENT_MENU = True
@@ -40,14 +40,13 @@ def _():
     ctr = request.controller
     # useful links to internal and external resources
     response.menu += [
-        ('Iniciar Sesion',False,'#',[
-            ('Miembro USB',False,"#"),
-            ('Empresa',False,'#')
-            ]),
-        ('Estudiante',False,"#",[
-            ('Agregar Preinscripcion',False,"#")
+        ('Empresa',False,"#",[
+            ('Registrarse',False,URL(c='empresa', f='registrar_empresa')),
+            ('Solicitudes de pasantes',False,"#"),
+            ('Registrar tutor industrial',False,URL(c='empresa', f='registrar_tutor_industrial')),
+            ('Gestionar Registro Empresarial',False,"#")
             ])
-        ]
+    ]
 
 if DEVELOPMENT_MENU: _()
 

@@ -57,6 +57,7 @@
 'Available Databases and Tables': 'Bases de datos y tablas disponibles',
 'Back': 'Atrás',
 'Bienvenido a SPE!': 'Bienvenido a SPE!',
+'Bienvenido al Sistema de Pasantías Empresariales de la USB': 'Bienvenido al Sistema de Pasantías Empresariales de la USB',
 'Buy this book': 'Compra este libro',
 "Buy web2py's book": "Buy web2py's book",
 'Cache': 'Caché',
@@ -334,6 +335,7 @@
 'session expired': 'sesión expirada',
 'shell': 'terminal',
 'Sign Up': 'Sign Up',
+'Sistema de Pasantías Empresariales': 'Sistema de Pasantías Empresariales',
 'site': 'sitio',
 'Size of cache:': 'Tamaño de la Caché:',
 'some files could not be removed': 'algunos archivos no pudieron ser removidos',
@@ -445,4 +447,5 @@
 'You can modify this application and adapt it to your needs': 'Usted puede modificar esta aplicación y adaptarla a sus necesidades',
 'You visited the url %s': 'Usted visitó la url %s',
 'Your username is: %(username)s': 'Su nombre de usuario es: %(username)s',
+'¡Bienvenido!': '¡Bienvenido!',
 }

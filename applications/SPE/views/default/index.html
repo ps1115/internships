@@ -1,19 +1,17 @@
-{{left_sidebar_enabled=False,right_sidebar_enabled=False,('message' in globals())}}
+{{left_sidebar_enabled,right_sidebar_enabled=False,('message' in globals())}}
 {{extend 'layout.html'}}
-
-{{block left_sidebar}}
-<div class="container">
-  <div class='subtitle'> Esta es la columna izquierda.</div>
-    <p>Aqui ira informacion adicional de navegacion.</p>
-    <p>Funcionalidades comunes, etc.</p>
-</div>
-{{end}}
 
 {{if 'message' in globals():}}
 <p class='title'>{{=message}}</p>
 <div class='content'>
-  <p class='title'>Esta es la columna principal</p>
-  <p>Aqui ira la informacion mas relevante </p>
+  <p><b>Estudiante</b>, este sistema te permite realizar la Inscripción, Documentación, Formulación y Culminación de Pasantías Empresariales.
+  Debes mantener tu información de contacto actualizada, para que la Coordinación de Cooperación Técnica pueda comunicarse contigo.</p>
+
+  <p><b>Profesores USB</b>, este sistema les permite realizar la Revisión de Planes de Trabajo, Asignación de Notas y Consulta de Pasantías Tutoreadas.</p>
+
+  <p><b>CCT</b>, este sistema le permite realizar Consultas Avanzadas y Reportes de utilidad para la comunidad USB entera.</p>
+
+  <p><b>Empresa Pública o Privada</b>, este sistema le permite solicitar pasantes, revisar el plan de trabajo y recibir anuncios de chalas y estudiantes interesados en hacer pasantías tanto largas, intermedias como cortas.</p>
 </div>
 
 {{elif 'content' in globals():}}
@@ -24,11 +22,11 @@
 
 {{block right_sidebar}}
 <div class="container">
-  <div class='subtitle'> Esta es la columna derecha</div>
-    <p>Aqui ira informacion importante o a resaltar.</p>
-    <p>El inicio de sesion ira en esta parte, etc.</p>
+  <div class='title'> Iniciar Sesión</div>
     <br>
-    <p>Ejemplo de boton </p>
-    <button class='success'>Ejemplo</button>
+    <button class='success'>Miembro USB</button>
+    <a href={{=URL(a='Empresas',c='default',f='index')}}>
+      <button class='success'>Empresas</button>
+    </a>
 </div>
 {{end}}
