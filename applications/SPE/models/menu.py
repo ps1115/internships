@@ -45,8 +45,10 @@ def _():
             ('Empresa',False,'#')
             ]),
         ('Estudiante',False,"#",[
-            ('Agregar Preinscripcion',False,"#"),
-            ('Retirar Pasantía',False,URL('default','retirar_pasantia'))
+            ('Agregar Preinscripcion',False,URL('estudiante','agregar_preinscripcion')),
+            ('Retirar Pasantía',False,URL('default','retirar_pasantia')),
+            ('Plan de Trabajo',False,URL('estudiante','plan_trabajo')),
+            ('LLenar Curriculum',False,URL('estudiante','llenar_curriculum'))
             ])
         ]
 
