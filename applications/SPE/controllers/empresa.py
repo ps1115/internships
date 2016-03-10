@@ -103,7 +103,7 @@ def registrar_tutor_industrial():
     if form.process().accepted:
         # Registramos la empresa
         dbSPE.tutor_industrial.insert(
-            email = request.vars.log,
+            email = request.vars.email,
             nombre = request.vars.nombre,
             apellido = request.vars.apellido,
             ci = request.vars.ci,
@@ -122,7 +122,7 @@ def registrar_tutor_industrial():
         # Nos dirigimos a la pagina de exito
         return response.render('empresa/registrarTutorIndustrial/registro_tutor_industrial_exitoso.html',message=T("Registrar Tutor Industrial"),
                                result=T("El registro de su tutor ha sido exitoso!"),
-                               email = request.vars.log,
+                               email = request.vars.email,
                                nombre = request.vars.nombre,
                                apellido = request.vars.apellido,
                                ci = request.vars.ci,
