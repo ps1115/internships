@@ -177,6 +177,8 @@ CREATE TABLE IF NOT EXISTS `empresa` (
     `pregunta_secreta`          varchar(254)    NOT NULL,
     `respuesta_pregunta_secreta`varchar(254)    NOT NULL,
     `nombre`                    varchar(254)    NOT NULL,
+     `id_pais`                 	int(2)          DEFAULT NULL,
+    `id_estado`                 int(2)          DEFAULT NULL,
     `direccion`                 text,
     `pag_web`                   varchar(254)    DEFAULT NULL,
     `descripcion`               text,
