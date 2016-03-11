@@ -6,7 +6,9 @@ dbSPE.define_table('empresa',
                 Field('password','password', required=True, notnull=True,label=T('Contraseña')),
                 Field('pregunta_secreta','string',label=T('Pregunta Secreta')),
                 Field('respuesta_pregunta_secreta','string',label=T('Respuesta A Pregunta Secreta')),
-                Field('nombre','string',required=True, notnull=True,label=T('Nombre De La Empresa')),
+                Field('nombre','string',required=True, notnull=True,label=T('Nombre')),
+                Field('id_pais','reference pais',label=T('Pais')),
+                Field('id_estado','reference estado',label=T('Estado')),
                 Field('direccion','text',label=T('Direccion De La Empresa')),
                 Field('pag_web','string',label=T('Pagina Web')),
                 Field('descripcion','text',label=T('Descripcion De La Empresa')),
@@ -38,6 +40,11 @@ dbSPE.empresa.respuesta_pregunta_secreta.requires+=[IS_NOT_EMPTY(error_message='
 
 dbSPE.empresa.nombre.requires=[IS_LENGTH(512)]
 dbSPE.empresa.nombre.requires+=[IS_NOT_EMPTY(error_message=T('Campo Obligatorio'))]
+
+dbSPE.empresa.id_estado.requires=IS_IN_DB(dbSPE,dbSPE.estado.id,'%(nombre)s',error_message=T('Elija Un Estado Valido'),zero=None)
+
+dbSPE.empresa.id_pais.requires=IS_IN_DB(dbSPE,dbSPE.pais.id,'%(nombre)s',error_message=T('Elija Un Pais Valido'),zero=None)
+
 
 dbSPE.empresa.pregunta_secreta.requires=[IS_LENGTH(512)]
 dbSPE.empresa.pregunta_secreta.requires+=[IS_NOT_EMPTY(error_message='Campo Obligatorio')]
