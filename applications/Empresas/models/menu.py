@@ -48,6 +48,13 @@ def _():
             ])
     ]
 
+    response.menu += [
+        ('Tutor Industrial',False,"#",[
+            ('¿Qué es un tutor industrial?',False,"#"),
+            ('Registrarse',False,URL(c='tutor_industrial', f='solicitar_registro_tutor'))
+            ])
+    ]
+
 if DEVELOPMENT_MENU: _()
 
 if "auth" in locals(): auth.wikimenu()
