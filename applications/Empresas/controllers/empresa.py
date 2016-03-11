@@ -5,10 +5,21 @@ def registrar_empresa():
     # Agregamos los campos en el orden deseado, comenzamos con el login y el password
     fields = [dbSPE.empresa.log,dbSPE.empresa.password]
     # Agregamos un campo extra de comfirm password el cual debera tener el mismo valor que el password para ser aceptado
-    fields += [Field('comfirm_Password','password', label=T('Comfirm Password'), 
+    fields += [Field('comfirm_Password','password', label=T('Comfirm Password'),
                      requires = [IS_EXPR('value==%s' % repr(request.vars.password),error_message=T('Las contraseñas no coinciden'))])]
     # Agregamos el resto de los campos
-    fields += [dbSPE.empresa.pregunta_secreta,dbSPE.empresa.respuesta_pregunta_secreta,dbSPE.empresa.nombre,dbSPE.empresa.direccion,dbSPE.empresa.pag_web,dbSPE.empresa.descripcion,dbSPE.empresa.telefono,dbSPE.empresa.contacto_RRHH]
+    fields += [
+        dbSPE.empresa.pregunta_secreta,
+        dbSPE.empresa.respuesta_pregunta_secreta,
+        dbSPE.empresa.nombre,
+        dbSPE.empresa.id_pais,
+        dbSPE.empresa.id_estado,
+        dbSPE.empresa.direccion,
+        dbSPE.empresa.pag_web,
+        dbSPE.empresa.descripcion,
+        dbSPE.empresa.telefono,
+        dbSPE.empresa.contacto_RRHH
+        ]
     # Generamos el SQLFORM utilizando los campos
     form = SQLFORM.factory(
     *fields,submit_button='Submit',
@@ -20,6 +31,8 @@ def registrar_empresa():
             'pregunta_secreta':T('Si necesita obtener de nuevo su contraseña se le hara esta pregunta'),
             'respuesta_pregunta_secreta':T('Respuesta a su pregunta secreta'),
             'nombre':T('Nombre comercial de la empresa'),
+            'id_pais':T('Pais en el que se encuentra la empresa'),
+            'id_estado':T('Estado del pais en el que se encuentra'),
             'direccion':T('Direccion de las instalaciones de la empresa'),
             'pag_web':T('Pagina Web de la empresa'),
             'descripcion':T('Descripcion breve de la empresa, su vision y sus funciones'),
@@ -35,6 +48,8 @@ def registrar_empresa():
                              pregunta_secreta = request.vars.pregunta_secreta,
                              respuesta_pregunta_secreta = request.vars.respuesta_pregunta_secreta,
                              nombre = request.vars.nombre,
+                             id_pais = request.vars.id_pais,
+                             id_estado = request.vars.id_estado,
                              direccion = request.vars.direccion,
                              pag_web = request.vars.pag_web,
                              descripcion = request.vars.descripcion,
@@ -48,6 +63,8 @@ def registrar_empresa():
                                log=request.vars.log,
                                nombre=request.vars.nombre,
                                direccion=request.vars.direccion,
+                               id_pais = request.vars.id_pais,
+                               id_estado = request.vars.id_estado,
                                pag_web=request.vars.pag_web,
                                descripcion=request.vars.descripcion,
                                telefono=request.vars.telefono,
@@ -66,7 +83,7 @@ def registrar_tutor_industrial():
         dbSPE.tutor_industrial.password
     ]
     # Agregamos un campo extra de comfirm password el cual debera tener el mismo valor que el password para ser aceptado
-    fields += [Field('comfirm_Password','password', label=T('Comfirm Password'), 
+    fields += [Field('comfirm_Password','password', label=T('Comfirm Password'),
                      requires = [IS_EXPR('value==%s' % repr(request.vars.password),error_message=T('Las contraseñas no coinciden'))])]
     # Agregamos el resto de los campos
     fields +=[

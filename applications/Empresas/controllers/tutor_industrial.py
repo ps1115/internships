@@ -21,8 +21,9 @@ def solicitar_registro_tutor():
         dbSPE.tutor_industrial.profesion,
         dbSPE.tutor_industrial.cargo,
         dbSPE.tutor_industrial.departamento,
-        dbSPE.tutor_industrial.direccion,
+        dbSPE.tutor_industrial.id_pais,
         dbSPE.tutor_industrial.id_estado,
+        dbSPE.tutor_industrial.direccion,
         dbSPE.tutor_industrial.telefono
     ]
     # Generamos el SQLFORM utilizando los campos
@@ -38,10 +39,12 @@ def solicitar_registro_tutor():
             'comfirm_Password':T('Repita su contraseña'),
             'pregunta_secreta':T('Si necesita obtener de nuevo su contraseña se le hara esta pregunta'),
             'respuesta_pregunta_secreta':T('Respuesta a su pregunta secreta'),
+            'id_empresa':T('Empresa en la que trabaja'),
             'profesion':T('Profesion del tutor industrial'),
             'cargo':T('Cargo que ocupa en la empresa'),
             'departamento':T('Departamento de la empresa en la que trabaja'),
             'direccion':T('Direccion del tutor industrial'),
+            'id_pais':T('Pais en el que se encuentra domiciliado el tutor industrial'),
             'id_estado':T('Estado en el que se encuentra domiciliado el tutor industrial'),
             'telefono':T('Numerico telefonico del tutor industrial')
            })
@@ -66,7 +69,7 @@ def solicitar_registro_tutor():
         # Mensaje de exito
         response.flash = T("Registro Exitoso")
         # Nos dirigimos a la pagina de exito
-        return response.render('empresa/registrarTutorIndustrial/registro_tutor_industrial_exitoso.html',message=T("Registrar Tutor Industrial"),
+        return response.render('empresa/registrarTutorIndustrial/registro_tutor_industrial_exitoso.html',message=T("Registrarse como Tutor Industrial"),
                                result=T("El registro de su tutor ha sido exitoso!"),
                                email = request.vars.email,
                                nombre = request.vars.nombre,
@@ -81,4 +84,4 @@ def solicitar_registro_tutor():
                                telefono = request.vars.telefono)
     # Caso 2: El form no se lleno de manera correcta asi que recargamos la pagina
     else:
-        return response.render('empresa/registrarTutorIndustrial/registrar_tutor_industrial.html',message=T("Registrar Tutor Industrial"),form=form)
+        return response.render('empresa/registrarTutorIndustrial/registrar_tutor_industrial.html',message=T("Registrarse como Tutor Industrial"),form=form)
