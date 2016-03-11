@@ -171,7 +171,7 @@ CREATE TABLE IF NOT EXISTS `division` (
 --
 
 CREATE TABLE IF NOT EXISTS `empresa` (
-	`id`        				int(11)     NOT NULL AUTO_INCREMENT,
+    `id`        				int(11)     NOT NULL AUTO_INCREMENT,
     `log`                       varchar(254)    NOT NULL UNIQUE,
     `password`                  varchar(254)    NOT NULL,
     `pregunta_secreta`          varchar(254)    NOT NULL,
@@ -574,10 +574,14 @@ CREATE TABLE IF NOT EXISTS `tutor_industrial` (
     `cargo`                     varchar(50)     NOT NULL,
     `departamento`              varchar(50)     NOT NULL,
     `direccion`                 varchar(254)    NOT NULL,
+    `id_pais`                 	int(2)          DEFAULT NULL,
     `id_estado`                 int(2)          DEFAULT NULL,
     `telefono`                  varchar(20)     NOT NULL,
+    `intentos`                  int(4)          DEFAULT '0',
+    `habilitado`                int(2)          DEFAULT '1',
     PRIMARY KEY (`id`),
     KEY `fk_tutor_industrial_id_estado_estado_nombre` (`id_estado`),
+    KEY `fk_tutor_industrial_pais` (`id_pais`),
     KEY `fk_tutor_industrial_id_empresa_empresa_log` (`id_empresa`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -794,8 +798,8 @@ ALTER TABLE `tutor_academico`
 --
 ALTER TABLE `tutor_industrial`
     ADD CONSTRAINT `fk_tutor_industrial_id_estado_estado_nombre` FOREIGN KEY (`id_estado`) REFERENCES `estado` (`id`) ON UPDATE CASCADE,
+    ADD CONSTRAINT `fk_tutor_industrial_pais` FOREIGN KEY (`id_pais`) REFERENCES `pais` (`id`) ON UPDATE CASCADE,
     ADD CONSTRAINT `fk_tutor_industrial_id_empresa_empresa_log` FOREIGN KEY (`id_empresa`) REFERENCES `empresa` (`id`) ON UPDATE CASCADE;
-
 --
 -- Filtros para la tabla `usuario_estudiante`
 --
