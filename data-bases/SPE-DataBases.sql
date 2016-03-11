@@ -171,12 +171,14 @@ CREATE TABLE IF NOT EXISTS `division` (
 --
 
 CREATE TABLE IF NOT EXISTS `empresa` (
-	`id`        				int(11)     NOT NULL AUTO_INCREMENT,
+    `id`        				int(11)     NOT NULL AUTO_INCREMENT,
     `log`                       varchar(254)    NOT NULL UNIQUE,
     `password`                  varchar(254)    NOT NULL,
     `pregunta_secreta`          varchar(254)    NOT NULL,
     `respuesta_pregunta_secreta`varchar(254)    NOT NULL,
     `nombre`                    varchar(254)    NOT NULL,
+     `id_pais`                 	int(2)          DEFAULT NULL,
+    `id_estado`                 int(2)          DEFAULT NULL,
     `direccion`                 text,
     `pag_web`                   varchar(254)    DEFAULT NULL,
     `descripcion`               text,
@@ -340,9 +342,9 @@ CREATE TABLE IF NOT EXISTS `pasantia` (
     `id_tutor_academico`            varchar(254)    NOT NULL,
     `retirar`                       varchar(15)     DEFAULT NULL,
     `obtencion_pasantia`            tinyint(1)      DEFAULT NULL,
-    `motivo_retiro_tutor_industrial`text CHARACTER  SET utf8 COLLATE utf8_spanish_ci NOT NULL,
-    `motivo_retiro_tutor_academico` text CHARACTER  SET utf8 COLLATE utf8_spanish_ci NOT NULL,
-    `motivo_retiro_estudiante`      text CHARACTER  SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+    `motivo_retiro_tutor_industrial`text CHARACTER  SET utf8 COLLATE utf8_spanish_ci DEFAULT NULL,
+    `motivo_retiro_tutor_academico` text CHARACTER  SET utf8 COLLATE utf8_spanish_ci DEFAULT NULL,
+    `motivo_retiro_estudiante`      text CHARACTER  SET utf8 COLLATE utf8_spanish_ci DEFAULT NULL,
     PRIMARY KEY (`codigo`,`id_estudiante`,`anio`,`periodo`),
     KEY `fk_pasantia_periodo_periodo_id` (`periodo`),
     KEY `fk_pasantia_id_tutor_industrial_tutor_industrial_email` (`id_tutor_industrial`),
@@ -386,7 +388,7 @@ CREATE TABLE IF NOT EXISTS `permiso` (
 
 --
 -- Estructura de tabla para la tabla `preinscripcion`
--- 
+--
 CREATE TABLE IF NOT EXISTS `preinscripcion` (
     `id`                int(10)         NOT NULL AUTO_INCREMENT,
     `id_periodo`        int(10)         NOT NULL,
@@ -502,9 +504,9 @@ CREATE TABLE IF NOT EXISTS `semana_muerta` (
     `fecha_fini`                    date    NOT NULL,
     `numero_semana`                 int(5)  NOT NULL,
     PRIMARY KEY (`numero_semana`,`codigo_sub_evento_afectado`),
-    FOREIGN KEY (`codigo_supra_evento_afectado`,`codigo_sub_evento_afectado`) 
+    FOREIGN KEY (`codigo_supra_evento_afectado`,`codigo_sub_evento_afectado`)
     REFERENCES sub_evento(`codigo_supra_evento`,`codigo_sub_evento`)
-    
+
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 --
@@ -574,10 +576,14 @@ CREATE TABLE IF NOT EXISTS `tutor_industrial` (
     `cargo`                     varchar(50)     NOT NULL,
     `departamento`              varchar(50)     NOT NULL,
     `direccion`                 varchar(254)    NOT NULL,
+    `id_pais`                 	int(2)          DEFAULT NULL,
     `id_estado`                 int(2)          DEFAULT NULL,
     `telefono`                  varchar(20)     NOT NULL,
+    `intentos`                  int(4)          DEFAULT '0',
+    `habilitado`                int(2)          DEFAULT '1',
     PRIMARY KEY (`id`),
     KEY `fk_tutor_industrial_id_estado_estado_nombre` (`id_estado`),
+    KEY `fk_tutor_industrial_pais` (`id_pais`),
     KEY `fk_tutor_industrial_id_empresa_empresa_log` (`id_empresa`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -685,7 +691,7 @@ CREATE TABLE IF NOT EXISTS `plan_de_trabajo` (
     KEY `fk_plan_de_trabajo_id_tutor_academico_usuario_usbid` (`id_tutor_academico`),
     KEY `fk_plan_de_trabajo_log_empresa_empresa_log` (`log_empresa`),
     KEY `fk_plan_de_trabajo_codigo_pasantia_tipo_pasantia_codigo` (`codigo_pasantia`)
-    
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -775,7 +781,7 @@ ALTER TABLE `solicitud_pasante`
 -- Filtros para la tabla `semana_muerta`
 --
 -- ALTER TABLE `semana_muerta`
-	
+
 --
 -- Filtros para la tabla `sub_evento`
 --
@@ -794,8 +800,8 @@ ALTER TABLE `tutor_academico`
 --
 ALTER TABLE `tutor_industrial`
     ADD CONSTRAINT `fk_tutor_industrial_id_estado_estado_nombre` FOREIGN KEY (`id_estado`) REFERENCES `estado` (`id`) ON UPDATE CASCADE,
+    ADD CONSTRAINT `fk_tutor_industrial_pais` FOREIGN KEY (`id_pais`) REFERENCES `pais` (`id`) ON UPDATE CASCADE,
     ADD CONSTRAINT `fk_tutor_industrial_id_empresa_empresa_log` FOREIGN KEY (`id_empresa`) REFERENCES `empresa` (`id`) ON UPDATE CASCADE;
-
 --
 -- Filtros para la tabla `usuario_estudiante`
 --
