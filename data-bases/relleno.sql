@@ -8,7 +8,7 @@ INSERT INTO usuario
       );
 
 INSERT INTO empresa
-   VALUES (77, 'log', 'password', 'quien?', 'yo', 'Empresa',
+   VALUES (77, 'log', 'password', 'quien?', 'yo', 'Empresa', NULL, NULL,
       'Hogwarts', NULL, 'Hacemos cosas finas', NULL, NULL, 0, 1,
       CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
       );
@@ -17,7 +17,8 @@ INSERT INTO tutor_academico VALUES ('77');
 
 INSERT INTO tutor_industrial
    VALUES (77, '77@gmail.com', NULL, NULL, NULL, NULL, 'soy', 'jogs', 77,
-      'vago', 'Senior vago', 'Vagancia', 'Narnia', NULL, '777-7777'
+      'vago', 'Senior vago', 'Vagancia', 'Narnia', NULL, NULL, '777-7777',
+      0, 1
       );
 
 INSERT INTO pasantia
