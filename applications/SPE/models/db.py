@@ -131,7 +131,7 @@ db.define_table('usuario_profesor',
                 Field('activo', requires=[IS_NOT_EMPTY(), IS_IN_SET(['0','1'],error_message='Valor no Permitido')], default='1', label='Activo'))
 
 db.define_table('empresa', 
-                Field('login', requires=IS_NOT_EMPTY(), label='Usuario', unique=True), 
+                Field('log', requires=IS_NOT_EMPTY(), label='Usuario', unique=True), 
                 Field('password', requires=IS_NOT_EMPTY(), label='Clave', type='password'),
                 Field('pregunta_secreta', requires=IS_NOT_EMPTY(), label='Pregunta Secreta'),
                 Field('respuesta_pregunta_secreta', requires=IS_NOT_EMPTY(), label='Respuesta a Pregunta Secreta'),
@@ -159,6 +159,7 @@ db.define_table("evento"
 db.define_table("sub_evento"
                ,Field("codigo_supra_evento", type="integer",label="Código Supra Evento", readable=False, writable=False,  requires=IS_NOT_EMPTY())
                ,Field("codigo_sub_evento", label="Código Sub Evento", type="integer", readable=False, writable=False,  requires=IS_NOT_EMPTY())
+               # Hay que agregar nombre_supra_evento al sql
                ,Field("nombre_supra_evento", type="string",label="Nombre del Supra Evento", 
                       requires=IS_IN_DB(db,'evento.nombre', error_message='Evento no Existe'))
                ,Field("nombre_sub_evento", label="Nombre del Sub Evento", requires=IS_NOT_EMPTY())
@@ -180,11 +181,10 @@ db.define_table("rol_sistema"
                ,Field("rol", label="Nombre del Rol", requires=IS_NOT_EMPTY(), unique=True)
                ,Field("sede", label="Sede", requires=[IS_NOT_EMPTY(), IS_IN_SET(['Sartenejas','Litoral'],error_message='Sede Inválida')], default="Sartenejas"))
 
-
 db.define_table("calculo_pago"
                , Field("id_categoria", requires=IS_NOT_EMPTY(),type="integer")
                , Field("id_tipo_pasantia",requires=IS_NOT_EMPTY())
-               , Field("id_zona",requires=IS_NOT_EMPTY(),type="integer")
+               , Field("id_pais",requires=IS_NOT_EMPTY(),type="integer")
                , Field("monto",requires=IS_NOT_EMPTY(),type="double", label="Monto de Pago")
                ,Field("fecha", label="Fecha", type="date",requires=[IS_NOT_EMPTY(),IS_DATE(format='%d/%m/%Y')]))
 
