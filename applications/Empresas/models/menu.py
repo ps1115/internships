@@ -25,7 +25,7 @@ response.google_analytics_id = None
 #########################################################################
 
 response.menu = [
-    ('Inicio', False, URL(a= 'SPE',c='default', f='index'), [])
+    ('Inicio', False, URL(a= 'Empresas',c='default', f='index'), [])
 ]
 
 DEVELOPMENT_MENU = True
