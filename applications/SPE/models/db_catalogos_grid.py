@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
-dbSPE = DAL('mysql://root:root@localhost:3306/pasantiasnuevo', pool_size=0,migrate=False)
+dbSPE = DAL('mysql://spe:spe@localhost:3306/pasantiasnuevo', pool_size=0,migrate=False)
 
+'''
 import datetime
 
 db.define_table('usuario_estudiante', 
@@ -96,4 +97,4 @@ db.define_table("calculo_pago"
                , Field("id_tipo_pasantia",label="Tipo de Pasantía",requires=IS_NOT_EMPTY())
                , Field("id_pais",label="País",requires=IS_NOT_EMPTY(),type="integer")
                , Field("monto",requires=IS_NOT_EMPTY(),type="double", label="Monto de Pago")
-               ,Field("fecha", label="Fecha", type="date",requires=[IS_NOT_EMPTY(),IS_DATE(format='%Y/%m/%d')]))
+               ,Field("fecha", label="Fecha", type="date",requires=[IS_NOT_EMPTY(),IS_DATE(format='%Y/%m/%d')]))'''
