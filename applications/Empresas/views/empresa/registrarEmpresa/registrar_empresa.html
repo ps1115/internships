@@ -7,7 +7,19 @@
 <div class='content'>
   <div class="row">
     {{=form.custom.begin}}
-        <div class="col-xs-4">
+       <div class="col-xs-4">
+          Nombre de la Empresa:
+          <div>{{=form.custom.widget.nombre}}</div>
+          <span class="help-block">Nombre comercial de la empresa</span>
+          Pais:
+          <div>{{=form.custom.widget.id_pais}}</div>
+          <span class="help-block">Pais en el que se encuentra la empresa</span>
+          Estado:
+          <div>{{=form.custom.widget.id_estado}}</div>
+          <span class="help-block">Estado del pais en el que se encuentra</span>
+          Direccion:
+          <div>{{=form.custom.widget.direccion}}</div>
+          <span class="help-block">Direccion de las instalaciones de la empresa</span>
         </div>
         <div class="col-xs-4">
         </div>
