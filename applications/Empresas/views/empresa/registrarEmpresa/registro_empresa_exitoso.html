@@ -1,27 +1,48 @@
 {{('message' in globals())}}
 {{extend 'layout.html'}}
 
+<head>
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+</head>
 
 {{if 'message' in globals():}}
 <p class='title'>{{=message}}</p>
 <div class='content'>
-    <p class='title'>{{=result}}</p>
-    <p><br><b>Datos De La Empresa</b><br></p>
-    <p>Login : {{=log}} </p>
-    <p>nombre : {{=nombre}} </p>
-    {{if 'direccion':}}
-        <p>direccion : {{=direccion}} </p>
-    {{pass}}
-    {{if 'pag_web':}}
-        <p>pag_web : {{=pag_web}} </p>
-    {{pass}}
-    {{if 'descripcion':}}
-        <p>descripcion : {{=descripcion}} </p>
-    {{pass}}
-    {{if 'telefono':}}
-        <p>telefono : {{=telefono}} </p>
-    {{pass}}
-    <p>contacto_RRHH : {{=contacto_RRHH}} </p>
+    <p class='title'>{{=result}} <i class="fa fa-thumbs-o-up"></i></p>
+    <div class="row">
+        <div class="col-xs-4">
+
+        </div>
+        <div class="col-xs-4">
+            <p><br><b>Datos De La Empresa</b><br></p>
+            <p>Login : {{=log}} </p>
+            <p>Nombre : {{=nombre}} </p>
+            {{if 'direccion':}}
+                <p>Dirección : {{=direccion}} </p>
+            {{pass}}
+            {{if 'pag_web':}}
+                <p>Página web : {{=pag_web}} </p>
+            {{pass}}
+            {{if 'descripcion':}}
+                <p>Descripción : {{=descripcion}} </p>
+            {{pass}}
+            {{if 'telefono':}}
+                <p>Teléfono : {{=telefono}} </p>
+            {{pass}}
+            <p>Contacto de Recursos Humanos : {{=contacto_RRHH}} </p>
+        </div>
+        <div class="col-xs-4">
+            <p>
+                Como empresa registrada, puede solicitar pasantes y asignar tutores industriales para las pasantías.
+            </p>
+            <a href={{=URL(a='Empresas',c='default',f='index')}}>
+              <button class='success'>Iniciar Sesión</button>
+            </a>
+        </div>
+        </div>
+    <div class="row">
+        <br>
+    </div>
     <p><br></p>
     <p><br></p>
 </div>
