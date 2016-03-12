@@ -5,7 +5,31 @@
 {{if 'message' in globals():}}
 <p class='title'>{{=message}}</p>
 <div class='content'>
-    {{=form}}
+  <div class="row">
+    {{=form.custom.begin}}
+        <div class="col-xs-4">
+        </div>
+        <div class="col-xs-4">
+        </div>
+        <div class="col-xs-4">
+          Login:
+          <div>{{=form.custom.widget.log}}</div>
+          <span class="help-block">Identificación de acceso unica asignada a la empresa</span>
+          Contraseña:
+          <div>{{=form.custom.widget.password}}</div>
+          <span class="help-block">Contraseña para acceder al sistema</span>
+          Confirmar Contraseña:
+          <div>{{=form.custom.widget.comfirm_Password}}</div>
+          <span class="help-block">Repita su contraseña</span>
+          Pregunta Secreta:
+          <div>{{=form.custom.widget.pregunta_secreta}}</div>
+          <span class="help-block">Si necesita obtener de nuevo su contraseña se le hara esta pregunta</span>
+          <input type="submit" value="Registrarse">
+        </div>
+    {{=form.custom.end}}
+    </div>
+    <div class="row">
+    </div>
     <p><br></p>
     <p><br></p>
 </div>
