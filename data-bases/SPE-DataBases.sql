@@ -253,34 +253,7 @@ CREATE TABLE IF NOT EXISTS `evento` (
 
 -- --------------------------------------------------------
 
-------------------------------------
--- Eventos que pueden componer otros.
--------------------------------------
 
-CREATE TABLE IF NOT EXISTS `sub_evento` (
-  `codigo_supra_evento` int(11) NOT NULL,
-  `codigo_sub_evento` int(11) NOT NULL,
-  `fecha_inicio` date NOT NULL,
-  `fecha_fin` date NOT NULL,
-  `nombre_sub_evento` varchar(254) NOT NULL,
-  PRIMARY KEY (`codigo_supra_evento`, `codigo_sub_evento`),
-  FOREIGN KEY (`codigo_supra_evento`) REFERENCES evento(`codigo`)
-)
-
--- --------------------------------------------------------
-
--------------------------------
--- Semanas Muertas en un evento
--------------------------------
-
-CREATE TABLE IF NOT EXISTS `semana_muerta` (
-  `codigo_sub_evento_afectado` int(11) NOT NULL,
-  `fecha_ini` date NOT NULL,
-  `fecha_fini` date NOT NULL,
-  `numero_semana` int(5) NOT NULL,
-  PRIMARY KEY (`numero_semana`,`codigo_sub_evento_afectado`),
-  FOREIGN KEY (`codigo_sub_evento_afectado`) REFERENCES sub_evento(`codigo_sub_evento`)
-)
 
 -- --------------------------------------------------------
 
@@ -466,7 +439,6 @@ CREATE TABLE IF NOT EXISTS `rol_sistema` (
     `apellido`          varchar(254)    NOT NULL,
     `rol`               varchar(254)    NOT NULL,
     `sede`              varchar(20)     NOT NULL,
-    `longitudCarnet`    int(11)         NOT NULL,
     PRIMARY KEY (`usbid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -514,10 +486,11 @@ CREATE TABLE IF NOT EXISTS `solicitud_pasante` (
 
 CREATE TABLE IF NOT EXISTS `sub_evento` (
     `codigo_supra_evento`   int(11)         NOT NULL,
-    `codigo_sub_evento`     int(11)         NOT NULL,
+    `codigo_sub_evento`     int(11)         NOT NULL AUTO_INCREMENT,
     `fecha_inicio`          date            NOT NULL,
     `fecha_fin`             date            NOT NULL,
     `nombre_sub_evento`     varchar(254)    NOT NULL,
+    `nombre_supra_evento`   varchar(254)    NOT NULL,
     PRIMARY KEY (`codigo_supra_evento`, `codigo_sub_evento`),
     FOREIGN KEY (`codigo_supra_evento`) REFERENCES evento(`codigo`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
@@ -531,6 +504,8 @@ CREATE TABLE IF NOT EXISTS `sub_evento` (
 CREATE TABLE IF NOT EXISTS `semana_muerta` (
     `codigo_supra_evento_afectado`    int(11) NOT NULL,
     `codigo_sub_evento_afectado`    int(11) NOT NULL,
+    `nombre_supra_evento_afectado`  varchar(254) NOT NULL,
+    `nombre_sub_evento_afectado`    varchar(254) NOT NULL,
     `fecha_ini`                     date    NOT NULL,
     `fecha_fini`                    date    NOT NULL,
     `numero_semana`                 int(5)  NOT NULL,
