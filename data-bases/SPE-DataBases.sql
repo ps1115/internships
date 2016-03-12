@@ -40,9 +40,9 @@ CREATE TABLE IF NOT EXISTS `actividad` (
 
 -- --------------------------------------------------------
 
----------------------------------------------------
+--
 -- Estructura de tabla para la tabla `calculo_pago`
----------------------------------------------------
+--
 
 CREATE TABLE IF NOT EXISTS `calculo_pago` (
     `id_categoria`      int(11)     NOT NULL,
@@ -238,9 +238,9 @@ CREATE TABLE IF NOT EXISTS `estado` (
 
 -- --------------------------------------------------------
 
-------------------------------------------
+-- ---------------------------------------
 -- Estructura de tabla para la tabla `evento`
--------------------------------------------
+-- ----------------------------------------
 
 CREATE TABLE IF NOT EXISTS `evento` (
   `codigo` int(11) NOT NULL AUTO_INCREMENT,
@@ -429,9 +429,9 @@ CREATE TABLE IF NOT EXISTS `region` (
 
 -- --------------------------------------------------------
 
-------------------------------------------------
+-- ---------------------------------------------
 -- Estructura de tabla para la tabla `rol_sistema`
--------------------------------------------------
+-- ----------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `rol_sistema` (
     `usbid`             varchar(254)    NOT NULL DEFAULT ' ',
@@ -486,7 +486,7 @@ CREATE TABLE IF NOT EXISTS `solicitud_pasante` (
 
 CREATE TABLE IF NOT EXISTS `sub_evento` (
     `codigo_supra_evento`   int(11)         NOT NULL,
-    `codigo_sub_evento`     int(11)         NOT NULL AUTO_INCREMENT,
+    `codigo_sub_evento`     int(11)         NOT NULL,
     `fecha_inicio`          date            NOT NULL,
     `fecha_fin`             date            NOT NULL,
     `nombre_sub_evento`     varchar(254)    NOT NULL,
@@ -595,7 +595,7 @@ CREATE TABLE IF NOT EXISTS `tutor_industrial` (
 
 --
 -- Estructura de tabla para la tabla `usuario`
----------------------------------------------
+-- ------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `usuario` (
     `usbid`     varchar(254)    NOT NULL,
@@ -603,7 +603,7 @@ CREATE TABLE IF NOT EXISTS `usuario` (
     `apellido`  varchar(254)    NOT NULL,
     `ci`        varchar(8)      DEFAULT NULL,
     `tipo`      varchar(15)     DEFAULT NULL,
-	`llave`     varchar(20)     DEFAULT NULL,
+    `llave`     varchar(15)     DEFAULT NULL,
     PRIMARY KEY (`usbid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
