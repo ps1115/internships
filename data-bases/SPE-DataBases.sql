@@ -603,6 +603,7 @@ CREATE TABLE IF NOT EXISTS `usuario` (
     `apellido`  varchar(254)    NOT NULL,
     `ci`        varchar(8)      DEFAULT NULL,
     `tipo`      varchar(15)     DEFAULT NULL,
+	`llave`     varchar(20)     DEFAULT NULL,
     PRIMARY KEY (`usbid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
