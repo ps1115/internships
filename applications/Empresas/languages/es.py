@@ -141,7 +141,7 @@
 'detecting': 'detectando',
 'Direccion De La Empresa': 'Dirección de la Empresa',
 'Direccion de las instalaciones de la empresa': 'Dirección de las instalaciones de la empresa',
-'Direccion Del tutor': 'Dirección Del tutor',
+'Direccion Del tutor': 'Dirección del tutor',
 'Direccion del tutor industrial': 'Dirección del tutor industrial',
 'Dirección del tutor industrial': 'Dirección del tutor industrial',
 'DISK': 'DISCO',

@@ -93,6 +93,7 @@ def registrar_tutor_industrial():
         dbSPE.tutor_industrial.cargo,
         dbSPE.tutor_industrial.departamento,
         dbSPE.tutor_industrial.direccion,
+        dbSPE.tutor_industrial.id_pais,
         dbSPE.tutor_industrial.id_estado,
         dbSPE.tutor_industrial.telefono
     ]
