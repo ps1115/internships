@@ -2,6 +2,8 @@
 
 db = DAL('sqlite://storage.sqlite')
 
+import datetime
+
 db.define_table('usuario_estudiante', 
                 Field('usbid_usuario', requires=[IS_NOT_EMPTY(), IS_MATCH('[0-9][0-9]-[0-9]{5}','USBID Inválido')], unique=True, label="USBID"),
                 Field('carrera', requires=[IS_NOT_EMPTY(), IS_IN_DB(db,'carrera.nombre', error_message='Carrera Inválida')], label="Carrera"),
@@ -49,13 +51,13 @@ db.define_table('empresa',
                 Field('contacto_RRHH', requires=IS_NOT_EMPTY(), label='Teléfono de la Sección de Recursos Humanos'),
                 Field('intentos', type='integer', default='0',readable=False, writable=False, requires=IS_NOT_EMPTY()),
                 Field('habilitado', type='integer', default='1',readable=False, writable=False, requires=IS_NOT_EMPTY()),
-                Field('fechaCreacion', type='datetime',requires=[IS_NOT_EMPTY(),IS_DATETIME(format='%Y/%m/%d %H:%M:%S')], readable=False, writable=False, default='0000-00-00 00:00:00'),
-                Field('ultimaModificacion', type='datetime',requires=[IS_NOT_EMPTY(),IS_DATETIME(format='%Y/%m/%d %H:%M:%S')], readable=False, writable=False, default='0000-00-00 00:00:00'))
+                Field('fechaCreacion', type='datetime',requires=[IS_NOT_EMPTY(),IS_DATETIME(format='%Y-%m-%d %H:%M:%S')], readable=False, writable=False, default=datetime.datetime.now()),
+                Field('ultimaModificacion', type='datetime',requires=[IS_NOT_EMPTY(),IS_DATETIME(format='%Y-%m-%d %H:%M:%S')], readable=False, writable=False, default=datetime.datetime.now()))
 
 
 
 db.define_table("evento"
-               ,Field("codigo", label="Código", type="integer", readable=False, writable=False,  requires=IS_NOT_EMPTY())
+               ,Field("codigo", type="integer", readable=False, writable=False)
                ,Field("nombre", label="Nombre del Evento", requires=IS_NOT_EMPTY(),unique=True)
                ,Field("fecha_inicio", label="Fecha de Inicio", type="date", requires=[IS_NOT_EMPTY(),IS_DATE(format='%Y/%m/%d')])
                ,Field("fecha_fin", label="Fecha de Finalización", type="date", requires=[IS_NOT_EMPTY(),IS_DATE(format='%Y/%m/%d')])
@@ -63,8 +65,8 @@ db.define_table("evento"
 
 
 db.define_table("sub_evento"
-               ,Field("codigo_supra_evento", type="integer",label="Código Supra Evento", readable=False, writable=False,  requires=IS_NOT_EMPTY())
-               ,Field("codigo_sub_evento", label="Código Sub Evento", type="integer", readable=False, writable=False,  requires=IS_NOT_EMPTY())
+               ,Field("codigo_supra_evento", type="integer", readable=False, writable=False)
+               ,Field("codigo_sub_evento", type="integer",readable=False, writable=False)
                # Hay que agregar nombre_supra_evento al sql
                ,Field("nombre_supra_evento", type="string",label="Nombre del Supra Evento", 
                       requires=IS_IN_DB(db,'evento.nombre', error_message='Evento no Existe'))
@@ -73,6 +75,8 @@ db.define_table("sub_evento"
                ,Field("fecha_fin", label="Fecha de Finalización", type="date", requires=[IS_NOT_EMPTY(),IS_DATE(format='%Y/%m/%d')]))
 
 db.define_table("semana_muerta"
+               ,Field("codigo_supra_evento_afectado", type="integer",writable=False, readable=False)
+               ,Field("codigo_sub_evento_afectado", type="integer",writable=False, readable=False)
                ,Field("nombre_supra_evento_afectado", label="Nombre de Evento", type="string",  requires=IS_IN_DB(db,'sub_evento.nombre_supra_evento', error_message='Evento no Existe'))
                ,Field("nombre_sub_evento_afectado", label="Nombre de Sub Evento", type="string",  requires=IS_IN_DB(db,'sub_evento.nombre_sub_evento', error_message='Evento no Existe'))
                ,Field("numero_semana", type="integer",label="Numero de Semana", requires=IS_NOT_EMPTY())
@@ -88,8 +92,8 @@ db.define_table("rol_sistema"
                ,Field("sede", label="Sede", requires=[IS_NOT_EMPTY(), IS_IN_SET(['Sartenejas','Litoral'],error_message='Sede Inválida')], default="Sartenejas"))
 
 db.define_table("calculo_pago"
-               , Field("id_categoria", requires=IS_NOT_EMPTY(),type="integer")
-               , Field("id_tipo_pasantia",requires=IS_NOT_EMPTY())
-               , Field("id_pais",requires=IS_NOT_EMPTY(),type="integer")
+               , Field("id_categoria",label="Categoría", requires=IS_NOT_EMPTY(),type="integer")
+               , Field("id_tipo_pasantia",label="Tipo de Pasantía",requires=IS_NOT_EMPTY())
+               , Field("id_pais",label="País",requires=IS_NOT_EMPTY(),type="integer")
                , Field("monto",requires=IS_NOT_EMPTY(),type="double", label="Monto de Pago")
                ,Field("fecha", label="Fecha", type="date",requires=[IS_NOT_EMPTY(),IS_DATE(format='%Y/%m/%d')]))

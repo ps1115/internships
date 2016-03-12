@@ -45,8 +45,23 @@ def _():
             ('Empresa',False,'#')
             ]),
         ('Estudiante',False,"#",[
-            ('Agregar Preinscripcion',False,"#"),
-            ('Retirar Pasantía',False,URL('default','retirar_pasantia'))
+            ('Agregar Preinscripcion',False,URL('estudiante','agregar_preinscripcion')),
+            ('Llenar Curriculum',False,URL('estudiante','llenar_curriculum')),
+            ('Plan de Trabajo',False,URL('estudiante','plan_trabajo')),
+            ('Retirar Pasantía',False,URL('default','retirar_pasantia')),
+            ('Solicitar permiso de inscripción extemporánea',False,"#"),
+            ('Solicitar permiso de evaluación extemporánea',False,"#")
+            ]),
+        ('Profesor',False,"#",[
+            ('Registrarse',False,URL('default','registrar_profesor')),
+            ('Consultar pasantías',False,"#"),
+            ('Evaluar Pasantía',False,"#")
+            ]),
+        ('Administrador',False,"#",[
+            ('Gestionar Catálogos',False,URL('catalogos_grid','gestionar_cct2'))
+            ]),
+        ('Coordinador',False,"#",[
+            ('Especificar Configuraciones',False,URL('catalogos_grid','especificar_catalogos'))
             ])
         ]
 
