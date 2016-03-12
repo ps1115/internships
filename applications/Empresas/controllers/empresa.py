@@ -36,7 +36,7 @@ def registrar_empresa():
             'direccion':T('Direccion de las instalaciones de la empresa'),
             'pag_web':T('Pagina Web de la empresa'),
             'descripcion':T('Descripcion breve de la empresa, su vision y sus funciones'),
-            'telefono':T('Numerico telefonico de contacto de la empresa'),
+            'telefono':T('Numero telefonico de contacto de la empresa'),
             'contacto_RRHH':T('Correo de contacto del departamento de recursos humanos de la empresa')}
     )
 
