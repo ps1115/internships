@@ -14,6 +14,8 @@
 '%s selected': '%s %%{seleccionado}',
 '%Y-%m-%d': '%d/%m/%Y',
 '%Y-%m-%d %H:%M:%S': '%d/%m/%Y %H:%M:%S',
+'%Y/%m/%d': '%Y/%m/%d',
+'%Y/%m/%d %H:%M:%S': '%Y/%m/%d %H:%M:%S',
 '(something like "it-it")': '(algo como "eso-eso")',
 '+ And': '+ And',
 '+ Or': '+ Or',
