@@ -68,7 +68,9 @@ def registrar_empresa():
                                pag_web=request.vars.pag_web,
                                descripcion=request.vars.descripcion,
                                telefono=request.vars.telefono,
-                               contacto_RRHH=request.vars.contacto_RRHH)
+                               contacto_RRHH=request.vars.contacto_RRHH,
+                               pregunta_secreta=request.vars.pregunta_secreta,
+                               respuesta_pregunta_secreta=request.vars.respuesta_pregunta_secreta)
     # Caso 2: El form no se lleno de manera correcta asi que recargamos la pagina
     else:
         return response.render('empresa/registrarEmpresa/registrar_empresa.html',message=T("Registrar Empresa"),form=form)

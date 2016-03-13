@@ -8,43 +8,84 @@
 {{if 'message' in globals():}}
 <p class='title'>{{=message}}</p>
 <div class='content'>
-    <p class='title'>{{=result}} <i class="fa fa-thumbs-o-up"></i></p>
     <div class="row">
         <div class="col-xs-4">
-
+            <div class="panel-group" id="accordionTwo">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionTwo" href="#collapseFour">
+                                Información de la empresa <i class="fa fa-check-square-o"></i>
+                            </a>
+                        </h3>
+                    </div>
+                    <div class="panel-collapse collapse in" id="collapseFour">
+                        <div class="list-group">
+                            <p class="list-group-item">Nombre : {{=nombre}} </p>
+                            <p class="list-group-item">Login : {{=log}} </p>
+                            {{if 'telefono':}}
+                                <p class="list-group-item">Teléfono : {{=telefono}} </p>
+                            {{pass}}
+                            {{if 'direccion':}}
+                                <p class="list-group-item">Dirección : {{=direccion}} </p>
+                            {{pass}}
+                            {{if 'pag_web':}}
+                                <p class="list-group-item">Página web : {{=pag_web}} </p>
+                            {{pass}}
+                            {{if 'descripcion':}}
+                                <p class="list-group-item">Descripción : {{=descripcion}} </p>
+                            {{pass}}
+                                <p class="list-group-item">Contacto de Recursos Humanos : {{=contacto_RRHH}} </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="col-xs-4">
-            <p><br><b>Datos De La Empresa</b><br></p>
-            <p>Login : {{=log}} </p>
-            <p>Nombre : {{=nombre}} </p>
-            {{if 'direccion':}}
-                <p>Dirección : {{=direccion}} </p>
-            {{pass}}
-            {{if 'pag_web':}}
-                <p>Página web : {{=pag_web}} </p>
-            {{pass}}
-            {{if 'descripcion':}}
-                <p>Descripción : {{=descripcion}} </p>
-            {{pass}}
-            {{if 'telefono':}}
-                <p>Teléfono : {{=telefono}} </p>
-            {{pass}}
-            <p>Contacto de Recursos Humanos : {{=contacto_RRHH}} </p>
-        </div>
-        <div class="col-xs-4">
-            <p>
-                Como empresa registrada, puede solicitar pasantes y asignar tutores industriales para las pasantías.
+            <br></br>
+            <h3 align="center">{{=result}} <i class="fa fa-thumbs-o-up"></i></h3>
+            <br></br>
+            <p align="center">
+                Se le enviará un correo de confirmación.
+                <br></br>
+                <i class="fa fa-envelope-o fa-5x"></i>
             </p>
-            <a href={{=URL(a='Empresas',c='default',f='index')}}>
-              <button class='success'>Iniciar Sesión</button>
-            </a>
         </div>
+        <div class="col-xs-4" align="left">
+            <div class="panel-group" id="accordionTwo2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionTwo2" href="#collapseFour2">
+                                Datos de sesión de la empresa <i class="fa fa-check-square-o"></i>
+                            </a>
+                        </h3>
+                    </div>
+                    <div class="panel-collapse collapse in" id="collapseFour2">
+                        <div class="list-group">
+                            <p class="list-group-item">Login : {{=log}} </p>
+                            {{if 'pregunta_secreta':}}
+                                <p class="list-group-item">Pregunta Secreta : {{=pregunta_secreta}} </p>
+                            {{pass}}
+                            {{if 'respuesta_pregunta_secreta':}}
+                                <p class="list-group-item">Respuesta a la pregunta secreta : {{=respuesta_pregunta_secreta}} </p>
+                            {{pass}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br></br>
+            <div align="left">
+                <a href={{=URL(a='Empresas',c='default',f='index')}}>
+                  <button class='success'>Iniciar Sesión</button>
+                </a>
+            </div>
         </div>
-    <div class="row">
-        <br>
     </div>
-    <p><br></p>
-    <p><br></p>
+    <div class="row">
+        <br></br>
+    </div>
+
 </div>
 
 {{elif 'content' in globals():}}
