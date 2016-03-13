@@ -7,6 +7,7 @@ dbSPE.define_table('usuario',
                 Field('apellido','string',required=True, requires=[IS_LENGTH(254)]),
                 Field('ci','string', requires=[IS_LENGTH(8)]),
                 Field('tipo','string', requires=[IS_LENGTH(15)]),
+                Field('foto','blob'),
                 Field('llave','string', requires=[IS_LENGTH(20)]),
                 primarykey=['usbid'],
                 format='%(usbid)s %(nombre)s'

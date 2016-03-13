@@ -14,8 +14,9 @@
   </div>
   <div class="col-sm-4">
     <p class='subtitle'>Datos del Perfil</p>
-    {{if tiene_foto(auth.user.username):}}
-    {{=IMG(_src=URL('static','profile_pictures/'+str(auth.user.username)+'.png'),_alt="profile",_height="200",_width="200")}}
+    {{result = tiene_foto(auth.user.username)}}
+    {{if result['check']:}}
+    {{=IMG(_src=URL('static','profile_pictures/'+str(result['path'])),_alt="profile",_height="200",_width="200")}}
     {{else:}}
     {{=IMG(_src=URL('static','profile_pictures/default.png'),_alt="profile",_height="200",_width="200")}}
     {{pass}}

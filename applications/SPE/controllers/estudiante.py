@@ -33,6 +33,12 @@ def agregar_preinscripcion():
         Field('codigo_pasantia',label='Codigo de la Pasantia',required=True,
                 requires=IS_IN_DB(dbSPE,dbSPE.tipo_pasantia,'%(codigo)s %(nombre)s',
                 zero="Seleccione")),
+        # Field('periodo',label='Periodo',required=True,
+        #                 requires=IS_IN_DB(dbSPE,dbSPE.sub_evento.nombre == Inscripcion,'%(nombre_supra_evento)s',
+        #                 zero="Seleccione")),
+        Field('periodo',label='Periodo',required=True,
+                requires=IS_IN_SET(["Enero - Marzo 2016","Abril-Septiembre 2016"],
+                zero="Seleccione")),
         Field('es_graduando',label="¿Es usted graduando?",required=True, requires=IS_IN_SET(["Si","No"]),
                 widget=lambda k,v:SQLFORM.widgets.radio.widget(k,v,style='divs')),
         Field('publicar_datos',label="¿Desea que las empresas puedan ver sus datos?",
@@ -42,18 +48,23 @@ def agregar_preinscripcion():
         buttons=[]
     )
 
+    existe_foto = tiene_foto(DatosUsuario.usbid)['check']
+    print(existe_foto)
+
     #Funciones guardar_imagen y validar_foto estan definicads en models/funciones.py
     datos_perfil = SQLFORM.factory(
 
-        Field('image', 'upload',label="Foto de Perfil", uploadfolder='applications/SPE/static/profile_pictures',
+        Field('image', 'upload',label="Foto de Perfil", required=not(existe_foto),
+                uploadfolder='applications/SPE/static/profile_pictures',
                 requires = IS_IMAGE(extensions=('jpeg', 'png'))),
-        formstyle='bootstrap3_stacked'
 
+        formstyle='bootstrap3_stacked'
     )
 
     #validamos la foto de perfil
     if datos_perfil.process().accepted:
-        response.flash = "files updated"
+        query =  dbSPE(dbSPE.usuario.usbid==auth.user.username)
+        query.update(foto=datos_perfil.vars.image)
 
     response.flash = T("¡Bienvenido!")
     return dict(message="Preinscripcion",form1=datos_personales,form2=datos_pasantia,form3=datos_perfil)

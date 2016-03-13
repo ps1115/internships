@@ -1,9 +1,23 @@
 # Funciones disponibles en todo el codigo.
 
 def tiene_foto(usbid):
-    import os
-    path = '/SPE/static/profile_pictures' +str(usbid)+".jpg"
-    return os.path.exists(path)
+    # import os
+    #
+    # query =  dbSPE(dbSPE.usuario.usbid==usbid)
+    # foto  = query.select()[0].foto
+    # path = '/SPE/static/profile_pictures/' + str(foto)
+    # print "foto " + foto
+    # print path
+    # print "path" + str(os.path.exists(path))
+    # return os.path.exists(path)
+    import requests
+
+    query =  dbSPE(dbSPE.usuario.usbid==usbid)
+    foto  = query.select()[0].foto
+    path = 'http://127.0.0.1:8000/SPE/static/profile_pictures/' + str(foto)
+    r = requests.head(path)
+    print(r.status_code == requests.codes.ok)
+    return dict(check=(r.status_code == requests.codes.ok),path=foto)
 
 def validar_foto(form):
     if form.vars.image is not None:
