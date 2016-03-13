@@ -603,6 +603,7 @@ CREATE TABLE IF NOT EXISTS `usuario` (
     `apellido`  varchar(254)    NOT NULL,
     `ci`        varchar(8)      DEFAULT NULL,
     `tipo`      varchar(15)     DEFAULT NULL,
+    `foto`      blob            DEFAULT NULL,
     `llave`     varchar(20)     DEFAULT NULL,
     PRIMARY KEY (`usbid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -674,7 +675,6 @@ CREATE TABLE IF NOT EXISTS `curriculum` (
     `conocimientos` text,
     `idiomas`       text,
     `aficiones`     text,
-    `foto`          blob            NOT NULL,
     PRIMARY KEY (`usbid`),
     KEY `fk_curriculum_usbid_usuario_estudiante_usbid` (`usbid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
