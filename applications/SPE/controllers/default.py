@@ -109,84 +109,38 @@ def login_cas():
             #Como el usuario ya esta registrado, buscamos sus datos y lo logueamos.
             datosUsuario = dbSPE(tablaUsuario.usbid==usbid).select()[0]
             clave    = datosUsuario.llave
-            print(clave)
-            print(usbid)
 
-            x = auth.login_bare(usbid,clave)
-            print "login " + str(x)
+            auth.login_bare(usbid,clave)
 
             #Si el usuario no ha actualizado sus datos
-            if not verificar_datos(usuario):
+            if verificar_datos(usuario).isempty():
                 redirect(URL(c='default',f='registrar', vars=dict(usuario=usuario)))
             else:
                 #Deberiamos redireccionar a un "home" dependiendo del tipo de usuario
                 redirect('index')
 
-        # if consulta.isempty():
-        #     clave   = random_key()
-        #     us      = get_ldap_data(usbid)
-        #     print "================== Begin"
-        #     print "type      " + str(type(us))
-        #     print "user_data " + str(us)
-        #
-        #     # print "insertando"
-        #     a = db.auth_user.insert(
-        #         first_name = us.get('first_name'),
-        #         last_name  = us.get('last_name'),
-        #         username   = usbid,
-        #         password   = db.auth_user.password.validate(clave)[0],
-        #         email      = us.get('email'),
-        #         f_cedula     = us['cedula'],
-        #         f_telefono   = us['phone'],
-        #         f_tipo       = us['tipo'],
-        #     )
-        #
-        #     user = db(db.auth_user.username==usbid).select()[0]
-        #     print us
-        #     db.t_universitario.insert(
-        #         f_usbid   = usbid,
-        #         f_key     = clave,
-        #         f_usuario = user.id
-        #     )
-        #
-        #     userUniv = db(db.t_universitario.f_usbid==usbid).select()[0]
-        #
-        #     if (us['tipo'] == "Pregrado") or (us['tipo'] == "Postgrado"):
-        #        # Si es estudiante insertar en su tabla
-        #         db.t_estudiante.insert(
-        #             f_universitario = userUniv.id,
-        #             f_carrera       = us['carrera'],
-        #             f_sede          = "Sartenejas"
-        #         )
-        #     elif us['tipo'] == "Docente":
-        #         # En caso de ser docente, agregar dpto.
-        #         db.t_tutor_academico.insert(
-        #             f_universitario = userUniv.id,
-        #             f_departamento  = us['dpto'],
-        #             f_sede          = "Sartenejas"
-        #         )
-        #
-        # else:
-        #     userUniv = db(db.t_universitario.f_usbid==usbid).select()[0]
-        #     clave    = userUniv.f_key
-        #
-        #
-        # # Al finalizar login o registro, redireccionamos a home
-
-
-        redirect('index')
-
     return None
 
+def logout():
+    url = 'http://secure.dst.usb.ve/logout'
+    auth.logout(next=url)
+
 def verificar_datos(usuario):
-        if usuario['tipo'] == "Docente":
-            pass
-        elif usuario['tipo'] == "Administrativo":
-            pass
-        elif usuario['tipo'] in ["Pregrado","Postgrado"]:
-            pass
-        elif usuario['tipo'] in ["Empleado","Organizacion","Egresado"]:
-            pass
+
+    consulta = None
+    usbid = usuario.get('usbid')
+
+    if usuario['tipo'] == "Docente":
+        consulta = dbSPE(dbSPE.usuario_profesor.usbid_usuario==usbid)
+    elif usuario['tipo'] == "Administrativo":
+        pass
+    elif usuario['tipo'] in ["Pregrado","Postgrado"]:
+        consulta = dbSPE(dbSPE.usuario_estudiante.usbid_usuario==usbid)
+    elif usuario['tipo'] in ["Empleado","Organizacion","Egresado"]:
+        pass
+
+    print "consulta " + str(consulta)
+    return consulta
 
 def registrar():
         #Aqui estan las variables obtenidas por el CAS

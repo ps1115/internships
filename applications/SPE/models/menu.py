@@ -35,13 +35,13 @@ DEVELOPMENT_MENU = True
 #########################################################################
 
 if auth.is_logged_in():
-    texto_principal = "Bienvenido" + auth.user.first_name
+    texto_principal = "Bienvenido " + auth.user.first_name
 else:
     texto_principal = "Bienvenido"
 
 menu_autenticado = [
     (texto_principal,False, '#',[
-        ("Cerrar Sesion",False,URL('default','log_out'))
+        ("Cerrar Sesion",False,URL('default','logout'))
     ])
 ]
 
