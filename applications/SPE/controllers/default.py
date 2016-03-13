@@ -66,24 +66,62 @@ def login_cas():
         data  = the_page.split()
         usbid = data[1]
 
-        print usbid
+        usuario = get_ldap_data(usbid) #Se leen los datos del CAS
         tablaUsuario  = dbSPE.usuario
 
         #Esto nos indica si el usuario ha ingresado alguna vez al sistema
-        consulta = dbSPE(tablaUsuario.usbid==usbid)
-        clave = 1234
+        #buscandolo en la tabla de usuario.
+        primeravez = dbSPE(tablaUsuario.usbid==usbid)
 
-        if consulta.isempty():
+        if primeravez.isempty():
             #Si es primera vez que ingresa al sistema
             clave   = random_key()         #Se genera una clave automatica
-            us      = get_ldap_data(usbid) #Se leen los datos del CAS
             print "================== Begin"
-            print "type      " + str(type(us))
-            print "user_data " + str(us)
+            print "type      " + str(type(usuario))
+            print "user_data " + str(usuario)
             print clave
             print "Empty"
+
+            #Ingresamos al usuario en la tabla de Autenticacion
+            # de la base de datos de Web2Py
+            result = db.auth_user.insert(
+                first_name = usuario.get('first_name'),
+                last_name  = usuario.get('last_name'),
+                username   = usbid,
+                password   = db.auth_user.password.validate(clave)[0],
+                email      = usuario.get('email')
+            )
+
+            #Ingresamos a la base de datos de Usuario
+            resutl = tablaUsuario.insert(
+                usbid    = usbid,
+                nombre   = usuario.get('first_name'),
+                apellido = usuario.get('last_name'),
+                ci       = usuario.get('cedula'),
+                tipo     = usuario.get('tipo'),
+                llave    = clave
+            )
+
+            auth.login_bare(usbid,clave)
+            redirect(URL(c='default',f='registrar', vars=dict(usuario=usuario)))
+
         else:
-            print "hay algo aqui"
+            #Como el usuario ya esta registrado, buscamos sus datos y lo logueamos.
+            datosUsuario = dbSPE(tablaUsuario.usbid==usbid).select()[0]
+            clave    = datosUsuario.llave
+            print(clave)
+            print(usbid)
+
+            x = auth.login_bare(usbid,clave)
+            print "login " + str(x)
+
+            #Si el usuario no ha actualizado sus datos
+            if not verificar_datos(usuario):
+                redirect(URL(c='default',f='registrar', vars=dict(usuario=usuario)))
+            else:
+                #Deberiamos redireccionar a un "home" dependiendo del tipo de usuario
+                redirect('index')
+
         # if consulta.isempty():
         #     clave   = random_key()
         #     us      = get_ldap_data(usbid)
@@ -135,10 +173,39 @@ def login_cas():
         #
         # # Al finalizar login o registro, redireccionamos a home
 
-        auth.login_bare(usbid,clave)
+
         redirect('index')
 
     return None
+
+def verificar_datos(usuario):
+        if usuario['tipo'] == "Docente":
+            pass
+        elif usuario['tipo'] == "Administrativo":
+            pass
+        elif usuario['tipo'] in ["Pregrado","Postgrado"]:
+            pass
+        elif usuario['tipo'] in ["Empleado","Organizacion","Egresado"]:
+            pass
+
+def registrar():
+        #Aqui estan las variables obtenidas por el CAS
+        usuario = request.vars['usuario']
+        print(auth.is_logged_in())
+
+        #temporal
+        return dict(message=T(usuario))
+
+        if usuario['tipo'] == "Docente":
+            #Codigo para registrar docente
+            pass
+        elif usuario['tipo'] == "Administrativo":
+            pass
+        elif usuario['tipo'] in ["Pregrado","Postgrado"]:
+            #Codigo para registar usuario
+            pass
+        elif usuario['tipo'] in ["Empleado","Organizacion","Egresado"]:
+            pass
 
 @cache.action()
 def download():

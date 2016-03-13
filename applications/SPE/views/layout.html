@@ -69,6 +69,9 @@
     <nav class="navbar-default navbar-style" role="navigation">
       <div class="container-fluid">
         <div class="collapse navbar-collapse navbar-ex1-collapse navbar-content-style">
+          <ul class="nav navbar-nav navbar-right">
+            {{=MENU(menu_autenticado, _class='nav navbar-nav',li_class='dropdown',ul_class='dropdown-menu dropdown-menu-style')}}
+          </ul>
           {{if response.menu:}}
           {{=MENU(response.menu, _class='nav navbar-nav',li_class='dropdown',ul_class='dropdown-menu dropdown-menu-style')}}
           {{pass}}

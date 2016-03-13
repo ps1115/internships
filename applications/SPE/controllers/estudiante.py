@@ -1,4 +1,3 @@
-
 def agregar_preinscripcion():
     # return dict(message="Para preinscribirse complete los siguientes datos:")
     response.flash = T("¡Bienvenido!")

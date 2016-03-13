@@ -31,6 +31,21 @@ response.menu = [
 DEVELOPMENT_MENU = True
 
 #########################################################################
+## Menu personalizado para la autenticacion
+#########################################################################
+
+if auth.is_logged_in():
+    texto_principal = "Bienvenido" + auth.user.first_name
+else:
+    texto_principal = "Bienvenido"
+
+menu_autenticado = [
+    (texto_principal,False, '#',[
+        ("Cerrar Sesion",False,URL('default','log_out'))
+    ])
+]
+
+#########################################################################
 ## provide shortcuts for development. remove in production
 #########################################################################
 
