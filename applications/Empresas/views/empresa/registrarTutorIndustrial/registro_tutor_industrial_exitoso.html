@@ -1,14 +1,105 @@
 {{('message' in globals())}}
 {{extend 'layout.html'}}
 
+<head>
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+</head>
 
 {{if 'message' in globals():}}
-<p class='title'>{{=message}}</p>
 <div class='content'>
-    <p class='title'>{{=result}}</p>
-    <p><br><b>Datos Del tutor</b></p>
-    <p><br></p>
-    <p><br></p>
+    <p class='title'>{{=message}}</p>
+    <div class="row">
+        <div class="col-xs-4">
+            <div class="panel-group" id="accordion">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#personal">
+                                <i class="fa fa-check-square-o fa-pull-right"></i>
+                                Datos personales del tutor industrial 
+                            </a>
+                        </h3>
+                    </div>
+                    <div class="panel-collapse collapse in" id="personal">
+                        <div class="list-group">
+                            <p class="list-group-item">E-mail : {{=email}} </p>
+                            <p class="list-group-item">Nombre : {{=nombre}} </p>
+                            <p class="list-group-item">Apellido : {{=apellido}} </p>
+                            <p class="list-group-item">Identificación (Cédula o pasaporte) : {{=ci}} </p>
+                            {{if 'telefono':}}
+                                <p class="list-group-item">Teléfono : {{=telefono}} </p>
+                            {{pass}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-4">
+            <br></br>
+            <h3 align="center">{{=result}} <i class="fa fa-thumbs-o-up"></i></h3>
+            <br></br>
+            <p align="center">
+                Se le enviará un correo de confirmación.
+                <br></br>
+                <i class="fa fa-envelope-o fa-5x"></i>
+            </p>
+        </div>
+        <div class="col-xs-4" align="left">
+            <div class="panel-group" id="accordionTwo">
+                {{if profesion or cargo or departamento:}}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <a data-toggle="collapse" href="#profesional">
+                                <i class="fa fa-check-square-o fa-pull-right"></i>
+                                Datos profesionales del tutor industrial
+                            </a>
+                        </h3>
+                    </div>
+                    <div class="panel-collapse collapse in" id="profesional">
+                        <div class="list-group">
+                            {{if profesion:}}
+                                <p class="list-group-item">Profesión : {{=profesion}} </p>
+                            {{pass}}
+                            {{if cargo:}}
+                                <p class="list-group-item">Cargo : {{=cargo}} </p>
+                            {{pass}}
+                            {{if departamento:}}
+                                <p class="list-group-item">Departamento : {{=departamento}} </p>
+                            {{pass}}
+                        </div>
+                    </div>
+                </div>
+                {{pass}}
+                {{if id_estado or direccion:}}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <a data-toggle="collapse" href="#location">
+                                <i class="fa fa-check-square-o fa-pull-right"></i>
+                                Ubicación del tutor industrial 
+                            </a>
+                        </h3>
+                    </div>
+                    <div class="panel-collapse collapse in" id="location">
+                        <div class="list-group">
+                            {{if id_estado:}}
+                                <p class="list-group-item">Estado : {{=id_estado}} </p>
+                            {{pass}}
+                            {{if direccion:}}
+                                <p class="list-group-item">Dirección : {{=direccion}} </p>
+                            {{pass}}
+                        </div>
+                    </div>
+                </div>
+                {{pass}}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <br></br>
+    </div>
+
 </div>
 
 {{elif 'content' in globals():}}
