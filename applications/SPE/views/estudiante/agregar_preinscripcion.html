@@ -3,7 +3,29 @@
 
 <p class='title'>{{=message}}</p>
 
-  <form role="form">
+<div class="row">
+  <div class="col-sm-4">
+    <p class='subtitle'>Datos Personales</p>
+    {{=form1}}
+  </div>
+  <div class="col-sm-4">
+    <p class='subtitle'>Datos de la Pasantia</p>
+    {{=form2}}
+  </div>
+  <div class="col-sm-4">
+    <p class='subtitle'>Datos del Perfil</p>
+    {{if tiene_foto(auth.user.username):}}
+    {{=IMG(_src=URL('static','profile_pictures/'+str(auth.user.username)+'.png'),_alt="profile",_height="200",_width="200")}}
+    {{else:}}
+    {{=IMG(_src=URL('static','profile_pictures/default.png'),_alt="profile",_height="200",_width="200")}}
+    {{pass}}
+    {{=form3}}
+  </div>
+</div>
+<div class="row">
+  <br><br>
+</div>
+  <!-- <form role="form">
     <div class="container col-md-4 form-group">
       <p class="subtitle">Datos Personales</p>
       <label for="text">Nombre y Apellido</label>
@@ -71,5 +93,5 @@
       <p>Tener una fotografia actualizada es obligatorio.<p>
     <br>
     <button type="submit" class="btn btn-default">Enviar Preinscripcion</button>
-    </div>
+    </div> -->
   </form>
