@@ -58,7 +58,7 @@ service = Service()
 plugins = PluginManager()
 
 ## create all tables needed by auth if not custom tables
-auth.define_tables(username=False, signature=False)
+auth.define_tables(username=True, signature=False)
 
 ## configure email
 mail = auth.settings.mailer
@@ -72,12 +72,12 @@ auth.settings.registration_requires_approval = False
 auth.settings.reset_password_requires_verification = True
 
 def captcha_field(request=request):
-    from gluon.tools import Recaptcha
-    w = lambda x,y: Recaptcha(request,
-                              'xxxxxxxxxxxxxxxxxxxxxxx',
-                              'yyyyyyyyyyyyyyyyyyyyyyy')
+    from gluon.tools import Recaptcha2
+    w = lambda x,y: Recaptcha2(request,
+                              '6Ld4oxoTAAAAAOtPnx7JL0kbuGV0gIlkeZz3aYet',
+                              '6Ld4oxoTAAAAAOHpRgTPO2LBiwH3lbkQtdeZXDik')
 
-    return Field('captcha', 'string', label='verify', widget=w, default='ok')
+    return Field('captcha', 'string', widget=w, default='ok')
 
 #########################################################################
 ## Define your tables below (or better in another model file) for example

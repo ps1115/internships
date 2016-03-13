@@ -5,7 +5,7 @@ def registrar_empresa():
     # Agregamos los campos en el orden deseado, comenzamos con el login y el password
     fields = [dbSPE.empresa.log,dbSPE.empresa.password]
     # Agregamos un campo extra de comfirm password el cual debera tener el mismo valor que el password para ser aceptado
-    fields += [Field('comfirm_Password','password', label=T('Comfirm Password'), 
+    fields += [Field('comfirm_Password','password', label=T('Comfirm Password'),
                      requires = [IS_EXPR('value==%s' % repr(request.vars.password),error_message=T('Las contraseñas no coinciden'))])]
     # Agregamos el resto de los campos
     fields += [dbSPE.empresa.pregunta_secreta,dbSPE.empresa.respuesta_pregunta_secreta,dbSPE.empresa.nombre,dbSPE.empresa.direccion,dbSPE.empresa.pag_web,dbSPE.empresa.descripcion,dbSPE.empresa.telefono,dbSPE.empresa.contacto_RRHH]
@@ -40,6 +40,15 @@ def registrar_empresa():
                              descripcion = request.vars.descripcion,
                              telefono = request.vars.telefono,
                              contacto_RRHH = request.vars.contacto_RRHH)
+
+        #Insertamos en la tabla User de Web2py, para el login
+        result = db.auth_user.insert(
+            username   = request.vars.log,
+            first_name = request.vars.nombre,
+            password   = db.auth_user.password.validate(request.vars.password)[0],
+            email      = request.vars.contacto_RRHH
+        )
+
         # Mensaje de exito
         response.flash = T("Registro Exitoso")
         # Nos dirigimos a la pagina de exito
@@ -66,7 +75,7 @@ def registrar_tutor_industrial():
         dbSPE.tutor_industrial.password
     ]
     # Agregamos un campo extra de comfirm password el cual debera tener el mismo valor que el password para ser aceptado
-    fields += [Field('comfirm_Password','password', label=T('Comfirm Password'), 
+    fields += [Field('comfirm_Password','password', label=T('Comfirm Password'),
                      requires = [IS_EXPR('value==%s' % repr(request.vars.password),error_message=T('Las contraseñas no coinciden'))])]
     # Agregamos el resto de los campos
     fields +=[
@@ -117,6 +126,16 @@ def registrar_tutor_industrial():
             direccion = request.vars.direccion,
             id_estado = None, #Estara asi hasta que se implemente la tabla estado
             telefono = request.vars.telefono)
+
+        #Insertamos en la tabla user de Web2py
+        result = db.auth_user.insert(
+            first_name = request.vars.nombre,
+            last_name  = request.vars.apellido,
+            username   = request.vars.email,
+            password   = db.auth_user.password.validate(clave)[request.vars.password],
+            email      = request.vars.email
+        )
+
         # Mensaje de exito
         response.flash = T("Registro Exitoso")
         # Nos dirigimos a la pagina de exito

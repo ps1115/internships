@@ -1,0 +1,5 @@
+{{extend 'layout.html'}}
+
+{{if auth.is_logged_in():}}
+<p class="title"> Bienvenida empresa {{=auth.user.first_name}}
+{{pass}}

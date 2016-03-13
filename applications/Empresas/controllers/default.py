@@ -10,16 +10,10 @@
 
 
 def index():
-    """
-    example action using the internationalization operator T and flash
-    rendered by views/default/index.html or views/generic.html
 
-    if you need a simple wiki simply replace the two lines below with:
-    return auth.wiki()
-    """
     response.flash = "Bienvenida Empresa"
     # return dict(message='Área de Empresas')
-    return dict(message='Área de Empresas')
+    return dict(form=login())
 
 def user():
     """
@@ -38,6 +32,48 @@ def user():
     also notice there is http://..../[app]/appadmin/manage/auth to allow administrator to manage users
     """
     return dict(form=auth())
+
+def login():
+
+    formulario_login = SQLFORM.factory(
+                            Field('login', label=T('Usuario o Correo Electronico'), required=True,
+                                    requires=[IS_MATCH('^[a-zA-Z0-9.@_\\-]',error_message=T('Usuario o correo invalido.'))]),
+                            Field('password', 'password',required=True,label=T('Contraseña')),
+                           captcha_field(),
+                           formstyle='bootstrap3_stacked'
+                           )
+
+
+    if formulario_login.process(onvalidation=validar_credenciales).accepted:
+        auth.login_bare(request.vars.login,request.vars.password)
+        redirect(URL(c='default',f='home'))
+    else:
+        response.flash = T("Usuario o Contraseña invalida.")
+    return formulario_login
+
+def validar_credenciales(form):
+    #Si es empresa, busco en la tabla por login
+    login_empresa1  = dbSPE(dbSPE.empresa.log  == form.vars.login)
+    #Si es tutor industrial, busco en la tabla por email
+    login_tutor_ind = dbSPE(dbSPE.tutor_industrial.email  ==form.vars.login)
+
+    #Solo puedo encontrar alguno de los dos, verifico el password
+    if not login_empresa1.isempty():
+        datosUsuario = login_empresa1.select()[0]
+        if datosUsuario.password != form.vars.password:
+            form.errors = "Usuario o contraseña invalida"
+    elif not login_tutor_ind.isempty():
+        datosUsuario = login_tutor_ind.select()[0]
+        if datosUsuario.password != form.vars.password:
+            form.errors = "Usuario o contraseña invalida"
+
+def logout():
+    url = (URL(c='default',f='index'))
+    auth.logout(next=url)
+
+def home():
+    response.flash = T("Inicio Exitoso")
+    return response.render('default/home.html')
 
 @cache.action()
 def download():

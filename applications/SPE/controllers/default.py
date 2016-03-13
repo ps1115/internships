@@ -122,7 +122,7 @@ def login_cas():
     return None
 
 def logout():
-    url = 'http://secure.dst.usb.ve/logout'
+    url = (URL(c='default',f='index'))
     auth.logout(next=url)
 
 def verificar_datos(usuario):
