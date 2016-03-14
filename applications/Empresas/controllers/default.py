@@ -13,7 +13,7 @@ def index():
 
     response.flash = "Bienvenida Empresa"
     # return dict(message='Área de Empresas')
-    return dict(form=login())
+    return dict(form=login(),message="Empresas")
 
 def user():
     """
