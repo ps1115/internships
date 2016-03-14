@@ -485,14 +485,14 @@ CREATE TABLE IF NOT EXISTS `solicitud_pasante` (
 
 CREATE TABLE IF NOT EXISTS `sub_evento` (
     `codigo_supra_evento`   int(11)         NOT NULL,
-    `codigo_sub_evento`     int(11)         NOT NULL,
-    `fecha_inicio`          timestamp            NOT NULL,
-    `fecha_fin`             timestamp            NOT NULL,
+    `codigo_sub_evento`     int(11)         NOT NULL AUTO_INCREMENT,
+    `fecha_inicio`          timestamp       NOT NULL,
+    `fecha_fin`             timestamp       NOT NULL,
     `nombre_sub_evento`     varchar(254)    NOT NULL,
     `nombre_supra_evento`   varchar(254)    NOT NULL,
     PRIMARY KEY (`codigo_supra_evento`, `codigo_sub_evento`),
     FOREIGN KEY (`codigo_supra_evento`) REFERENCES evento(`codigo`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10;
 
 -- --------------------------------------------------------
 
