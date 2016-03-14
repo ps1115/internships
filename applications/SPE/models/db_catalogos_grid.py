@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
-dbSPE = DAL('mysql://spe:spe@localhost:3306/pasantiasnuevo', pool_size=0,migrate=False)
+dbSPE = DAL('mysql://root:root@localhost:3306/pasantiasnuevo', pool_size=0,migrate=False)
 
-'''
 import datetime
 
 db.define_table('usuario_estudiante', 
@@ -40,7 +39,7 @@ db.define_table('usuario_profesor',
                 Field('activo', requires=[IS_NOT_EMPTY(), IS_IN_SET(['0','1'],error_message='Valor no Permitido')], default='1', label='Activo'))
 
 db.define_table('empresa', 
-                Field('log', requires=IS_NOT_EMPTY(), label='Usuario', unique=True), 
+                Field('loglog', requires=IS_NOT_EMPTY(), label='Usuario', unique=True), 
                 Field('password', requires=IS_NOT_EMPTY(), label='Clave', type='password'),
                 Field('pregunta_secreta', requires=IS_NOT_EMPTY(), label='Pregunta Secreta'),
                 Field('respuesta_pregunta_secreta', requires=IS_NOT_EMPTY(), label='Respuesta a Pregunta Secreta'),
@@ -97,4 +96,4 @@ db.define_table("calculo_pago"
                , Field("id_tipo_pasantia",label="Tipo de Pasantía",requires=IS_NOT_EMPTY())
                , Field("id_pais",label="País",requires=IS_NOT_EMPTY(),type="integer")
                , Field("monto",requires=IS_NOT_EMPTY(),type="double", label="Monto de Pago")
-               ,Field("fecha", label="Fecha", type="date",requires=[IS_NOT_EMPTY(),IS_DATE(format='%Y/%m/%d')]))'''
+               ,Field("fecha", label="Fecha", type="date",requires=[IS_NOT_EMPTY(),IS_DATE(format='%Y/%m/%d')]))
