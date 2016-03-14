@@ -74,8 +74,6 @@ db.define_table("sub_evento"
 
 
 db.define_table("semana_muerta"
-               ,Field("codigo_supra_evento_afectado", db.evento, requires=IS_IN_DB(db,'evento.codigo', error_message='Evento no Existe'))
-               ,Field("codigo_sub_evento_afectado", db.sub_evento, requires=IS_IN_DB(db,'sub_evento.codigo_sub_evento', error_message='Subevento no Existe'))
                ,Field("nombre_supra_evento_afectado", label="Nombre de Evento", type="string",  requires=IS_IN_DB(db,'sub_evento.nombre_supra_evento', error_message='Evento no Existe'))
                ,Field("nombre_sub_evento_afectado", label="Nombre de Sub Evento", type="string",  requires=IS_IN_DB(db,'sub_evento.nombre_sub_evento', error_message='Subevento no Existe'))
                ,Field("numero_semana", type="integer",label="Numero de Semana", requires=IS_NOT_EMPTY())
