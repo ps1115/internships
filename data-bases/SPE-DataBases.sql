@@ -45,12 +45,13 @@ CREATE TABLE IF NOT EXISTS `actividad` (
 --
 
 CREATE TABLE IF NOT EXISTS `calculo_pago` (
+    `id`                int(11)     NOT NULL AUTO_INCREMENT,
     `id_categoria`      int(11)     NOT NULL,
     `id_tipo_pasantia`  varchar(8)  NOT NULL,
     `id_pais`           int(11)     NOT NULL,
     `monto`             double      NOT NULL,
     `fecha`             date        NOT NULL,
-    PRIMARY KEY (`id_categoria`,`id_tipo_pasantia`,`id_pais`),
+    PRIMARY KEY (`id`,`id_categoria`,`id_tipo_pasantia`,`id_pais`),
     KEY `fk_calculo_pago_id_tipo_pasantia_tipo_pasantia_codigo` (`id_tipo_pasantia`),
     KEY `fk_calculo_pago_id_pais_pais_id` (`id_pais`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -433,12 +434,13 @@ CREATE TABLE IF NOT EXISTS `region` (
 -- ----------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `rol_sistema` (
+    `id`                int(11)         NOT NULL AUTO_INCREMENT,
     `usbid`             varchar(254)    NOT NULL DEFAULT ' ',
     `nombre`            varchar(254)    NOT NULL,
     `apellido`          varchar(254)    NOT NULL,
     `rol`               varchar(254)    NOT NULL,
     `sede`              varchar(20)     NOT NULL,
-    PRIMARY KEY (`usbid`)
+    PRIMARY KEY (`id`,`usbid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -712,10 +714,10 @@ ALTER TABLE `actividad`
 --
 -- Filtros para la tabla `calculo_pago`
 --
-ALTER TABLE `calculo_pago`
-    ADD CONSTRAINT `fk_calculo_pago_id_categoria_categoria_id` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-    ADD CONSTRAINT `fk_calculo_pago_id_tipo_pasantia_tipo_pasantia_codigo` FOREIGN KEY (`id_tipo_pasantia`) REFERENCES `tipo_pasantia` (`codigo`) ON DELETE CASCADE ON UPDATE CASCADE,
-    ADD CONSTRAINT `fk_calculo_pago_id_pais_pais_id` FOREIGN KEY (`id_pais`) REFERENCES `pais` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+--ALTER TABLE `calculo_pago`
+--    ADD CONSTRAINT `fk_calculo_pago_id_categoria_categoria_id` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+--    ADD CONSTRAINT `fk_calculo_pago_id_tipo_pasantia_tipo_pasantia_codigo` FOREIGN KEY (`id_tipo_pasantia`) REFERENCES `tipo_pasantia` (`codigo`) ON DELETE CASCADE ON UPDATE CASCADE,
+--    ADD CONSTRAINT `fk_calculo_pago_id_pais_pais_id` FOREIGN KEY (`id_pais`) REFERENCES `pais` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `departamento`
