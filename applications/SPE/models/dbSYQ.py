@@ -1,2 +1,2 @@
 # -*- coding: utf-8 -*-
-dbSYQ = DAL ('mysql://root:Futb0l@localhost/mysql', pool_size=0,migrate=False)
+dbSYQ = DAL ('mysql://root:www123456@localhost/mysql', pool_size=0,migrate=False)

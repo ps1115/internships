@@ -24,6 +24,7 @@ li.dropdown.open{
 	top: 10px;
 	bottom: 10px;
 	height: 40px;
+	text-align: center;
 }
 
 .navbar-style{
