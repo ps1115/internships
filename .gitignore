@@ -1,8 +1,10 @@
 *.pyc
 *.py.bak
+*.pid
 parameters_*
 httpserver.log
 gluon/
 logs/
 applications/SPE/errors/
+applications/SPE/sessions/
 applications/admin/sessions/
