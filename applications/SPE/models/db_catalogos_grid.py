@@ -65,8 +65,8 @@ db.define_table("evento"
 
 
 db.define_table("sub_evento"
-               ,Field("codigo_supra_evento", type="integer", readable=False, writable=False)
-               ,Field("codigo_sub_evento", type="integer" ,readable=False, writable=False)
+               ,Field("codigo_supra_evento", db.evento, requires=IS_IN_DB(db,'evento.codigo', error_message='Evento no Existe'))
+               ,Field("codigo_sub_evento", type="id" ,readable=False, writable=False)
                # Hay que agregar nombre_supra_evento al sql
                ,Field("nombre_supra_evento", type="string",label="Nombre del Supra Evento", 
                       requires=IS_IN_DB(db,'evento.nombre', error_message='Evento no Existe'))
@@ -75,10 +75,10 @@ db.define_table("sub_evento"
                ,Field("fecha_fin", label="Fecha de Finalización", type="date", requires=[IS_NOT_EMPTY(),IS_DATE(format='%Y/%m/%d')]))
 
 db.define_table("semana_muerta"
-               ,Field("codigo_supra_evento_afectado", type="integer",writable=False, readable=False)
-               ,Field("codigo_sub_evento_afectado", type="integer",writable=False, readable=False)
+               ,Field("codigo_supra_evento_afectado", db.evento, requires=IS_IN_DB(db,'evento.codigo', error_message='Evento no Existe'))
+               ,Field("codigo_sub_evento_afectado", db.sub_evento, requires=IS_IN_DB(db,'sub_evento.codigo_sub_evento', error_message='Subevento no Existe'))
                ,Field("nombre_supra_evento_afectado", label="Nombre de Evento", type="string",  requires=IS_IN_DB(db,'sub_evento.nombre_supra_evento', error_message='Evento no Existe'))
-               ,Field("nombre_sub_evento_afectado", label="Nombre de Sub Evento", type="string",  requires=IS_IN_DB(db,'sub_evento.nombre_sub_evento', error_message='Evento no Existe'))
+               ,Field("nombre_sub_evento_afectado", label="Nombre de Sub Evento", type="string",  requires=IS_IN_DB(db,'sub_evento.nombre_sub_evento', error_message='Subevento no Existe'))
                ,Field("numero_semana", type="integer",label="Numero de Semana", requires=IS_NOT_EMPTY())
                ,Field("fecha_ini", label="Fecha de Inicio", type="date", requires=[IS_NOT_EMPTY(),IS_DATE(format='%Y/%m/%d')])
                ,Field("fecha_fini", label="Fecha de Finalización", type="date", requires=[IS_NOT_EMPTY(),IS_DATE(format='%Y/%m/%d')]))
