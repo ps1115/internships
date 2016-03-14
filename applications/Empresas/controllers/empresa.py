@@ -108,6 +108,8 @@ def registrar_tutor_industrial():
         dbSPE.tutor_industrial.id_estado,
         dbSPE.tutor_industrial.telefono
     ]
+
+
     # Generamos el SQLFORM utilizando los campos
     form = SQLFORM.factory(
     *fields,submit_button='Submit',
@@ -130,6 +132,9 @@ def registrar_tutor_industrial():
            })
     # Caso 1: El form se lleno de manera correcta asi que registramos al tutor y procedemos a la pagina de exito
     if form.process().accepted:
+        # Buscamos el id de la empresa
+        empresaRegistradoraSet = dbSPE(dbSPE.empresa.log == auth.user.username).select()
+        empresaRegistradora = empresaRegistradoraSet[0]
         # Registramos la empresa
         dbSPE.tutor_industrial.insert(
             email = request.vars.email,
@@ -139,12 +144,12 @@ def registrar_tutor_industrial():
             password = request.vars.password,
             pregunta_secreta = request.vars.pregunta_secreta,
             respuesta_pregunta_secreta = request.vars.respuesta_pregunta_secreta,
-            id_empresa = 1, # Cableado mientras se resuelven problemas
+            id_empresa = empresaRegistradora.id, # Cableado mientras se resuelven problemas
             profesion = request.vars.profesion,
             cargo = request.vars.cargo,
             departamento = request.vars.departamento,
             direccion = request.vars.direccion,
-            id_estado = None, #Estara asi hasta que se implemente la tabla estado
+            id_estado = request.vars.id_estado, #Estara asi hasta que se implemente la tabla estado
             telefono = request.vars.telefono)
 
         #Insertamos en la tabla user de Web2py
@@ -152,7 +157,7 @@ def registrar_tutor_industrial():
             first_name = request.vars.nombre,
             last_name  = request.vars.apellido,
             username   = request.vars.email,
-            password   = db.auth_user.password.validate(clave)[request.vars.password],
+            password   = db.auth_user.password.validate(request.vars.password)[0],
             email      = request.vars.email
         )
 
