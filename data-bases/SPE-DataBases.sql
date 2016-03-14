@@ -490,8 +490,8 @@ CREATE TABLE IF NOT EXISTS `sub_evento` (
     `fecha_fin`             timestamp       NOT NULL,
     `nombre_sub_evento`     varchar(254)    NOT NULL,
     `nombre_supra_evento`   varchar(254)    NOT NULL,
-    PRIMARY KEY (`codigo_supra_evento`, `codigo_sub_evento`),
-    FOREIGN KEY (`codigo_supra_evento`) REFERENCES evento(`codigo`)
+    PRIMARY KEY (`codigo_sub_evento`),
+    KEY `fk_sub_eventos_codigo_supra_evento_eventos_codigo` (`codigo_supra_evento`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10;
 
 -- --------------------------------------------------------
