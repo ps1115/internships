@@ -55,6 +55,15 @@ def registrar_empresa():
                              descripcion = request.vars.descripcion,
                              telefono = request.vars.telefono,
                              contacto_RRHH = request.vars.contacto_RRHH)
+
+        #Insertamos en la tabla User de Web2py, para el login
+        result = db.auth_user.insert(
+            username   = request.vars.log,
+            first_name = request.vars.nombre,
+            password   = db.auth_user.password.validate(request.vars.password)[0],
+            email      = request.vars.contacto_RRHH
+        )
+
         # Mensaje de exito
         response.flash = T("Registro Exitoso")
         # Nos dirigimos a la pagina de exito
@@ -137,6 +146,16 @@ def registrar_tutor_industrial():
             direccion = request.vars.direccion,
             id_estado = None, #Estara asi hasta que se implemente la tabla estado
             telefono = request.vars.telefono)
+
+        #Insertamos en la tabla user de Web2py
+        result = db.auth_user.insert(
+            first_name = request.vars.nombre,
+            last_name  = request.vars.apellido,
+            username   = request.vars.email,
+            password   = db.auth_user.password.validate(clave)[request.vars.password],
+            email      = request.vars.email
+        )
+
         # Mensaje de exito
         response.flash = T("Registro Exitoso")
         # Nos dirigimos a la pagina de exito
