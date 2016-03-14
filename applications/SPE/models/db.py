@@ -90,8 +90,3 @@ auth.settings.reset_password_requires_verification = True
 
 ## after defining tables, uncomment below to enable auditing
 # auth.enable_record_versioning(db)
-db = DAL ('mysql://root:www123456@localhost/mysql', pool_size=0,migrate=False)
-db.define_table('contact',
-   Field('Carnet'),
-   Field('Nombre'),
-   Field('Motivo'),)
