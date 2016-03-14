@@ -57,7 +57,7 @@ db.define_table('empresa',
 
 
 db.define_table("evento"
-               ,Field("codigo", type="integer", readable=False, writable=False)
+               ,Field("codigo", type="id", readable=False, writable=False)
                ,Field("nombre", label="Nombre del Evento", requires=IS_NOT_EMPTY(),unique=True)
                ,Field("fecha_inicio", label="Fecha de Inicio", type="date", requires=[IS_NOT_EMPTY(),IS_DATE(format='%Y/%m/%d')])
                ,Field("fecha_fin", label="Fecha de Finalización", type="date", requires=[IS_NOT_EMPTY(),IS_DATE(format='%Y/%m/%d')])
@@ -66,7 +66,7 @@ db.define_table("evento"
 
 db.define_table("sub_evento"
                ,Field("codigo_supra_evento", type="integer", readable=False, writable=False)
-               ,Field("codigo_sub_evento", type="integer",readable=False, writable=False)
+               ,Field("codigo_sub_evento", type="integer" ,readable=False, writable=False)
                # Hay que agregar nombre_supra_evento al sql
                ,Field("nombre_supra_evento", type="string",label="Nombre del Supra Evento", 
                       requires=IS_IN_DB(db,'evento.nombre', error_message='Evento no Existe'))
