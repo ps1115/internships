@@ -397,7 +397,6 @@ CREATE TABLE IF NOT EXISTS `preinscripcion` (
     `id`                int(10)         NOT NULL AUTO_INCREMENT,
     `id_periodo`        int(10)         NOT NULL,
     `anio`              int(4)          NOT NULL,
-    `bloque`            varchar(1)      NOT NULL,
     `codigo`            varchar(7)      NOT NULL,
     `usbid`             varchar(254)    NOT NULL,
     `fecha_ingreso`     date            NOT NULL,
