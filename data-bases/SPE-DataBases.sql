@@ -238,9 +238,9 @@ CREATE TABLE IF NOT EXISTS `estado` (
 
 -- --------------------------------------------------------
 
---
+-- ---------------------------------------
 -- Estructura de tabla para la tabla `evento`
---
+-- ----------------------------------------
 
 CREATE TABLE IF NOT EXISTS `evento` (
   `codigo` int(11) NOT NULL AUTO_INCREMENT,
@@ -250,6 +250,10 @@ CREATE TABLE IF NOT EXISTS `evento` (
   `nombre_trimestre_actual` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`codigo`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
+
+-- --------------------------------------------------------
+
+
 
 -- --------------------------------------------------------
 
@@ -425,9 +429,9 @@ CREATE TABLE IF NOT EXISTS `region` (
 
 -- --------------------------------------------------------
 
---
+-- ---------------------------------------------
 -- Estructura de tabla para la tabla `rol_sistema`
---
+-- ----------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `rol_sistema` (
     `usbid`             varchar(254)    NOT NULL DEFAULT ' ',
@@ -435,7 +439,6 @@ CREATE TABLE IF NOT EXISTS `rol_sistema` (
     `apellido`          varchar(254)    NOT NULL,
     `rol`               varchar(254)    NOT NULL,
     `sede`              varchar(20)     NOT NULL,
-    `longitudCarnet`    int(11)         NOT NULL,
     PRIMARY KEY (`usbid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -487,6 +490,7 @@ CREATE TABLE IF NOT EXISTS `sub_evento` (
     `fecha_inicio`          date            NOT NULL,
     `fecha_fin`             date            NOT NULL,
     `nombre_sub_evento`     varchar(254)    NOT NULL,
+    `nombre_supra_evento`   varchar(254)    NOT NULL,
     PRIMARY KEY (`codigo_supra_evento`, `codigo_sub_evento`),
     FOREIGN KEY (`codigo_supra_evento`) REFERENCES evento(`codigo`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
@@ -500,6 +504,8 @@ CREATE TABLE IF NOT EXISTS `sub_evento` (
 CREATE TABLE IF NOT EXISTS `semana_muerta` (
     `codigo_supra_evento_afectado`    int(11) NOT NULL,
     `codigo_sub_evento_afectado`    int(11) NOT NULL,
+    `nombre_supra_evento_afectado`  varchar(254) NOT NULL,
+    `nombre_sub_evento_afectado`    varchar(254) NOT NULL,
     `fecha_ini`                     date    NOT NULL,
     `fecha_fini`                    date    NOT NULL,
     `numero_semana`                 int(5)  NOT NULL,
@@ -589,7 +595,7 @@ CREATE TABLE IF NOT EXISTS `tutor_industrial` (
 
 --
 -- Estructura de tabla para la tabla `usuario`
---
+-- ------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `usuario` (
     `usbid`     varchar(254)    NOT NULL,
@@ -597,6 +603,8 @@ CREATE TABLE IF NOT EXISTS `usuario` (
     `apellido`  varchar(254)    NOT NULL,
     `ci`        varchar(8)      DEFAULT NULL,
     `tipo`      varchar(15)     DEFAULT NULL,
+    `foto`      blob            DEFAULT NULL,
+    `llave`     varchar(20)     DEFAULT NULL,
     PRIMARY KEY (`usbid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -667,7 +675,6 @@ CREATE TABLE IF NOT EXISTS `curriculum` (
     `conocimientos` text,
     `idiomas`       text,
     `aficiones`     text,
-    `foto`          blob            NOT NULL,
     PRIMARY KEY (`usbid`),
     KEY `fk_curriculum_usbid_usuario_estudiante_usbid` (`usbid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
