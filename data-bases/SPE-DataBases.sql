@@ -245,8 +245,8 @@ CREATE TABLE IF NOT EXISTS `estado` (
 CREATE TABLE IF NOT EXISTS `evento` (
   `codigo` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(254) NOT NULL,
-  `fecha_inicio` date NOT NULL,
-  `fecha_fin` date NOT NULL,
+  `fecha_inicio` timestamp NOT NULL,
+  `fecha_fin` timestamp NOT NULL,
   `nombre_trimestre_actual` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`codigo`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
@@ -487,8 +487,8 @@ CREATE TABLE IF NOT EXISTS `solicitud_pasante` (
 CREATE TABLE IF NOT EXISTS `sub_evento` (
     `codigo_supra_evento`   int(11)         NOT NULL,
     `codigo_sub_evento`     int(11)         NOT NULL,
-    `fecha_inicio`          date            NOT NULL,
-    `fecha_fin`             date            NOT NULL,
+    `fecha_inicio`          timestamp            NOT NULL,
+    `fecha_fin`             timestamp            NOT NULL,
     `nombre_sub_evento`     varchar(254)    NOT NULL,
     `nombre_supra_evento`   varchar(254)    NOT NULL,
     PRIMARY KEY (`codigo_supra_evento`, `codigo_sub_evento`),
@@ -506,8 +506,8 @@ CREATE TABLE IF NOT EXISTS `semana_muerta` (
     `codigo_sub_evento_afectado`    int(11) NOT NULL,
     `nombre_supra_evento_afectado`  varchar(254) NOT NULL,
     `nombre_sub_evento_afectado`    varchar(254) NOT NULL,
-    `fecha_ini`                     date    NOT NULL,
-    `fecha_fini`                    date    NOT NULL,
+    `fecha_ini`                     timestamp    NOT NULL,
+    `fecha_fini`                    timestamp    NOT NULL,
     `numero_semana`                 int(5)  NOT NULL,
     PRIMARY KEY (`numero_semana`,`codigo_sub_evento_afectado`),
     FOREIGN KEY (`codigo_supra_evento_afectado`,`codigo_sub_evento_afectado`)
