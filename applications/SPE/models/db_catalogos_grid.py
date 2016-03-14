@@ -65,9 +65,8 @@ db.define_table("evento"
 
 
 db.define_table("sub_evento"
-               ,Field("codigo_supra_evento", db.evento, requires=IS_IN_DB(db,'evento.codigo', error_message='Evento no Existe'))
                ,Field("codigo_sub_evento", type="id" ,readable=False, writable=False)
-               # Hay que agregar nombre_supra_evento al sql
+               ,Field("codigo_supra_evento", 'reference evento', writable=False, readable=False)
                ,Field("nombre_supra_evento", type="string",label="Nombre del Supra Evento", 
                       requires=IS_IN_DB(db,'evento.nombre', error_message='Evento no Existe'))
                ,Field("nombre_sub_evento", label="Nombre del Sub Evento", requires=IS_NOT_EMPTY())

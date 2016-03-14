@@ -108,9 +108,11 @@ def eventos():
     return grid
 
 def sub_evento():
-    grid = SQLFORM.grid(db.sub_evento,user_signature=False,
-                        deletable=False,
-                       csv=False)
+    grid = SQLFORM.grid(db.sub_evento
+        ,user_signature=False
+        ,deletable=False
+        ,csv=False
+        ) 
     return grid
 
 def semana_muerta():
