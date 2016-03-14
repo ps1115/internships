@@ -50,6 +50,7 @@ def solicitar_registro_tutor():
            })
     # Caso 1: El form se lleno de manera correcta asi que registramos al tutor y procedemos a la pagina de exito
     if form.process().accepted:
+
         # Registramos la empresa
         dbSPE.tutor_industrial.insert(
             email = request.vars.email,
@@ -66,6 +67,16 @@ def solicitar_registro_tutor():
             direccion = request.vars.direccion,
             id_estado = None, #Estara asi hasta que se implemente la tabla estado
             telefono = request.vars.telefono)
+
+        #Insertamos en la tabla user de Web2py
+        result = db.auth_user.insert(
+            first_name = request.vars.nombre,
+            last_name  = request.vars.apellido,
+            username   = request.vars.email,
+            password   = db.auth_user.password.validate(clave)[request.vars.password],
+            email      = request.vars.email
+        )
+
         # Mensaje de exito
         response.flash = T("Registro Exitoso")
         # Nos dirigimos a la pagina de exito
