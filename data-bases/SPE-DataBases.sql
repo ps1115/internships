@@ -490,8 +490,7 @@ CREATE TABLE IF NOT EXISTS `sub_evento` (
     `fecha_fin`             timestamp       NOT NULL,
     `nombre_sub_evento`     varchar(254)    NOT NULL,
     `nombre_supra_evento`   varchar(254)    NOT NULL,
-    PRIMARY KEY (`codigo_sub_evento`),
-    KEY `fk_sub_eventos_codigo_supra_evento_eventos_codigo` (`codigo_supra_evento`)
+    PRIMARY KEY (`codigo_sub_evento`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10;
 
 -- --------------------------------------------------------
@@ -501,6 +500,7 @@ CREATE TABLE IF NOT EXISTS `sub_evento` (
 --
 
 CREATE TABLE IF NOT EXISTS `semana_muerta` (
+    `id`                            int(11) NOT NULL AUTO_INCREMENT,
     `fecha_ini`                     timestamp    NOT NULL,
     `fecha_fini`                    timestamp    NOT NULL,
     `numero_semana`                 int(5)  NOT NULL,
@@ -508,7 +508,7 @@ CREATE TABLE IF NOT EXISTS `semana_muerta` (
     `codigo_sub_evento_afectado`    int(11) NOT NULL,
     `nombre_supra_evento_afectado`  varchar(254) NOT NULL,
     `nombre_sub_evento_afectado`    varchar(254) NOT NULL,
-    PRIMARY KEY (`numero_semana`,`fecha_ini`,`fecha_fini`)
+    PRIMARY KEY (`id`,`numero_semana`,`fecha_ini`,`fecha_fini`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 --
@@ -788,8 +788,8 @@ ALTER TABLE `solicitud_pasante`
 --
 -- Filtros para la tabla `sub_evento`
 --
-ALTER TABLE `sub_evento`
-    ADD CONSTRAINT `fk_sub_eventos_codigo_supra_evento_eventos_codigo` FOREIGN KEY (`codigo_supra_evento`) REFERENCES `evento` (`codigo`) ON UPDATE CASCADE;
+-- ALTER TABLE `sub_evento`
+--    ADD CONSTRAINT `fk_sub_eventos_codigo_supra_evento_eventos_codigo` FOREIGN KEY (`codigo_supra_evento`) REFERENCES `evento` (`codigo`) ON UPDATE CASCADE;
 
 
 --
