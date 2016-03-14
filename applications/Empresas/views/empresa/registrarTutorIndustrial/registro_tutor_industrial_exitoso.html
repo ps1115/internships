@@ -26,7 +26,7 @@
                             <p class="list-group-item">Nombre : {{=nombre}} </p>
                             <p class="list-group-item">Apellido : {{=apellido}} </p>
                             <p class="list-group-item">Identificación (Cédula o pasaporte) : {{=ci}} </p>
-                            {{if 'telefono':}}
+                            {{if telefono:}}
                                 <p class="list-group-item">Teléfono : {{=telefono}} </p>
                             {{pass}}
                         </div>
@@ -47,51 +47,51 @@
         <div class="col-xs-4" align="left">
             <div class="panel-group" id="accordionTwo">
                 {{if profesion or cargo or departamento:}}
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
-                            <a data-toggle="collapse" href="#profesional">
-                                <i class="fa fa-check-square-o fa-pull-right"></i>
-                                Datos profesionales del tutor industrial
-                            </a>
-                        </h3>
-                    </div>
-                    <div class="panel-collapse collapse in" id="profesional">
-                        <div class="list-group">
-                            {{if profesion:}}
-                                <p class="list-group-item">Profesión : {{=profesion}} </p>
-                            {{pass}}
-                            {{if cargo:}}
-                                <p class="list-group-item">Cargo : {{=cargo}} </p>
-                            {{pass}}
-                            {{if departamento:}}
-                                <p class="list-group-item">Departamento : {{=departamento}} </p>
-                            {{pass}}
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                <a data-toggle="collapse" href="#profesional">
+                                    <i class="fa fa-check-square-o fa-pull-right"></i>
+                                    Datos profesionales del tutor industrial
+                                </a>
+                            </h3>
+                        </div>
+                        <div class="panel-collapse collapse in" id="profesional">
+                            <div class="list-group">
+                                {{if profesion:}}
+                                    <p class="list-group-item">Profesión : {{=profesion}} </p>
+                                {{pass}}
+                                {{if cargo:}}
+                                    <p class="list-group-item">Cargo : {{=cargo}} </p>
+                                {{pass}}
+                                {{if departamento:}}
+                                    <p class="list-group-item">Departamento : {{=departamento}} </p>
+                                {{pass}}
+                            </div>
                         </div>
                     </div>
-                </div>
                 {{pass}}
                 {{if id_estado or direccion:}}
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
-                            <a data-toggle="collapse" href="#location">
-                                <i class="fa fa-check-square-o fa-pull-right"></i>
-                                Ubicación del tutor industrial 
-                            </a>
-                        </h3>
-                    </div>
-                    <div class="panel-collapse collapse in" id="location">
-                        <div class="list-group">
-                            {{if id_estado:}}
-                                <p class="list-group-item">Estado : {{=id_estado}} </p>
-                            {{pass}}
-                            {{if direccion:}}
-                                <p class="list-group-item">Dirección : {{=direccion}} </p>
-                            {{pass}}
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                <a data-toggle="collapse" href="#location">
+                                    <i class="fa fa-check-square-o fa-pull-right"></i>
+                                    Ubicación del tutor industrial 
+                                </a>
+                            </h3>
+                        </div>
+                        <div class="panel-collapse collapse in" id="location">
+                            <div class="list-group">
+                                {{if id_estado:}}
+                                    <p class="list-group-item">Estado : {{=id_estado}} </p>
+                                {{pass}}
+                                {{if direccion:}}
+                                    <p class="list-group-item">Dirección : {{=direccion}} </p>
+                                {{pass}}
+                            </div>
                         </div>
                     </div>
-                </div>
                 {{pass}}
             </div>
         </div>

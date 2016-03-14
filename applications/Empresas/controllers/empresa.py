@@ -120,26 +120,27 @@ def registrar_tutor_industrial():
     # Caso 1: El form se lleno de manera correcta asi que registramos al tutor y procedemos a la pagina de exito
     if form.process().accepted:
         # Registramos la empresa
-        dbSPE.tutor_industrial.insert(
-            email = request.vars.email,
-            nombre = request.vars.nombre,
-            apellido = request.vars.apellido,
-            ci = request.vars.ci,
-            password = request.vars.password,
-            pregunta_secreta = request.vars.pregunta_secreta,
-            respuesta_pregunta_secreta = request.vars.respuesta_pregunta_secreta,
-            id_empresa = 1, # Cableado mientras se resuelven problemas
-            profesion = request.vars.profesion,
-            cargo = request.vars.cargo,
-            departamento = request.vars.departamento,
-            direccion = request.vars.direccion,
-            id_estado = None, #Estara asi hasta que se implemente la tabla estado
-            telefono = request.vars.telefono)
-        # Mensaje de exito
-        response.flash = T("Registro Exitoso")
-        # Nos dirigimos a la pagina de exito
-        return response.render('empresa/registrarTutorIndustrial/registro_tutor_industrial_exitoso.html',message=T("Registrar Tutor Industrial"),
-                               result=T("El registro de su tutor ha sido exitoso!"),
+        try:
+            dbSPE.tutor_industrial.insert(
+                email = request.vars.email,
+                nombre = request.vars.nombre,
+                apellido = request.vars.apellido,
+                ci = request.vars.ci,
+                password = request.vars.password,
+                pregunta_secreta = request.vars.pregunta_secreta,
+                respuesta_pregunta_secreta = request.vars.respuesta_pregunta_secreta,
+                id_empresa = 1, # Cableado mientras se resuelven problemas
+                profesion = request.vars.profesion,
+                cargo = request.vars.cargo,
+                departamento = request.vars.departamento,
+                direccion = request.vars.direccion,
+                id_estado = None, #Estara asi hasta que se implemente la tabla estado
+                telefono = request.vars.telefono)
+            # Mensaje de exito
+            response.flash = T("Registro Exitoso")
+            # Nos dirigimos a la pagina de exito
+            return response.render('empresa/registrarTutorIndustrial/registro_tutor_industrial_exitoso.html',message=T("Registrar Tutor Industrial"),
+                               result = T("El registro de su tutor ha sido exitoso!"),
                                email = request.vars.email,
                                nombre = request.vars.nombre,
                                apellido = request.vars.apellido,
@@ -151,6 +152,10 @@ def registrar_tutor_industrial():
                                direccion = request.vars.direccion,
                                id_estado = None, #Estara asi hasta que se implemente la tabla estado
                                telefono = request.vars.telefono)
+        except:
+            response.flash = T("El tutor industrial que trató de registrar ya existe en la aplicación")
+            return response.render('empresa/registrarTutorIndustrial/registrar_tutor_industrial.html',message=T("Registrar Tutor Industrial"),form=form)
+            
     # Caso 2: El form no se lleno de manera correcta asi que recargamos la pagina
     else:
         return response.render('empresa/registrarTutorIndustrial/registrar_tutor_industrial.html',message=T("Registrar Tutor Industrial"),form=form)

@@ -165,6 +165,7 @@
 'Editing file "%s"': 'Editando archivo "%s"',
 'El registro de su empresa ha sido exitoso!': 'El registro de su empresa ha sido exitoso!',
 'El registro de su tutor ha sido exitoso!': 'El registro de su tutor ha sido exitoso!',
+'El tutor industrial que trató de registrar ya existe en la aplicación': 'El tutor industrial que trató de registrar ya existe en la aplicación',
 'Elija Un Estado Valido': 'Elija Un Estado Valido',
 'Elija Un Pais Valido': 'Elija Un Pais Valido',
 'Elija Una Empresa Valida': 'Elija Una Empresa Valida',
