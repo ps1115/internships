@@ -45,13 +45,12 @@ CREATE TABLE IF NOT EXISTS `actividad` (
 --
 
 CREATE TABLE IF NOT EXISTS `calculo_pago` (
-    `id`                int(11)     NOT NULL AUTO_INCREMENT,
     `id_categoria`      int(11)     NOT NULL,
     `id_tipo_pasantia`  varchar(8)  NOT NULL,
     `id_pais`           int(11)     NOT NULL,
     `monto`             double      NOT NULL,
     `fecha`             date        NOT NULL,
-    PRIMARY KEY (`id`,`id_categoria`,`id_tipo_pasantia`,`id_pais`),
+    PRIMARY KEY (`id_categoria`,`id_tipo_pasantia`,`id_pais`),
     KEY `fk_calculo_pago_id_tipo_pasantia_tipo_pasantia_codigo` (`id_tipo_pasantia`),
     KEY `fk_calculo_pago_id_pais_pais_id` (`id_pais`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -246,8 +245,8 @@ CREATE TABLE IF NOT EXISTS `estado` (
 CREATE TABLE IF NOT EXISTS `evento` (
   `codigo` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(254) NOT NULL,
-  `fecha_inicio` timestamp NOT NULL,
-  `fecha_fin` timestamp NOT NULL,
+  `fecha_inicio` date NOT NULL,
+  `fecha_fin` date NOT NULL,
   `nombre_trimestre_actual` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`codigo`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
@@ -409,7 +408,6 @@ CREATE TABLE IF NOT EXISTS `preinscripcion` (
     `cod_seguridad`     varchar(10)     NOT NULL,
     PRIMARY KEY (`id`),
     KEY `fk_preinscripcion_usbid_usuario_usbid` (`usbid`),
-    KEY `fk_preinscripcion_id_periodo_periodo_id` (`id_periodo`),
     KEY `fk_preinscripcion_id_region_region_id` (`id_region`),
     KEY `fk_preinscripcion_id_estado_estado_id` (`id_estado`),
     KEY `fk_preinscripcion_codigo_tipo_pasantia_codigo` (`codigo`)
@@ -434,13 +432,12 @@ CREATE TABLE IF NOT EXISTS `region` (
 -- ----------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `rol_sistema` (
-    `id`                int(11)         NOT NULL AUTO_INCREMENT,
     `usbid`             varchar(254)    NOT NULL DEFAULT ' ',
     `nombre`            varchar(254)    NOT NULL,
     `apellido`          varchar(254)    NOT NULL,
     `rol`               varchar(254)    NOT NULL,
     `sede`              varchar(20)     NOT NULL,
-    PRIMARY KEY (`id`,`usbid`)
+    PRIMARY KEY (`usbid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -486,14 +483,15 @@ CREATE TABLE IF NOT EXISTS `solicitud_pasante` (
 --
 
 CREATE TABLE IF NOT EXISTS `sub_evento` (
-    `codigo_sub_evento`     int(11)         NOT NULL AUTO_INCREMENT,
     `codigo_supra_evento`   int(11)         NOT NULL,
-    `fecha_inicio`          timestamp       NOT NULL,
-    `fecha_fin`             timestamp       NOT NULL,
+    `codigo_sub_evento`     int(11)         NOT NULL,
+    `fecha_inicio`          date            NOT NULL,
+    `fecha_fin`             date            NOT NULL,
     `nombre_sub_evento`     varchar(254)    NOT NULL,
     `nombre_supra_evento`   varchar(254)    NOT NULL,
-    PRIMARY KEY (`codigo_sub_evento`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10;
+    PRIMARY KEY (`codigo_supra_evento`, `codigo_sub_evento`),
+    FOREIGN KEY (`codigo_supra_evento`) REFERENCES evento(`codigo`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -502,15 +500,17 @@ CREATE TABLE IF NOT EXISTS `sub_evento` (
 --
 
 CREATE TABLE IF NOT EXISTS `semana_muerta` (
-    `id`                            int(11) NOT NULL AUTO_INCREMENT,
-    `fecha_ini`                     timestamp    NOT NULL,
-    `fecha_fini`                    timestamp    NOT NULL,
-    `numero_semana`                 int(5)  NOT NULL,
-    `codigo_supra_evento_afectado`  int(11) NOT NULL,
+    `codigo_supra_evento_afectado`    int(11) NOT NULL,
     `codigo_sub_evento_afectado`    int(11) NOT NULL,
     `nombre_supra_evento_afectado`  varchar(254) NOT NULL,
     `nombre_sub_evento_afectado`    varchar(254) NOT NULL,
-    PRIMARY KEY (`id`,`numero_semana`,`fecha_ini`,`fecha_fini`)
+    `fecha_ini`                     date    NOT NULL,
+    `fecha_fini`                    date    NOT NULL,
+    `numero_semana`                 int(5)  NOT NULL,
+    PRIMARY KEY (`numero_semana`,`codigo_sub_evento_afectado`),
+    FOREIGN KEY (`codigo_supra_evento_afectado`,`codigo_sub_evento_afectado`)
+    REFERENCES sub_evento(`codigo_supra_evento`,`codigo_sub_evento`)
+
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 --
@@ -623,7 +623,8 @@ CREATE TABLE IF NOT EXISTS `usuario_estudiante` (
     `telf_cel`          varchar(20)     DEFAULT NULL,
     `direccion`         text,
     `sexo`              varchar(1)      DEFAULT NULL,
-    PRIMARY KEY (`usbid_usuario`)
+    PRIMARY KEY (`usbid_usuario`),
+    KEY `fk_usuario_estudiante_carrera_carrera_codigo` (`carrera`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -713,10 +714,10 @@ ALTER TABLE `actividad`
 --
 -- Filtros para la tabla `calculo_pago`
 --
--- ALTER TABLE `calculo_pago`
---    ADD CONSTRAINT `fk_calculo_pago_id_categoria_categoria_id` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
---    ADD CONSTRAINT `fk_calculo_pago_id_tipo_pasantia_tipo_pasantia_codigo` FOREIGN KEY (`id_tipo_pasantia`) REFERENCES `tipo_pasantia` (`codigo`) ON DELETE CASCADE ON UPDATE CASCADE,
---    ADD CONSTRAINT `fk_calculo_pago_id_pais_pais_id` FOREIGN KEY (`id_pais`) REFERENCES `pais` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `calculo_pago`
+    ADD CONSTRAINT `fk_calculo_pago_id_categoria_categoria_id` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    ADD CONSTRAINT `fk_calculo_pago_id_tipo_pasantia_tipo_pasantia_codigo` FOREIGN KEY (`id_tipo_pasantia`) REFERENCES `tipo_pasantia` (`codigo`) ON DELETE CASCADE ON UPDATE CASCADE,
+    ADD CONSTRAINT `fk_calculo_pago_id_pais_pais_id` FOREIGN KEY (`id_pais`) REFERENCES `pais` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `departamento`
@@ -761,7 +762,6 @@ ALTER TABLE `pasantia`
 ALTER TABLE `preinscripcion`
     ADD CONSTRAINT `fk_preinscripcion_codigo_tipo_pasantia_codigo` FOREIGN KEY (`codigo`) REFERENCES `tipo_pasantia` (`codigo`) ON UPDATE CASCADE,
     ADD CONSTRAINT `fk_preinscripcion_id_estado_estado_id` FOREIGN KEY (`id_estado`) REFERENCES `estado` (`id`) ON UPDATE CASCADE,
-    ADD CONSTRAINT `fk_preinscripcion_id_periodo_periodo_id` FOREIGN KEY (`id_periodo`) REFERENCES `periodo` (`id`) ON UPDATE CASCADE,
     ADD CONSTRAINT `fk_preinscripcion_id_region_region_id` FOREIGN KEY (`id_region`) REFERENCES `region` (`id`) ON UPDATE CASCADE,
     ADD CONSTRAINT `fk_preinscripcion_usbid_usuario_usbid` FOREIGN KEY (`usbid`) REFERENCES `usuario` (`usbid`);
 
@@ -789,8 +789,8 @@ ALTER TABLE `solicitud_pasante`
 --
 -- Filtros para la tabla `sub_evento`
 --
--- ALTER TABLE `sub_evento`
---    ADD CONSTRAINT `fk_sub_eventos_codigo_supra_evento_eventos_codigo` FOREIGN KEY (`codigo_supra_evento`) REFERENCES `evento` (`codigo`) ON UPDATE CASCADE;
+ALTER TABLE `sub_evento`
+    ADD CONSTRAINT `fk_sub_eventos_codigo_supra_evento_eventos_codigo` FOREIGN KEY (`codigo_supra_evento`) REFERENCES `evento` (`codigo`) ON UPDATE CASCADE;
 
 
 --
