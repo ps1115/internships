@@ -53,3 +53,68 @@ CREATE TABLE auth_cas(
     renew CHAR(1)
 );
 success!
+timestamp: 2016-03-10T00:08:41.567236
+CREATE TABLE usuario_estudiante(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    usbid_usuario CHAR(512) UNIQUE,
+    carrera CHAR(512),
+    cohorte INTEGER,
+    estudiante_sede CHAR(512),
+    email_sec CHAR(512),
+    telf_hab CHAR(512),
+    telf_cel CHAR(512),
+    direccion CHAR(512),
+    sexo CHAR(512)
+);
+success!
+timestamp: 2016-03-10T00:08:41.583227
+CREATE TABLE carrera(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    codigo CHAR(512),
+    nombre CHAR(512),
+    duracion CHAR(512),
+    sede CHAR(512),
+    coordinacion CHAR(512)
+);
+success!
+timestamp: 2016-03-10T00:08:41.594931
+CREATE TABLE departamento(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre CHAR(512),
+    id_division CHAR(512),
+    email_dep CHAR(512),
+    sede CHAR(512)
+);
+success!
+timestamp: 2016-03-10T00:08:41.606605
+CREATE TABLE usuario_profesor(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    usbid_usuario CHAR(512) UNIQUE,
+    dependencia CHAR(512),
+    dedicacion CHAR(512),
+    categoria CHAR(512),
+    email_sec CHAR(512),
+    telf CHAR(512),
+    celular CHAR(512),
+    activo CHAR(512)
+);
+success!
+timestamp: 2016-03-10T00:08:41.621559
+CREATE TABLE empresa(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    login CHAR(512) UNIQUE,
+    password CHAR(512),
+    pregunta_secreta CHAR(512),
+    respuesta_pregunta_secreta CHAR(512),
+    nombre CHAR(512),
+    direccion CHAR(512),
+    pag_web CHAR(512),
+    descripcion CHAR(512),
+    telefono CHAR(512),
+    contacto_RRHH CHAR(512),
+    intentos INTEGER,
+    habilitado INTEGER,
+    fechaCreacion TIMESTAMP,
+    ultimaModificacion TIMESTAMP
+);
+success!

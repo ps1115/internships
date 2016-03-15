@@ -71,6 +71,12 @@ def _():
             ('Registrarse',False,URL('default','registrar_profesor')),
             ('Consultar pasantías',False,"#"),
             ('Evaluar Pasantía',False,"#")
+            ]),
+        ('Administrador',False,"#",[
+            ('Gestionar Catálogos',False,URL('catalogos_grid','gestion_cct2'))
+            ]),
+        ('Coordinador',False,"#",[
+            ('Especificar Configuraciones',False,URL('catalogos_grid','especificar_configuraciones'))
             ])
         ]
 

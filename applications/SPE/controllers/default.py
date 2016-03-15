@@ -73,6 +73,7 @@ def login_cas():
         #buscandolo en la tabla de usuario.
         primeravez = dbSPE(tablaUsuario.usbid==usbid)
 
+        print primeravez
         if primeravez.isempty():
             #Si es primera vez que ingresa al sistema
             clave   = random_key()         #Se genera una clave automatica
@@ -103,7 +104,7 @@ def login_cas():
         else:
             #Como el usuario ya esta registrado, buscamos sus datos y lo logueamos.
             datosUsuario = dbSPE(tablaUsuario.usbid==usbid).select()[0]
-            clave    = datosUsuario.llave
+            clave        = datosUsuario.llave
 
             auth.login_bare(usbid,clave)
 
