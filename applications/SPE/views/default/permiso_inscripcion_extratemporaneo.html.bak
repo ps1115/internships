@@ -1,0 +1,11 @@
+{{extend 'layout.html'}}
+
+<div class="col-xs-4">
+  Información relevante para el usuario
+</div>
+<div class="col-xs-4">
+    <h1>      INSCRIPCION EXTRATEMPORANEA</h1>
+    {{=grid}}
+</div>
+<div class="col-xs-4">
+</div>

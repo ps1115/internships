@@ -1,0 +1,15 @@
+{{extend 'layout.html'}}
+<div class="col-xs-4">
+  Información relevante para el usuario
+</div>
+<div class="col-xs-4">
+  <h3>Carta de motivo de retiro de la pasantia</h3>
+    <p class='title'>{{=message}}</p>
+    <div class='content'>
+        {{=form}}
+        <p><br></p>
+        <p><br></p>
+    </div>
+</div>
+<div class="col-xs-4">
+</div>
