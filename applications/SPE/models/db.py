@@ -56,6 +56,8 @@ from gluon.tools import Auth, Service, PluginManager
 auth = Auth(db)
 service = Service()
 plugins = PluginManager()
+auth.settings.extra_fields['auth_user']= [Field('user_Type',requires=IS_IN_SET('Docente','Administrativo','Pregrado','Postgrado','Organizacion','Egresado'))]
+
 
 ## create all tables needed by auth if not custom tables
 auth.define_tables(username=True, signature=False)

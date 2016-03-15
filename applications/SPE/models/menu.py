@@ -54,30 +54,43 @@ def _():
     app = request.application
     ctr = request.controller
     # useful links to internal and external resources
-    response.menu += [
-        (T('Iniciar Sesion'),False,'#',[
-            (T('Miembro USB'),False,"#"),
-            (T('Empresa'),False,'#')
-            ]),
-        ('Estudiante',False,"#",[
-            ('Agregar Preinscripcion',False,URL('estudiante','agregar_preinscripcion')),
-            ('Llenar Curriculum',False,URL('estudiante','llenar_curriculum')),
-            ('Plan de Trabajo',False,URL('estudiante','plan_trabajo')),
-            ('Retirar Pasantía',False,URL('estudiante','retirar_pasantia')),
-            ('Solicitar permiso de inscripción extemporánea',False,"#"),
-            ('Solicitar permiso de evaluación extemporánea',False,"#")
-            ]),
-        ('Profesor',False,"#",[
-            ('Registrarse',False,URL('default','registrar_profesor')),
-            ('Consultar pasantías',False,"#"),
-            ('Evaluar Pasantía',False,"#")
-            ]),
-        ('Administrador',False,"#",[
-            ('Gestionar Catálogos',False,URL('catalogos_grid','gestion_cct2'))
-            ]),
-        ('Coordinador',False,"#",[
-            ('Especificar Configuraciones',False,URL('catalogos_grid','especificar_configuraciones'))
-            ])
+
+    # Entradas del menu si el usuario esta autenticado
+    if auth.is_logged_in():
+        if auth.user.user_Type == 'Pregrado' or auth.user.user_Type == 'Postgrado':
+            response.menu += [('Estudiante',False,"#",[
+                ('Agregar Preinscripcion',False,URL('estudiante','agregar_preinscripcion')),
+                ('Llenar Curriculum',False,URL('estudiante','llenar_curriculum')),
+                ('Plan de Trabajo',False,URL('estudiante','plan_trabajo')),
+                ('Retirar Pasantía',False,URL('estudiante','retirar_pasantia')),
+                ('Solicitar permiso de inscripción extemporánea',False,"#"),
+                ('Solicitar permiso de evaluación extemporánea',False,"#")
+                ])]
+        elif auth.user.user_Type == 'Docente':
+            response.menu += [('Profesor',False,"#",[
+                ('Consultar pasantías',False,"#"),
+                ('Evaluar Pasantía',False,"#")
+                ])]
+        elif auth.user.user_Type == 'Administrativo':
+            response.menu += [('Administrador',False,"#",[
+                ('Gestionar Catálogos',False,URL('catalogos_grid','gestion_cct2'))
+                ])]
+        else:
+            pass
+    else:
+        response.menu += [
+            (T('Iniciar Sesion'),False,'#',[
+                (T('Miembro USB'),False,"#"),
+                (T('Empresa'),False,'#')
+                ]),
+            ('Profesor',False,"#",[
+                ('Registrarse',False,URL('default','registrar_profesor'))]),
+            ('Administrador',False,"#",[
+                ('Gestionar Catálogos',False,URL('catalogos_grid','gestion_cct2'))
+                ]),
+            ('Coordinador',False,"#",[
+                ('Especificar Configuraciones',False,URL('catalogos_grid','especificar_configuraciones'))
+                ])
         ]
 
 if DEVELOPMENT_MENU: _()

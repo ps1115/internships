@@ -85,7 +85,8 @@ def login_cas():
                 last_name  = usuario.get('last_name'),
                 username   = usbid,
                 password   = db.auth_user.password.validate(clave)[0],
-                email      = usuario.get('email')
+                email      = usuario.get('email'),
+                user_Type  = usuario.get('tipo')
             )
 
             #Ingresamos a la base de datos de Usuario
