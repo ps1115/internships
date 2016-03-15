@@ -288,6 +288,8 @@
 'previous 100 rows': '100 filas anteriores',
 'Profile': 'Perfil',
 'Profile updated': 'Perfil actualizado',
+'Puede ver el prototipo de la aplicación para el administrador aquí.': 'Puede ver el prototipo de la aplicación para el administrador aquí.',
+'Puede ver el prototipo de la aplicación para el coordinador aquí.': 'Puede ver el prototipo de la aplicación para el coordinador aquí.',
 'Python': 'Python',
 'Query Not Supported: %s': 'Consulta No Soportada: %s',
 'Query:': 'Consulta:',

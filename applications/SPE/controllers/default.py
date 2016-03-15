@@ -59,3 +59,4 @@ def call():
 
 def retirar_pasantia():
     return response.render('default/retirar_pasantia.html')
+
