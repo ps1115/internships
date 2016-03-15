@@ -86,6 +86,10 @@
                         </h3>
                     </div>
                     <div id="profesional" class="panel-collapse collapse in panel-body">
+                        <label for='no_table_profesion'>{{=form.custom.label.id_empresa}}</label>
+                        {{=form.custom.widget.id_empresa.update(_placeholder="Ej: Empresas Polar C.A.")}}
+                        <br>
+                        {{pass}}
                         <label for='no_table_profesion'>{{=form.custom.label.profesion}}</label>
                         {{=form.custom.widget.profesion.update(_placeholder="Ej: Ing. Computación")}}
                         <br>
