@@ -3,73 +3,32 @@
 
 <p class='title'>{{=message}}</p>
 
-  <form role="form">
-    <div class="container col-md-4 form-group">
-      <p class="subtitle">Datos Personales</p>
-      <label for="text">Nombre y Apellido</label>
-      <input type="text" class="form-control" id="nombreyapellido">
-      <label for="text">Cedula</label>
-      <input type="text" class="form-control" id="cedula">
-      <label for="text">Carrera</label>
-      <select class="form-control" id="carrera">
-        <option>(0800) Ingenieria de Computacion</option>
-        <option>(0500) Ingenieria Electronica</option>
-        <option>(COD ) Carrera </option>
-      </select>
-      <label for="text">Sede</label>
-      <select class="form-control" id="sede">
-        <option>Sartenejas</option>
-        <option>Litoral</option>
-      </select>
-      <label for="text">Direccion</label>
-      <input type="text" class="form-control" id="direccion">
-      <label for="text">Telefono de Habitacion</label>
-      <input type="text" class="form-control" id="telhab">
-      <label for="text">Telefono Celular</label>
-      <input type="text" class="form-control" id="telcel">
-      <br><br><br><br>
-    </div>
-    <div class="container col-md-4 form-group">
-      <p class="subtitle">Datos de la Pasantia</p>
-      <label for="text">Codigo de la Pasantia</label>
-      <select class="form-control" id="codpas">
-        <option>EP-1420 - Pasantía Corta Carreras Largas</option>
-        <option>ET-1420 - Pasantía Corta Carreras Cortas</option>
-        <option>EP-2420 - Pasantía Intermedia Carreras Largas</option>
-        <option>ET-2420 - Pasantía Intermedia Carreras Cortas</option>
-        <option>EP-3420 - Pasantía Larga</option>
-      </select>
-      <label for="text">Periodo</label>
-      <select class="form-control" id="codpas">
-        <option>Enero - Marzo 2016</option>
-        <option>....</option>
-        <option>....</option>
-      </select>
-      <br>
-      <label for="text">¿Es usted graduando?</label><br>
-      <label class="radio-inline"><input type="radio" name="optradio">Sí</label>
-      <label class="radio-inline"><input type="radio" name="optradio">No</label>
-      <br>
-      <label for="text">¿Desea publicar sus datos para que las empresas lo contacten?</label><br>
-      <label class="radio-inline"><input type="radio" name="optradio">Sí</label>
-      <label class="radio-inline"><input type="radio" name="optradio">No</label> <br>
-      <br>
-      <p>Para que las empresas puedan contactarlo, usted debe seleccionar "Si" y llenar su curriculum en el sistema.</p>
-      <br>
-      <a href={{=URL('estudiante','llenar_curriculum')}}>
-        <button type="success" class="btn btn-default">Llenar Curriculum</button>
-      </a>
-    </div>
-    <div class="container col-md-4 form-group">
-    <p class="subtitle">Datos del Perfil</p>
-    <label for="text">Foto Actualizada</label><br>
-      <div class=img>
-        {{=IMG(_src=URL('static','images/empty_avatar.png'),_alt="captcha",_height="200",_width="200")}}
-      </div>
-      <input id="avatar" name="avatar" type="file" class="file-loading">
-      <br>
-      <p>Tener una fotografia actualizada es obligatorio.<p>
+<div class="row">
+  <div class="col-sm-4">
+    <p class='subtitle'>Datos Personales</p>
+    {{=form1}}
+  </div>
+  <div class="col-sm-4">
+    <p class='subtitle'>Datos de la Pasantia</p>
+    {{=form2}}
+  </div>
+  <div class="col-sm-4">
+    <p class='subtitle'>Datos del Perfil</p>
+    {{result = tiene_foto(auth.user.username)}}
+    {{if result['check']:}}
+    {{=IMG(_src=URL('static','profile_pictures/'+str(result['path'])),_alt="profile",_height="200",_width="200")}}
+    {{else:}}
+    {{=IMG(_src=URL('static','profile_pictures/default.png'),_alt="profile",_height="200",_width="200")}}
+    {{pass}}
+    {{=form3}}
     <br>
-    <button type="submit" class="btn btn-default">Enviar Preinscripcion</button>
-    </div>
-  </form>
+    <p>Una vez actualizados todos sus datos, finalice su preinscripcion.</p>
+    </br>
+    <a href={{=URL('estudiante','finalizar_preinscripcion')}}>
+      <button type="success" class="btn btn-default">Finalizar Preinscripcion</button>
+    </a>
+  </div>
+</div>
+<div class="row">
+  <br><br>
+</div>

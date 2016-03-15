@@ -397,7 +397,6 @@ CREATE TABLE IF NOT EXISTS `preinscripcion` (
     `id`                int(10)         NOT NULL AUTO_INCREMENT,
     `id_periodo`        int(10)         NOT NULL,
     `anio`              int(4)          NOT NULL,
-    `bloque`            varchar(1)      NOT NULL,
     `codigo`            varchar(7)      NOT NULL,
     `usbid`             varchar(254)    NOT NULL,
     `fecha_ingreso`     date            NOT NULL,
@@ -409,7 +408,6 @@ CREATE TABLE IF NOT EXISTS `preinscripcion` (
     `cod_seguridad`     varchar(10)     NOT NULL,
     PRIMARY KEY (`id`),
     KEY `fk_preinscripcion_usbid_usuario_usbid` (`usbid`),
-    KEY `fk_preinscripcion_id_periodo_periodo_id` (`id_periodo`),
     KEY `fk_preinscripcion_id_region_region_id` (`id_region`),
     KEY `fk_preinscripcion_id_estado_estado_id` (`id_estado`),
     KEY `fk_preinscripcion_codigo_tipo_pasantia_codigo` (`codigo`)
@@ -764,7 +762,6 @@ ALTER TABLE `pasantia`
 ALTER TABLE `preinscripcion`
     ADD CONSTRAINT `fk_preinscripcion_codigo_tipo_pasantia_codigo` FOREIGN KEY (`codigo`) REFERENCES `tipo_pasantia` (`codigo`) ON UPDATE CASCADE,
     ADD CONSTRAINT `fk_preinscripcion_id_estado_estado_id` FOREIGN KEY (`id_estado`) REFERENCES `estado` (`id`) ON UPDATE CASCADE,
-    ADD CONSTRAINT `fk_preinscripcion_id_periodo_periodo_id` FOREIGN KEY (`id_periodo`) REFERENCES `periodo` (`id`) ON UPDATE CASCADE,
     ADD CONSTRAINT `fk_preinscripcion_id_region_region_id` FOREIGN KEY (`id_region`) REFERENCES `region` (`id`) ON UPDATE CASCADE,
     ADD CONSTRAINT `fk_preinscripcion_usbid_usuario_usbid` FOREIGN KEY (`usbid`) REFERENCES `usuario` (`usbid`);
 

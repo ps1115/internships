@@ -1,0 +1,31 @@
+{{('message' in globals())}}
+{{extend 'layout.html'}}
+
+<p class='title'>{{=message}}</p>
+
+<div class="row">
+  <div class="col-sm-3">
+    <p class=subtitle>Foto de Perfil</p>
+    {{result = tiene_foto(auth.user.username)}}
+    {{if result['check']:}}
+    {{=IMG(_src=URL('static','profile_pictures/'+str(result['path'])),_alt="profile",_height="200",_width="200")}}
+    {{else:}}
+    {{=IMG(_src=URL('static','profile_pictures/default.png'),_alt="profile",_height="200",_width="200")}}
+    {{pass}}
+  </div>
+  <div class="col-sm-3">
+    <p class='subtitle'>Datos Personales</p>
+      {{for dato in datos_personales:}}
+      <li>{{=dato}} : {{=datos_personales[dato]}}</li>
+      {{pass}}
+  </div>
+  <div class="col-sm-3">
+    <p class='subtitle'>Datos Pasantia</p>
+      {{for dato in datos_pasantia:}}
+      <li>{{=dato}} : {{=datos_pasantia[dato]}}</li>
+      {{pass}}
+  </div>
+</div>
+<div class="row">
+  <br><br>
+</div>

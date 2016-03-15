@@ -8,18 +8,7 @@ def registrar_empresa():
     fields += [Field('comfirm_Password','password', label=T('Comfirm Password'),
                      requires = [IS_EXPR('value==%s' % repr(request.vars.password),error_message=T('Las contraseñas no coinciden'))])]
     # Agregamos el resto de los campos
-    fields += [
-        dbSPE.empresa.pregunta_secreta,
-        dbSPE.empresa.respuesta_pregunta_secreta,
-        dbSPE.empresa.nombre,
-        dbSPE.empresa.id_pais,
-        dbSPE.empresa.id_estado,
-        dbSPE.empresa.direccion,
-        dbSPE.empresa.pag_web,
-        dbSPE.empresa.descripcion,
-        dbSPE.empresa.telefono,
-        dbSPE.empresa.contacto_RRHH
-        ]
+    fields += [dbSPE.empresa.pregunta_secreta,dbSPE.empresa.respuesta_pregunta_secreta,dbSPE.empresa.nombre,dbSPE.empresa.direccion,dbSPE.empresa.pag_web,dbSPE.empresa.descripcion,dbSPE.empresa.telefono,dbSPE.empresa.contacto_RRHH]
     # Generamos el SQLFORM utilizando los campos
     form = SQLFORM.factory(
     *fields,submit_button='Submit',
@@ -31,12 +20,10 @@ def registrar_empresa():
             'pregunta_secreta':T('Si necesita obtener de nuevo su contraseña se le hara esta pregunta'),
             'respuesta_pregunta_secreta':T('Respuesta a su pregunta secreta'),
             'nombre':T('Nombre comercial de la empresa'),
-            'id_pais':T('Pais en el que se encuentra la empresa'),
-            'id_estado':T('Estado del pais en el que se encuentra'),
             'direccion':T('Direccion de las instalaciones de la empresa'),
             'pag_web':T('Pagina Web de la empresa'),
             'descripcion':T('Descripcion breve de la empresa, su vision y sus funciones'),
-            'telefono':T('Numero telefonico de contacto de la empresa'),
+            'telefono':T('Numerico telefonico de contacto de la empresa'),
             'contacto_RRHH':T('Correo de contacto del departamento de recursos humanos de la empresa')}
     )
 
@@ -48,8 +35,6 @@ def registrar_empresa():
                              pregunta_secreta = request.vars.pregunta_secreta,
                              respuesta_pregunta_secreta = request.vars.respuesta_pregunta_secreta,
                              nombre = request.vars.nombre,
-                             id_pais = request.vars.id_pais,
-                             id_estado = request.vars.id_estado,
                              direccion = request.vars.direccion,
                              pag_web = request.vars.pag_web,
                              descripcion = request.vars.descripcion,
@@ -61,8 +46,7 @@ def registrar_empresa():
             username   = request.vars.log,
             first_name = request.vars.nombre,
             password   = db.auth_user.password.validate(request.vars.password)[0],
-            email      = request.vars.contacto_RRHH,
-            user_Type  = 'empresa'
+            email      = request.vars.contacto_RRHH
         )
 
         # Mensaje de exito
@@ -73,14 +57,10 @@ def registrar_empresa():
                                log=request.vars.log,
                                nombre=request.vars.nombre,
                                direccion=request.vars.direccion,
-                               id_pais = request.vars.id_pais,
-                               id_estado = request.vars.id_estado,
                                pag_web=request.vars.pag_web,
                                descripcion=request.vars.descripcion,
                                telefono=request.vars.telefono,
-                               contacto_RRHH=request.vars.contacto_RRHH,
-                               pregunta_secreta=request.vars.pregunta_secreta,
-                               respuesta_pregunta_secreta=request.vars.respuesta_pregunta_secreta)
+                               contacto_RRHH=request.vars.contacto_RRHH)
     # Caso 2: El form no se lleno de manera correcta asi que recargamos la pagina
     else:
         return response.render('empresa/registrarEmpresa/registrar_empresa.html',message=T("Registrar Empresa"),form=form)
@@ -105,12 +85,9 @@ def registrar_tutor_industrial():
         dbSPE.tutor_industrial.cargo,
         dbSPE.tutor_industrial.departamento,
         dbSPE.tutor_industrial.direccion,
-        dbSPE.tutor_industrial.id_pais,
         dbSPE.tutor_industrial.id_estado,
         dbSPE.tutor_industrial.telefono
     ]
-
-
     # Generamos el SQLFORM utilizando los campos
     form = SQLFORM.factory(
     *fields,submit_button='Submit',
@@ -133,9 +110,6 @@ def registrar_tutor_industrial():
            })
     # Caso 1: El form se lleno de manera correcta asi que registramos al tutor y procedemos a la pagina de exito
     if form.process().accepted:
-        # Buscamos el id de la empresa
-        empresaRegistradoraSet = dbSPE(dbSPE.empresa.log == auth.user.username).select()
-        empresaRegistradora = empresaRegistradoraSet[0]
         # Registramos la empresa
         dbSPE.tutor_industrial.insert(
             email = request.vars.email,
@@ -145,12 +119,12 @@ def registrar_tutor_industrial():
             password = request.vars.password,
             pregunta_secreta = request.vars.pregunta_secreta,
             respuesta_pregunta_secreta = request.vars.respuesta_pregunta_secreta,
-            id_empresa = empresaRegistradora.id, # Cableado mientras se resuelven problemas
+            id_empresa = 1, # Cableado mientras se resuelven problemas
             profesion = request.vars.profesion,
             cargo = request.vars.cargo,
             departamento = request.vars.departamento,
             direccion = request.vars.direccion,
-            id_estado = request.vars.id_estado, #Estara asi hasta que se implemente la tabla estado
+            id_estado = None, #Estara asi hasta que se implemente la tabla estado
             telefono = request.vars.telefono)
 
         #Insertamos en la tabla user de Web2py
@@ -158,9 +132,8 @@ def registrar_tutor_industrial():
             first_name = request.vars.nombre,
             last_name  = request.vars.apellido,
             username   = request.vars.email,
-            password   = db.auth_user.password.validate(request.vars.password)[0],
-            email      = request.vars.email,
-            user_Type  = 'tutor_industrial'
+            password   = db.auth_user.password.validate(clave)[request.vars.password],
+            email      = request.vars.email
         )
 
         # Mensaje de exito
@@ -172,7 +145,7 @@ def registrar_tutor_industrial():
                                nombre = request.vars.nombre,
                                apellido = request.vars.apellido,
                                ci = request.vars.ci,
-                               id_empresa = empresaRegistradora.id, # Cableado mientras se resuelven problemas
+                               id_empresa = 1, # Cableado mientras se resuelven problemas
                                profesion = request.vars.profesion,
                                cargo = request.vars.cargo,
                                departamento = request.vars.departamento,
