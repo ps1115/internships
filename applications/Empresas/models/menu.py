@@ -51,21 +51,43 @@ def _():
     app = request.application
     ctr = request.controller
     # useful links to internal and external resources
-    response.menu += [
-        ('Empresa',False,"#",[
-            ('Registrarse',False,URL(c='empresa', f='registrar_empresa')),
-            ('Solicitudes de pasantes',False,"#"),
-            ('Registrar tutor industrial',False,URL(c='empresa', f='registrar_tutor_industrial')),
-            ('Gestionar Registro Empresarial',False,"#")
-            ])
-    ]
 
-    response.menu += [
-        ('Tutor Industrial',False,"#",[
-            ('¿Qué es un tutor industrial?',False,"#"),
-            ('Registrarse',False,URL(c='tutor_industrial', f='solicitar_registro_tutor'))
-            ])
-    ]
+    # Entradas del menu si el usuario esta autenticado
+    if auth.is_logged_in():
+        # Caso 1: El usuario es una empresa
+        if auth.user.user_Type == 'empresa':
+
+            response.menu += [
+                ('Empresa',False,"#",[
+                    ('¿Qué puede obtener tu empresa?',False,"#"),
+                    ('Solicitudes de pasantes',False,"#"),
+                    ('Registrar tutor industrial',False,URL(c='empresa', f='registrar_tutor_industrial')),
+                    ('Gestionar Registro Empresarial',False,"#")
+                    ])
+            ]
+        # Caso 2: El usuario es un tutor industrial
+        elif auth.user.user_Type == 'tutor_industrial':
+            response.menu += [
+                ('Tutor Industrial',False,"#",[
+                    ('¿Qué es un tutor industrial?',False,"#"),
+                    ('Consultar Pasantias',False,"#")
+                    ])
+            ]
+    # Entradas del menu si el usuario NO esta autenticado
+    else:
+
+        response.menu += [
+            ('Empresa',False,"#",[
+                ('¿Qué puede obtener tu empresa?',False,"#"),
+                ('Registrarse',False,URL(c='empresa', f='registrar_empresa'))])
+        ]
+
+        response.menu += [
+            ('Tutor Industrial',False,"#",[
+                ('¿Qué es un tutor industrial?',False,"#"),
+                ('Registrarse',False,URL(c='tutor_industrial', f='solicitar_registro_tutor'))
+                ])
+        ]
 
 if DEVELOPMENT_MENU: _()
 

@@ -61,7 +61,8 @@ def registrar_empresa():
             username   = request.vars.log,
             first_name = request.vars.nombre,
             password   = db.auth_user.password.validate(request.vars.password)[0],
-            email      = request.vars.contacto_RRHH
+            email      = request.vars.contacto_RRHH,
+            user_Type  = 'empresa'
         )
 
         # Mensaje de exito
@@ -158,7 +159,8 @@ def registrar_tutor_industrial():
             last_name  = request.vars.apellido,
             username   = request.vars.email,
             password   = db.auth_user.password.validate(request.vars.password)[0],
-            email      = request.vars.email
+            email      = request.vars.email,
+            user_Type  = 'tutor_industrial'
         )
 
         # Mensaje de exito
@@ -170,7 +172,7 @@ def registrar_tutor_industrial():
                                nombre = request.vars.nombre,
                                apellido = request.vars.apellido,
                                ci = request.vars.ci,
-                               id_empresa = 1, # Cableado mientras se resuelven problemas
+                               id_empresa = empresaRegistradora.id, # Cableado mientras se resuelven problemas
                                profesion = request.vars.profesion,
                                cargo = request.vars.cargo,
                                departamento = request.vars.departamento,
