@@ -623,8 +623,7 @@ CREATE TABLE IF NOT EXISTS `usuario_estudiante` (
     `telf_cel`          varchar(20)     DEFAULT NULL,
     `direccion`         text,
     `sexo`              varchar(1)      DEFAULT NULL,
-    PRIMARY KEY (`usbid_usuario`),
-    KEY `fk_usuario_estudiante_carrera_carrera_codigo` (`carrera`)
+    PRIMARY KEY (`usbid_usuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
