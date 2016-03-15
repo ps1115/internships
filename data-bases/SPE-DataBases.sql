@@ -234,7 +234,7 @@ CREATE TABLE IF NOT EXISTS `estado` (
     `id_pais`   int(11)     NOT NULL,
     PRIMARY KEY (`id`),
     KEY `fk_estado_id_pais_pais_id` (`id_pais`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=25 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -658,7 +658,7 @@ CREATE TABLE IF NOT EXISTS `pais` (
     `id`        int(11)     NOT NULL AUTO_INCREMENT,
     `nombre`    varchar(10) NOT NULL,
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
