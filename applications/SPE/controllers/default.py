@@ -76,6 +76,11 @@ def login_cas():
         if primeravez.isempty():
             #Si es primera vez que ingresa al sistema
             clave   = random_key()         #Se genera una clave automatica
+            print "================== Begin"
+            print "type      " + str(type(usuario))
+            print "user_data " + str(usuario)
+            print clave
+            print "Empty"
 
             #Ingresamos al usuario en la tabla de Autenticacion
             # de la base de datos de Web2Py
