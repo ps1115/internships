@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+# Falta especificar que el usario sea profesor.
 def justificar_retiro_profesor():
     # Argumentos son: codigo, año, periodo(nombre)
     if len(request.args)==3:
@@ -12,9 +13,13 @@ def justificar_retiro_profesor():
             col3 = {'motivo':T('Motivo justificativo')}
             )
         if form.process().accepted:
-            # Falta refinar este query con año, periodo e id_estudiante
-            busqueda = dbSPE(dbSPE.pasantia.codigo==request.args[0])
-            busqueda.update(motivo_retiro_tutor_academico = request.vars.motivo_retiro_tutor_academico)
+            pasantia = dbSPE((dbSPE.pasantia.codigo==request.args[0]) &
+                (dbSPE.pasantia.anio==request.args[1]) &
+                (dbSPE.pasantia.periodo==request.args[2]) &
+                (dbSPE.pasantia.id_tutor_academico==auth.user.username)
+                )
+
+            pasantia.update(motivo_retiro_tutor_academico = request.vars.motivo_retiro_tutor_academico)
             response.flash = 'Actualizado el motivo'
             redirect(URL('justificar_retiro_profesor'))
 
@@ -22,14 +27,15 @@ def justificar_retiro_profesor():
             response.flash = 'Error'
 
     else:
-        # Este query debe ser remplazado por el correcto
-        # Buscar las pasantias segun el id del usuario(estudiante)
-        pasantias = dbSPE(dbSPE.pasantia.periodo == 77)
-        pasantia = pasantias.select()[0]
+        pasantias = dbSPE((dbSPE.pasantia.id_estudiante==auth.user.username) &
+            (dbSPE.pasantia.motivo_retiro_estudiante!=None)
+        )
 
         opciones = []
+        periodos = {}
         for p in pasantias.select():
             periodo = dbSPE.periodo(p.periodo)
+            periodos[periodo.nombre] = p.periodo
             opciones.append('['+p.codigo+'] '+periodo.nombre+' '+str(p.anio)+' '+p.titulo)
 
         form = SQLFORM.factory(
@@ -39,7 +45,7 @@ def justificar_retiro_profesor():
             # Datos: codigo, periodo(nombre), año
             datos = form.vars.pasantia.split()
             datos[0] = datos[0][1:-1]
-            redirect(URL('justificar_retiro_profesor/'+datos[0]+'/'+datos[2]+'/'+datos[1]))
+            redirect(URL('justificar_retiro_profesor/'+datos[0]+'/'+datos[2]+'/'+str(periodos[datos[1]])))
 
         elif form.errors:
             response.flash = 'Error'
