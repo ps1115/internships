@@ -25,7 +25,7 @@ response.google_analytics_id = None
 #########################################################################
 
 response.menu = [
-    ('Inicio', False, URL('default', 'index'), [])
+    (T('Inicio'), False, URL('default', 'index'), [])
 ]
 
 DEVELOPMENT_MENU = True
@@ -55,15 +55,15 @@ def _():
     ctr = request.controller
     # useful links to internal and external resources
     response.menu += [
-        ('Iniciar Sesion',False,'#',[
-            ('Miembro USB',False,"#"),
-            ('Empresa',False,'#')
+        (T('Iniciar Sesion'),False,'#',[
+            (T('Miembro USB'),False,"#"),
+            (T('Empresa'),False,'#')
             ]),
         ('Estudiante',False,"#",[
             ('Agregar Preinscripcion',False,URL('estudiante','agregar_preinscripcion')),
             ('Llenar Curriculum',False,URL('estudiante','llenar_curriculum')),
             ('Plan de Trabajo',False,URL('estudiante','plan_trabajo')),
-            ('Retirar Pasantía',False,URL('default','retirar_pasantia')),
+            ('Retirar Pasantía',False,URL('estudiante','retirar_pasantia')),
             ('Solicitar permiso de inscripción extemporánea',False,"#"),
             ('Solicitar permiso de evaluación extemporánea',False,"#")
             ]),
