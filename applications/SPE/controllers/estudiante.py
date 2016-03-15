@@ -36,12 +36,9 @@ def agregar_preinscripcion():
         Field('codigo_pasantia',label='Codigo de la Pasantia',required=True,
                 requires=IS_IN_DB(dbSPE,dbSPE.tipo_pasantia,'%(codigo)s %(nombre)s',
                 zero="Seleccione")),
-        # Field('periodo',label='Periodo',required=True,
-        #                 requires=IS_IN_DB(dbSPE,dbSPE.sub_evento.nombre == Inscripcion,'%(nombre_supra_evento)s',
-        #                 zero="Seleccione")),
         Field('periodo',label='Periodo',required=True,
-                requires=IS_IN_SET(["Enero - Marzo 2016","Abril-Septiembre 2016"],
-                zero="Seleccione")),
+                        requires=IS_IN_DB(dbSPE,dbSPE.evento,'%(nombre)s',
+                        zero="Seleccione")),
         Field('es_graduando',label="¿Es usted graduando?",required=True, requires=IS_IN_SET(["Si","No"]),
                 widget=lambda k,v:SQLFORM.widgets.radio.widget(k,v,style='divs')),
         Field('publicar_datos',label="¿Desea que las empresas puedan ver sus datos?",
@@ -83,7 +80,7 @@ def agregar_preinscripcion():
     if datos_pasantia.process(formname="datos_pasantia").accepted:
         print "Aceptado!"
         dbSPE.preinscripcion.insert(
-                id_periodo    = '00',
+                id_periodo    = datos_pasantia.vars.periodo,
                 anio          = int(request.now.year),
                 codigo        = datos_pasantia.vars.codigo_pasantia,
                 usbid         = auth.user.username,
@@ -101,6 +98,7 @@ def finalizar_preinscripcion():
     DatosUsuario     = dbSPE(dbSPE.usuario.usbid==auth.user.username).select()[0]
     DatosEstudiante  = dbSPE(dbSPE.usuario_estudiante.usbid_usuario==auth.user.username).select()[0]
     DatosCarrera     = dbSPE(dbSPE.carrera.codigo==DatosEstudiante.carrera).select()[0]
+    DatosPeriodo     = dbSPE(dbSPE.evento.codigo==DatosInscripcion.id_periodo).select()[0]
 
     return  dict(message=T("Preinscripcion Exitosa"),
                 datos_personales = {
@@ -113,7 +111,7 @@ def finalizar_preinscripcion():
                 'Telfono habitacion' : DatosEstudiante.telf_hab
                 },
                 datos_pasantia = {
-                'Periodo'            : 'Nombre Periodo',
+                'Periodo'            : DatosPeriodo.nombre,
                 'Codigo Pasantia'    : DatosInscripcion.codigo,
                 'Fecha Inscripcion'  : DatosInscripcion.fecha_ingreso.strftime('%d-%m-%Y'),
                 'Codigo de Seguridad': DatosInscripcion.cod_seguridad
