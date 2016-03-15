@@ -59,7 +59,8 @@ def registrar_empresa():
             username   = request.vars.log,
             first_name = request.vars.nombre,
             password   = db.auth_user.password.validate(request.vars.password)[0],
-            email      = request.vars.contacto_RRHH
+            email      = request.vars.contacto_RRHH,
+            user_Type  = 'empresa'
         )
 
         # Mensaje de exito
