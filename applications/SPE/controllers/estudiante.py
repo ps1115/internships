@@ -127,14 +127,20 @@ def llenar_curriculum():
     return dict(message="Curriculum")
 
 def retirar_pasantia():
-    # Argumentos son: codigo, año, periodo(nombre)
+    # Argumentos son: codigo, año, periodo
     if len(request.args)==3:
         form = SQLFORM.factory(
             Field('motivo', label = 'Motivo del retiro')
             )
         if form.process().accepted:
             # Falta refinar este query con año, periodo e id_estudiante
-            dbSPE(dbSPE.pasantia.codigo==request.args[0]).update(motivo_retiro_estudiante=form.vars.motivo)
+            pasantia = dbSPE((dbSPE.pasantia.codigo==request.args[0]) &
+                (dbSPE.pasantia.anio==request.args[1]) &
+                (dbSPE.pasantia.periodo==request.args[2]) &
+                (dbSPE.pasantia.id_estudiante==auth.user.username)
+                )
+
+            pasantia.update(motivo_retiro_estudiante=form.vars.motivo)
             response.flash = 'Actualizado el motivo'
             redirect(URL('retirar_pasantia'))
 
@@ -144,12 +150,14 @@ def retirar_pasantia():
     else:
         # Este query debe ser remplazado por el correcto
         # Buscar las pasantias segun el id del usuario(estudiante)
-        pasantias = dbSPE(dbSPE.pasantia.periodo == 77)
-        pasantia = pasantias.select()[0]
+        pasantias = dbSPE(dbSPE.pasantia.id_estudiante == auth.user.username)
+        # pasantia = pasantias.select()[0]
 
         opciones = []
+        periodos = {}
         for p in pasantias.select():
             periodo = dbSPE.periodo(p.periodo)
+            periodos[periodo.nombre] = p.periodo
             opciones.append('['+p.codigo+'] '+periodo.nombre+' '+str(p.anio)+' '+p.titulo)
 
         form = SQLFORM.factory(
@@ -160,7 +168,7 @@ def retirar_pasantia():
             # Datos: codigo, periodo(nombre), año
             datos = form.vars.pasantia.split()
             datos[0] = datos[0][1:-1]
-            redirect(URL('retirar_pasantia/'+datos[0]+'/'+datos[2]+'/'+datos[1]))
+            redirect(URL('retirar_pasantia/'+datos[0]+'/'+datos[2]+'/'+str(periodos[datos[1]])))
 
         elif form.errors:
             response.flash = 'Error'

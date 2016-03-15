@@ -5,6 +5,10 @@ INSERT INTO tipo_pasantia VALUES ('PS1115', 'Pasantia prueba');
 INSERT INTO tipo_pasantia VALUES ('PS1110', 'Otra Pasantia prueba');
 
 INSERT INTO usuario
+   VALUES ('11-10053', 'Estudiante', 'Estudioso', NULL, NULL, NULL,NULL
+      );
+
+INSERT INTO usuario
    VALUES ('77', 'Estudiante', 'Estudioso', NULL, NULL, NULL,NULL
       );
 
@@ -26,12 +30,12 @@ INSERT INTO pasantia
    VALUES ('PS1115', 77, 2016, '2016-03-10', 'seguridad',
       'Probando', 'Pruebas', 'muy fino', 'si', 'varios', 0, 0, 0, NULL,
       '2016-03-10', 2017, 0, 'no mencion', '2016-03-10', 'en curso',
-      '77@gmail.com', NULL, '77', '77', NULL, NULL, NULL, NULL, NULL
+      '77@gmail.com', NULL, '11-10053', '77', NULL, NULL, NULL, NULL, NULL
       );
 
 INSERT INTO pasantia
    VALUES ('PS1110', 77, 2016, '2016-03-10', 'seguridad',
       'Probando', 'Pruebas', 'muy fino', 'si', 'varios', 0, 0, 0, NULL,
       '2016-03-10', 2017, 0, 'no mencion', '2016-03-10', 'en curso',
-      '77@gmail.com', NULL, '77', '77', NULL, NULL, NULL, NULL, NULL
+      '77@gmail.com', NULL, '11-10053', '77', NULL, NULL, NULL, NULL, NULL
       );
