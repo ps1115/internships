@@ -56,3 +56,28 @@ success!
 timestamp: 2016-03-12T21:41:15.339351
 ALTER TABLE auth_user ADD username CHAR(128);
 success!
+timestamp: 2016-03-15T02:23:20.738883
+ALTER TABLE auth_user ADD user_type CHAR(512);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
