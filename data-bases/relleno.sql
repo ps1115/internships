@@ -5,7 +5,7 @@ INSERT INTO tipo_pasantia VALUES ('PS1115', 'Pasantia prueba');
 INSERT INTO tipo_pasantia VALUES ('PS1110', 'Otra Pasantia prueba');
 
 INSERT INTO usuario
-   VALUES ('77', 'Estudiante', 'Estudioso', NULL, NULL
+   VALUES ('77', 'Estudiante', 'Estudioso', NULL, NULL, NULL,NULL
       );
 
 INSERT INTO empresa
