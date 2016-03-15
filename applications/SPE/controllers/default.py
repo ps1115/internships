@@ -93,26 +93,6 @@ def cc():
     formulario4=FORM(TEXTAREA(_name='Motivo'))
     return dict(formulario1=formulario1,formulario2=formulario2,formulario3=formulario3,formulario4=formulario4)
 
-def justificar_retiro_profesor():
-    return response.render('default/justificar_retiro_profesor.html')
-
-def justificar_retiro_profesor():
-    formulario1=FORM(INPUT(_name='Nombre'))
-    formulario2=FORM(INPUT(_name='Carnet'))
-    formulario3=FORM(INPUT(_name='Fecha'))
-    formulario4=FORM(TEXTAREA(_name='Motivo'))
-    return dict(formulario1=formulario1,formulario2=formulario2,formulario3=formulario3,formulario4=formulario4)
-
-def justificar_retiro_empresa():
-    return response.render('default/justificar_retiro_empresa.html')
-
-def justificar_retiro_empresa():
-    formulario1=FORM(INPUT(_name='Nombre'))
-    formulario2=FORM(INPUT(_name='Carnet'))
-    formulario3=FORM(INPUT(_name='Fecha'))
-    formulario4=FORM(TEXTAREA(_name='Motivo'))
-    return dict(formulario1=formulario1,formulario2=formulario2,formulario3=formulario3,formulario4=formulario4)
-
 def permiso_inscripcion_extratemporaneo():
     grid=SQLFORM(db.contact, user_signature=False)
     return locals()

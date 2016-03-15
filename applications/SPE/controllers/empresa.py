@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-def justificar_retiro_profesor():
+def justificar_retiro_empresa():
     # Este query debe ser remplazado por el correcto
     # Buscar las pasantias segun el id del usuario(estudiante)
     pasantias = dbSPE(dbSPE.pasantia.periodo == 77)
@@ -16,16 +16,9 @@ def justificar_retiro_profesor():
     if form.process().accepted:
         # Esto esta para dar la idea del flujo, pero debe
         # ser remplazado por el formulario correcto
-        field =[dbSPE.pasantia.motivo_retiro_tutor_academico]
-        form = SQLFORM.factory(
-        *field,submit_button='Subir Carta',
-        separator=': ',
-        buttons=['submit'],
-        col3 = {'motivo':T('Motivo justificativo')}
-        )
+        form = SQLFORM(dbSPE.pasantia, pasantia, readonly=True)
 
         if form.process().accepted:
-            (dbSPE.pasantia.codigo == 'PS1110').update(motivo_retiro_tutor_academico = request.vars.motivo)
             response.flash = 'form accepted'
         elif form.errors:
             response.flash = 'form has errors'
@@ -37,6 +30,3 @@ def justificar_retiro_profesor():
     else:
         response.flash = 'please fill out the form'
     return dict(form=form)
-
-#def justificar_retiro_profesor():
-#    return response.render('profesor/justificar_retiro_profesor.html')
