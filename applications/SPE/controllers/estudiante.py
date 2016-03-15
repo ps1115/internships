@@ -1,7 +1,12 @@
+from usbutils import random_key
+
 def agregar_preinscripcion():
+
     #Buscamos los datos del usuario
-    DatosUsuario    = dbSPE(dbSPE.usuario.usbid==auth.user.username).select()[0]
-    DatosEstudiante = dbSPE(dbSPE.usuario_estudiante.usbid_usuario==auth.user.username).select()[0]
+    ConsultaDatosUsuario    = dbSPE(dbSPE.usuario.usbid==auth.user.username)
+    ConsultaDatosEstudiante = dbSPE(dbSPE.usuario_estudiante.usbid_usuario==auth.user.username)
+    DatosUsuario    = ConsultaDatosUsuario.select()[0]
+    DatosEstudiante = ConsultaDatosEstudiante.select()[0]
 
     #Datos de las carrera
     DatosCarrera   = dbSPE(dbSPE.carrera.codigo==DatosEstudiante.carrera).select()[0]
@@ -21,10 +26,9 @@ def agregar_preinscripcion():
                 default = DatosEstudiante.direccion),
         Field('correo',label='Correo Electronico',required=True,
                 default  = DatosEstudiante.email_sec),
-        Field('tel_cel',label='Telefono Habitacion',
+        Field('telf_hab',label='Telefono Habitacion',required=True,
                 default = DatosEstudiante.telf_hab),
-        formstyle='bootstrap3_stacked',
-        buttons=[]
+        formstyle='bootstrap3_stacked'
     )
 
     datos_pasantia = SQLFORM.factory(
@@ -46,9 +50,9 @@ def agregar_preinscripcion():
         Field('estado',label='Estado',
                 requires=IS_IN_DB(dbSPE,dbSPE.estado,'%(nombre)s',zero="Seleccione")),
         formstyle='bootstrap3_stacked',
-        buttons=[],
 
-        col3={'publicar_datos':'Al contestar "Si" empresas podran ver su curriculum. Debera llenar su curriculum en el sistema.',
+        col3={'es_graduando':'Conteste "Si" si la pasantia es su ultimo requisito para el acto de grado.',
+              'publicar_datos':'Al contestar "Si" empresas podran ver su curriculum. Debera llenar su curriculum en el sistema.',
               'estado':'Estado del pais donde usted tenga preferencia para realizar su pasantia.'}
     )
 
@@ -66,20 +70,55 @@ def agregar_preinscripcion():
     )
 
     #validamos la foto de perfil
-    if datos_perfil.process().accepted:
-        query =  dbSPE(dbSPE.usuario.usbid==auth.user.username)
-        query.update(foto=datos_perfil.vars.image)
+    if datos_perfil.process(formname="datos_perfil").accepted:
+        print "Foto!"
+        ConsultaDatosUsuario.update(foto=datos_perfil.vars.image)
 
-    if datos_personales.process().accepted:
-        #hacer algo
-        pass
-    if datos_pasantia.process().accepted:
-        #hacer otra cosa
-        pass
+    if datos_personales.process(formname="datos_personales").accepted:
+        print "Datos!"
+        ConsultaDatosEstudiante.update(direccion=datos_personales.vars.direccion)
+        ConsultaDatosEstudiante.update(email_sec=datos_personales.vars.correo)
+        ConsultaDatosEstudiante.update(telf_hab=datos_personales.vars.telf_hab)
+
+    if datos_pasantia.process(formname="datos_pasantia").accepted:
+        print "Aceptado!"
+        dbSPE.preinscripcion.insert(
+                id_periodo    = '00',
+                anio          = int(request.now.year),
+                codigo        = datos_pasantia.vars.codigo_pasantia,
+                usbid         = auth.user.username,
+                fecha_ingreso = request.now,
+                id_estado     = datos_pasantia.vars.id,
+                cod_seguridad = random_key()
+                )
 
     response.flash = T("¡Bienvenido!")
     return dict(message="Preinscripcion",form1=datos_personales,form2=datos_pasantia,form3=datos_perfil)
 
+def finalizar_preinscripcion():
+
+    DatosInscripcion = dbSPE(dbSPE.preinscripcion.usbid==auth.user.username).select()[0]
+    DatosUsuario     = dbSPE(dbSPE.usuario.usbid==auth.user.username).select()[0]
+    DatosEstudiante  = dbSPE(dbSPE.usuario_estudiante.usbid_usuario==auth.user.username).select()[0]
+    DatosCarrera     = dbSPE(dbSPE.carrera.codigo==DatosEstudiante.carrera).select()[0]
+
+    return  dict(message=T("Preinscripcion Exitosa"),
+                datos_personales = {
+                'Nombre'   : DatosUsuario.nombre + ' ' + DatosUsuario.apellido,
+                'Cedula'   : str(DatosUsuario.ci),
+                'Carrera'  : DatosCarrera.nombre,
+                'Sede'     : DatosEstudiante.estudiante_sede,
+                'Direccion': DatosEstudiante.direccion,
+                'Correo'   : DatosEstudiante.email_sec,
+                'Telfono habitacion' : DatosEstudiante.telf_hab
+                },
+                datos_pasantia = {
+                'Periodo'            : 'Nombre Periodo',
+                'Codigo Pasantia'    : DatosInscripcion.codigo,
+                'Fecha Inscripcion'  : DatosInscripcion.fecha_ingreso.strftime('%d-%m-%Y'),
+                'Codigo de Seguridad': DatosInscripcion.cod_seguridad
+                }
+            )
 
 def plan_trabajo():
     return dict(message="Plan de Trabajo")
