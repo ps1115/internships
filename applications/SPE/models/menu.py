@@ -70,7 +70,8 @@ def _():
         ('Profesor',False,"#",[
             ('Registrarse',False,URL('default','registrar_profesor')),
             ('Consultar pasantías',False,"#"),
-            ('Evaluar Pasantía',False,"#")
+            ('Evaluar Pasantía',False,"#"),
+            ('Justificar Retiro Pasante',False,URL('profesor','justificar_retiro_profesor'))
             ]),
         ('Administrador',False,"#",[
             ('Gestionar Catálogos',False,URL('catalogos_grid','gestion_cct2'))

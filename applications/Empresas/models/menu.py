@@ -70,7 +70,8 @@ def _():
             response.menu += [
                 ('Tutor Industrial',False,"#",[
                     ('¿Qué es un tutor industrial?',False,"#"),
-                    ('Consultar Pasantias',False,"#")
+                    ('Consultar Pasantias',False,"#"),
+                    ('Justificar Retiro Pasante',False,URL('empresa','justificar_retiro_empresa'))
                     ])
             ]
     # Entradas del menu si el usuario NO esta autenticado
