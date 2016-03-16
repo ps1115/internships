@@ -85,7 +85,8 @@ def login_cas():
                 last_name  = usuario.get('last_name'),
                 username   = usbid,
                 password   = db.auth_user.password.validate(clave)[0],
-                email      = usuario.get('email')
+                email      = usuario.get('email'),
+                user_Type  = usuario.get('tipo')
             )
 
             #Ingresamos a la base de datos de Usuario
@@ -118,7 +119,7 @@ def login_cas():
     return None
 
 def logout():
-    url = (URL(c='default',f='index'))
+    url = 'http://secure.dst.usb.ve/logout'
     auth.logout(next=url)
 
 def verificar_datos(usuario):

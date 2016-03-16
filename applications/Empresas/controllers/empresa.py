@@ -48,6 +48,8 @@ def registrar_empresa():
                              pregunta_secreta = request.vars.pregunta_secreta,
                              respuesta_pregunta_secreta = request.vars.respuesta_pregunta_secreta,
                              nombre = request.vars.nombre,
+                             id_pais = request.vars.id_pais,
+                             id_estado = request.vars.id_estado,
                              direccion = request.vars.direccion,
                              pag_web = request.vars.pag_web,
                              descripcion = request.vars.descripcion,
@@ -59,7 +61,8 @@ def registrar_empresa():
             username   = request.vars.log,
             first_name = request.vars.nombre,
             password   = db.auth_user.password.validate(request.vars.password)[0],
-            email      = request.vars.contacto_RRHH
+            email      = request.vars.contacto_RRHH,
+            user_Type  = 'empresa'
         )
 
         # Mensaje de exito
@@ -70,10 +73,14 @@ def registrar_empresa():
                                log=request.vars.log,
                                nombre=request.vars.nombre,
                                direccion=request.vars.direccion,
+                               id_pais = request.vars.id_pais,
+                               id_estado = request.vars.id_estado,
                                pag_web=request.vars.pag_web,
                                descripcion=request.vars.descripcion,
                                telefono=request.vars.telefono,
-                               contacto_RRHH=request.vars.contacto_RRHH)
+                               contacto_RRHH=request.vars.contacto_RRHH,
+                               pregunta_secreta=request.vars.pregunta_secreta,
+                               respuesta_pregunta_secreta=request.vars.respuesta_pregunta_secreta)
     # Caso 2: El form no se lleno de manera correcta asi que recargamos la pagina
     else:
         return response.render('empresa/registrarEmpresa/registrar_empresa.html',message=T("Registrar Empresa"),form=form)
