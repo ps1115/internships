@@ -134,6 +134,7 @@ def retirar_pasantia():
             # Falta refinar este query con año, periodo e id_estudiante
             dbSPE(dbSPE.pasantia.codigo==request.args[0]).update(motivo_retiro_estudiante=form.vars.motivo)
             response.flash = 'Actualizado el motivo'
+            #redirect(URL('retirar_pasantia'))
             redirect(URL('default', 'index'))
         elif form.errors:
             response.flash = 'Error'
