@@ -48,10 +48,10 @@ def registrar_empresa():
                              pregunta_secreta = request.vars.pregunta_secreta,
                              respuesta_pregunta_secreta = request.vars.respuesta_pregunta_secreta,
                              nombre = request.vars.nombre,
-                             direccion = request.vars.direccion,
-                             pag_web = request.vars.pag_web,
                              id_pais = request.vars.id_pais,
                              id_estado = request.vars.id_estado,
+                             direccion = request.vars.direccion,
+                             pag_web = request.vars.pag_web,
                              descripcion = request.vars.descripcion,
                              telefono = request.vars.telefono,
                              contacto_RRHH = request.vars.contacto_RRHH)
@@ -71,16 +71,16 @@ def registrar_empresa():
         return response.render('empresa/registrarEmpresa/registro_empresa_exitoso.html',message=T("Registrar Empresa"),
                                result=T("El registro de su empresa ha sido exitoso!"),
                                log=request.vars.log,
-                               pregunta_secreta = request.vars.pregunta_secreta,
-                               respuesta_pregunta_secreta = request.vars.respuesta_pregunta_secreta,
                                nombre=request.vars.nombre,
                                direccion=request.vars.direccion,
-                               pag_web=request.vars.pag_web,
                                id_pais = request.vars.id_pais,
-                               id_estado = request.vars.id_estado,                               
+                               id_estado = request.vars.id_estado,
+                               pag_web=request.vars.pag_web,
                                descripcion=request.vars.descripcion,
                                telefono=request.vars.telefono,
-                               contacto_RRHH=request.vars.contacto_RRHH)
+                               contacto_RRHH=request.vars.contacto_RRHH,
+                               pregunta_secreta=request.vars.pregunta_secreta,
+                               respuesta_pregunta_secreta=request.vars.respuesta_pregunta_secreta)
     # Caso 2: El form no se lleno de manera correcta asi que recargamos la pagina
     else:
         return response.render('empresa/registrarEmpresa/registrar_empresa.html',message=T("Registrar Empresa"),form=form)
@@ -128,7 +128,6 @@ def registrar_tutor_industrial():
             'cargo':T('Cargo que ocupa en la empresa'),
             'departamento':T('Departamento de la empresa en la que trabaja'),
             'direccion':T('Direccion del tutor industrial'),
-            'id_pais':T('Pais en el que se encuentra domiciliado el tutor industrial'),
             'id_estado':T('Estado en el que se encuentra domiciliado el tutor industrial'),
             'telefono':T('Numerico telefonico del tutor industrial')
            })
@@ -151,7 +150,6 @@ def registrar_tutor_industrial():
             cargo = request.vars.cargo,
             departamento = request.vars.departamento,
             direccion = request.vars.direccion,
-            id_pais = request.vars.id_pais, #Estara asi hasta que se implemente la tabla estado
             id_estado = request.vars.id_estado, #Estara asi hasta que se implemente la tabla estado
             telefono = request.vars.telefono)
 
@@ -169,21 +167,18 @@ def registrar_tutor_industrial():
         response.flash = T("Registro Exitoso")
         # Nos dirigimos a la pagina de exito
         return response.render('empresa/registrarTutorIndustrial/registro_tutor_industrial_exitoso.html',message=T("Registrar Tutor Industrial"),
-            result=T("El registro de su tutor ha sido exitoso!"),
-            email = request.vars.email,
-            nombre = request.vars.nombre,
-            apellido = request.vars.apellido,
-            ci = request.vars.ci,
-            pregunta_secreta = request.vars.pregunta_secreta,
-            respuesta_pregunta_secreta = request.vars.respuesta_pregunta_secreta,
-            id_empresa = empresaRegistradora.id, # Cableado mientras se resuelven problemas
-            profesion = request.vars.profesion,
-            cargo = request.vars.cargo,
-            departamento = request.vars.departamento,
-            direccion = request.vars.direccion,
-            id_pais = request.vars.id_pais, #Estara asi hasta que se implemente la tabla estado
-            id_estado = request.vars.id_estado, #Estara asi hasta que se implemente la tabla estado
-            telefono = request.vars.telefono)
+                               result=T("El registro de su tutor ha sido exitoso!"),
+                               email = request.vars.email,
+                               nombre = request.vars.nombre,
+                               apellido = request.vars.apellido,
+                               ci = request.vars.ci,
+                               id_empresa = empresaRegistradora.id, # Cableado mientras se resuelven problemas
+                               profesion = request.vars.profesion,
+                               cargo = request.vars.cargo,
+                               departamento = request.vars.departamento,
+                               direccion = request.vars.direccion,
+                               id_estado = None, #Estara asi hasta que se implemente la tabla estado
+                               telefono = request.vars.telefono)
     # Caso 2: El form no se lleno de manera correcta asi que recargamos la pagina
     else:
         return response.render('empresa/registrarTutorIndustrial/registrar_tutor_industrial.html',message=T("Registrar Tutor Industrial"),form=form)
