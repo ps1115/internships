@@ -48,6 +48,22 @@ li.dropdown.open{
 	background-color: rgba(63,93,93,0.5);
 }
 
-.dropdown-menu-style li a:hover{
-        background-color: #679898;
+a.dropdown-focus{
+	background-color: #679898;
+}
+
+ul.nav.navbar-nav.navbar-right .navbar-nav>li>.dropdown-menu{
+	background-color: rgba(63,93,93,1);
+	width: 100%;
+}
+
+.navbar-default .navbar-nav>.open>a,
+.navbar-default .navbar-nav>.open>a:hover,
+.navbar-default .navbar-nav>.open>a:focus{
+	background-color: #679898;
+}
+
+
+.dropdown-menu>li>a:hover {
+	background-color: #679898;
 }
