@@ -475,8 +475,8 @@
 'toggle breakpoint': 'alternar punto de ruptura',
 'Toggle comment': 'Alternar comentario',
 'Toggle Fullscreen': 'Alternar pantalla completa',
-'too short': 'demasiado corto',
 'Too short': 'Too short',
+'too short': 'demasiado corto',
 'translation strings for the application': 'cadenas de caracteres de traducción para la aplicación',
 'try': 'intente',
 'try something like': 'intente algo como',
@@ -547,6 +547,8 @@
 'You can modify this application and adapt it to your needs': 'Usted puede modificar esta aplicación y adaptarla a sus necesidades',
 'You visited the url %s': 'Usted visitó la url %s',
 'Your username is: %(username)s': 'Su nombre de usuario es: %(username)s',
+"{'first_name': 'Francisco Antonio', 'last_name': 'Martinez Medina', 'tipo': 'Pregrado', 'phone': None, 'carrera': 'Ingenieria en Computacion', 'email': '09-10502@usb.ve', 'cedula': '20229650'}": "{'first_name': 'Francisco Antonio', 'last_name': 'Martinez Medina', 'tipo': 'Pregrado', 'phone': None, 'carrera': 'Ingenieria en Computacion', 'email': '09-10502@usb.ve', 'cedula': '20229650'}",
 "{'first_name': 'Leonardo Rafael', 'last_name': 'Martinez Azuaje', 'tipo': 'Pregrado', 'phone': None, 'carrera': 'Ingenieria de Computacion', 'email': '11-10576@usb.ve', 'cedula': '20839271'}": "{'first_name': 'Leonardo Rafael', 'last_name': 'Martinez Azuaje', 'tipo': 'Pregrado', 'phone': None, 'carrera': 'Ingenieria de Computacion', 'email': '11-10576@usb.ve', 'cedula': '20839271'}",
+"{'first_name': 'Ricardo Andres', 'last_name': 'Vethencourt Mistage', 'tipo': 'Pregrado', 'phone': '(0416) 406-4477', 'carrera': 'Ingenieria en Computacion', 'email': '09-10894@usb.ve', 'cedula': '24221073'}": "{'first_name': 'Ricardo Andres', 'last_name': 'Vethencourt Mistage', 'tipo': 'Pregrado', 'phone': '(0416) 406-4477', 'carrera': 'Ingenieria en Computacion', 'email': '09-10894@usb.ve', 'cedula': '24221073'}",
 '¡Bienvenido!': '¡Bienvenido!',
 }
