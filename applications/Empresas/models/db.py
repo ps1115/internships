@@ -76,8 +76,8 @@ auth.settings.reset_password_requires_verification = True
 def captcha_field(request=request):
     from gluon.tools import Recaptcha2
     w = lambda x,y: Recaptcha2(request,
-                              '6Ld4oxoTAAAAAOtPnx7JL0kbuGV0gIlkeZz3aYet',
-                              '6Ld4oxoTAAAAAOHpRgTPO2LBiwH3lbkQtdeZXDik')
+                              '6Lcg5hoTAAAAADfqPDXf4htFpyjqkBGRID3KiLEP',
+                              '6Lcg5hoTAAAAANYiBEtWC1NSG5nEMZcHMgC4_eIT')
 
     return Field('captcha', 'string', widget=w, default='ok')
 
