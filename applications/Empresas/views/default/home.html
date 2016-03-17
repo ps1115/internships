@@ -1,9 +1,11 @@
 {{extend 'layout.html'}}
 
+<div class='content'>
 {{if auth.is_logged_in():}}
     {{if auth.user.user_Type == 'empresa':}}
-        <p class="title"> Bienvenida empresa {{=auth.user.first_name}}
-    {{elif auth.user.user_Type == 'tutor_industrial':}}
-        <p class="title"> Bienvenido Tutor {{=auth.user.first_name}} {{=auth.user.last_name}}
+        <p class="title"> Bienvenida Empresa {{=auth.user.first_name}}
+    {{elif auth.user.user_Type == 'tutor_industrial':}} </p>
+        <p class="title"> Bienvenido Tutor {{=auth.user.first_name}} {{=auth.user.last_name}} </p>
     {{pass}}
 {{pass}}
+</div>

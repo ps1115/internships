@@ -25,7 +25,7 @@ response.google_analytics_id = None
 #########################################################################
 
 response.menu = [
-    ('Inicio', False, URL(a= 'Empresas',c='default', f='index'), [])
+    ('Inicio', False, URL(a= 'Empresas',c='default', f='index'))
 ]
 
 DEVELOPMENT_MENU = True
@@ -33,13 +33,14 @@ DEVELOPMENT_MENU = True
 # Menu de autenticacion
 
 if auth.is_logged_in():
-    texto_principal = "Bienvenido " + auth.user.first_name
+    texto_principal = auth.user.first_name
 else:
     texto_principal = "Bienvenido"
 
 menu_autenticado = [
     (texto_principal,False, '#',[
-        ("Cerrar Sesion",False,URL('default','logout'))
+        ("Cerrar Sesión",False,URL('default','logout')),
+        ("Su Perfil", False, '#')
     ])
 ]
 #########################################################################
@@ -58,20 +59,19 @@ def _():
         if auth.user.user_Type == 'empresa':
 
             response.menu += [
-                ('Empresa',False,"#",[
-                    ('¿Qué puede obtener tu empresa?',False,"#"),
-                    ('Solicitudes de pasantes',False,"#"),
+                ('Solicitudes de pasantes',False,"#",[
+                    ('Agregar solicitud', False, "#")
+                    ]),
+                ('Tutores Industriales',False,"#",[
                     ('Registrar tutor industrial',False,URL(c='empresa', f='registrar_tutor_industrial')),
-                    ('Gestionar Registro Empresarial',False,"#")
-                    ])
+                    ]),
+                ('Reportes', False, "#")
             ]
         # Caso 2: El usuario es un tutor industrial
         elif auth.user.user_Type == 'tutor_industrial':
             response.menu += [
-                ('Tutor Industrial',False,"#",[
-                    ('¿Qué es un tutor industrial?',False,"#"),
-                    ('Consultar Pasantias',False,"#")
-                    ])
+                ('Solicitudes de pasantes',False,"#"),
+                ('Pasantías',False,"#"),
             ]
     # Entradas del menu si el usuario NO esta autenticado
     else:

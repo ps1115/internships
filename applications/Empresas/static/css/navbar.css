@@ -8,7 +8,8 @@ ul{
 }
 
 ul.dropdown-menu.dropdown-menu-style{
-	height: 194%;
+	height: 100;
+    background-color: #526060;
 } 
 
 li a{
@@ -16,20 +17,21 @@ li a{
 	position: relative;
 }
 
+
 li.dropdown.open{
 	position: relative;
-	background-color: !important;
 	top: 10px;
-	bottom: -100px;
 	height: 40px;
+}
+.dropdown-toggle{
+    height: 40px;
 }
 
 .navbar-style{
 	margin-top: 10px;
 	position: relative;
 	height: 40px;
-	background-color: rgba(63,93,93,0.50);
-
+	background-color: rgba(63,93,93,0.5);
 }
 
 .navbar-content-style{
@@ -39,8 +41,28 @@ li.dropdown.open{
 
 .dropdown-menu-style li{
 	position: relative;
-	top: -5px;
 	padding-top: 5px;
 	padding-bottom: 5px;
-	background-color: rgba(63,93,93,0.50);
+	background-color: #526060;
+}
+
+a.dropdown-focus{
+	background-color: #526060;
+	top: -10px;
+}
+
+ul.nav.navbar-nav.navbar-right .navbar-nav>li>.dropdown-menu{
+	background-color: #526060;
+	width: 100%;
+}
+
+.navbar-default .navbar-nav>.open>a,
+.navbar-default .navbar-nav>.open>a:hover,
+.navbar-default .navbar-nav>.open>a:focus{
+	background-color: #526060;
+}
+
+
+.dropdown-menu>li>a:hover {
+	background-color: rgba(145, 161, 161, 1);
 }
