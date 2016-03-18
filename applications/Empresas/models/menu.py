@@ -12,9 +12,9 @@ response.title = request.application.replace('_',' ').title()
 response.subtitle = ''
 
 ## read more at http://dev.w3.org/html5/markup/meta.name.html
-response.meta.author = 'Your Name <you@example.com>'
-response.meta.description = 'a cool new app'
-response.meta.keywords = 'web2py, python, framework'
+response.meta.author = 'Universidad Simón Bolívar'
+response.meta.description = 'Sistema de Pasantías Empresariales'
+response.meta.keywords = 'pasantías, USB, empresa'
 response.meta.generator = 'Web2py Web Framework'
 
 ## your http://google.com/analytics id
@@ -25,7 +25,7 @@ response.google_analytics_id = None
 #########################################################################
 
 response.menu = [
-    ('Inicio', False, URL(a= 'Empresas',c='default', f='index'))
+    (SPAN(' ', _class='fa fa-home fa-lg'), False, URL(a= 'Empresas',c='default', f='index'))
 ]
 
 DEVELOPMENT_MENU = True
@@ -39,8 +39,8 @@ else:
 
 menu_autenticado = [
     (texto_principal,False, '#',[
-        ("Cerrar Sesión",False,URL('default','logout')),
-        ("Su Perfil", False, '#')
+        ("Su Perfil", False, '#'),
+        (SPAN(' Cerrar Sesión', _class='fa fa-sign-out'), False, URL('default','logout'))
     ])
 ]
 #########################################################################
@@ -63,7 +63,8 @@ def _():
                     ('Agregar solicitud', False, "#")
                     ]),
                 ('Tutores Industriales',False,"#",[
-                    ('Registrar tutor industrial',False,URL(c='empresa', f='registrar_tutor_industrial')),
+                    ('Sus tutores industriales', False, "#"),
+                    ('Registrar tutor industrial', False, URL(c='empresa', f='registrar_tutor_industrial')),
                     ]),
                 ('Reportes', False, "#")
             ]

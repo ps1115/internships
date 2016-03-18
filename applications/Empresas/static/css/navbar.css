@@ -8,7 +8,7 @@ body{
     position: relative;
     margin-top: 10px;
     padding: 0px 12px !important;
-	background-color: rgba(145, 161, 161, 1) !important;
+	background-color: rgba(63, 93, 93, 0.50) !important;
 }
 
 .navbar-nav>li>a {  
@@ -37,11 +37,10 @@ li.dropdown.open{
 	position: relative;
 }
 
-
 .dropdown-menu-style li{
 	position: relative;
-	padding-top: 5px;
-	padding-bottom: 5px;
+/*	padding-top: 5px;*/
+/*	padding-bottom: 5px;*/
 	background-color: #526060;
 }
 
@@ -61,7 +60,9 @@ ul.nav.navbar-nav.navbar-right .navbar-nav>li>.dropdown-menu{
 	background-color: #758a8a;
 }
 
-
+.dropdown:hover .dropdown-menu{
+    display: block;
+}
 .dropdown-menu>li>a:hover {
 	background-color: #758a8a;
 }
