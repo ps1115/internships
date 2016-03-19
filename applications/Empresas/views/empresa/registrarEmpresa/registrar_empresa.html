@@ -1,60 +1,95 @@
 {{('message' in globals())}}
 {{extend 'layout.html'}}
 
-<head>
-    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
-</head>
-
 {{if 'message' in globals():}}
 <p class='title'>{{=message}}</p>
 <br>
 <div class='content'>
   <div class="row">
     {{=form.custom.begin}}
-       <div class="col-xs-4">
-          <i class="fa fa-briefcase fa-pull-right"></i> Nombre de la Empresa:
-          <div>{{=form.custom.widget.nombre}}</div>
-          <span class="help-block">Nombre comercial de la empresa</span>
-          <i class="fa fa-globe fa-pull-right"></i> Pais:
-          <div>{{=form.custom.widget.id_pais}}</div>
-          <span class="help-block">Pais en el que se encuentra la empresa</span>
-          <i class="fa fa-map-o fa-pull-right"></i> Estado:
-          <div>{{=form.custom.widget.id_estado}}</div>
-          <span class="help-block">Estado del pais en el que se encuentra</span>
-          <i class="fa fa-map-marker fa-pull-right"></i> Direccion:
-          <div>{{=form.custom.widget.direccion}}</div>
-          <span class="help-block">Direccion de las instalaciones de la empresa</span>
+       <div class="col-md-4">
+	    <div class="panel-group" id="accordionOne">
+                <div class="panel panel-warning">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionOne" href="#collapseOne">
+                                Información de la empresa <i class="fa fa-check-square-o"></i>
+                            </a>
+                        </h3>
+                    </div>
+                    <div class="panel-collapse collapse in panel-body" id="collapseOne">
+                              <i class="fa fa-briefcase fa-pull-right"></i> Nombre de la Empresa:
+                              <div>{{=form.custom.widget.nombre}}</div>
+                              <span class="help-block">Nombre comercial de la empresa</span>
+                              <i class="fa fa-globe fa-pull-right"></i> Pais:
+                              <div>{{=form.custom.widget.id_pais}}</div>
+                              <span class="help-block">Pais en el que se encuentra la empresa</span>
+                              <i class="fa fa-map-o fa-pull-right"></i> Estado:
+                              <div>{{=form.custom.widget.id_estado}}</div>
+                              <span class="help-block">Estado del pais en el que se encuentra</span>
+                              <i class="fa fa-map-marker fa-pull-right"></i> Direccion:
+                              <div>{{=form.custom.widget.direccion}}</div>
+                              <span class="help-block">Direccion de las instalaciones de la empresa</span>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col-xs-4">
-          <i class="fa fa-phone fa-pull-right"></i> Teléfono:
-          <div>{{=form.custom.widget.telefono}}</div>
-          <span class="help-block">Numero telefonico de contacto de la empresa</span>
-          <i class="fa fa-laptop fa-pull-right"></i> Página web:
-          <div>{{=form.custom.widget.pag_web}}</div>
-          <span class="help-block">Pagina Web de la empresa</span>
-          <i class="fa fa-users fa-pull-right"></i> Contacto de Recursos Humanos de la Empresa:
-          <div>{{=form.custom.widget.contacto_RRHH}}</div>
-          <span class="help-block">Correo de contacto del departamento de recursos humanos</span>
-          <i class="fa fa-book fa-pull-right"></i> Descripción:
-          <div>{{=form.custom.widget.descripcion}}</div>
-          <span class="help-block">Descripcion breve de la empresa, su vision y sus funciones</span>
+        <div class="col-md-4">
+	    <div class="panel-group" id="accordionTwo">
+                <div class="panel panel-warning">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionTwo" href="#collapseTwo">
+                                Datos adicionales de la empresa <i class="fa fa-check-square-o"></i>
+                            </a>
+                        </h3>
+                    </div>
+                    <div class="panel-collapse collapse in panel-body" id="collapseTwo">
+                          <i class="fa fa-phone fa-pull-right"></i> Teléfono:
+                          <div>{{=form.custom.widget.telefono}}</div>
+                          <span class="help-block">Numero telefonico de contacto de la empresa</span>
+                          <i class="fa fa-laptop fa-pull-right"></i> Página web:
+                          <div>{{=form.custom.widget.pag_web}}</div>
+                          <span class="help-block">Pagina Web de la empresa</span>
+                          <i class="fa fa-users fa-pull-right"></i> Contacto de Recursos Humanos de la Empresa:
+                          <div>{{=form.custom.widget.contacto_RRHH}}</div>
+                          <span class="help-block">Correo de contacto del departamento de recursos humanos</span>
+                          <i class="fa fa-book fa-pull-right"></i> Descripción:
+                          <div>{{=form.custom.widget.descripcion}}</div>
+                          <span class="help-block">Descripcion breve de la empresa, su vision y sus funciones</span>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col-xs-4">
-          <i class="fa fa-envelope-o fa-pull-right"></i> Correo de Login:
-          <div>{{=form.custom.widget.log}}</div>
-          <span class="help-block">Identificación de acceso unica asignada a la empresa</span>
-          <i class="fa fa-lock fa-pull-right"></i> Contraseña:
-          <div>{{=form.custom.widget.password}}</div>
-          <span class="help-block">Contraseña para acceder al sistema</span>
-          Confirmar Contraseña:
-          <div>{{=form.custom.widget.comfirm_Password}}</div>
-          <span class="help-block">Repita su contraseña</span>
-          <i class="fa fa-unlock-alt fa-pull-right"></i> Pregunta Secreta:
-          <div>{{=form.custom.widget.pregunta_secreta}}</div>
-          <span class="help-block">Si necesita obtener de nuevo su contraseña se le hara esta pregunta</span>
-          Respuesta a la pregunta secreta:
-          <div>{{=form.custom.widget.respuesta_pregunta_secreta}}</div>
-          <span class="help-block">Respuesta a su pregunta secreta</span>
+        <div class="col-md-4">
+	    <div class="panel-group" id="accordionThree">
+                <div class="panel panel-warning">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionThree" href="#collapseThree">
+                                Información de inicio de sesión <i class="fa fa-check-square-o"></i>
+                            </a>
+                        </h3>
+                    </div>
+                    <div class="panel-collapse collapse in panel-body" id="collapseThree">
+                          <i class="fa fa-envelope-o fa-pull-right"></i> Correo de Login:
+                          <div>{{=form.custom.widget.log}}</div>
+                          <span class="help-block">Identificación de acceso unica asignada a la empresa</span>
+                          <i class="fa fa-lock fa-pull-right"></i> Contraseña:
+                          <div>{{=form.custom.widget.password}}</div>
+                          <span class="help-block">Contraseña para acceder al sistema</span>
+                          Confirmar Contraseña:
+                          <div>{{=form.custom.widget.comfirm_Password}}</div>
+                          <span class="help-block">Repita su contraseña</span>
+                          <i class="fa fa-unlock-alt fa-pull-right"></i> Pregunta Secreta:
+                          <div>{{=form.custom.widget.pregunta_secreta}}</div>
+                          <span class="help-block">Si necesita obtener de nuevo su contraseña se le hara esta pregunta</span>
+                          Respuesta a la pregunta secreta:
+                          <div>{{=form.custom.widget.respuesta_pregunta_secreta}}</div>
+                          <span class="help-block">Respuesta a su pregunta secreta</span>
+                    </div>
+                </div>
+            </div>
           <input type="submit" value="Registrarse" onclick="document.getElementById('loadingicon').style.display='block';" >
           <i class="fa fa-spinner fa-spin" style="display: none;" id="loadingicon"></i>
         </div>
