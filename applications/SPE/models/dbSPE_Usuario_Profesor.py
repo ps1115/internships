@@ -2,14 +2,14 @@
 
 # Estudiante
 dbSPE.define_table('usuario_profesor',
-                Field('usbid_usuario','string',required=True, requires=[IS_LENGTH(524),IS_NOT_EMPTY(error_message='Campo Obligatorio'),IS_NOT_IN_DB(dbSPE, 'estudiante.usbid_usuario',error_message=T('Login No Disponible'))], ondelete='CASCADE', notnull=True, unique=True,label='Login'),
-                Field('dependencia','integer', requires=[IS_LENGTH(11)]),
-                Field('dedicacion','integer', requires=[IS_LENGTH(11)]),
-                Field('categoria','integer', requires=[IS_LENGTH(11)]),
-                Field('email_sec','string',required=True, requires=[IS_LENGTH(254)]),
-                Field('telef','string', requires=[IS_LENGTH(20),IS_MATCH('^\+[0-9]*$|^[0-9]*$',error_message=T('Solo se permiten numeros y el signo +'))]),
-                Field('celular','string', requires=[IS_LENGTH(20),IS_MATCH('^\+[0-9]*$|^[0-9]*$',error_message=T('Solo se permiten numeros y el signo +'))]),
-                Field('activo','boolean',default=False),
+                Field('usbid_usuario', requires=[IS_NOT_EMPTY(), IS_MATCH('[0-9][0-9]-[0-9]{5}','USBID Inválido')], label='USBID', unique=True),
+                Field('dependencia', requires=IS_NOT_EMPTY(), label='Dependencia'),
+                Field('dedicacion', requires=IS_NOT_EMPTY(), label='Dedicación'),
+                Field('categoria', requires=IS_NOT_EMPTY(), label='Categoría'),
+                Field('email_sec', requires=[IS_NOT_EMPTY(), IS_EMAIL(error_message='Correo Electrónico Inválido')], label='Correo Electrónico'),
+                Field('telf', requires=IS_NOT_EMPTY(), label='Teléfono de Habitación'),
+                Field('celular', requires=IS_NOT_EMPTY(), label='Teléfono Celular'),
+                Field('activo', requires=[IS_NOT_EMPTY(), IS_IN_SET(['0','1'],error_message='Valor no Permitido')], default='1', label='Activo'),
                 primarykey=['usbid_usuario'],
                 format='%(carnet)s'
-               )
+                )
