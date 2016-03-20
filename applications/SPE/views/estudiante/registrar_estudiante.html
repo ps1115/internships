@@ -1,0 +1,14 @@
+{{extend 'layout.html'}}
+
+{{if auth.is_logged_in():}}
+<p class='title'>Bienvenido {{=auth.user.first_name}}</p>
+{{pass}}
+<p class='subtitle'> {{=message}}</p>
+<div class="row">
+  <div class="col-md-4 col-md-offset-4">
+    {{=form}}
+  </div>
+</div>
+<div class="row">
+  <br>
+</div>

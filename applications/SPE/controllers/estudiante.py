@@ -54,7 +54,6 @@ def agregar_preinscripcion():
     )
 
     existe_foto = tiene_foto(DatosUsuario.usbid)['check']
-    print(existe_foto)
 
     #Funciones guardar_imagen y validar_foto estan definicads en models/funciones.py
     datos_perfil = SQLFORM.factory(
@@ -117,6 +116,27 @@ def finalizar_preinscripcion():
                 'Codigo de Seguridad': DatosInscripcion.cod_seguridad
                 }
             )
+
+def registrar_estudiante():
+
+    import ast
+    #Aqui estan las variables obtenidas por el CAS
+    usuario =  ast.literal_eval(request.vars['usuario'])
+
+    #Llenamos el formulario con el default
+    dbSPE.usuario_estudiante.usbid_usuario.default = auth.user.username
+    dbSPE.usuario_estudiante.carrera.requires = IS_IN_DB(dbSPE,dbSPE.carrera,'%(nombre)s',zero="Seleccione", error_message='Carrera Inválida')
+    dbSPE.usuario_estudiante.carrera.default  = usuario['carrera']
+
+    form_estudiante = SQLFORM(
+                    dbSPE.usuario_estudiante,
+                    formstyle='bootstrap3_stacked'
+                    )
+
+    if form_estudiante.process().accepted:
+        redirect(URL(c='default',f='index'))
+
+    return dict(message='Por favor actualiza tus datos para continuar',form=form_estudiante)
 
 def plan_trabajo():
     return dict(message="Plan de Trabajo")

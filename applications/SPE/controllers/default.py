@@ -73,7 +73,6 @@ def login_cas():
         #buscandolo en la tabla de usuario.
         primeravez = dbSPE(tablaUsuario.usbid==usbid)
 
-        print primeravez
         if primeravez.isempty():
             #Si es primera vez que ingresa al sistema
             clave   = random_key()         #Se genera una clave automatica
@@ -110,7 +109,7 @@ def login_cas():
             auth.login_bare(usbid,clave)
 
             #Si el usuario no ha actualizado sus datos
-            if verificar_datos(usuario).isempty():
+            if verificar_datos(usuario,usbid).isempty():
                 redirect(URL(c='default',f='registrar', vars=dict(usuario=usuario)))
             else:
                 #Deberiamos redireccionar a un "home" dependiendo del tipo de usuario
@@ -122,10 +121,9 @@ def logout():
     url = 'http://secure.dst.usb.ve/logout'
     auth.logout(next=url)
 
-def verificar_datos(usuario):
+def verificar_datos(usuario,usbid):
 
     consulta = None
-    usbid = usuario.get('usbid')
 
     if usuario['tipo'] == "Docente":
         consulta = dbSPE(dbSPE.usuario_profesor.usbid_usuario==usbid)
@@ -136,27 +134,25 @@ def verificar_datos(usuario):
     elif usuario['tipo'] in ["Empleado","Organizacion","Egresado"]:
         pass
 
-    print "consulta " + str(consulta)
     return consulta
 
 def registrar():
-        #Aqui estan las variables obtenidas por el CAS
-        usuario = request.vars['usuario']
-        print(auth.is_logged_in())
 
-        #temporal
-        return dict(message=T(usuario))
+    import ast
+    #Aqui estan las variables obtenidas por el CAS
+    usuario =  ast.literal_eval(request.vars['usuario'])
 
-        if usuario['tipo'] == "Docente":
-            #Codigo para registrar docente
-            pass
-        elif usuario['tipo'] == "Administrativo":
-            pass
-        elif usuario['tipo'] in ["Pregrado","Postgrado"]:
-            #Codigo para registar usuario
-            pass
-        elif usuario['tipo'] in ["Empleado","Organizacion","Egresado"]:
-            pass
+    if usuario['tipo'] == "Docente":
+        #Enviar al registro del profesor
+        pass
+    elif usuario['tipo'] == "Administrativo":
+        pass
+    elif usuario['tipo'] in ["Pregrado","Postgrado"]:
+        redirect(URL(c='estudiante',f='registrar_estudiante', vars=dict(usuario=usuario)))
+    elif usuario['tipo'] in ["Empleado","Organizacion","Egresado"]:
+        pass
+
+    return dict(message=usuario)
 
 @cache.action()
 def download():
