@@ -580,7 +580,7 @@ CREATE TABLE IF NOT EXISTS `tutor_industrial` (
     `id_empresa`                integer		    NOT NULL,
     `profesion`                 varchar(50)     NOT NULL,
     `cargo`                     varchar(50)     NOT NULL,
-    `id_universidad`            varchar(50)     NOT NULL,
+    `id_universidad`            int(11)         NOT NULL,
     `departamento`              varchar(50)     NOT NULL,
     `direccion`                 varchar(254)    NOT NULL,
     `id_pais`                 	int(2)          DEFAULT NULL,
@@ -846,7 +846,7 @@ ALTER TABLE `tutor_industrial`
     ADD CONSTRAINT `fk_tutor_industrial_id_estado_estado_nombre` FOREIGN KEY (`id_estado`) REFERENCES `estado` (`id`) ON UPDATE CASCADE,
     ADD CONSTRAINT `fk_tutor_industrial_pais` FOREIGN KEY (`id_pais`) REFERENCES `pais` (`id`) ON UPDATE CASCADE,
     ADD CONSTRAINT `fk_tutor_industrial_id_empresa_empresa_log` FOREIGN KEY (`id_empresa`) REFERENCES `empresa` (`id`) ON UPDATE CASCADE,
-    ADD CONSTRAINT `fk_tutor_industrial_id_universidad_universidad_id` FOREIGN KEY (`id_universidad`) REFERENCES `universidad` (`id`) ON UPDATE CASCADE;
+    ADD CONSTRAINT `fk_tutor_industrial_id_universidad_universidad_id` FOREIGN KEY (`id_universidad`) REFERENCES `universidad` (`id`);
 --
 -- Filtros para la tabla `usuario_estudiante`
 --
