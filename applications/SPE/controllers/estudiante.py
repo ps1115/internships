@@ -11,7 +11,6 @@ def agregar_preinscripcion():
     #Datos de las carrera
     DatosCarrera   = dbSPE(dbSPE.carrera.codigo==DatosEstudiante.carrera).select()[0]
 
-
     #llenamos el formulario
     datos_personales = SQLFORM.factory(
         Field('nombre' ,label='Nombre y Apellido ',required=True,
@@ -142,7 +141,72 @@ def plan_trabajo():
     return dict(message="Plan de Trabajo")
 
 def llenar_curriculum():
-    return dict(message="Curriculum")
+
+    print('Voy a llenar curriculum')
+    #Buscamos los datos del curriculum si los hay
+    ConsultaDatosCurriculum = dbSPE(dbSPE.curriculum.usbid==auth.user.username)
+    DatosCurriculum = ConsultaDatosCurriculum.select()
+    
+    electivas = []
+    cursos    = []
+    idiomas   = []
+    conocimientos = []
+    aficiones = []    
+
+    for i in range(len(DatosCurriculum)):
+        electivas.append(DatosCurriculum[i]['electiva'])
+        cursos.append(DatosCurriculum[i]['cursos'])
+        idiomas.append(DatosCurriculum[i]['idiomas'])
+        conocimientos.append(DatosCurriculum[i]['conocimientos'])
+        aficiones.append(DatosCurriculum[i]['aficiones'])
+
+    #Generamos el SQLFORM utilizando los campos
+    datos_electivas = SQLFORM.factory(
+        Field('electivas',label='Electivas Cursadas',required=True,
+                default='Nombre de la electiva'),
+        submit_button='Agregar',
+        buttons=['submit'],
+    )
+
+    datos_cursos = SQLFORM.factory(
+        Field('cursos',label='Cursos Realizados',
+                default='Nombre o tema del curso'),
+        submit_button='Submit',
+        buttons=['submit']
+    )
+
+    datos_idiomas = SQLFORM.factory(
+        Field('idiomas',label='Idiomas manejados',
+                default='Nombre del idioma'),
+        submit_button='Submit',
+        buttons=['submit']
+    )
+
+    datos_aficiones = SQLFORM.factory(
+        Field('aficiones',label='Aficiones',
+                default='Cosas que te gustan o interesan'),
+        submit_button='Submit',
+        buttons=['submit']
+    )
+
+    if datos_electivas.process().accepted:
+        #Insertamos la electiva
+        print("Heyyy1")
+        
+    if datos_cursos.process().accepted:
+        #Insertamos la electiva
+        print("Heyyy2")
+
+    if datos_idiomas.process().accepted:
+        #Insertamos la electiva
+        print("Heyyy3")
+
+    if datos_aficiones.process().accepted:
+        #Insertamos la electiva
+        print("Heyyy5")
+
+    return dict(message="Curriculum", form1=datos_electivas, form2=datos_cursos, form3=datos_idiomas, form4=datos_aficiones, 
+                electivas=electivas, cursos=cursos, idiomas=idiomas, conocimientos=conocimientos, aficiones=aficiones)
 
 def retirar_pasantia():
     # Argumentos son: codigo, año, periodo

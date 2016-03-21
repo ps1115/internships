@@ -11,7 +11,6 @@ def agregar_preinscripcion():
     #Datos de las carrera
     DatosCarrera   = dbSPE(dbSPE.carrera.codigo==DatosEstudiante.carrera).select()[0]
 
-
     #llenamos el formulario
     datos_personales = SQLFORM.factory(
         Field('nombre' ,label='Nombre y Apellido ',required=True,
@@ -54,7 +53,6 @@ def agregar_preinscripcion():
     )
 
     existe_foto = tiene_foto(DatosUsuario.usbid)['check']
-    print(existe_foto)
 
     #Funciones guardar_imagen y validar_foto estan definicads en models/funciones.py
     datos_perfil = SQLFORM.factory(
@@ -118,23 +116,115 @@ def finalizar_preinscripcion():
                 }
             )
 
+def registrar_estudiante():
+
+    import ast
+    #Aqui estan las variables obtenidas por el CAS
+    usuario =  ast.literal_eval(request.vars['usuario'])
+
+    #Llenamos el formulario con el default
+    dbSPE.usuario_estudiante.usbid_usuario.default = auth.user.username
+    dbSPE.usuario_estudiante.carrera.requires = IS_IN_DB(dbSPE,dbSPE.carrera,'%(nombre)s',zero="Seleccione", error_message='Carrera Inválida')
+    dbSPE.usuario_estudiante.carrera.default  = usuario['carrera']
+
+    form_estudiante = SQLFORM(
+                    dbSPE.usuario_estudiante,
+                    formstyle='bootstrap3_stacked'
+                    )
+
+    if form_estudiante.process().accepted:
+        redirect(URL(c='default',f='index'))
+
+    return dict(message='Por favor actualiza tus datos para continuar',form=form_estudiante)
+
 def plan_trabajo():
     return dict(message="Plan de Trabajo")
 
 def llenar_curriculum():
-    return dict(message="Curriculum")
+
+    print('Voy a llenar curriculum')
+    #Buscamos los datos del curriculum si los hay
+    ConsultaDatosCurriculum = dbSPE(dbSPE.curriculum.usbid==auth.user.username)
+    DatosCurriculum = ConsultaDatosCurriculum.select()
+    
+    electivas = []
+    cursos    = []
+    idiomas   = []
+    conocimientos = []
+    aficiones = []    
+
+    for i in range(len(DatosCurriculum)):
+        electivas.append(DatosCurriculum[i]['electiva'])
+        cursos.append(DatosCurriculum[i]['cursos'])
+        idiomas.append(DatosCurriculum[i]['idiomas'])
+        conocimientos.append(DatosCurriculum[i]['conocimientos'])
+        aficiones.append(DatosCurriculum[i]['aficiones'])
+
+    #Generamos el SQLFORM utilizando los campos
+    datos_electivas = SQLFORM.factory(
+        Field('electivas',label='Electivas Cursadas',required=True,
+                default='Nombre de la electiva'),
+        submit_button='Agregar',
+        buttons=['submit'],
+    )
+
+    datos_cursos = SQLFORM.factory(
+        Field('cursos',label='Cursos Realizados',
+                default='Nombre o tema del curso'),
+        submit_button='Submit',
+        buttons=['submit']
+    )
+
+    datos_idiomas = SQLFORM.factory(
+        Field('idiomas',label='Idiomas manejados',
+                default='Nombre del idioma'),
+        submit_button='Submit',
+        buttons=['submit']
+    )
+
+    datos_aficiones = SQLFORM.factory(
+        Field('aficiones',label='Aficiones',
+                default='Cosas que te gustan o interesan'),
+        submit_button='Submit',
+        buttons=['submit']
+    )
+
+    if datos_electivas.process().accepted:
+        #Insertamos la electiva
+        #dbSPE.curriculum.insert(electiva = request.vars.electiva)
+        print("Heyyy1")
+        
+    if datos_cursos.process().accepted:
+        #Insertamos la electiva
+        print("Heyyy2")
+
+    if datos_idiomas.process().accepted:
+        #Insertamos la electiva
+        print("Heyyy3")
+
+    if datos_aficiones.process().accepted:
+        #Insertamos la electiva
+        print("Heyyy5")
+
+    return dict(message="Curriculum", form1=datos_electivas, form2=datos_cursos, form3=datos_idiomas, form4=datos_aficiones, 
+                electivas=electivas, cursos=cursos, idiomas=idiomas, conocimientos=conocimientos, aficiones=aficiones)
 
 def retirar_pasantia():
-    # Argumentos son: codigo, año, periodo(nombre)
+    # Argumentos son: codigo, año, periodo
     if len(request.args)==3:
         form = SQLFORM.factory(
             Field('motivo', label = 'Motivo del retiro')
             )
         if form.process().accepted:
             # Falta refinar este query con año, periodo e id_estudiante
-            dbSPE(dbSPE.pasantia.codigo==request.args[0]).update(motivo_retiro_estudiante=form.vars.motivo)
+            pasantia = dbSPE((dbSPE.pasantia.codigo==request.args[0]) &
+                (dbSPE.pasantia.anio==request.args[1]) &
+                (dbSPE.pasantia.periodo==request.args[2]) &
+                (dbSPE.pasantia.id_estudiante==auth.user.username)
+                )
+
+            pasantia.update(motivo_retiro_estudiante=form.vars.motivo)
             response.flash = 'Actualizado el motivo'
-            #redirect(URL('retirar_pasantia'))
             redirect(URL('default', 'index'))
         elif form.errors:
             response.flash = 'Error'
@@ -142,12 +232,13 @@ def retirar_pasantia():
     else:
         # Este query debe ser remplazado por el correcto
         # Buscar las pasantias segun el id del usuario(estudiante)
-        pasantias = dbSPE(dbSPE.pasantia.periodo == 77)
-        pasantia = pasantias.select()[0]
+        pasantias = dbSPE(dbSPE.pasantia.id_estudiante == auth.user.username)
 
         opciones = []
+        periodos = {}
         for p in pasantias.select():
             periodo = dbSPE.periodo(p.periodo)
+            periodos[periodo.nombre] = p.periodo
             opciones.append('['+p.codigo+'] '+periodo.nombre+' '+str(p.anio)+' '+p.titulo)
 
         form = SQLFORM.factory(
@@ -158,7 +249,7 @@ def retirar_pasantia():
             # Datos: codigo, periodo(nombre), año
             datos = form.vars.pasantia.split()
             datos[0] = datos[0][1:-1]
-            redirect(URL('retirar_pasantia/'+datos[0]+'/'+datos[2]+'/'+datos[1]))
+            redirect(URL('retirar_pasantia/'+datos[0]+'/'+datos[2]+'/'+str(periodos[datos[1]])))
 
         elif form.errors:
             response.flash = 'Error'
