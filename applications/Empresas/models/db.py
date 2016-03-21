@@ -66,8 +66,8 @@ auth.define_tables(username=True, signature=False)
 
 mail = Mail()
 mail.settings.server = 'smtp.gmail.com:587'
-mail.settings.sender = 'frank91games@gmail.com'
-mail.settings.login = 'frank91games@gmail.com:usibjbwjpwdvzftd'
+mail.settings.sender = 'sistemapasantiaempresarialusb@gmail.com'
+mail.settings.login = 'sistemapasantiaempresarialusb@gmail.com:speusb2016'
 mail.settings.tls = True
 
 ## configure auth policy

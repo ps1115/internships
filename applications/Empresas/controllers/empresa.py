@@ -5,6 +5,7 @@ def registrar_empresa():
 
     import string
     import random
+    from random import randint
 
     # Agregamos los campos en el orden deseado, comenzamos con el login y el password
     fields = [dbSPE.empresa.log,dbSPE.empresa.password]
@@ -69,11 +70,11 @@ def registrar_empresa():
             "email":request.vars.contacto_RRHH,
             "user_Type":'empresa'})
 
-        size = 10
+        size = randint(4,11)
         i = 0
         codigoGenerado = ''
 
-        for i in range(0,10):
+        for i in range(0,size):
                     codigoGenerado += random.choice(string.lowercase + string.uppercase + string.digits)
 
         dbSPE.correo_Por_Verificar.insert(correo = request.vars.log,codigo = codigoGenerado)

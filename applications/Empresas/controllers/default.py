@@ -52,6 +52,7 @@ def login():
         else:
             auth.login_bare(request.vars.login,request.vars.password)
             redirect(URL(c='default',f='home'))
+            response.flash = T("Inicio Exitoso")
     else:
         response.flash = T("Usuario o Contraseña invalida.")
     return formulario_login
@@ -96,7 +97,6 @@ def logout():
     auth.logout(next=url)
 
 def home():
-    response.flash = T("Inicio Exitoso")
     return response.render('default/home.html')
 
 @cache.action()
