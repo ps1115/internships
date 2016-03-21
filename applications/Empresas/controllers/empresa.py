@@ -22,22 +22,25 @@ def registrar_empresa():
         ]
     # Generamos el SQLFORM utilizando los campos
     form = SQLFORM.factory(
-    *fields,submit_button='Submit',
-    separator=': ',
-    buttons=['submit'],
-    col3 = {'log':T('Identificación de acceso unica asignada a la empresa'),
-            'password':T('Contraseña para acceder al sistema'),
-            'comfirm_Password':T('Repita su contraseña'),
-            'pregunta_secreta':T('Si necesita obtener de nuevo su contraseña se le hara esta pregunta'),
-            'respuesta_pregunta_secreta':T('Respuesta a su pregunta secreta'),
-            'nombre':T('Nombre comercial de la empresa'),
-            'id_pais':T('Pais en el que se encuentra la empresa'),
-            'id_estado':T('Estado del pais en el que se encuentra'),
-            'direccion':T('Direccion de las instalaciones de la empresa'),
-            'pag_web':T('Pagina Web de la empresa'),
-            'descripcion':T('Descripcion breve de la empresa, su vision y sus funciones'),
-            'telefono':T('Numero telefonico de contacto de la empresa'),
-            'contacto_RRHH':T('Correo de contacto del departamento de recursos humanos de la empresa')}
+        captcha_field(),
+        *fields,
+        submit_button='Submit',
+        separator=': ',
+        buttons=['submit'],
+        col3 = {'log':T('Identificación de acceso unica asignada a la empresa'),
+                'password':T('Contraseña para acceder al sistema'),
+                'comfirm_Password':T('Repita su contraseña'),
+                'pregunta_secreta':T('Si necesita obtener de nuevo su contraseña se le hara esta pregunta'),
+                'respuesta_pregunta_secreta':T('Respuesta a su pregunta secreta'),
+                'nombre':T('Nombre comercial de la empresa'),
+                'id_pais':T('Pais en el que se encuentra la empresa'),
+                'id_estado':T('Estado del pais en el que se encuentra'),
+                'direccion':T('Direccion de las instalaciones de la empresa'),
+                'pag_web':T('Pagina Web de la empresa'),
+                'descripcion':T('Descripcion breve de la empresa, su vision y sus funciones'),
+                'telefono':T('Numero telefonico de contacto de la empresa'),
+                'contacto_RRHH':T('Correo de contacto del departamento de recursos humanos de la empresa')
+                }
     )
 
     # Caso 1: El form se lleno de manera correcta asi que registramos la empresa y procedemos a la pagina de exito
