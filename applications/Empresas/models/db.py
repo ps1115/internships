@@ -51,7 +51,7 @@ response.form_label_separator = myconf.take('forms.separator')
 ## (more options discussed in gluon/tools.py)
 #########################################################################
 
-from gluon.tools import Auth, Service, PluginManager
+from gluon.tools import Auth, Service, PluginManager,Mail
 
 auth = Auth(db)
 service = Service()
@@ -63,10 +63,12 @@ auth.settings.extra_fields['auth_user']= [Field('user_Type',requires=IS_IN_SET('
 auth.define_tables(username=True, signature=False)
 
 ## configure email
-mail = auth.settings.mailer
-mail.settings.server = 'logging' if request.is_local else myconf.take('smtp.server')
-mail.settings.sender = myconf.take('smtp.sender')
-mail.settings.login = myconf.take('smtp.login')
+
+mail = Mail()
+mail.settings.server = 'smtp.gmail.com:587'
+mail.settings.sender = 'frank91games@gmail.com'
+mail.settings.login = 'frank91games@gmail.com:usibjbwjpwdvzftd'
+mail.settings.tls = True
 
 ## configure auth policy
 auth.settings.registration_requires_verification = False

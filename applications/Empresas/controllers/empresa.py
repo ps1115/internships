@@ -78,15 +78,15 @@ def registrar_empresa():
 
         dbSPE.correo_Por_Verificar.insert(correo = request.vars.log,codigo = codigoGenerado)
 
-        '''
-        result = db.auth_user.insert(
-            username   = request.vars.log,
-            first_name = request.vars.nombre,
-            password   = db.auth_user.password.validate(request.vars.password)[0],
-            email      = request.vars.contacto_RRHH,
-            user_Type  = 'empresa'
-        )
-        '''
+        if mail:
+            if mail.send(to=[request.vars.log],
+                subject=T('Activacion'),
+                message= 'Codigo De Activacion ' + codigoGenerado):
+                    response.flash = 'email sent sucessfully.'
+            else:
+                response.flash = 'fail to send email sorry!'
+        else:
+            response.flash = 'Unable to send the email : email parameters not defined'
 
         # Mensaje de exito
         response.flash = T("Registro Exitoso")

@@ -48,13 +48,32 @@ def login():
         # Buscamos el id de la empresa
         correoVerificarSet = dbSPE(dbSPE.correo_Por_Verificar.correo == request.vars.login).select()
         if correoVerificarSet:
-            pass
+            redirect(URL(c='default',f='verifyEmail',vars=dict(correo=request.vars.login, contrasena= request.vars.password)))
         else:
             auth.login_bare(request.vars.login,request.vars.password)
             redirect(URL(c='default',f='home'))
     else:
         response.flash = T("Usuario o Contraseña invalida.")
     return formulario_login
+
+def verifyEmail():
+    form = SQLFORM.factory(
+        Field('codigo', label=T('Codigo De Verificacion'), required=True,
+                requires=IS_NOT_EMPTY(error_message=T('Este campo es necesario'))),
+                formstyle='bootstrap3_stacked'
+                           )
+
+    if form.process().accepted:
+        # Buscamos el id de la empresa
+        correoVerificarSet = dbSPE(dbSPE.correo_Por_Verificar.correo == request.vars.correo).select()
+        if correoVerificarSet[0].codigo != request.vars.codigo:
+            response.flash = T("Codigo incorrecto")
+        else:
+            dbSPE(dbSPE.correo_Por_Verificar.correo == request.vars.correo).delete()
+            auth.login_bare(request.vars.correo,request.vars.contrasena)
+            redirect(URL(c='default',f='home'))
+    return form
+
 
 def validar_credenciales(form):
     #Si es empresa, busco en la tabla por login
