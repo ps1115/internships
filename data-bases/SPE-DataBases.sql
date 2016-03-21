@@ -177,7 +177,8 @@ CREATE TABLE IF NOT EXISTS `empresa` (
     `pregunta_secreta`          varchar(254)    NOT NULL,
     `respuesta_pregunta_secreta`varchar(254)    NOT NULL,
     `nombre`                    varchar(254)    NOT NULL,
-     `id_pais`                 	int(2)          DEFAULT NULL,
+    `id_pais`                 	int(2)          DEFAULT NULL,
+    `id_area_laboral`           int(11)         DEFAULT NULL,
     `id_estado`                 int(2)          DEFAULT NULL,
     `direccion`                 text,
     `pag_web`                   varchar(254)    DEFAULT NULL,
@@ -188,7 +189,8 @@ CREATE TABLE IF NOT EXISTS `empresa` (
     `habilitado`                int(2)          DEFAULT '1',
     `fechaCreacion`             timestamp       NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `ultimaModificacion`        timestamp       NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (`id`),
+    KEY `fk_empresa_id_area_laboral_area_laboral_id` (`id_area_laboral`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -578,6 +580,7 @@ CREATE TABLE IF NOT EXISTS `tutor_industrial` (
     `id_empresa`                integer		    NOT NULL,
     `profesion`                 varchar(50)     NOT NULL,
     `cargo`                     varchar(50)     NOT NULL,
+    `id_universidad`            varchar(50)     NOT NULL,
     `departamento`              varchar(50)     NOT NULL,
     `direccion`                 varchar(254)    NOT NULL,
     `id_pais`                 	int(2)          DEFAULT NULL,
@@ -588,8 +591,38 @@ CREATE TABLE IF NOT EXISTS `tutor_industrial` (
     PRIMARY KEY (`id`),
     KEY `fk_tutor_industrial_id_estado_estado_nombre` (`id_estado`),
     KEY `fk_tutor_industrial_pais` (`id_pais`),
-    KEY `fk_tutor_industrial_id_empresa_empresa_log` (`id_empresa`)
+    KEY `fk_tutor_industrial_id_empresa_empresa_log` (`id_empresa`),
+    KEY `fk_tutor_industrial_id_universidad_universidad_id` (`id_universidad`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `universidad`
+--
+CREATE TABLE IF NOT EXISTS `universidad` (
+    `id`        int(11)         NOT NULL AUTO_INCREMENT,
+    `nombre`    varchar(254)    NOT NULL,
+    `id_pais`   int(11)         NOT NULL,
+    PRIMARY KEY (`id`),
+    KEY `fk_universidad_id_pais_pais_id` (`id_pais`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+
+--
+-- Estructura de tabla para la tabla `area_laboral`
+--
+CREATE TABLE IF NOT EXISTS `area_laboral` (
+    `id`            int(11)         NOT NULL AUTO_INCREMENT,
+    `nombre`        varchar(254)    NOT NULL,
+    `descripcion`   text,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
 
 --
 -- Estructura de tabla para la tabla `usuario`
@@ -706,6 +739,13 @@ CREATE TABLE IF NOT EXISTS `plan_de_trabajo` (
 --
 
 --
+-- Filtros para la tabla `empresa`
+--
+ALTER TABLE `empresa`
+    ADD CONSTRAINT `fk_empresa_id_area_laboral_area_laboral_id` FOREIGN KEY (`id_area_laboral`) REFERENCES `area_laboral` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+
+--
 -- Filtros para la tabla `actividad`
 --
 ALTER TABLE `actividad`
@@ -805,7 +845,8 @@ ALTER TABLE `tutor_academico`
 ALTER TABLE `tutor_industrial`
     ADD CONSTRAINT `fk_tutor_industrial_id_estado_estado_nombre` FOREIGN KEY (`id_estado`) REFERENCES `estado` (`id`) ON UPDATE CASCADE,
     ADD CONSTRAINT `fk_tutor_industrial_pais` FOREIGN KEY (`id_pais`) REFERENCES `pais` (`id`) ON UPDATE CASCADE,
-    ADD CONSTRAINT `fk_tutor_industrial_id_empresa_empresa_log` FOREIGN KEY (`id_empresa`) REFERENCES `empresa` (`id`) ON UPDATE CASCADE;
+    ADD CONSTRAINT `fk_tutor_industrial_id_empresa_empresa_log` FOREIGN KEY (`id_empresa`) REFERENCES `empresa` (`id`) ON UPDATE CASCADE,
+    ADD CONSTRAINT `fk_tutor_industrial_id_universidad_universidad_id` FOREIGN KEY (`id_universidad`) REFERENCES `universidad` (`id`) ON UPDATE CASCADE;
 --
 -- Filtros para la tabla `usuario_estudiante`
 --
@@ -827,6 +868,13 @@ ALTER TABLE `usuario_profesor`
 --
 ALTER TABLE `curriculum`
     ADD CONSTRAINT `fk_curriculum_usbid_usuario_estudiante_usbid` FOREIGN KEY (`usbid`) REFERENCES `usuario` (`usbid`);
+
+--
+-- Filtros para la tabla `universidad`
+--
+ALTER TABLE `universidad`
+    ADD CONSTRAINT `fk_universidad_id_pais_pais_id` FOREIGN KEY (`id_pais`) REFERENCES `pais` (`id`);
+
 
 --
 -- Filtros para la tabla `curriculum`
