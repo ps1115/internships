@@ -45,8 +45,13 @@ def login():
 
 
     if formulario_login.process(onvalidation=validar_credenciales).accepted:
-        auth.login_bare(request.vars.login,request.vars.password)
-        redirect(URL(c='default',f='home'))
+        # Buscamos el id de la empresa
+        correoVerificarSet = dbSPE(dbSPE.correo_Por_Verificar.correo == request.vars.login).select()
+        if correoVerificarSet:
+            pass
+        else:
+            auth.login_bare(request.vars.login,request.vars.password)
+            redirect(URL(c='default',f='home'))
     else:
         response.flash = T("Usuario o Contraseña invalida.")
     return formulario_login

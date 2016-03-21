@@ -2,6 +2,10 @@
 
 # Proceso de registro de empresa por medio de la opcion Empresa -> Registrarse, en el Index
 def registrar_empresa():
+
+    import string
+    import random
+
     # Agregamos los campos en el orden deseado, comenzamos con el login y el password
     fields = [dbSPE.empresa.log,dbSPE.empresa.password]
     # Agregamos un campo extra de comfirm password el cual debera tener el mismo valor que el password para ser aceptado
@@ -57,6 +61,24 @@ def registrar_empresa():
                              contacto_RRHH = request.vars.contacto_RRHH)
 
         #Insertamos en la tabla User de Web2py, para el login
+
+        auth.get_or_create_user({
+            "username":request.vars.log,
+            "first_name":request.vars.nombre,
+            "password":db.auth_user.password.validate(request.vars.password)[0],
+            "email":request.vars.contacto_RRHH,
+            "user_Type":'empresa'})
+
+        size = 10
+        i = 0
+        codigoGenerado = ''
+
+        for i in range(0,10):
+                    codigoGenerado += random.choice(string.lowercase + string.uppercase + string.digits)
+
+        dbSPE.correo_Por_Verificar.insert(correo = request.vars.log,codigo = codigoGenerado)
+
+        '''
         result = db.auth_user.insert(
             username   = request.vars.log,
             first_name = request.vars.nombre,
@@ -64,6 +86,7 @@ def registrar_empresa():
             email      = request.vars.contacto_RRHH,
             user_Type  = 'empresa'
         )
+        '''
 
         # Mensaje de exito
         response.flash = T("Registro Exitoso")
