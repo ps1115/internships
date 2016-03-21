@@ -134,7 +134,7 @@ CREATE TABLE `correo_por_verificar` (
 	`correo` VARCHAR(80) NOT NULL,
 	`codigo` VARCHAR(45) NOT NULL,
 	PRIMARY KEY (`id`, `correo`)
-)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
