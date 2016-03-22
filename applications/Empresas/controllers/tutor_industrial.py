@@ -113,6 +113,18 @@ def solicitar_registro_tutor():
 
         enviar_Correo_Verificacion(request.vars.email)
 
+        empresaSet = dbSPE(dbSPE.empresa.id == request.vars.id_empresa).select()
+        empresa = empresaSet[0].nombre
+
+        paisSet = dbSPE(dbSPE.pais.id == request.vars.id_pais).select()
+        pais = paisSet[0].nombre
+
+        estadoSet = dbSPE(dbSPE.estado.id == request.vars.id_estado).select()
+        estado = estadoSet[0].nombre
+
+        universidadSet = dbSPE(dbSPE.universidad.id == request.vars.id_universidad).select()
+        universidad = universidadSet[0].nombre
+
         # Mensaje de exito
         response.flash = T("Registro Exitoso")
         # Nos dirigimos a la pagina de exito
@@ -122,14 +134,14 @@ def solicitar_registro_tutor():
                                nombre = request.vars.nombre,
                                apellido = request.vars.apellido,
                                ci = request.vars.ci,
-                               id_empresa = request.vars.id_empresa, # Cableado mientras se resuelven problemas
+                               empresa = empresa, # Cableado mientras se resuelven problemas
                                profesion = request.vars.profesion,
                                cargo = request.vars.cargo,
                                departamento = request.vars.departamento,
                                direccion = request.vars.direccion,
-                               id_estado = request.vars.id_estado, #Estara asi hasta que se implemente la tabla estado
-                               id_pais = request.vars.id_pais, #Estara asi hasta que se implemente la tabla estado
-                               id_universidad = request.vars.id_universidad,
+                               estado = estado, #Estara asi hasta que se implemente la tabla estado
+                               pais = pais, #Estara asi hasta que se implemente la tabla estado
+                               universidad = universidad,
                                telefono = request.vars.telefono)
     # Caso 2: El form no se lleno de manera correcta asi que recargamos la pagina
     else:

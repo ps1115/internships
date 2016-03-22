@@ -101,13 +101,13 @@ def registrar_empresa():
 
         enviar_Correo_Verificacion(request.vars.log)
 
-        paisSet = dbSPE(dbSPE.empresa.id_pais == request.vars.id_pais).select()
+        paisSet = dbSPE(dbSPE.pais.id == request.vars.id_pais).select()
         pais = paisSet[0].nombre
 
-        estadoSet = dbSPE(dbSPE.empresa.id_estado == request.vars.id_estado).select()
+        estadoSet = dbSPE(dbSPE.estado.id == request.vars.id_estado).select()
         estado = estadoSet[0].nombre
 
-        arealaboralSet = dbSPE(dbSPE.empresa.id_area_laboral == request.vars.id_area_laboral).select()
+        arealaboralSet = dbSPE(dbSPE.area_laboral.id == request.vars.id_area_laboral).select()
         area_laboral = arealaboralSet[0].nombre
 
         # Mensaje de exito
@@ -194,13 +194,14 @@ def registrar_tutor_industrial():
             password = request.vars.password,
             pregunta_secreta = request.vars.pregunta_secreta,
             respuesta_pregunta_secreta = request.vars.respuesta_pregunta_secreta,
-            id_empresa = empresaRegistradora.id, # Cableado mientras se resuelven problemas
+            id_empresa = empresaRegistradora.id,
             profesion = request.vars.profesion,
             cargo = request.vars.cargo,
             departamento = request.vars.departamento,
             direccion = request.vars.direccion,
             id_pais = request.vars.id_pais,
             id_estado = request.vars.id_estado,
+            id_universidad = request.vars.id_universidad,
             telefono = request.vars.telefono)
 
         #Insertamos en la tabla user de Web2py
@@ -215,6 +216,15 @@ def registrar_tutor_industrial():
 
         enviar_Correo_Verificacion(request.vars.email)
 
+        paisSet = dbSPE(dbSPE.pais.id == request.vars.id_pais).select()
+        pais = paisSet[0].nombre
+
+        estadoSet = dbSPE(dbSPE.estado.id == request.vars.id_estado).select()
+        estado = estadoSet[0].nombre
+
+        universidadSet = dbSPE(dbSPE.universidad.id == request.vars.id_universidad).select()
+        universidad = universidadSet[0].nombre
+
         # Mensaje de exito
         response.flash = T("Registro Exitoso")
         # Nos dirigimos a la pagina de exito
@@ -224,13 +234,14 @@ def registrar_tutor_industrial():
                                nombre = request.vars.nombre,
                                apellido = request.vars.apellido,
                                ci = request.vars.ci,
-                               id_empresa = empresaRegistradora.id, # Cableado mientras se resuelven problemas
+                               empresa = empresaRegistradora.nombre, # Cableado mientras se resuelven problemas
                                profesion = request.vars.profesion,
                                cargo = request.vars.cargo,
                                departamento = request.vars.departamento,
                                direccion = request.vars.direccion,
-                               id_pais = request.vars.id_pais,
-                               id_estado = request.vars.id_estado,
+                               pais = pais,
+                               estado = estado,
+                               universidad = universidad,
                                telefono = request.vars.telefono)
     # Caso 2: El form no se lleno de manera correcta asi que recargamos la pagina
     else:
