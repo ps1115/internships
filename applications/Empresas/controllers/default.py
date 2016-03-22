@@ -34,7 +34,6 @@ def user():
     return dict(form=auth())
 
 def login():
-
     formulario_login = SQLFORM.factory(
                             Field('login', label=T('Usuario o Correo Electronico'), required=True,
                                     requires=[IS_MATCH('^[a-zA-Z0-9.@_\\-]',error_message=T('Usuario o correo invalido.'))]),
@@ -43,12 +42,11 @@ def login():
                            formstyle='bootstrap3_stacked'
                            )
 
-
     if formulario_login.process(onvalidation=validar_credenciales).accepted:
         # Buscamos el id de la empresa
         correoVerificarSet = dbSPE(dbSPE.correo_Por_Verificar.correo == request.vars.login).select()
         if correoVerificarSet:
-            redirect(URL(c='default',f='verifyEmail',vars=dict(correo=request.vars.login, contrasena= request.vars.password)))
+            redirect(URL(c='default',f='verifyEmail',vars=dict(correo=request.vars.login)))
         else:
             auth.login_bare(request.vars.login,request.vars.password)
             redirect(URL(c='default',f='home'))
@@ -57,12 +55,39 @@ def login():
         response.flash = T("Usuario o Contraseña invalida.")
     return formulario_login
 
+def resendVerificationEmail():
+
+    correoVerificarSet = dbSPE(dbSPE.correo_Por_Verificar.correo == request.vars.correo).select()
+
+    codigoGenerado = correoVerificarSet[0].codigo
+
+    if mail:
+        if mail.send(to=[request.vars.correo],
+            subject=T('Activacion'),
+            message= 'Codigo De Activacion ' + codigoGenerado):
+                response.flash = 'email sent sucessfully.'
+                resultado = True
+        else:
+            response.flash = 'fail to send email sorry!'
+    else:
+        response.flash = 'Unable to send the email : email parameters not defined'
+    return response.render('default/codigoReenviado.html',message=T("Verificacion de Correo"),vars=dict(correo=request.vars.login))
+
+
 def verifyEmail():
     form = SQLFORM.factory(
         Field('codigo', label=T('Codigo De Verificacion'), required=True,
                 requires=IS_NOT_EMPTY(error_message=T('Este campo es necesario'))),
                 formstyle='bootstrap3_stacked'
                            )
+
+    form.add_button(T('Send Email Again'), URL(c='default',f='resendVerificationEmail',vars=dict(correo=request.vars.correo)))
+
+    contrasenaSet = dbSPE(dbSPE.empresa.log == request.vars.correo).select()
+
+    if not (contrasenaSet):
+        contrasenaSet = dbSPE(dbSPE.tutor_industrial.email == request.vars.correo).select()
+    contrasena = contrasenaSet[0].password
 
     if form.process().accepted:
         # Buscamos el id de la empresa
@@ -71,9 +96,9 @@ def verifyEmail():
             response.flash = T("Codigo incorrecto")
         else:
             dbSPE(dbSPE.correo_Por_Verificar.correo == request.vars.correo).delete()
-            auth.login_bare(request.vars.correo,request.vars.contrasena)
+            auth.login_bare(request.vars.correo,contrasena)
             redirect(URL(c='default',f='home'))
-    return form
+    return response.render('default/codigoVerificacion.html',message=T("Verificacion de Correo"),form=form,vars=dict(correo=request.vars.login))
 
 
 def validar_credenciales(form):
