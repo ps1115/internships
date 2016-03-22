@@ -3,14 +3,16 @@
 
 <p class='title'>{{=message}}</p>
 
-<form role="form">
   <div class="container col-md-4 form-group">
     <p class="subtitle">Electivas Profesionales Cursadas:</p>
+    {{=form1.custom.begin}}
     <div class="input-group">
-       {{=form1}}
+       {{=form1.custom.widget.electivas}}
        <span class="input-group-btn">
+            {{=form1.custom.submit}}
        </span>
     </div>
+    {{=form1.custom.end}}
     <br>
     {{items =electivas}}
     <ul class="list">
@@ -65,4 +67,3 @@
       <br><br>
       <button type="submit" class="btn btn-default">Guardar Curriculum</button>
   </div>
-</form>

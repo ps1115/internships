@@ -66,17 +66,16 @@ def agregar_preinscripcion():
 
     #validamos la foto de perfil
     if datos_perfil.process(formname="datos_perfil").accepted:
-        print "Foto!"
         ConsultaDatosUsuario.update(foto=datos_perfil.vars.image)
 
+    #Validamos los datos personales
     if datos_personales.process(formname="datos_personales").accepted:
-        print "Datos!"
         ConsultaDatosEstudiante.update(direccion=datos_personales.vars.direccion)
         ConsultaDatosEstudiante.update(email_sec=datos_personales.vars.correo)
         ConsultaDatosEstudiante.update(telf_hab=datos_personales.vars.telf_hab)
 
+    #Validamos los datos de la pasantia
     if datos_pasantia.process(formname="datos_pasantia").accepted:
-        print "Aceptado!"
         dbSPE.preinscripcion.insert(
                 id_periodo    = datos_pasantia.vars.periodo,
                 anio          = int(request.now.year),
@@ -143,15 +142,22 @@ def plan_trabajo():
 def llenar_curriculum():
 
     print('Voy a llenar curriculum')
+
     #Buscamos los datos del curriculum si los hay
     ConsultaDatosCurriculum = dbSPE(dbSPE.curriculum.usbid==auth.user.username)
+
+    #Si no los hay, lo creamos
+    if ConsultaDatosCurriculum.isempty():
+        dbSPE.curriculum.insert(usbid=auth.user.username)
+        ConsultaDatosCurriculum = dbSPE(dbSPE.curriculum.usbid==auth.user.username)
+
     DatosCurriculum = ConsultaDatosCurriculum.select()
-    
+
     electivas = []
     cursos    = []
     idiomas   = []
     conocimientos = []
-    aficiones = []    
+    aficiones = []
 
     for i in range(len(DatosCurriculum)):
         electivas.append(DatosCurriculum[i]['electiva'])
@@ -165,7 +171,7 @@ def llenar_curriculum():
         Field('electivas',label='Electivas Cursadas',required=True,
                 default='Nombre de la electiva'),
         submit_button='Agregar',
-        buttons=['submit'],
+        buttons=['submit']
     )
 
     datos_cursos = SQLFORM.factory(
@@ -189,24 +195,35 @@ def llenar_curriculum():
         buttons=['submit']
     )
 
-    if datos_electivas.process().accepted:
+    if datos_electivas.process(formname="datos_electivas").accepted:
         #Insertamos la electiva
+        electivas.append(datos_electivas.vars.electivas)
+        ConsultaDatosCurriculum.update(electiva=str(electivas))
         print("Heyyy1")
-        
-    if datos_cursos.process().accepted:
+
+    if datos_cursos.process(formname="datos_cursos").accepted:
         #Insertamos la electiva
         print("Heyyy2")
 
-    if datos_idiomas.process().accepted:
+    if datos_idiomas.process(formname="datos_idiomas").accepted:
         #Insertamos la electiva
         print("Heyyy3")
 
-    if datos_aficiones.process().accepted:
+    if datos_aficiones.process(formname="datos_aficiones").accepted:
         #Insertamos la electiva
         print("Heyyy5")
 
-    return dict(message="Curriculum", form1=datos_electivas, form2=datos_cursos, form3=datos_idiomas, form4=datos_aficiones, 
-                electivas=electivas, cursos=cursos, idiomas=idiomas, conocimientos=conocimientos, aficiones=aficiones)
+    return dict(message="Curriculum",
+                form1=datos_electivas,
+                form2=datos_cursos,
+                form3=datos_idiomas,
+                form4=datos_aficiones,
+                electivas=electivas,
+                cursos=cursos,
+                idiomas=idiomas,
+                conocimientos=conocimientos,
+                aficiones=aficiones
+                )
 
 def retirar_pasantia():
     # Argumentos son: codigo, año, periodo
