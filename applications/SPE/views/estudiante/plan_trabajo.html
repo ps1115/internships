@@ -2,38 +2,40 @@
 {{extend 'layout.html'}}
 
 <p class='title'>{{=message}}</p>
-<p class='subtitle'>Agregue una a una las actividades de su plan de trabajo <p>
+<p class='subtitle'>Agregue de forma individual cada actividad a su plan de trabajo<br>
+  Todos los campos son obligatorios</p>
 
   <form role="form">
     <div class="container col-md-10 form-group">
       <p class="subtitle">Actividad</p>
       <div class="row">
         <div class="col-xs-2">
-        <label for="ex1">Fase:</label>
+        <label for="ex1">Fase</label>
           <select class="form-control" id="codpas">
+            <option>Seleccione</option>
             <option>Inicio</option>
             <option>Desarrollo</option>
             <option>Cierre</option>
           </select>
         </div>
         <div class="col-xs-3">
-          <label for="ex2">Fecha Inicio</label>
-          <input class="form-control" id="ex2" type="date">
-        </div>
-        <div class="col-xs-3">
-          <label for="ex2">Fecha Finalizacion</label>
-          <input class="form-control" id="ex2" type="date">
-        </div>
-
-        <div class="col-xs-2">
-          <label for="ex2">Tiempo Estimado</label>
-          <input class="form-control" id="ex2" type="text">
+          <label for="ex2">Fecha</label>
+          <select class="form-control" id="fecha">
+            <option>Seleccione</option>
+            <option>Semana 1</option>
+            <option>Semana 2</option>
+            <option>Semana 3</option>
+          </select>
         </div>
       </div>
       <div class="row">
           <div class="col-md-10 form-group">
               <br>
-             <label for="text">Descripcion</label>
+             <label for="text">Descripción</label>
+             <input type="text" class="form-control">
+          </div>
+          <div class="col-md-10 form-group">
+             <label for="text">Objetivo específico</label>
              <input type="text" class="form-control">
           </div>
       </div>
