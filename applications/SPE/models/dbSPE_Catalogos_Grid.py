@@ -19,11 +19,13 @@ import datetime
 #                 Field('sede', requires=[IS_NOT_EMPTY(), IS_IN_SET(['Sartenejas','Litoral'], error_message='Sede Inválida')], label="Sede", default='Sartenejas'),
 #                 Field('coordinacion', requires=IS_NOT_EMPTY(), label="Coordinación"))
 
+dbSPE.define_table('division',Field('nombre'))
+
 dbSPE.define_table('departamento',
                 Field('nombre', requires=IS_NOT_EMPTY(), default='', label="Nombre del Departamento"),
-                Field('id_division', requires=IS_NOT_EMPTY(), default='0', label='Identificador de División'),
+                Field('id_division', requires=IS_IN_DB(dbSPE,'division.id', '%(nombre)s',error_message='Division no Existe'), notnull=True, label='Nombre de División'),
                 Field('email_dep', requires=IS_EMAIL('Correo Electrónico Inválido'),label='Correo Electrónico del Departamento'),
-                Field('sede', requires=[IS_NOT_EMPTY(), IS_IN_SET(['Sartenejas','Litoral'],error_message='Sede Inválida')], label='Sede', default='Sartenejas'))
+                Field('sede', requires=IS_IN_SET(['Sartenejas','Litoral'],error_message='Sede Inválida'), label='Sede', notnull=True))
 
 # dbSPE.define_table('usuario_profesor',
 #                 Field('usbid_usuario', requires=[IS_NOT_EMPTY(), IS_MATCH('[0-9][0-9]-[0-9]{5}','USBID Inválido')], label='USBID', unique=True),
@@ -36,7 +38,7 @@ dbSPE.define_table('departamento',
 #                 Field('activo', requires=[IS_NOT_EMPTY(), IS_IN_SET(['0','1'],error_message='Valor no Permitido')], default='1', label='Activo'))
 
 dbSPE.define_table('empresa',
-                Field('loglog', requires=IS_NOT_EMPTY(), label='Usuario', unique=True),
+                Field('log', requires=IS_NOT_EMPTY(), label='Usuario', unique=True),
                 Field('password', requires=IS_NOT_EMPTY(), label='Clave', type='password'),
                 Field('pregunta_secreta', requires=IS_NOT_EMPTY(), label='Pregunta Secreta'),
                 Field('respuesta_pregunta_secreta', requires=IS_NOT_EMPTY(), label='Respuesta a Pregunta Secreta'),
