@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-# Estudiante
-dbSPE.define_table('periodo',
-                Field('id','id',required=True, requires=[IS_LENGTH(10),IS_NOT_EMPTY(error_message='Campo Obligatorio'),IS_NOT_IN_DB(dbSPE, 'carrera.codigo',error_message=T('Carrera no disponible'))], ondelete='CASCADE', notnull=True, unique=True,label='Carrera'),
-                Field('nombre','string',required=True, requires=[IS_LENGTH(100)]),
-                primarykey=['id'],
-                format='%(codigo)s %(nombre)s'
-               )
+"""
+dbSPE.define_table("periodo"
+                  ,Field('nombre',label="Nombre del Periodo", notnull=True, unique=True)
+                  ,Field('fecha_inicio', label="Fecha de Inicio", type='date',requires=[IS_NOT_EMPTY(),IS_DATE(format='%Y/%m/%d')])
+                  ,Field('fecha_fin', label="Fecha de Fin", type='date',requires=[IS_NOT_EMPTY(),IS_DATE(format='%Y/%m/%d')])
+                  ,Field('periodo_activo', label="Situación", requires=IS_IN_SET({1:'activo',0:'no activo'})))
+"""

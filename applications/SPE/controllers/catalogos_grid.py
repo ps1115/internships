@@ -101,6 +101,7 @@ def montos():
     grid = SQLFORM.grid(dbSPE.calculo_pago, deletable=False, editable=False, user_signature=False)
     return grid
 
+"""
 def eventos():
     grid = SQLFORM.grid(dbSPE.evento,user_signature=False,
                         deletable=False,
@@ -113,6 +114,13 @@ def sub_evento():
         ,deletable=False
         ,csv=False
         )
+    return grid
+"""
+
+def periodos():
+    grid = SQLFORM.grid(dbSPE.periodo,user_signature=False,
+                        deletable=False,
+                       csv=False)
     return grid
 
 def semana_muerta():
