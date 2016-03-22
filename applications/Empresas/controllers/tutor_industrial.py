@@ -52,6 +52,7 @@ def solicitar_registro_tutor():
         dbSPE.tutor_industrial.departamento,
         dbSPE.tutor_industrial.id_pais,
         dbSPE.tutor_industrial.id_estado,
+        dbSPE.tutor_industrial.id_universidad,
         dbSPE.tutor_industrial.direccion,
         dbSPE.tutor_industrial.telefono
     ]
@@ -75,6 +76,7 @@ def solicitar_registro_tutor():
             'direccion':T('Direccion del tutor industrial'),
             'id_pais':T('Pais en el que se encuentra domiciliado el tutor industrial'),
             'id_estado':T('Estado en el que se encuentra domiciliado el tutor industrial'),
+            'id_universidad':T('Universidad de la cual egreso el tutor'),
             'telefono':T('Numerico telefonico del tutor industrial')
            })
     # Caso 1: El form se lleno de manera correcta asi que registramos al tutor y procedemos a la pagina de exito
@@ -94,8 +96,9 @@ def solicitar_registro_tutor():
             cargo = request.vars.cargo,
             departamento = request.vars.departamento,
             direccion = request.vars.direccion,
-            id_estado = request.vars.id_estado, #Estara asi hasta que se implemente la tabla estado
-            id_pais = request.vars.id_pais, #Estara asi hasta que se implemente la tabla estado
+            id_estado = request.vars.id_estado,
+            id_pais = request.vars.id_pais,
+            id_universidad = request.vars.id_universidad,
             telefono = request.vars.telefono)
 
         #Insertamos en la tabla user de Web2py
@@ -126,6 +129,7 @@ def solicitar_registro_tutor():
                                direccion = request.vars.direccion,
                                id_estado = request.vars.id_estado, #Estara asi hasta que se implemente la tabla estado
                                id_pais = request.vars.id_pais, #Estara asi hasta que se implemente la tabla estado
+                               id_universidad = request.vars.id_universidad,
                                telefono = request.vars.telefono)
     # Caso 2: El form no se lleno de manera correcta asi que recargamos la pagina
     else:

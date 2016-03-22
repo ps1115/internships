@@ -45,6 +45,7 @@ def registrar_empresa():
         dbSPE.empresa.nombre,
         dbSPE.empresa.id_pais,
         dbSPE.empresa.id_estado,
+        dbSPE.empresa.id_area_laboral,
         dbSPE.empresa.direccion,
         dbSPE.empresa.pag_web,
         dbSPE.empresa.descripcion,
@@ -64,6 +65,7 @@ def registrar_empresa():
             'nombre':T('Nombre comercial de la empresa'),
             'id_pais':T('Pais en el que se encuentra la empresa'),
             'id_estado':T('Estado del pais en el que se encuentra'),
+            'id_area_laboral':T('Area Laboral de la Empresa'),
             'direccion':T('Direccion de las instalaciones de la empresa'),
             'pag_web':T('Pagina Web de la empresa'),
             'descripcion':T('Descripcion breve de la empresa, su vision y sus funciones'),
@@ -81,6 +83,7 @@ def registrar_empresa():
                              nombre = request.vars.nombre,
                              id_pais = request.vars.id_pais,
                              id_estado = request.vars.id_estado,
+                             id_area_laboral = request.vars.id_area_laboral,
                              direccion = request.vars.direccion,
                              pag_web = request.vars.pag_web,
                              descripcion = request.vars.descripcion,
@@ -98,6 +101,15 @@ def registrar_empresa():
 
         enviar_Correo_Verificacion(request.vars.log)
 
+        paisSet = dbSPE(dbSPE.empresa.id_pais == request.vars.id_pais).select()
+        pais = paisSet[0].nombre
+
+        estadoSet = dbSPE(dbSPE.empresa.id_estado == request.vars.id_estado).select()
+        estado = estadoSet[0].nombre
+
+        arealaboralSet = dbSPE(dbSPE.empresa.id_area_laboral == request.vars.id_area_laboral).select()
+        area_laboral = arealaboralSet[0].nombre
+
         # Mensaje de exito
         response.flash = T("Registro Exitoso")
         # Nos dirigimos a la pagina de exito
@@ -106,8 +118,9 @@ def registrar_empresa():
                                log=request.vars.log,
                                nombre=request.vars.nombre,
                                direccion=request.vars.direccion,
-                               id_pais = request.vars.id_pais,
-                               id_estado = request.vars.id_estado,
+                               pais = pais,
+                               estado = estado,
+                               area_laboral = area_laboral,
                                pag_web=request.vars.pag_web,
                                descripcion=request.vars.descripcion,
                                telefono=request.vars.telefono,
@@ -140,6 +153,7 @@ def registrar_tutor_industrial():
         dbSPE.tutor_industrial.direccion,
         dbSPE.tutor_industrial.id_pais,
         dbSPE.tutor_industrial.id_estado,
+        dbSPE.tutor_industrial.id_universidad,
         dbSPE.tutor_industrial.telefono
     ]
 
@@ -163,6 +177,7 @@ def registrar_tutor_industrial():
             'direccion':T('Direccion del tutor industrial'),
             'id_pais':T('Pais en el que se encuentra domiciliado el tutor industrial'),
             'id_estado':T('Estado en el que se encuentra domiciliado el tutor industrial'),
+            'id_universidad':T('Universidad de la cual egreso el tutor'),
             'telefono':T('Numerico telefonico del tutor industrial')
            })
     # Caso 1: El form se lleno de manera correcta asi que registramos al tutor y procedemos a la pagina de exito
