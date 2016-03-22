@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `calculo_pago` (
     `id_pais`           int(11)     NOT NULL,
     `monto`             double      NOT NULL,
     `fecha`             date        NOT NULL,
-    PRIMARY KEY (`id`,`id_categoria`,`id_tipo_pasantia`,`id_pais`),
+    PRIMARY KEY (`id`),
     KEY `fk_calculo_pago_id_tipo_pasantia_tipo_pasantia_codigo` (`id_tipo_pasantia`),
     KEY `fk_calculo_pago_id_pais_pais_id` (`id_pais`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -240,23 +240,6 @@ CREATE TABLE IF NOT EXISTS `estado` (
 
 -- --------------------------------------------------------
 
--- ---------------------------------------
--- Estructura de tabla para la tabla `evento`
--- ----------------------------------------
-
-CREATE TABLE IF NOT EXISTS `evento` (
-  `codigo` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(254) NOT NULL,
-  `fecha_inicio` timestamp NOT NULL,
-  `fecha_fin` timestamp NOT NULL,
-  `nombre_trimestre_actual` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`codigo`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
-
--- --------------------------------------------------------
-
-
-
 -- --------------------------------------------------------
 
 --
@@ -367,10 +350,13 @@ CREATE TABLE IF NOT EXISTS `pasantia` (
 --
 
 CREATE TABLE IF NOT EXISTS `periodo` (
-    `id`        int(10)         NOT NULL AUTO_INCREMENT,
-    `nombre`    varchar(255)    NOT NULL,
+    `id`                int(10)         NOT NULL AUTO_INCREMENT,
+    `nombre`            varchar(255)    NOT NULL,
+    `fecha_inicio`      timestamp       NOT NULL,
+    `fecha_fin`         timestamp       NOT NULL,
+    `periodo_activo`    tinyint(1)      NOT NULL,    
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -481,36 +467,18 @@ CREATE TABLE IF NOT EXISTS `solicitud_pasante` (
 -- --------------------------------------------------------
 
 --
--- Eventos que pueden componer otros.
---
-
-CREATE TABLE IF NOT EXISTS `sub_evento` (
-    `codigo_sub_evento`     int(11)         NOT NULL AUTO_INCREMENT,
-    `codigo_supra_evento`   int(11)         NOT NULL,
-    `fecha_inicio`          timestamp       NOT NULL,
-    `fecha_fin`             timestamp       NOT NULL,
-    `nombre_sub_evento`     varchar(254)    NOT NULL,
-    `nombre_supra_evento`   varchar(254)    NOT NULL,
-    PRIMARY KEY (`codigo_sub_evento`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10;
-
--- --------------------------------------------------------
-
---
 -- Semanas Muertas en un evento
 --
 
 CREATE TABLE IF NOT EXISTS `semana_muerta` (
-    `id`                            int(11) NOT NULL AUTO_INCREMENT,
+    `id`                            int(11)      NOT NULL AUTO_INCREMENT,
     `fecha_ini`                     timestamp    NOT NULL,
     `fecha_fini`                    timestamp    NOT NULL,
-    `numero_semana`                 int(5)  NOT NULL,
-    `codigo_supra_evento_afectado`  int(11) NOT NULL,
-    `codigo_sub_evento_afectado`    int(11) NOT NULL,
-    `nombre_supra_evento_afectado`  varchar(254) NOT NULL,
-    `nombre_sub_evento_afectado`    varchar(254) NOT NULL,
-    PRIMARY KEY (`id`,`numero_semana`,`fecha_ini`,`fecha_fini`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+    `numero_semana`                 int(5)       NOT NULL,
+    `codigo_periodo_afectado`       int(11)      NOT NULL,
+    PRIMARY KEY (`id`),
+    KEY `fk_semana_muerta_periodo_periodo_id` (`codigo_periodo_afectado`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
 --
 -- Estructura de tabla para la tabla `tipo_pasantia`
@@ -749,10 +717,10 @@ ALTER TABLE `actividad`
 --
 -- Filtros para la tabla `calculo_pago`
 --
--- ALTER TABLE `calculo_pago`
---    ADD CONSTRAINT `fk_calculo_pago_id_categoria_categoria_id` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
---    ADD CONSTRAINT `fk_calculo_pago_id_tipo_pasantia_tipo_pasantia_codigo` FOREIGN KEY (`id_tipo_pasantia`) REFERENCES `tipo_pasantia` (`codigo`) ON DELETE CASCADE ON UPDATE CASCADE,
---    ADD CONSTRAINT `fk_calculo_pago_id_pais_pais_id` FOREIGN KEY (`id_pais`) REFERENCES `pais` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `calculo_pago`
+    ADD CONSTRAINT `fk_calculo_pago_id_categoria_categoria_id` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    ADD CONSTRAINT `fk_calculo_pago_id_tipo_pasantia_tipo_pasantia_codigo` FOREIGN KEY (`id_tipo_pasantia`) REFERENCES `tipo_pasantia` (`codigo`) ON DELETE CASCADE ON UPDATE CASCADE,
+    ADD CONSTRAINT `fk_calculo_pago_id_pais_pais_id` FOREIGN KEY (`id_pais`) REFERENCES `pais` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `departamento`
@@ -819,14 +787,8 @@ ALTER TABLE `solicitud_pasante`
 --
 -- Filtros para la tabla `semana_muerta`
 --
--- ALTER TABLE `semana_muerta`
-
---
--- Filtros para la tabla `sub_evento`
-
--- ALTER TABLE `sub_evento`
---    ADD CONSTRAINT `fk_sub_eventos_codigo_supra_evento_eventos_codigo` FOREIGN KEY (`codigo_supra_evento`) REFERENCES `evento` (`codigo`) ON UPDATE CASCADE;
-
+ALTER TABLE `semana_muerta`
+    ADD CONSTRAINT `fk_semana_muerta_periodo_periodo_id` FOREIGN KEY (`codigo_periodo_afectado`) REFERENCES `periodo` (`id`) ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `tutor_academico`
