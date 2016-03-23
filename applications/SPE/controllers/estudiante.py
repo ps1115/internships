@@ -37,8 +37,8 @@ def agregar_preinscripcion():
                 requires=IS_IN_DB(dbSPE,dbSPE.tipo_pasantia,'%(codigo)s %(nombre)s',
                 zero="Seleccione")),
         Field('periodo',label='Periodo',required=True,
-                        requires=IS_IN_DB(dbSPE,dbSPE.evento,'%(nombre)s',
-                        zero="Seleccione")),
+                        requires=IS_IN_DB(dbSPE(dbSPE.periodo.periodo_activo == 1),dbSPE.periodo,
+                        '%(nombre)s',zero="Seleccione")),
         Field('es_graduando',label="¿Es usted graduando?",required=True, requires=IS_IN_SET(["Si","No"]),
                 widget=lambda k,v:SQLFORM.widgets.radio.widget(k,v,style='divs')),
         Field('publicar_datos',label="¿Desea que las empresas puedan ver sus datos?",
@@ -145,12 +145,12 @@ def llenar_curriculum():
     #Buscamos los datos del curriculum si los hay
     ConsultaDatosCurriculum = dbSPE(dbSPE.curriculum.usbid==auth.user.username)
     DatosCurriculum = ConsultaDatosCurriculum.select()
-    
+
     electivas = []
     cursos    = []
     idiomas   = []
     conocimientos = []
-    aficiones = []    
+    aficiones = []
 
     for i in range(len(DatosCurriculum)):
         electivas.append(DatosCurriculum[i]['electiva'])
@@ -191,7 +191,7 @@ def llenar_curriculum():
     if datos_electivas.process().accepted:
         #Insertamos la electiva
         print("Heyyy1")
-        
+
     if datos_cursos.process().accepted:
         #Insertamos la electiva
         print("Heyyy2")
@@ -204,7 +204,7 @@ def llenar_curriculum():
         #Insertamos la electiva
         print("Heyyy5")
 
-    return dict(message="Curriculum", form1=datos_electivas, form2=datos_cursos, form3=datos_idiomas, form4=datos_aficiones, 
+    return dict(message="Curriculum", form1=datos_electivas, form2=datos_cursos, form3=datos_idiomas, form4=datos_aficiones,
                 electivas=electivas, cursos=cursos, idiomas=idiomas, conocimientos=conocimientos, aficiones=aficiones)
 
 def retirar_pasantia():
