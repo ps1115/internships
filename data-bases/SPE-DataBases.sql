@@ -124,6 +124,18 @@ CREATE TABLE IF NOT EXISTS `coordinacion` (
     PRIMARY KEY (`nombre`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Estructura de tabla para la tabla `correo_por_verificar`
+--
+
+
+CREATE TABLE `correo_por_verificar` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`correo` VARCHAR(80) NOT NULL,
+	`codigo` VARCHAR(45) NOT NULL,
+	PRIMARY KEY (`id`, `correo`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 -- --------------------------------------------------------
 
 --
@@ -177,7 +189,7 @@ CREATE TABLE IF NOT EXISTS `empresa` (
     `pregunta_secreta`          varchar(254)    NOT NULL,
     `respuesta_pregunta_secreta`varchar(254)    NOT NULL,
     `nombre`                    varchar(254)    NOT NULL,
-     `id_pais`                 	int(2)          DEFAULT NULL,
+    `id_pais`                 	int(2)          DEFAULT NULL,
     `id_area_laboral`           int(11)         DEFAULT NULL,
     `id_estado`                 int(2)          DEFAULT NULL,
     `direccion`                 text,
@@ -547,6 +559,7 @@ CREATE TABLE IF NOT EXISTS `tutor_industrial` (
     `id_universidad`			int(11)			NOT NULL,
     `profesion`                 varchar(50)     NOT NULL,
     `cargo`                     varchar(50)     NOT NULL,
+    `id_universidad`            int(11)         NOT NULL,
     `departamento`              varchar(50)     NOT NULL,
     `direccion`                 varchar(254)    NOT NULL,
     `id_pais`                 	int(2)          DEFAULT NULL,
@@ -588,6 +601,7 @@ CREATE TABLE IF NOT EXISTS `area_laboral` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
+
 
 --
 -- Estructura de tabla para la tabla `usuario`
@@ -708,6 +722,7 @@ CREATE TABLE IF NOT EXISTS `plan_de_trabajo` (
 --
 ALTER TABLE `empresa`
     ADD CONSTRAINT `fk_empresa_id_area_laboral_area_laboral_id` FOREIGN KEY (`id_area_laboral`) REFERENCES `area_laboral` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
 
 --
 -- Filtros para la tabla `actividad`
@@ -838,6 +853,7 @@ ALTER TABLE `curriculum`
 --
 ALTER TABLE `universidad`
     ADD CONSTRAINT `fk_universidad_id_pais_pais_id` FOREIGN KEY (`id_pais`) REFERENCES `pais` (`id`);
+
 
 --
 -- Filtros para la tabla `curriculum`

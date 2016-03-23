@@ -23,6 +23,15 @@
                         <div class="list-group">
                             <p class="list-group-item">Nombre : {{=nombre}} </p>
                             <p class="list-group-item">Login : {{=log}} </p>
+                            {{if 'area_laboral':}}
+                                <p class="list-group-item">Area Laboral : {{=area_laboral}} </p>
+                            {{pass}}
+                            {{if 'pais':}}
+                                <p class="list-group-item">Pais : {{=pais}} </p>
+                            {{pass}}
+                            {{if 'estado':}}
+                                <p class="list-group-item">Estado : {{=estado}} </p>
+                            {{pass}}
                             {{if 'telefono':}}
                                 <p class="list-group-item">Teléfono : {{=telefono}} </p>
                             {{pass}}
