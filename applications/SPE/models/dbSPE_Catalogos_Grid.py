@@ -23,7 +23,7 @@ dbSPE.define_table('division',Field('nombre'))
 
 dbSPE.define_table('departamento',
                 Field('nombre', requires=IS_NOT_EMPTY(), default='', label="Nombre del Departamento"),
-                Field('id_division', requires=IS_IN_DB(dbSPE,'division.id', '%(nombre)s',error_message='Division no Existe'), notnull=True, label='Nombre de División'),
+                Field('id_division', represent=lambda x, row: (dbSPE(dbSPE.division.id==x)).select().first().nombre,requires=IS_IN_DB(dbSPE,'division.id', '%(nombre)s',error_message='Division no Existe'), notnull=True, label='Nombre de División'),
                 Field('email_dep', requires=IS_EMAIL('Correo Electrónico Inválido'),label='Correo Electrónico del Departamento'),
                 Field('sede', requires=IS_IN_SET(['Sartenejas','Litoral'],error_message='Sede Inválida'), label='Sede', notnull=True))
 
@@ -76,11 +76,11 @@ dbSPE.define_table("periodo"
                   ,Field('nombre',label="Nombre del Periodo", notnull=True, unique=True)
                   ,Field('fecha_inicio', label="Fecha de Inicio", type='date',requires=[IS_NOT_EMPTY(),IS_DATE(format='%Y/%m/%d')])
                   ,Field('fecha_fin', label="Fecha de Fin", type='date',requires=[IS_NOT_EMPTY(),IS_DATE(format='%Y/%m/%d')])
-                  ,Field('periodo_activo', label="Situación", requires=IS_IN_SET({1:'activo',0:'no activo'})))
+                  ,Field('periodo_activo', represent=lambda x, row: (dict({1:"Activo",0:"No Activo"}))[x],label="Situación", requires=IS_IN_SET({1:'activo',0:'no activo'})))
 
 
 dbSPE.define_table("semana_muerta"
-               ,Field("codigo_periodo_afectado", label="Nombre de Periodo", type="integer",  requires=IS_IN_DB(dbSPE,'periodo.id', '%(nombre)s',error_message='Periodo no Existe'), notnull=True)
+               ,Field("codigo_periodo_afectado", represent=lambda x, row: (dbSPE(dbSPE.periodo.id==x)).select().first().nombre,label="Nombre de Periodo", type="integer",  requires=IS_IN_DB(dbSPE,'periodo.id', '%(nombre)s',error_message='Periodo no Existe'), notnull=True)
                ,Field("numero_semana", type="integer",label="Numero de Semana", requires=IS_NOT_EMPTY())
                ,Field("fecha_ini", label="Fecha de Inicio", type="date", requires=[IS_NOT_EMPTY(),IS_DATE(format='%Y/%m/%d')])
                ,Field("fecha_fini", label="Fecha de Finalización", type="date", requires=[IS_NOT_EMPTY(),IS_DATE(format='%Y/%m/%d')]))
@@ -102,8 +102,8 @@ dbSPE.define_table("rol_sistema"
                ,Field("sede", label="Sede", requires=IS_IN_SET(['Sartenejas','Litoral'],error_message='Sede Inválida'),notnull=True, default="Sartenejas"))
 
 dbSPE.define_table("calculo_pago"
-               , Field("id_categoria",label="Categoría", requires=IS_IN_DB(dbSPE,'categoria.id', '%(nombre)s',error_message='Categoria no existe'),type="integer")
-               , Field("id_tipo_pasantia",label="Tipo de Pasantía",requires=IS_IN_DB(dbSPE,'tipo_pasantia.codigo', '%(nombre)s',error_message='Tipo de Pasantía no existe'), notnull=True)
-               , Field("id_pais",label="País",requires=IS_IN_DB(dbSPE,'pais.id', '%(nombre)s',error_message='País no existe'), notnull=True,type="integer")
+               , Field("id_categoria",represent=lambda x, row: (dbSPE(dbSPE.categoria.id==x)).select().first().nombre,label="Categoría", requires=IS_IN_DB(dbSPE,'categoria.id', '%(nombre)s',error_message='Categoria no existe'),type="integer")
+               , Field("id_tipo_pasantia",represent=lambda x, row: (dbSPE(dbSPE.tipo_pasantia.codigo==x)).select().first().nombre,label="Tipo de Pasantía",requires=IS_IN_DB(dbSPE,'tipo_pasantia.codigo', '%(nombre)s',error_message='Tipo de Pasantía no existe'), notnull=True)
+               , Field("id_pais",represent=lambda x, row: (dbSPE(dbSPE.pais.id==x)).select().first().nombre,label="País",requires=IS_IN_DB(dbSPE,'pais.id', '%(nombre)s',error_message='País no existe'), notnull=True,type="reference pais.id")
                , Field("monto",requires=IS_NOT_EMPTY(),type="double", label="Monto de Pago")
                ,Field("fecha", label="Fecha", type="date",requires=[IS_NOT_EMPTY(),IS_DATE(format='%Y/%m/%d')]))

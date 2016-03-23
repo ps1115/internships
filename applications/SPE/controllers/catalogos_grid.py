@@ -97,8 +97,9 @@ def roles():
     grid = SQLFORM.grid(dbSPE.rol_sistema,user_signature=False, csv=False)
     return grid
 
+#SQLFORM.smartgrid(db.parent,linked_tables=['child'])
 def montos():
-    grid = SQLFORM.grid(dbSPE.calculo_pago, deletable=False, csv=False, user_signature=False)
+    grid = SQLFORM.grid(dbSPE.calculo_pago, csv=False, deletable=False, user_signature=False)
     return grid
 
 """
