@@ -28,7 +28,8 @@ def agregar_preinscripcion():
                 default  = DatosEstudiante.email_sec),
         Field('telf_hab',label='Telefono Habitacion',required=True,
                 default = DatosEstudiante.telf_hab),
-        formstyle='bootstrap3_stacked'
+        formstyle='bootstrap3_stacked',
+        submit_button=T('Actualizar Datos')
     )
 
     datos_pasantia = SQLFORM.factory(
@@ -62,23 +63,22 @@ def agregar_preinscripcion():
                 uploadfolder='applications/SPE/static/profile_pictures',
                 requires = IS_IMAGE(extensions=('jpeg', 'png'))),
         col3={'image':'Utilice una foto tipo carnet reciente.'},
-        formstyle='bootstrap3_stacked'
+        formstyle='bootstrap3_stacked',
+        submit_button=T('Subir Foto')
     )
 
     #validamos la foto de perfil
     if datos_perfil.process(formname="datos_perfil").accepted:
-        print "Foto!"
         ConsultaDatosUsuario.update(foto=datos_perfil.vars.image)
 
     if datos_personales.process(formname="datos_personales").accepted:
-        print "Datos!"
         ConsultaDatosEstudiante.update(direccion=datos_personales.vars.direccion)
         ConsultaDatosEstudiante.update(email_sec=datos_personales.vars.correo)
         ConsultaDatosEstudiante.update(telf_hab=datos_personales.vars.telf_hab)
 
     if datos_pasantia.process(formname="datos_pasantia").accepted:
-        print "Aceptado!"
-        dbSPE.preinscripcion.insert(
+        dbSPE.preinscripcion.update_or_insert(
+                dbSPE.preinscripcion.usbid == auth.user.username,
                 id_periodo    = datos_pasantia.vars.periodo,
                 anio          = int(request.now.year),
                 codigo        = datos_pasantia.vars.codigo_pasantia,
@@ -88,7 +88,6 @@ def agregar_preinscripcion():
                 cod_seguridad = random_key()
                 )
 
-    response.flash = T("¡Bienvenido!")
     return dict(message="Preinscripcion",form1=datos_personales,form2=datos_pasantia,form3=datos_perfil)
 
 def finalizar_preinscripcion():

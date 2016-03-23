@@ -32,3 +32,15 @@
 <div class="row">
   <br><br>
 </div>
+
+<script>
+jQuery(document).ready(function(){
+   if(jQuery('#no_table_publicar_datos input[type="radio"]').val() == "Si")
+        jQuery('#no_table_estado__row').show();
+   else jQuery('#no_table_estado__row').hide();
+   jQuery('#no_table_publicar_datos input[type="radio"]').change(function(){
+        if(jQuery('#no_publicar_datos input[type="radio"]').val()== "Si")
+             jQuery('#no_table_estado__row').show();
+        else jQuery('#no_table_estado__row').hide();});
+});
+</script>
