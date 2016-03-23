@@ -426,7 +426,8 @@ CREATE TABLE IF NOT EXISTS `rol_sistema` (
     `apellido`          varchar(254)    NOT NULL,
     `rol`               varchar(254)    NOT NULL,
     `sede`              varchar(20)     NOT NULL,
-    PRIMARY KEY (`id`,`usbid`)
+    PRIMARY KEY (`id`,`usbid`),
+    KEY `fk_rol_sistema_usbid_usuario_usbid` (`usbid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 -- --------------------------------------------------------
 
@@ -767,6 +768,12 @@ ALTER TABLE `preinscripcion`
     ADD CONSTRAINT `fk_preinscripcion_id_estado_estado_id` FOREIGN KEY (`id_estado`) REFERENCES `estado` (`id`) ON UPDATE CASCADE,
     ADD CONSTRAINT `fk_preinscripcion_id_region_region_id` FOREIGN KEY (`id_region`) REFERENCES `region` (`id`) ON UPDATE CASCADE,
     ADD CONSTRAINT `fk_preinscripcion_usbid_usuario_usbid` FOREIGN KEY (`usbid`) REFERENCES `usuario` (`usbid`);
+
+--
+-- Filtros para la tabla `rol_sistema`
+--
+ALTER TABLE `rol_sistema`
+    ADD CONSTRAINT `fk_rol_sistema_usbid_usuario_usbid` FOREIGN KEY (`usbid`) REFERENCES `usuario` (`usbid`) ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `solicita_permiso`
