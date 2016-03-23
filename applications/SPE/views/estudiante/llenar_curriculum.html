@@ -5,32 +5,29 @@
 
 <form role="form">
   <div class="container col-md-4 form-group">
-    <p class="subtitle">Electivas Cursadas:</p>
+    <p class="subtitle">Electivas Profesionales Cursadas:</p>
     <div class="input-group">
-       <input type="text" class="form-control">
+       {{=form1}}
        <span class="input-group-btn">
-            <button class="btn btn-default" type="button">Agregar</button>
        </span>
     </div>
     <br>
+    {{items =electivas}}
     <ul class="list">
-      <li class="list-item">Electiva 1</li>
-      <li class="list-item">Electiva 2</li>
-      <li class="list-item">Electiva 3</li>
+      {{for item in items:}}<li>{{=item}}</li>{{pass}}
     </ul>
     <br>
     <p class="subtitle">Cursos Realizados:</p>
     <div class="input-group">
-       <input type="text" class="form-control">
+       {{=form2.custom.widget.cursos}}
        <span class="input-group-btn">
-            <button class="btn btn-default" type="button">Agregar</button>
+            <button class="btn btn-default" type="submit">Agregar</button>
        </span>
     </div>
     <br>
+    {{items =cursos}}
     <ul class="list">
-      <li class="list-item">Curso 1</li>
-      <li class="list-item">Curso 2</li>
-      <li class="list-item">Curso 3</li>
+      {{for item in items:}}<li>{{=item}}</li>{{pass}}
     </ul>
     <br>
 
@@ -38,31 +35,29 @@
   <div class="container col-md-4 form-group">
     <p class="subtitle">Idiomas que maneja:</p>
     <div class="input-group">
-       <input type="text" class="form-control">
+       {{=form3.custom.widget.idiomas}}
        <span class="input-group-btn">
-            <button class="btn btn-default" type="button">Agregar</button>
+            <button class="btn btn-default" type="submit">Agregar</button>
        </span>
     </div>
     <br>
+    {{items =idiomas}}
     <ul class="list">
-      <li class="list-item">Idioma 1</li>
-      <li class="list-item">Idioma 2</li>
-      <li class="list-item">Idioma 3</li>
+      {{for item in items:}}<li>{{=item}}</li>{{pass}}
     </ul>
 
     <br>
     <p class="subtitle">Aficiones:</p>
     <div class="input-group">
-       <input type="text" class="form-control">
+       {{=form4.custom.widget.aficiones}}
        <span class="input-group-btn">
-            <button class="btn btn-default" type="button">Agregar</button>
+            <button class="btn btn-default" type="submit">Agregar</button>
        </span>
     </div>
     <br>
+    {{items =aficiones}}
     <ul class="list">
-      <li class="list-item">Aficion 1</li>
-      <li class="list-item">Aficion 2</li>
-      <li class="list-item">Aficion 3</li>
+      {{for item in items:}}<li>{{=item}}</li>{{pass}}
     </ul>
     <br><br>
   </div>
