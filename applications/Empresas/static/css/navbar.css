@@ -13,6 +13,7 @@ body{
 
 .navbar-collapse.collapse.in, .navbar-toggle.open,
 .navbar-toggle:hover, .navbar-toggle:focus {
+    border-color: rgba(63, 93, 93, 0.50);
     background-color: rgba(63, 93, 93, 0.50) !important;
 }
 
