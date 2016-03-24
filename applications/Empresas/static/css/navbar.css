@@ -11,6 +11,11 @@ body{
 	background-color: rgba(63, 93, 93, 0.50) !important;
 }
 
+.navbar-collapse.collapse.in{
+    background-color: rgba(63, 93, 93, 0.50) !important;
+    margin-bottom: 10px;
+}
+
 .navbar-nav>li>a {  
     padding-top: 0px !important;
     padding-bottom: 0px !important;
