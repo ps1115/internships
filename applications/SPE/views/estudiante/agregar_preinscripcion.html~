@@ -6,27 +6,68 @@
 <div class="row">
   <div class="col-sm-4">
     <p class='subtitle'>Datos Personales</p>
-    {{=form}}
-    {{=form1}}
+    {{=form1.custom.begin}}
+    <b>{{=form1.custom.label.nombre}}</b>
+    {{=form1.custom.widget.nombre}}<br/>
+    <b>{{=form1.custom.label.cedula}}</b>
+    {{=form1.custom.widget.cedula}}<br/>
+    <b>{{=form1.custom.label.carrera}}</b>
+    {{=form1.custom.widget.carrera}}<br/>
+    <b>{{=form1.custom.label.sede}}</b>
+    {{=form1.custom.widget.sede}}<br/>
+    <b>{{=form1.custom.label.direccion}}</b>
+    {{=form1.custom.widget.direccion}}<br/>
+    <b>{{=form1.custom.label.correo}}</b>
+    {{=form1.custom.widget.correo}}<br/>
+    <b>{{=form1.custom.label.telf_hab}}</b>
+    {{=form1.custom.widget.telf_hab}}<br/>
+    <button type="submit" class="btn btn-default">Guardar datos</button>
+    {{=form1.custom.end}}
+    <br/>
+    <br/>
+    <br/>
   </div>
   <div class="col-sm-4">
-    <p class='subtitle'>Datos de la Pasantia</p>
-    {{=form2}}
+    <p class='subtitle'>Datos de la Pasantía</p>
+    {{=form2.custom.begin}}
+    <b>{{=form2.custom.label.codigo_pasantia}}</b>
+    {{=form2.custom.widget.codigo_pasantia}}<br/>
+    <b>{{=form2.custom.label.periodo}}</b>
+    {{=form2.custom.widget.periodo}}<br/>
+    <b>{{=form2.custom.label.es_graduando}}</b>
+    {{=form2.custom.widget.es_graduando}}
+    <font color="gray">{{=form2.custom.comment.es_graduando}}</font><br/><br/>
+    <b>{{=form2.custom.label.publicar_datos}}</b>
+    {{=form2.custom.widget.publicar_datos}}
+    <font color="gray">{{=form2.custom.comment.publicar_datos}}</font><br/><br/>
+    <b>{{=form2.custom.label.estado}}</b>
+    {{=form2.custom.widget.estado}}
+    <font color="gray">{{=form2.custom.comment.estado}}</font><br/><br/><br/>
+    <button type="submit" class="btn btn-default">Guardar datos</button>
+    {{=form2.custom.end}}
+    <br/>
+    <br/>
+    <br/>
   </div>
   <div class="col-sm-4">
     <p class='subtitle'>Datos del Perfil</p>
+    {{=form3.custom.begin}}
+    <b>{{=form3.custom.label.image}}</b><br/>
     {{result = tiene_foto(auth.user.username)}}
     {{if result['check']:}}
     {{=IMG(_src=URL('static','profile_pictures/'+str(result['path'])),_alt="profile",_height="200",_width="200")}}
     {{else:}}
     {{=IMG(_src=URL('static','profile_pictures/default.png'),_alt="profile",_height="200",_width="200")}}
     {{pass}}
-    {{=form3}}
-    <br>
-    <p>Una vez actualizados todos sus datos, finalice su preinscripcion.</p>
-    </br>
+    
+    {{=form3.custom.widget.image}}
+    <font color="gray">{{=form3.custom.comment.image}}</font><br/>
+    <button type="submit" class="btn btn-default">Guardar datos</button>
+    <br/><br/>
+    {{=form3.custom.end}}
+    <p>Una vez completados todos sus datos, finalice su preinscripción.</p>
     <a href={{=URL('estudiante','finalizar_preinscripcion')}}>
-      <button type="success" class="btn btn-default">Finalizar Preinscripcion</button>
+      <button type="submit" class="btn btn-default">Finalizar Preinscripción</button>
     </a>
   </div>
 </div>
