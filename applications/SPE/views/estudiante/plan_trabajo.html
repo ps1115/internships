@@ -2,7 +2,7 @@
 {{extend 'layout.html'}}
 
 <p class='title'>{{=message}}</p>
-<p class='subtitle'>Agregue de forma individual cada actividad a su plan de trabajo<br>
+<p class='subtitle'>Agregue de forma individual cada actividad perteneciente a cada fase de su plan de trabajo<br>
   Todos los campos son obligatorios</p>
 
   <form role="form">
@@ -13,58 +13,69 @@
         <label for="ex1">Fase</label>
           <select class="form-control" id="codpas">
             <option>Seleccione</option>
-            <option>Inicio</option>
-            <option>Desarrollo</option>
-            <option>Cierre</option>
+            <option>Fase 1</option>
+            <option>Fase 2</option>
+            <option>Fase 3</option>
+            <option>Fase 4</option>
+            <option>Fase 5</option>
+            <option>Fase 6</option>
+            <option>Fase 7</option>
+            <option>Fase 8</option>
+            <option>Fase 9</option>
+            <option>Fase 10</option>
+            <option>Fase 11</option>
+            <option>Fase 12</option>
+            <option>Fase 13</option>
+            <option>Fase 14</option>
+            <option>Fase 15</option>
+            <option>Fase 16</option>
+            <option>Fase 17</option>
+            <option>Fase 18</option>
+            <option>Fase 19</option>
+            <option>Fase 20</option>
           </select>
         </div>
         <div class="col-xs-3">
-          <label for="ex2">Fecha</label>
-          <select class="form-control" id="fecha">
-            <option>Seleccione</option>
-            <option>Semana 1</option>
-            <option>Semana 2</option>
-            <option>Semana 3</option>
-            <option>Semana 4</option>
-            <option>Semana 5</option>
-            <option>Semana 6</option>
-            <option>Semana 7</option>
-            <option>Semana 8</option>
-            <option>Semana 9</option>
-            <option>Semana 10</option>
-            <option>Semana 11</option>
-            <option>Semana 12</option>
-            <option>Semana 13</option>
-            <option>Semana 14</option>
-            <option>Semana 15</option>
-            <option>Semana 16</option>
-            <option>Semana 17</option>
-            <option>Semana 18</option>
-            <option>Semana 19</option>
-            <option>Semana 20</option>
-          </select>
+          <label for="text">Objetivo específico de la fase</label>
+          <input type="text" class="form-control">
         </div>
       </div>
       <div class="row">
-          <div class="col-md-10 form-group">
-            <br>
-             <label for="text">Objetivo específico</label>
-             <input type="text" class="form-control">
-          </div>
-          <div class="col-md-10 form-group">
-              <br>
-             <label for="text">Descripción</label>
-             <input type="text" class="form-control">
-          </div>
+        <div class="col-md-5 form-group">
+          <label for="text">Descripción de la actividad</label>
+          <input type="text" class="form-control">  
+        </div>
+        <div class="col-md-3 form-group">
+        <label for="ex1">Duración de la actividad</label>
+          <select class="form-control" id="tiempoact">
+            <option>Seleccione</option>
+            <option>1 semana</option>
+            <option>2 semanas</option>
+            <option>3 semanas</option>
+            <option>4 semanas</option>
+            <option>5 semanas</option>
+            <option>6 semanas</option>
+            <option>7 semanas</option>
+            <option>8 semanas</option>
+            <option>9 semanas</option>
+            <option>10 semanas</option>
+          </select> 
+        </div>
+        <div class="col-md-2">
+          <button type="submit" class="btn btn-default">Agregar Fase</button>
+          <br><br><br>
+        </div> 
       </div>
       <div class="row">
-        <div class="col-md-10 form-group">
+        <div class="col-md-3">
           <button type="submit" class="btn btn-default">Agregar Actividad</button>
+          <br><br><br>
+        </div>
+        <div class="container col-md-9 form-group">
+          <button type="sucess" class="btn btn-default">Enviar Plan de Trabajo</button>
           <br><br><br>
         </div>
       </div>
     </div>
-    <div class="container col-md-2 form-group">
-        <button type="sucess" class="btn btn-default">Enviar Plan de Trabajo</button>
-    </div>
+
   </form>

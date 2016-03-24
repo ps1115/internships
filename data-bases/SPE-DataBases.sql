@@ -30,8 +30,6 @@ CREATE TABLE IF NOT EXISTS `actividad` (
     `codigo_fase`       int(11)     DEFAULT NULL,
     `descripcion`       text        NOT NULL,
     `tiempo_estimado`   varchar(20) NOT NULL,
-    `fecha_inicio`      date        NOT NULL,
-    `fecha_fin`         date        NOT NULL,
     `id_plan_de_trab`   int(11)     NOT NULL,
     PRIMARY KEY (`id`),
 	KEY `fk_actividad_codigo_fase_fase_codigo` (`codigo_fase`),
@@ -276,7 +274,6 @@ CREATE TABLE IF NOT EXISTS `extemp` (
 CREATE TABLE IF NOT EXISTS `fase` (
     `codigo`                int(11)         NOT NULL AUTO_INCREMENT,
     `id_periodo`            int(10)         NOT NULL,
-    `anio`                  int(11)         NOT NULL,
     `id_estudiante`         varchar(254)    NOT NULL,
     `codigo_pasantia`       varchar(8)      NOT NULL,
     `nombre_fase`           varchar(100)    NOT NULL,
@@ -677,7 +674,7 @@ CREATE TABLE IF NOT EXISTS `curriculum` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `curriculum`
+-- Estructura de tabla para la tabla `plan_de_trabajo`
 --
 
 CREATE TABLE IF NOT EXISTS `plan_de_trabajo` (
