@@ -94,7 +94,8 @@ def solicitar_registro_tutor():
                                cargo = request.vars.cargo,
                                departamento = request.vars.departamento,
                                direccion = request.vars.direccion,
-                               id_estado = None, #Estara asi hasta que se implemente la tabla estado
+                               id_estado = request.vars.id_estado, 
+                               id_pais = request.vars.id_pais,
                                telefono = request.vars.telefono)
     # Caso 2: El form no se lleno de manera correcta asi que recargamos la pagina
     else:

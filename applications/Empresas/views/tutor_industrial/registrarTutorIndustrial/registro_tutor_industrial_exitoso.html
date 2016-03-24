@@ -1,17 +1,13 @@
 {{('message' in globals())}}
 {{extend 'layout.html'}}
 
-<head>
-    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
-</head>
-
 {{if 'message' in globals():}}
 <div class='content'>
     <p class='title'>{{=message}}</p>
     <div class="row">
         <div class="col-md-4">
             <div class="panel-group" id="accordion">
-                <div class="panel panel-default">
+                <div class="panel panel-warning">
                     <div class="panel-heading">
                         <h3 class="panel-title">
                             <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#personal">
@@ -47,7 +43,7 @@
         <div class="col-md-4">
             <div class="panel-group" id="accordionTwo">
                 {{if profesion or cargo or departamento:}}
-                <div class="panel panel-default">
+                <div class="panel panel-warning">
                     <div class="panel-heading">
                         <h3 class="panel-title">
                             <a data-toggle="collapse" href="#profesional">
@@ -73,7 +69,7 @@
                 </div>
                 {{pass}}
                 {{if id_estado or direccion:}}
-                <div class="panel panel-default">
+                <div class="panel panel-warning">
                     <div class="panel-heading">
                         <h3 class="panel-title">
                             <a data-toggle="collapse" href="#location">
@@ -84,6 +80,9 @@
                     </div>
                     <div class="panel-collapse collapse in" id="location">
                         <div class="list-group">
+                            {{if id_pais:}}
+                                <p class="list-group-item">País : {{=id_pais}} </p>
+                            {{pass}}
                             {{if id_estado:}}
                                 <p class="list-group-item">Estado : {{=id_estado}} </p>
                             {{pass}}
