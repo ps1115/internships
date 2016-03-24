@@ -3,14 +3,13 @@
 
 <p class='title'>{{=message}}</p>
 
-<form role="form">
   <div class="container col-md-4 form-group">
     <p class="subtitle">Electivas Profesionales Cursadas:</p>
     {{=form1.custom.begin}}
     <div class="input-group">
        {{=form1.custom.widget.electivas}}
        <span class="input-group-btn">
-            {{=form1.custom.submit}}
+            <button class="btn btn-default" type="submit">Agregar</button>
        </span>
     </div>
     <br>
@@ -18,9 +17,10 @@
     <ul class="list">
       {{for item in items:}}<li>{{=item}}</li>{{pass}}
     </ul>
-    <br>
     {{=form1.custom.end}}
+    <br>
     <p class="subtitle">Cursos Realizados:</p>
+    {{=form2.custom.begin}}
     <div class="input-group">
        {{=form2.custom.widget.cursos}}
        <span class="input-group-btn">
@@ -32,11 +32,30 @@
     <ul class="list">
       {{for item in items:}}<li>{{=item}}</li>{{pass}}
     </ul>
+    {{=form2.custom.end}}
+    <br>
+    <p class="subtitle">Conocimientos con los que cuentas:</p>
+    {{=form5.custom.begin}}
+    <div class="input-group">
+       {{=form5.custom.widget.conocimientos}}
+       <span class="input-group-btn">
+            <button class="btn btn-default" type="submit">Agregar</button>
+       </span>
+    </div>
+    <br>
+    {{items =conocimientos}}
+    <ul class="list">
+      {{for item in items:}}<li>{{=item}}</li>{{pass}}
+    </ul>
+    {{=form5.custom.end}}
+    <br>
+    <br>
     <br>
 
   </div>
   <div class="container col-md-4 form-group">
-    <p class="subtitle">Idiomas que maneja:</p>
+    <p class="subtitle">Idiomas que manejas:</p>
+    {{=form3.custom.begin}}
     <div class="input-group">
        {{=form3.custom.widget.idiomas}}
        <span class="input-group-btn">
@@ -48,9 +67,10 @@
     <ul class="list">
       {{for item in items:}}<li>{{=item}}</li>{{pass}}
     </ul>
-
+    {{=form3.custom.end}}
     <br>
-    <p class="subtitle">Aficiones:</p>
+    <p class="subtitle">Aficiones o Intereses:</p>
+    {{=form4.custom.begin}}
     <div class="input-group">
        {{=form4.custom.widget.aficiones}}
        <span class="input-group-btn">
@@ -62,10 +82,20 @@
     <ul class="list">
       {{for item in items:}}<li>{{=item}}</li>{{pass}}
     </ul>
-    <br><br>
+    {{=form4.custom.end}}
+    <br>
+    <br>
+    <br>
   </div>
   <div class="container col-md-2 form-group">
       <br><br>
-      <button type="submit" class="btn btn-default">Guardar Curriculum</button>
+      {{if electivas != []:}}
+      <a href={{=URL('estudiante','generar_curriculum')}}>
+      <button type="submit" class="btn btn-default">Generar Curriculum</button>
+      </a>      
+      {{else:}}
+      <a href={{=URL('estudiante','llenar_curriculum')}}>
+      <button type="submit" class="btn btn-default">Generar Curriculum</button>
+      </a>  
+      {{pass}}    
   </div>
-</form>

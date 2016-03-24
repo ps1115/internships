@@ -1,4 +1,6 @@
+# -*- coding: utf-8 -*-
 from usbutils import random_key
+import re
 
 def agregar_preinscripcion():
 
@@ -15,25 +17,26 @@ def agregar_preinscripcion():
     datos_personales = SQLFORM.factory(
         Field('nombre' ,label='Nombre y Apellido ',required=True,
                 default = DatosUsuario.nombre + ' ' + DatosUsuario.apellido),
-        Field('cedula' ,label='Cedula ',required=True,
+        Field('cedula' ,label='Cédula ',required=True,
                 default = DatosUsuario.ci),
         Field('carrera',label='Carrera',required=True, requires=IS_IN_DB(dbSPE,dbSPE.carrera,'%(codigo)s %(nombre)s',zero="Seleccione"),
                 default = DatosCarrera.codigo),
         Field('sede',label='Sede',required=True, requires=IS_IN_SET(['Sartenejas','Litoral'],zero="Seleccione"),
                 default = DatosEstudiante.estudiante_sede),
-        Field('direccion',label='Direccion',required=True,
+        Field('direccion',label='Dirección',required=True,
                 default = DatosEstudiante.direccion),
-        Field('correo',label='Correo Electronico',required=True,
+        Field('correo',label='Correo Electrónico',required=True,
                 default  = DatosEstudiante.email_sec),
-        Field('telf_hab',label='Telefono Habitacion',required=True,
+        Field('telf_hab',label='Teléfono Habitación',required=True,
                 default = DatosEstudiante.telf_hab),
-        formstyle='bootstrap3_stacked',
-        submit_button=T('Actualizar Datos')
+        submit_button='Guardar datos',
+        buttons=['submit'],
+        formstyle='bootstrap3_stacked'
     )
 
     datos_pasantia = SQLFORM.factory(
 
-        Field('codigo_pasantia',label='Codigo de la Pasantia',required=True,
+        Field('codigo_pasantia',label='Código de la Pasantía',required=True,
                 requires=IS_IN_DB(dbSPE,dbSPE.tipo_pasantia,'%(codigo)s %(nombre)s',
                 zero="Seleccione")),
         Field('periodo',label='Periodo',required=True,
@@ -46,11 +49,13 @@ def agregar_preinscripcion():
                 widget=lambda k,v:SQLFORM.widgets.radio.widget(k,v,style='divs')),
         Field('estado',label='Estado',
                 requires=IS_IN_DB(dbSPE,dbSPE.estado,'%(nombre)s',zero="Seleccione")),
+        submit_button='Guardar datos',
+        buttons=['submit'],
         formstyle='bootstrap3_stacked',
 
-        col3={'es_graduando':'Conteste "Si" si la pasantia es su ultimo requisito para el acto de grado.',
-              'publicar_datos':'Al contestar "Si" empresas podran ver su curriculum. Debera llenar su curriculum en el sistema.',
-              'estado':'Estado del pais donde usted tenga preferencia para realizar su pasantia.'}
+        col3={'es_graduando':'Conteste "Si" si la pasantía es su último requisito para el acto de grado.',
+              'publicar_datos':'Al contestar "Si" las empresas podrán ver su curriculum. Deberá llenar su curriculum en el sistema.',
+              'estado':'Estado del país donde usted tenga preferencia para realizar su pasantía.'}
     )
 
     existe_foto = tiene_foto(DatosUsuario.usbid)['check']
@@ -61,20 +66,26 @@ def agregar_preinscripcion():
         Field('image', 'upload',label="Foto de Perfil", required=not(existe_foto),
                 uploadfolder='applications/SPE/static/profile_pictures',
                 requires = IS_IMAGE(extensions=('jpeg', 'png'))),
-        col3={'image':'Utilice una foto tipo carnet reciente.'},
-        formstyle='bootstrap3_stacked',
-        submit_button=T('Subir Foto')
+        submit_button='Subir Foto',
+        buttons=['submit'],
+	formstyle='bootstrap3_stacked',
+
+        col3={'image':'Utilice una foto tipo carnet reciente.'}
     )
 
     #validamos la foto de perfil
     if datos_perfil.process(formname="datos_perfil").accepted:
         ConsultaDatosUsuario.update(foto=datos_perfil.vars.image)
+        redirect(URL('estudiante', 'agregar_preinscripcion'))
 
+    #Validamos los datos personales
     if datos_personales.process(formname="datos_personales").accepted:
         ConsultaDatosEstudiante.update(direccion=datos_personales.vars.direccion)
         ConsultaDatosEstudiante.update(email_sec=datos_personales.vars.correo)
         ConsultaDatosEstudiante.update(telf_hab=datos_personales.vars.telf_hab)
+        redirect(URL('estudiante', 'agregar_preinscripcion'))
 
+    #Validamos los datos de la pasantia
     if datos_pasantia.process(formname="datos_pasantia").accepted:
         dbSPE.preinscripcion.update_or_insert(
                 dbSPE.preinscripcion.usbid == auth.user.username,
@@ -86,6 +97,7 @@ def agregar_preinscripcion():
                 id_estado     = datos_pasantia.vars.id,
                 cod_seguridad = random_key()
                 )
+        redirect(URL('estudiante', 'agregar_preinscripcion'))
 
     return dict(message="Preinscripcion",form1=datos_personales,form2=datos_pasantia,form3=datos_perfil)
 
@@ -95,7 +107,7 @@ def finalizar_preinscripcion():
     DatosUsuario     = dbSPE(dbSPE.usuario.usbid==auth.user.username).select()[0]
     DatosEstudiante  = dbSPE(dbSPE.usuario_estudiante.usbid_usuario==auth.user.username).select()[0]
     DatosCarrera     = dbSPE(dbSPE.carrera.codigo==DatosEstudiante.carrera).select()[0]
-    DatosPeriodo     = dbSPE(dbSPE.evento.codigo==DatosInscripcion.id_periodo).select()[0]
+    DatosPeriodo     = dbSPE(dbSPE.periodo.id==DatosInscripcion.id_periodo).select()[0]
 
     return  dict(message=T("Preinscripcion Exitosa"),
                 datos_personales = {
@@ -142,73 +154,168 @@ def registrar_estudiante():
 def plan_trabajo():
     return dict(message="Plan de Trabajo")
 
+
+            ##################################################
+            #              llenar_curriculum()               #
+            ##################################################
 def llenar_curriculum():
 
-    print('Voy a llenar curriculum')
+    import ast
+
     #Buscamos los datos del curriculum si los hay
     ConsultaDatosCurriculum = dbSPE(dbSPE.curriculum.usbid==auth.user.username)
-    DatosCurriculum = ConsultaDatosCurriculum.select()
 
-    electivas = []
-    cursos    = []
-    idiomas   = []
-    conocimientos = []
-    aficiones = []
+    #Si no los hay, lo creamos
+    if ConsultaDatosCurriculum.isempty():
+        dbSPE.curriculum.insert(usbid=auth.user.username)
+        ConsultaDatosCurriculum = dbSPE(dbSPE.curriculum.usbid==auth.user.username)
 
-    for i in range(len(DatosCurriculum)):
-        electivas.append(DatosCurriculum[i]['electiva'])
-        cursos.append(DatosCurriculum[i]['cursos'])
-        idiomas.append(DatosCurriculum[i]['idiomas'])
-        conocimientos.append(DatosCurriculum[i]['conocimientos'])
-        aficiones.append(DatosCurriculum[i]['aficiones'])
+    #Obtenemos los datos
+    DatosCurriculum = ConsultaDatosCurriculum.select()[0]
 
-    #Generamos el SQLFORM utilizando los campos
+    #Buscamos las electivas a mostrar en pantalla
+    if DatosCurriculum.electiva == None:
+        electivas = []
+    else:
+        electivas = ast.literal_eval(DatosCurriculum.electiva)
+        electivas.sort()
+
+    #Buscamos los cursos a mostrar en pantalla
+    if DatosCurriculum.cursos == None:
+        cursos = []
+    else:
+        cursos = ast.literal_eval(DatosCurriculum.cursos)
+        cursos.sort()
+
+    #Buscamos los idiomas a mostrar en pantalla
+    if DatosCurriculum.idiomas == None:
+        idiomas = []
+    else:
+        idiomas = ast.literal_eval(DatosCurriculum.idiomas)
+        idiomas.sort()
+
+    #Buscamos los conocimientos a mostrar en pantalla
+    if DatosCurriculum.conocimientos == None:
+        conocimientos = []
+    else:
+        conocimientos = ast.literal_eval(DatosCurriculum.conocimientos)
+        conocimientos.sort()
+
+    #Buscamos las aficiones o intereses a mostrar en pantalla
+    if DatosCurriculum.aficiones == None:
+        aficiones = []
+    else:
+        aficiones = ast.literal_eval(DatosCurriculum.aficiones)
+        aficiones.sort()
+
+    #Generamos los SQLFORM
     datos_electivas = SQLFORM.factory(
-        Field('electivas',label='Electivas Cursadas',required=True,
-                default='Nombre de la electiva'),
+        Field('electivas',label='Electivas Cursadas.'),
         submit_button='Agregar',
-        buttons=['submit'],
+        buttons=['submit']
     )
 
     datos_cursos = SQLFORM.factory(
-        Field('cursos',label='Cursos Realizados',
-                default='Nombre o tema del curso'),
-        submit_button='Submit',
+        Field('cursos',label='Cursos Realizados'),
+        submit_button='Agregar',
         buttons=['submit']
     )
 
     datos_idiomas = SQLFORM.factory(
-        Field('idiomas',label='Idiomas manejados',
-                default='Nombre del idioma'),
-        submit_button='Submit',
+        Field('idiomas',label='Idiomas manejados'),
+        submit_button='Agregar',
         buttons=['submit']
     )
 
     datos_aficiones = SQLFORM.factory(
-        Field('aficiones',label='Aficiones',
-                default='Cosas que te gustan o interesan'),
-        submit_button='Submit',
+        Field('aficiones',label='Aficiones'),
+        submit_button='Agregar',
         buttons=['submit']
     )
 
-    if datos_electivas.process().accepted:
-        #Insertamos la electiva
-        print("Heyyy1")
+    datos_conocimientos = SQLFORM.factory(
+        Field('conocimientos',label='Conocimientos'),
+        submit_button='Agregar',
+        buttons=['submit']
+    )
 
-    if datos_cursos.process().accepted:
-        #Insertamos la electiva
-        print("Heyyy2")
 
-    if datos_idiomas.process().accepted:
+    if datos_electivas.process(formname="datos_electivas").accepted:
         #Insertamos la electiva
-        print("Heyyy3")
+        if re.search('[^\s]+',datos_electivas.vars.electivas):
+            electivas.append(datos_electivas.vars.electivas)
+            ConsultaDatosCurriculum.update(electiva=str(electivas))
+        redirect(URL('estudiante', 'llenar_curriculum'))
 
-    if datos_aficiones.process().accepted:
-        #Insertamos la electiva
-        print("Heyyy5")
+    if datos_cursos.process(formname="datos_cursos").accepted:
+        #Insertamos el curso
+        if datos_cursos.vars.cursos != '':
+            cursos.append(datos_cursos.vars.cursos)
+            ConsultaDatosCurriculum.update(cursos=str(cursos))
+        redirect(URL('estudiante', 'llenar_curriculum'))
 
-    return dict(message="Curriculum", form1=datos_electivas, form2=datos_cursos, form3=datos_idiomas, form4=datos_aficiones,
-                electivas=electivas, cursos=cursos, idiomas=idiomas, conocimientos=conocimientos, aficiones=aficiones)
+    if datos_idiomas.process(formname="datos_idiomas").accepted:
+        #Insertamos el idioma
+        if datos_idiomas.vars.idiomas != '':
+            idiomas.append(datos_idiomas.vars.idiomas)
+            ConsultaDatosCurriculum.update(idiomas=str(idiomas))
+        redirect(URL('estudiante', 'llenar_curriculum'))
+
+    if datos_aficiones.process(formname="datos_aficiones").accepted:
+        #Insertamos la aficion o interes
+        if datos_aficiones.vars.aficiones != '':
+            aficiones.append(datos_aficiones.vars.aficiones)
+            ConsultaDatosCurriculum.update(aficiones=str(aficiones))
+        redirect(URL('estudiante', 'llenar_curriculum'))
+
+    if datos_conocimientos.process(formname="datos_conocimientos").accepted:
+        #Insertamos el conocimiento
+        if datos_conocimientos.vars.conocimientos != '':
+            conocimientos.append(datos_conocimientos.vars.conocimientos)
+            ConsultaDatosCurriculum.update(conocimientos=str(conocimientos))
+        redirect(URL('estudiante', 'llenar_curriculum'))
+
+    return dict(message="Curriculum",
+                form1=datos_electivas,
+                form2=datos_cursos,
+                form3=datos_idiomas,
+                form4=datos_aficiones,
+                form5=datos_conocimientos,
+                electivas=electivas,
+                cursos=cursos,
+                idiomas=idiomas,
+                conocimientos=conocimientos,
+                aficiones=aficiones
+                )
+
+
+            ##################################################
+            #              generar_curriculum()              #
+            ##################################################
+def generar_curriculum():
+    import os
+
+    #Buscamos los datos del curriculum si los hay
+    ConsultaDatosCurriculum = dbSPE(dbSPE.curriculum.usbid==auth.user.username)
+    #Obtenemos los datos
+    DatosCurriculum = ConsultaDatosCurriculum.select()[0]
+
+    #Buscamos las electivas a mostrar en pantalla
+    if DatosCurriculum.electiva != None:
+        #Obtenemos el usuario y la ruta donde guardaremos el curriculum
+        nombreUsuario = auth.user.username
+        ruta = request.folder
+        #Obtenemos la ruta del archivo generado
+        archivoTemporal = curriculum_en_pdf(ruta,nombreUsuario)
+        #Abrimos el archivo generado
+        archivo = open(archivoTemporal,"rb").read()
+        #Quitamos el archivo generado
+        os.unlink(archivoTemporal)
+        #Indicamos la aplicacion con la que se abre el archivo
+        response.headers['Content-Type']='application/pdf'
+        #Enviamos la ruta del archivo a mostrar
+        return archivo
+
 
 def retirar_pasantia():
     # Argumentos son: codigo, año, periodo
