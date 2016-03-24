@@ -54,7 +54,7 @@
 
   </div>
   <div class="container col-md-4 form-group">
-    <p class="subtitle">Idiomas que manejas:</p>
+    <p class="subtitle">Idiomas que manejados:</p>
     {{=form3.custom.begin}}
     <div class="input-group">
        {{=form3.custom.widget.idiomas}}

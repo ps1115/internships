@@ -179,21 +179,10 @@ def llenar_curriculum():
         idiomas = ast.literal_eval(DatosCurriculum.idiomas)
         idiomas.sort()
 
-    #Buscamos los conocimientos a mostrar en pantalla
-    if DatosCurriculum.conocimientos == None:
-        conocimientos = []
-    else:
-        conocimientos = ast.literal_eval(DatosCurriculum.conocimientos)
-        conocimientos.sort()
+    conocimientos = []
+    aficiones = []
 
-    #Buscamos las aficiones o intereses a mostrar en pantalla
-    if DatosCurriculum.aficiones == None:
-        aficiones = []
-    else:
-        aficiones = ast.literal_eval(DatosCurriculum.aficiones)
-        aficiones.sort()
-
-    #Generamos los SQLFORM
+    #Generamos el SQLFORM utilizando los campos
     datos_electivas = SQLFORM.factory(
         Field('electivas',label='Electivas Cursadas.'),
         submit_button='Agregar',
@@ -218,13 +207,6 @@ def llenar_curriculum():
         buttons=['submit']
     )
 
-    datos_conocimientos = SQLFORM.factory(
-        Field('conocimientos',label='Conocimientos'),
-        submit_button='Agregar',
-        buttons=['submit']
-    )
-
-
     if datos_electivas.process(formname="datos_electivas").accepted:
         #Insertamos la electiva
         if datos_electivas.vars.electivas != '':
@@ -244,23 +226,14 @@ def llenar_curriculum():
             ConsultaDatosCurriculum.update(idiomas=str(idiomas))
 
     if datos_aficiones.process(formname="datos_aficiones").accepted:
-        #Insertamos la aficion o interes
-        if datos_aficiones.vars.aficiones != '':
-            aficiones.append(datos_aficiones.vars.aficiones)
-            ConsultaDatosCurriculum.update(aficiones=str(aficiones))
-
-    if datos_conocimientos.process(formname="datos_conocimientos").accepted:
-        #Insertamos el conocimiento
-        if datos_conocimientos.vars.conocimientos != '':
-            conocimientos.append(datos_conocimientos.vars.conocimientos)
-            ConsultaDatosCurriculum.update(conocimientos=str(conocimientos))
+        #Insertamos la electiva
+        print("Heyyy5")
 
     return dict(message="Curriculum",
                 form1=datos_electivas,
                 form2=datos_cursos,
                 form3=datos_idiomas,
                 form4=datos_aficiones,
-                form5=datos_conocimientos,
                 electivas=electivas,
                 cursos=cursos,
                 idiomas=idiomas,
