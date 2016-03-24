@@ -38,3 +38,46 @@ def guardar_imagen(image, imagename=None,path=None):
     finally:
             dest_file.close()
     return imagename
+
+def enviar_Correo_Verificacion(correo):
+    import string
+    import random
+    from random import randint
+
+    resultado = False
+
+    size = randint(4,11)
+    i = 0
+    codigoGenerado = ''
+
+    for i in range(0,size):
+                codigoGenerado += random.choice(string.lowercase + string.uppercase + string.digits)
+
+    dbSPE.correo_Por_Verificar.insert(correo = correo,codigo = codigoGenerado)
+
+    if mail:
+        if mail.send(to=[correo],
+            subject=T('Activacion'),
+            message= T('Codigo De Activacion ') + codigoGenerado):
+                response.flash = T('email sent sucessfully.')
+                resultado = True
+        else:
+            response.flash = T('fail to send email sorry!')
+    else:
+        response.flash = T('Unable to send the email : email parameters not defined')
+    return resultado
+
+def obtener_correo(usbid):
+    usuario = dbSPE(dbSPE.usuario.usbid == usbid).select()[0]
+    if usuario.tipo == "Docente":
+        #Buscamos el email del profesor
+        datosUsuario = dbSPE(dbSPE.usuario_profesor.usbid_usuario == usbid).select()[0]
+    elif usuario.tipo == "Administrativo":
+        pass
+    elif usuario.tipo in ["Pregrado","Postgrado"]:
+        #Buscamos el email del estudiante
+        datosUsuario = dbSPE(dbSPE.usuario_estudiante.usbid_usuario == usbid).select()[0]
+    elif usuario.tipo in ["Empleado","Organizacion","Egresado"]:
+        pass
+
+    return datosUsuario.email_sec
