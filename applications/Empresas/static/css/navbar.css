@@ -23,17 +23,17 @@ body{
     line-height: 40px !important;
 }
 
-ul{
+ul {
 	font-size: 13px !important;
 	padding-left: % !important;
 }
 
-ul.dropdown-menu.dropdown-menu-style{
+ul.dropdown-menu.dropdown-menu-style {
 	height: 100;
     background-color: #526060;
 } 
 
-li a{
+li a {
 	color: #ffffff !important;
 	position: relative;
 }
@@ -43,21 +43,21 @@ li.dropdown.open{
 	position: relative;
 }
 
-.dropdown-menu-style li{
+.dropdown-menu-style li {
 	position: relative;
 /*	padding-top: 5px;*/
 /*	padding-bottom: 5px;*/
 	background-color: #526060;
 }
 
-a.dropdown-focus{
+a.dropdown-focus {
 	background-color: #526060;
 }
 
-ul.nav.navbar-nav.navbar-right .navbar-nav>li>.dropdown-menu{
+ul.nav.navbar-nav.navbar-right .navbar-nav>li>.dropdown-menu {
 	background-color: #526060;
 }
-.navbar-default .navbar-nav>li:hover{
+.navbar-default .navbar-nav>li:hover {
     background-color: #758a8a;
 }
 .navbar-default .navbar-nav>.open>a,
@@ -66,14 +66,19 @@ ul.nav.navbar-nav.navbar-right .navbar-nav>li>.dropdown-menu{
 	background-color: #758a8a;
 }
 
-.dropdown:hover .dropdown-menu{
+.dropdown:hover .dropdown-menu {
     display: block;
 }
 .dropdown-menu>li>a:hover {
 	background-color: #758a8a;
 }
 
-.navbar-toggle{
+.navbar-toggle {
     padding: 13px 10px !important;
     margin-top: 0px;
 }
+
+.navbar-header {
+    height: 40px;
+}
+
