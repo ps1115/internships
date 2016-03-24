@@ -54,8 +54,8 @@
     <div class="w2p_flash alert alert-dismissable">{{=response.flash or ''}}</div>
     <!-- Navbar ======================================= -->
     <div class="header_home">
-		  <div class="container transparent">
-        <div class="col-xs-3 logo">
+		<div class="container transparent">
+            <div class="col-xs-3 logo">
 		    	{{=IMG(_src=URL('static','images/home/LogoUniversidadSimonBolivar.png'),alt="USBLOGO")}}
 		    </div>
 		  	<div class="title" padding-top: 10%>
@@ -64,18 +64,21 @@
 		    <div class="col-xs-offset-1 subtitle">
 		    	Sistema de Pasantías Empresariales de la USB
 		    </div>
-		  </div>
-		</div>
+	    </div>
+	</div>
 
     <nav class="navbar-default navbar-style" role="navigation">
       <div class="container-fluid">
-        <button type = "button" class = "navbar-toggle" 
-           data-toggle = "collapse" data-target = "#navbar">
-           <span class = "sr-only">Toggle navigation</span>
-           <span class = "icon-bar"></span>
-           <span class = "icon-bar"></span>
-           <span class = "icon-bar"></span>
-        </button>
+        <div class="navbar-header">
+            <button type = "button" class = "navbar-toggle collapsed" 
+               data-toggle = "collapse" data-target = "#navbar">
+               <span class = "sr-only">Toggle navigation</span>
+               <span class = "icon-bar"></span>
+               <span class = "icon-bar"></span>
+               <span class = "icon-bar"></span>
+            </button>
+        </div>
+        
         <div id="navbar" class="collapse navbar-collapse navbar-content-style">
           <ul class="nav navbar-nav navbar-right">
             {{if auth.is_logged_in():}}
@@ -91,7 +94,7 @@
 
     <!-- Main ========================================= -->
     <!-- Begin page content -->
-    <div class="container-fluid main-container">
+    <div id="main" class="container-fluid main-container">
       {{if left_sidebar_enabled:}}
         <div class="col-md-3 left-sidebar">
             {{block left_sidebar}}
@@ -151,7 +154,7 @@
     <script src="{{=URL('static','js/share.js',vars=dict(static=URL('static','images')))}}"></script>
     <script>
         $(document).ready(function(){
-        $('[data-toggle="tooltip"]').tooltip(); 
+            $('[data-toggle="tooltip"]').tooltip(); 
         });
     </script>
   </body>

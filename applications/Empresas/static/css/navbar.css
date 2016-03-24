@@ -4,7 +4,6 @@ body{
 
 .navbar-default, .navbar-style {
     min-height:40px !important;
-    height: 40px !important;
     position: relative;
     margin-top: 10px;
     padding: 0px 12px !important;
@@ -15,6 +14,7 @@ body{
 .navbar-toggle:hover, .navbar-toggle:focus {
     border-color: rgba(63, 93, 93, 0.50);
     background-color: rgba(63, 93, 93, 0.50) !important;
+    overflow-y: visible;
 }
 
 .navbar-nav>li>a {  
@@ -25,11 +25,9 @@ body{
 
 ul {
 	font-size: 13px !important;
-	padding-left: % !important;
 }
 
 ul.dropdown-menu.dropdown-menu-style {
-	height: 100;
     background-color: #526060;
 } 
 
@@ -45,8 +43,6 @@ li.dropdown.open{
 
 .dropdown-menu-style li {
 	position: relative;
-/*	padding-top: 5px;*/
-/*	padding-bottom: 5px;*/
 	background-color: #526060;
 }
 
@@ -71,11 +67,6 @@ ul.nav.navbar-nav.navbar-right .navbar-nav>li>.dropdown-menu {
 }
 .dropdown-menu>li>a:hover {
 	background-color: #758a8a;
-}
-
-.navbar-toggle {
-    padding: 13px 10px !important;
-    margin-top: 0px;
 }
 
 .navbar-header {
