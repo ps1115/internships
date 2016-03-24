@@ -167,12 +167,13 @@ def correo_no_verificado(usbid):
 #Reenvia la verificacion del correo
 def resendVerificationEmail():
 
-    correoVerificarSet = dbSPE(dbSPE.correo_Por_Verificar.correo == request.vars.correo).select()
+    correo_usuario = obtener_correo(auth.user.username)
+    correoVerificarSet = dbSPE(dbSPE.correo_Por_Verificar.correo == correo_usuario).select()
 
     codigoGenerado = correoVerificarSet[0].codigo
 
     if mail:
-        if mail.send(to=[request.vars.correo],
+        if mail.send(to=[correo_usuario],
             subject=T('Activacion'),
             message= 'Codigo De Activacion ' + codigoGenerado):
                 response.flash = 'email sent sucessfully.'
@@ -181,7 +182,7 @@ def resendVerificationEmail():
             response.flash = 'fail to send email sorry!'
     else:
         response.flash = 'Unable to send the email : email parameters not defined'
-    return response.render('default/codigoReenviado.html',message=T("Verificacion de Correo"),vars=dict(correo=request.vars.login))
+    return response.render('default/codigoReenviado.html',message=T("Verificacion de Correo"),vars=dict(correo=correo_usuario))
 
 #Verifica el correo
 def verifyEmail():
