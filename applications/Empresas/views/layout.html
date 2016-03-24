@@ -68,13 +68,14 @@
 		</div>
 
     <nav class="navbar-default navbar-style" role="navigation">
-      <button type = "button" class = "navbar-toggle" 
-         data-toggle = "collapse" data-target = "#navbar">
-         <span class = "sr-only">Toggle navigation</span>
-         <span class = "icon-bar"></span>
-         <span class = "icon-bar"></span>
-         <span class = "icon-bar"></span>
-      </button>
+      <div class="container-fluid">
+        <button type = "button" class = "navbar-toggle" 
+           data-toggle = "collapse" data-target = "#navbar">
+           <span class = "sr-only">Toggle navigation</span>
+           <span class = "icon-bar"></span>
+           <span class = "icon-bar"></span>
+           <span class = "icon-bar"></span>
+        </button>
         <div id="navbar" class="collapse navbar-collapse navbar-content-style">
           <ul class="nav navbar-nav navbar-right">
             {{if auth.is_logged_in():}}
@@ -85,6 +86,7 @@
           {{=MENU(response.menu, _class='nav navbar-nav',li_class='dropdown',ul_class='dropdown-menu dropdown-menu-style', li_first='dropdown', li_last='dropdown')}}
           {{pass}}
         </div>
+      </div>
     </nav>
 
     <!-- Main ========================================= -->

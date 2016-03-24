@@ -11,9 +11,9 @@ body{
 	background-color: rgba(63, 93, 93, 0.50) !important;
 }
 
-.navbar-collapse.collapse.in{
+.navbar-collapse.collapse.in, .navbar-toggle.open,
+.navbar-toggle:hover, .navbar-toggle:focus {
     background-color: rgba(63, 93, 93, 0.50) !important;
-    margin-bottom: 10px;
 }
 
 .navbar-nav>li>a {  
@@ -72,3 +72,7 @@ ul.nav.navbar-nav.navbar-right .navbar-nav>li>.dropdown-menu{
 	background-color: #758a8a;
 }
 
+.navbar-toggle{
+    padding: 13px 10px !important;
+    margin-top: 0px;
+}
