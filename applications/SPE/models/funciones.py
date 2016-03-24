@@ -1,15 +1,6 @@
 # Funciones disponibles en todo el codigo.
 
 def tiene_foto(usbid):
-    # import os
-    #
-    # query =  dbSPE(dbSPE.usuario.usbid==usbid)
-    # foto  = query.select()[0].foto
-    # path = '/SPE/static/profile_pictures/' + str(foto)
-    # print "foto " + foto
-    # print path
-    # print "path" + str(os.path.exists(path))
-    # return os.path.exists(path)
     import requests
 
     query =  dbSPE(dbSPE.usuario.usbid==usbid)

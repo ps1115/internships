@@ -122,13 +122,15 @@ def registrar_estudiante():
     usuario =  ast.literal_eval(request.vars['usuario'])
 
     #Llenamos el formulario con el default
-    dbSPE.usuario_estudiante.usbid_usuario.default = auth.user.username
+    dbSPE.usuario_estudiante.usbid_usuario.default  = auth.user.username
     dbSPE.usuario_estudiante.carrera.requires = IS_IN_DB(dbSPE,dbSPE.carrera,'%(nombre)s',zero="Seleccione", error_message='Carrera Inválida')
     dbSPE.usuario_estudiante.carrera.default  = usuario['carrera']
 
+
     form_estudiante = SQLFORM(
                     dbSPE.usuario_estudiante,
-                    formstyle='bootstrap3_stacked'
+                    formstyle='bootstrap3_stacked',
+                    submit_button="Actualizar Datos"
                     )
 
     if form_estudiante.process().accepted:
