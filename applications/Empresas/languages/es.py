@@ -427,6 +427,7 @@
 'Toggle comment': 'Alternar comentario',
 'Toggle Fullscreen': 'Alternar pantalla completa',
 'too short': 'demasiado corto',
+'Too short': 'Too short',
 'translation strings for the application': 'cadenas de caracteres de traducción para la aplicación',
 'try': 'intente',
 'try something like': 'intente algo como',

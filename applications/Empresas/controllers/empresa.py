@@ -54,7 +54,9 @@ def registrar_empresa():
         ]
     # Generamos el SQLFORM utilizando los campos
     form = SQLFORM.factory(
-    *fields,submit_button='Submit',
+    captcha_field(),
+    *fields,
+    submit_button='Submit',
     separator=': ',
     buttons=['submit'],
     col3 = {'log':T('Identificación de acceso unica asignada a la empresa'),
@@ -160,7 +162,9 @@ def registrar_tutor_industrial():
 
     # Generamos el SQLFORM utilizando los campos
     form = SQLFORM.factory(
-    *fields,submit_button='Submit',
+    captcha_field(),
+    *fields,
+    submit_button='Submit',
     separator=': ',
     buttons=['submit'],
     col3 = {'email':T('Identificación de acceso unica asignada a la empresa'),

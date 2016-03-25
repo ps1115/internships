@@ -1,9 +1,53 @@
 {{extend 'layout.html'}}
 
+<div class='container'>
 {{if auth.is_logged_in():}}
     {{if auth.user.user_Type == 'empresa':}}
-        <p class="title"> Bienvenida empresa {{=auth.user.first_name}}
-    {{elif auth.user.user_Type == 'tutor_industrial':}}
-        <p class="title"> Bienvenido Tutor {{=auth.user.first_name}} {{=auth.user.last_name}}
+        
+        <div class="row">
+            <div class="col-md-3">
+                <div class="panel-group" id="accordionTwo">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                    Información <i class="fa fa-info fa-2x fa-pull-right"></i>
+                            </h3>
+                        </div>
+                        <div class="panel-collapse collapse in panel-body" id="collapseFour">
+                            <div class="list-group">
+                                <p class="list-group-item" href="#">Ver mis notificaciones</p>
+                                <p class="list-group-item" href="#">Ver mis tutores industriales registrados</p>
+                                <p class="list-group-item" href="#">Ver mis solicitudes de pasantes</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class=img style='width:100%;'>
+                    <a href="https://www.aportes.usb.ve/Aportes/">
+                        {{=IMG(_src=URL('static','images/aportes.gif'),alt="aportes")}}
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <br>
+                <p align="right">¿Dudas o inquietudes?</p>
+                <div align="right"><a href="https://www.cctds.dex.usb.ve/">
+                  <button class='success'>Contáctenos</button>
+                </a></div>
+                <p align="right">Coordinación de Cooperación Técnica</p>
+                <br></br>
+                <br></br>
+                <p align="right">Gracias por utilizar el Sistema de Pasantías Empresariales de la USB.</p>
+                
+            </div>
+        </div>
+        <div class="row">
+            <br></br>
+        </div>
+    {{elif auth.user.user_Type == 'tutor_industrial':}} 
+        <p class="title"> Bienvenido Tutor {{=auth.user.first_name}} {{=auth.user.last_name}} </p>
     {{pass}}
 {{pass}}
+</div>

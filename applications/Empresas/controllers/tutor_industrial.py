@@ -58,7 +58,9 @@ def solicitar_registro_tutor():
     ]
     # Generamos el SQLFORM utilizando los campos
     form = SQLFORM.factory(
-    *fields,submit_button='Submit',
+    captcha_field(),
+    *fields,
+    submit_button='Submit',
     separator=': ',
     buttons=['submit'],
     col3 = {'email':T('Identificación de acceso unica asignada a la empresa'),
