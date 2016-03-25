@@ -80,11 +80,9 @@
         </div>
         
         <div id="navbar" class="collapse navbar-collapse navbar-content-style">
-          <ul class="nav navbar-nav navbar-right">
             {{if auth.is_logged_in():}}
             {{=MENU(menu_autenticado, _class='nav navbar-nav navbar-right',li_class='dropdown',ul_class='dropdown-menu dropdown-menu-style', li_first='dropdown', li_last='dropdown')}}
             {{pass}}
-          </ul>
           {{if response.menu:}}
           {{=MENU(response.menu, _class='nav navbar-nav',li_class='dropdown',ul_class='dropdown-menu dropdown-menu-style', li_first='dropdown', li_last='dropdown')}}
           {{pass}}

@@ -62,9 +62,12 @@ ul.nav.navbar-nav.navbar-right .navbar-nav>li>.dropdown-menu {
 	background-color: #758a8a;
 }
 
-.dropdown:hover .dropdown-menu {
+@media screen and (min-width: 768px) {
+  .dropdown:hover>.dropdown-menu {
     display: block;
+  }
 }
+
 .dropdown-menu>li>a:hover {
 	background-color: #758a8a;
 }
@@ -72,4 +75,3 @@ ul.nav.navbar-nav.navbar-right .navbar-nav>li>.dropdown-menu {
 .navbar-header {
     height: 40px;
 }
-
