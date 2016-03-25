@@ -136,6 +136,10 @@ def registrar_estudiante():
 
     return dict(message='Por favor actualiza tus datos para continuar',form=form_estudiante)
 
+
+            ##################################################
+            #                  plan_trabajo()                #
+            ##################################################
 def plan_trabajo():
     return dict(message="Plan de Trabajo")
 

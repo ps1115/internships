@@ -6,7 +6,7 @@
   Todos los campos son obligatorios</p>
 
   <form role="form">
-    <div class="container col-md-10 form-group">
+    <div class="container col-md-6 form-group">
       <p class="subtitle">Actividad</p>
       <div class="row">
         <div class="col-xs-2">
@@ -41,10 +41,6 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-md-5 form-group">
-          <label for="text">Descripción de la actividad</label>
-          <input type="text" class="form-control">  
-        </div>
         <div class="col-md-3 form-group">
         <label for="ex1">Duración de la actividad</label>
           <select class="form-control" id="tiempoact">
@@ -61,21 +57,36 @@
             <option>10 semanas</option>
           </select> 
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3 form-group">
+          <p class="subtitle">Descripcion de la actividad</p>
+          {{=form1.custom.begin}}
+          <div class="input-group">
+            {{=form1.custom.widget.actividad}}
+            <input type="text" class="form-control">
+            <span class="input-group-btn">
+              <button class="btn btn-default" type="submit">Agregar Actividad</button>
+            </span>
+          </div>
+          <br>
+          {{items =actividad}}
+          <ul class="list">
+            {{for item in items:}}<li>{{=item}}</li>{{pass}}
+          </ul>
+          {{=form1.custom.end}}
+          <br>
+        </div>
+        
+        <div class="col-md-2 form-group">
           <button type="submit" class="btn btn-default">Agregar Fase</button>
           <br><br><br>
         </div> 
       </div>
       <div class="row">
-        <div class="col-md-3">
-          <button type="submit" class="btn btn-default">Agregar Actividad</button>
-          <br><br><br>
-        </div>
-        <div class="container col-md-6 form-group">
-          <button type="sucess" class="btn btn-default">Enviar Plan de Trabajo</button>
-          <br><br><br>
-        </div>
+
       </div>
     </div>
-
+    <div class="container col-md-6 form-group">
+      <br><br>
+      <button type="submit" class="btn btn-default">Enviar Plan de Trabajo</button>
+    </div>
   </form>
