@@ -45,16 +45,16 @@ CREATE TABLE IF NOT EXISTS `actividad` (
 --
 
 CREATE TABLE IF NOT EXISTS `calculo_pago` (
+    `id`                int(11)     NOT NULL AUTO_INCREMENT,
     `id_categoria`      int(11)     NOT NULL,
     `id_tipo_pasantia`  varchar(8)  NOT NULL,
     `id_pais`           int(11)     NOT NULL,
     `monto`             double      NOT NULL,
     `fecha`             date        NOT NULL,
-    PRIMARY KEY (`id_categoria`,`id_tipo_pasantia`,`id_pais`),
+    PRIMARY KEY (`id`),
     KEY `fk_calculo_pago_id_tipo_pasantia_tipo_pasantia_codigo` (`id_tipo_pasantia`),
     KEY `fk_calculo_pago_id_pais_pais_id` (`id_pais`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 -- --------------------------------------------------------
 
 --
@@ -248,26 +248,9 @@ CREATE TABLE IF NOT EXISTS `estado` (
     `id_pais`   int(11)     NOT NULL,
     PRIMARY KEY (`id`),
     KEY `fk_estado_id_pais_pais_id` (`id_pais`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=25 ;
 
 -- --------------------------------------------------------
-
--- ---------------------------------------
--- Estructura de tabla para la tabla `evento`
--- ----------------------------------------
-
-CREATE TABLE IF NOT EXISTS `evento` (
-  `codigo` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(254) NOT NULL,
-  `fecha_inicio` date NOT NULL,
-  `fecha_fin` date NOT NULL,
-  `nombre_trimestre_actual` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`codigo`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
-
--- --------------------------------------------------------
-
-
 
 -- --------------------------------------------------------
 
@@ -379,10 +362,13 @@ CREATE TABLE IF NOT EXISTS `pasantia` (
 --
 
 CREATE TABLE IF NOT EXISTS `periodo` (
-    `id`        int(10)         NOT NULL AUTO_INCREMENT,
-    `nombre`    varchar(255)    NOT NULL,
+    `id`                int(10)         NOT NULL AUTO_INCREMENT,
+    `nombre`            varchar(255)    NOT NULL,
+    `fecha_inicio`      timestamp       NOT NULL,
+    `fecha_fin`         timestamp       NOT NULL,
+    `periodo_activo`    tinyint(1)      NOT NULL,
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -446,14 +432,15 @@ CREATE TABLE IF NOT EXISTS `region` (
 -- ----------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `rol_sistema` (
+    `id`                int(11)         NOT NULL AUTO_INCREMENT,
     `usbid`             varchar(254)    NOT NULL DEFAULT ' ',
     `nombre`            varchar(254)    NOT NULL,
     `apellido`          varchar(254)    NOT NULL,
     `rol`               varchar(254)    NOT NULL,
     `sede`              varchar(20)     NOT NULL,
-    PRIMARY KEY (`usbid`)
+    PRIMARY KEY (`id`,`usbid`),
+    KEY `fk_rol_sistema_usbid_usuario_usbid` (`usbid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 -- --------------------------------------------------------
 
 --
@@ -493,39 +480,18 @@ CREATE TABLE IF NOT EXISTS `solicitud_pasante` (
 -- --------------------------------------------------------
 
 --
--- Eventos que pueden componer otros.
---
-
-CREATE TABLE IF NOT EXISTS `sub_evento` (
-    `codigo_supra_evento`   int(11)         NOT NULL,
-    `codigo_sub_evento`     int(11)         NOT NULL,
-    `fecha_inicio`          date            NOT NULL,
-    `fecha_fin`             date            NOT NULL,
-    `nombre_sub_evento`     varchar(254)    NOT NULL,
-    `nombre_supra_evento`   varchar(254)    NOT NULL,
-    PRIMARY KEY (`codigo_supra_evento`, `codigo_sub_evento`),
-    FOREIGN KEY (`codigo_supra_evento`) REFERENCES evento(`codigo`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
 -- Semanas Muertas en un evento
 --
 
 CREATE TABLE IF NOT EXISTS `semana_muerta` (
-    `codigo_supra_evento_afectado`    int(11) NOT NULL,
-    `codigo_sub_evento_afectado`    int(11) NOT NULL,
-    `nombre_supra_evento_afectado`  varchar(254) NOT NULL,
-    `nombre_sub_evento_afectado`    varchar(254) NOT NULL,
-    `fecha_ini`                     date    NOT NULL,
-    `fecha_fini`                    date    NOT NULL,
-    `numero_semana`                 int(5)  NOT NULL,
-    PRIMARY KEY (`numero_semana`,`codigo_sub_evento_afectado`),
-    FOREIGN KEY (`codigo_supra_evento_afectado`,`codigo_sub_evento_afectado`)
-    REFERENCES sub_evento(`codigo_supra_evento`,`codigo_sub_evento`)
-
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+    `id`                            int(11)      NOT NULL AUTO_INCREMENT,
+    `fecha_ini`                     timestamp    NOT NULL,
+    `fecha_fini`                    timestamp    NOT NULL,
+    `numero_semana`                 int(5)       NOT NULL,
+    `codigo_periodo_afectado`       int(11)      NOT NULL,
+    PRIMARY KEY (`id`),
+    KEY `fk_semana_muerta_periodo_periodo_id` (`codigo_periodo_afectado`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
 --
 -- Estructura de tabla para la tabla `tipo_pasantia`
@@ -590,6 +556,7 @@ CREATE TABLE IF NOT EXISTS `tutor_industrial` (
     `pregunta_secreta`          varchar(254)    NOT NULL,
     `respuesta_pregunta_secreta`varchar(254)    NOT NULL,
     `id_empresa`                integer		    NOT NULL,
+    `id_universidad`			int(11)			NOT NULL,
     `profesion`                 varchar(50)     NOT NULL,
     `cargo`                     varchar(50)     NOT NULL,
     `id_universidad`            int(11)         NOT NULL,
@@ -756,7 +723,6 @@ CREATE TABLE IF NOT EXISTS `plan_de_trabajo` (
 ALTER TABLE `empresa`
     ADD CONSTRAINT `fk_empresa_id_area_laboral_area_laboral_id` FOREIGN KEY (`id_area_laboral`) REFERENCES `area_laboral` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
-
 --
 -- Filtros para la tabla `actividad`
 --
@@ -774,9 +740,9 @@ ALTER TABLE `calculo_pago`
 --
 -- Filtros para la tabla `departamento`
 --
+
 ALTER TABLE `departamento`
     ADD CONSTRAINT `fk_departamento_id_division_id` FOREIGN KEY (`id_division`) REFERENCES `division` (`id`) ON UPDATE CASCADE;
-
 --
 -- Filtros para la tabla `estado`
 --
@@ -818,6 +784,12 @@ ALTER TABLE `preinscripcion`
     ADD CONSTRAINT `fk_preinscripcion_usbid_usuario_usbid` FOREIGN KEY (`usbid`) REFERENCES `usuario` (`usbid`);
 
 --
+-- Filtros para la tabla `rol_sistema`
+--
+ALTER TABLE `rol_sistema`
+    ADD CONSTRAINT `fk_rol_sistema_usbid_usuario_usbid` FOREIGN KEY (`usbid`) REFERENCES `usuario` (`usbid`) ON UPDATE CASCADE;
+
+--
 -- Filtros para la tabla `solicita_permiso`
 --
 ALTER TABLE `solicita_permiso`
@@ -836,14 +808,8 @@ ALTER TABLE `solicitud_pasante`
 --
 -- Filtros para la tabla `semana_muerta`
 --
--- ALTER TABLE `semana_muerta`
-
---
--- Filtros para la tabla `sub_evento`
---
-ALTER TABLE `sub_evento`
-    ADD CONSTRAINT `fk_sub_eventos_codigo_supra_evento_eventos_codigo` FOREIGN KEY (`codigo_supra_evento`) REFERENCES `evento` (`codigo`) ON UPDATE CASCADE;
-
+ALTER TABLE `semana_muerta`
+    ADD CONSTRAINT `fk_semana_muerta_periodo_periodo_id` FOREIGN KEY (`codigo_periodo_afectado`) REFERENCES `periodo` (`id`) ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `tutor_academico`
@@ -886,7 +852,6 @@ ALTER TABLE `curriculum`
 --
 ALTER TABLE `universidad`
     ADD CONSTRAINT `fk_universidad_id_pais_pais_id` FOREIGN KEY (`id_pais`) REFERENCES `pais` (`id`);
-
 
 --
 -- Filtros para la tabla `curriculum`
