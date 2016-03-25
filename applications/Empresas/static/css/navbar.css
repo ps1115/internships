@@ -75,3 +75,6 @@ ul.nav.navbar-nav.navbar-right .navbar-nav>li>.dropdown-menu {
 .navbar-header {
     height: 40px;
 }
+.navbar-toggle > .icon-bar{
+    background-color: #ffffff !important;
+}
