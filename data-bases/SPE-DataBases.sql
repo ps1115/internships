@@ -124,6 +124,18 @@ CREATE TABLE IF NOT EXISTS `coordinacion` (
     PRIMARY KEY (`nombre`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Estructura de tabla para la tabla `correo_por_verificar`
+--
+
+
+CREATE TABLE `correo_por_verificar` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`correo` VARCHAR(80) NOT NULL,
+	`codigo` VARCHAR(45) NOT NULL,
+	PRIMARY KEY (`id`, `correo`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 -- --------------------------------------------------------
 
 --
@@ -177,7 +189,7 @@ CREATE TABLE IF NOT EXISTS `empresa` (
     `pregunta_secreta`          varchar(254)    NOT NULL,
     `respuesta_pregunta_secreta`varchar(254)    NOT NULL,
     `nombre`                    varchar(254)    NOT NULL,
-     `id_pais`                 	int(2)          DEFAULT NULL,
+    `id_pais`                 	int(2)          DEFAULT NULL,
     `id_area_laboral`           int(11)         DEFAULT NULL,
     `id_estado`                 int(2)          DEFAULT NULL,
     `direccion`                 text,
@@ -354,7 +366,7 @@ CREATE TABLE IF NOT EXISTS `periodo` (
     `nombre`            varchar(255)    NOT NULL,
     `fecha_inicio`      timestamp       NOT NULL,
     `fecha_fin`         timestamp       NOT NULL,
-    `periodo_activo`    tinyint(1)      NOT NULL,    
+    `periodo_activo`    tinyint(1)      NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
@@ -544,9 +556,9 @@ CREATE TABLE IF NOT EXISTS `tutor_industrial` (
     `pregunta_secreta`          varchar(254)    NOT NULL,
     `respuesta_pregunta_secreta`varchar(254)    NOT NULL,
     `id_empresa`                integer		    NOT NULL,
-    `id_universidad`			int(11)			NOT NULL,
     `profesion`                 varchar(50)     NOT NULL,
     `cargo`                     varchar(50)     NOT NULL,
+    `id_universidad`            int(11)         NOT NULL,
     `departamento`              varchar(50)     NOT NULL,
     `direccion`                 varchar(254)    NOT NULL,
     `id_pais`                 	int(2)          DEFAULT NULL,
@@ -588,6 +600,7 @@ CREATE TABLE IF NOT EXISTS `area_laboral` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
+
 
 --
 -- Estructura de tabla para la tabla `usuario`
