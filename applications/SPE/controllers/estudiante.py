@@ -141,6 +141,20 @@ def registrar_estudiante():
             #                  plan_trabajo()                #
             ##################################################
 def plan_trabajo():
+
+    import ast 
+
+    #Buscamos los datos del plan de trabajo si los hay
+    ConsultaDatosPlan = dbSPE(dbSPE.plan_de_trabajo.id_estudiante==auth.user.username)
+
+    #Si no los hay, lo creamos
+    if ConsultaDatosPlan.isempty():
+        dbSPE.plan_de_trabajo.insert(id_estudiante=auth.user.username)
+        ConsultaDatosPlan = dbSPE(dbSPE.plan_de_trabajo.id_estudiante==auth.user.username)
+
+    #Obtenemos los datos
+    DatosCurriculum = ConsultaDatosCurriculum.select()[0]    
+
     return dict(message="Plan de Trabajo")
 
 

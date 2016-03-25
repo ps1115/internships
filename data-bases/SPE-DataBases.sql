@@ -690,7 +690,6 @@ CREATE TABLE IF NOT EXISTS `plan_de_trabajo` (
     KEY `fk_plan_de_trabajo_id_tutor_academico_usuario_usbid` (`id_tutor_academico`),
     KEY `fk_plan_de_trabajo_log_empresa_empresa_log` (`log_empresa`),
     KEY `fk_plan_de_trabajo_codigo_pasantia_tipo_pasantia_codigo` (`codigo_pasantia`)
-
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
