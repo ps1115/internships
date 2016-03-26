@@ -2,7 +2,7 @@
 
 # Actividad
 dbSPE.define_table('actividad',
-                Field('id','integer',required=True),
+                Field('id','id', requires=[IS_LENGTH(11)]),
                 Field('codigo_fase','integer'),
                 Field('descripcion','text',required=True),
                 Field('tiempo_estimado','string',required=True, requires=[IS_LENGTH(20)]),

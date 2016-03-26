@@ -10,8 +10,9 @@
       <p class="subtitle">Actividad</p>
       <div class="row">
         <div class="col-xs-2">
-        <label for="ex1">Fase</label>
-          <select class="form-control" id="codpas">
+        <label for="text">Fase</label>
+        <input type="text" class="form-control">
+          <!-- <select class="form-control" id="codpas">
             <option>Seleccione</option>
             <option>Fase 1</option>
             <option>Fase 2</option>
@@ -33,17 +34,33 @@
             <option>Fase 18</option>
             <option>Fase 19</option>
             <option>Fase 20</option>
-          </select>
+          </select> -->
         </div>
         <div class="col-xs-3">
-          <label for="text">Objetivo específico de la fase</label>
-          <input type="text" class="form-control">
+        <label for="text">Objetivo específico de la fase</label>
+        <input type="text" class="form-control">
+          <!-- <p class="subtitle">Objetivo específico de la fase</p>
+          {{=form2.custom.begin}}
+          <div class="input-group">
+            {{=form2.custom.widget.cursos}}
+            <span class="input-group-btn">
+              <button class="btn btn-default" type="submit">Agregar Objetivo</button>
+            </span>
+          </div>
+          <br>
+          {{items =objetivos}}
+          <ul class="list">
+            {{for item in items:}}<li>{{=item}}</li>{{pass}}
+          </ul>
+          {{=form2.custom.end}}
+          <br> -->
         </div>
       </div>
       <div class="row">
         <div class="col-md-3 form-group">
-        <label for="ex1">Duración de la actividad</label>
-          <select class="form-control" id="tiempoact">
+        <label for="text">Duración de la actividad</label>
+        <input type="text" class="form-control" placeholder="Escriba las semanas de duracion. Por ejm: 1 semana">
+          <!-- <select class="form-control" id="tiempoact">
             <option>Seleccione</option>
             <option>1 semana</option>
             <option>2 semanas</option>
@@ -55,34 +72,30 @@
             <option>8 semanas</option>
             <option>9 semanas</option>
             <option>10 semanas</option>
-          </select> 
+          </select>  -->
         </div>
         <div class="col-md-3 form-group">
           <p class="subtitle">Descripcion de la actividad</p>
           {{=form1.custom.begin}}
           <div class="input-group">
-            {{=form1.custom.widget.actividad}}
+            {{=form1.custom.widget.descripcion}}
             <input type="text" class="form-control">
             <span class="input-group-btn">
               <button class="btn btn-default" type="submit">Agregar Actividad</button>
             </span>
           </div>
           <br>
-          {{items =actividad}}
+          {{items =descripcion}}
           <ul class="list">
             {{for item in items:}}<li>{{=item}}</li>{{pass}}
           </ul>
           {{=form1.custom.end}}
           <br>
-        </div>
-        
+        </div> 
         <div class="col-md-2 form-group">
           <button type="submit" class="btn btn-default">Agregar Fase</button>
           <br><br><br>
         </div> 
-      </div>
-      <div class="row">
-
       </div>
     </div>
     <div class="container col-md-6 form-group">

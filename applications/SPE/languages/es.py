@@ -72,6 +72,7 @@
 'cannot upload file "%(filename)s"': 'no es posible subir archivo "%(filename)s"',
 'Cargo': 'Cargo',
 'Cargo que ocupa en la empresa': 'Cargo que ocupa en la empresa',
+'Carrera Inválida': 'Carrera Inválida',
 'Cedula de Identidad': 'Cédula de Identidad',
 'Change Password': 'Cambie la Contraseña',
 'Change password': 'Cambie la contraseña',
