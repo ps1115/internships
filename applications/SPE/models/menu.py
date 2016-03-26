@@ -78,13 +78,24 @@ def _():
         else:
             pass
     else:
-        response.menu += [
+        response.menu += [ #Coloque esto porque el cas no me funciona
             (T('Iniciar Sesion'),False,'#',[
-                (T('Miembro USB'),False,"#"),
+                (T('Miembro USB'),False,'#'),
                 (T('Empresa'),False,'#')
                 ]),
+            ('Estudiante',False,"#",[
+                ('Agregar Preinscripcion',False,URL('estudiante','agregar_preinscripcion')),
+                ('Llenar Curriculum',False,URL('estudiante','llenar_curriculum')),
+                ('Plan de Trabajo',False,URL('estudiante','plan_trabajo')),
+                ('Retirar Pasantía',False,URL('estudiante','retirar_pasantia')),
+                ('Solicitar permiso de inscripción extemporánea',False,"#"),
+                ('Solicitar permiso de evaluación extemporánea',False,"#")
+                ]),
             ('Profesor',False,"#",[
-                ('Registrarse',False,URL('default','registrar_profesor'))]),
+                ('Registrarse',False,URL('default','registrar_profesor')),
+                ('Evaluar Pasantía',False,"#"),
+                ('Retiro Pasantia',False,URL('profesor','justificar_retiro_profesor'))
+                ]),
             ('Administrador',False,"#",[
                 ('Gestionar Catálogos',False,URL('catalogos_grid','gestion_cct2'))
                 ]),
