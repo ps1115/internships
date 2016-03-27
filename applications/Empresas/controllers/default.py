@@ -81,8 +81,6 @@ def verifyEmail():
                 formstyle='bootstrap3_stacked'
                            )
 
-    form.add_button(T('Send Email Again'), URL(c='default',f='resendVerificationEmail',vars=dict(correo=request.vars.correo)))
-
     contrasenaSet = dbSPE(dbSPE.empresa.log == request.vars.correo).select()
 
     if not (contrasenaSet):

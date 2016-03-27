@@ -7,34 +7,41 @@
         {{redirect(URL('home'))}}
 
     {{else:}}
-
-        <div class="col-xs-5">
-          <p class='title'>{{=message}}</p>
-             <div class='content'>
-             <p class='subtitle'>Bienvenido</p>
-                 <br></br>
-             </div>
-          ¿No representas una empresa?
-            <br></br>
-          <a href={{=URL(a='SPE',c='default',f='index')}}>
-              <button class='success'>Miembros USB</button>
-          </a>
+        <div class="row">
+            <p class='title'>{{=message}}</p>
         </div>
-        <div class="col-xs-6">
-              <div class="row">
-                  <p><b>Introduzca el codigo de verificacion que se le envio a su correo para poder acceder a su cuenta</b>.</p>
-              </div>
-              <div class="row">
-                <div class=img>
-                      {{=form}}
+            {{=form.custom.begin}}
+                <div class="row">
+                    <label for="no_table_codigo">{{=form.custom.label.codigo}}</label>
                 </div>
-              </div>
-              <br><br><br>
-              <br>
-        </div>
+                <div class="row">
+                    <div class="row col-md-8">
+                        {{=form.custom.widget.codigo.update(_placeholder="código de verificación")}}
+                    </div>
+                    <div class="col-md-4">
+                        <a data-toggle="popover" title={{=T('Help')}} data-content="Por su seguridad se le ha enviado una clave de verificación que debe ingresar para activar su cuenta, así constatamos que es una empresa o tutor industrial legítimo. Si no ha recibido el correo pulse pulse 'Reenviar Correo'.">
+                        <i class="fa fa-question-circle fa-2x" style="color:#3e3f3a"></i>
+                        </a>
+                    </div>       
+                </div>     
+                <br>
+                <div class="row">
+                    <div class="row col-md-8">
+                        {{=form.custom.submit}}
+                        <div class="right">
+                            {{=A(T('Send Email Again'), _class='btn btn-default',_href=URL  (c='default',f='resendVerificationEmail',vars=dict(correo=request.vars.correo)))}}
+                        </div>
+                    </div>
+                </div>
+                
+            {{=form.custom.end}}
+            <br><br><br>
+            <br>
 
         {{block right_sidebar}}
             <br><br><br>
+            <div align="center" style="color:#93c54b">
+                {{=IMG(_class='img-responsive', _src=URL('static','images/shield2.png'),alt="aportes", _width="100")}}
             </div>
             <br><br><br>
         {{end}}
@@ -46,3 +53,9 @@
     {{else:}}
     {{=BEAUTIFY(response._vars)}}
 {{pass}}
+
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="popover"]').popover();   
+    });
+</script>
