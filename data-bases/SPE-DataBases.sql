@@ -273,7 +273,7 @@ CREATE TABLE IF NOT EXISTS `extemp` (
 
 CREATE TABLE IF NOT EXISTS `fase` (
     `codigo`                int(11)         NOT NULL AUTO_INCREMENT,
-    `id_plan_de_trab`       varchar(254)    NOT NULL,
+    `id_plan_de_trab`       int(11)         NOT NULL,
     `codigo_pasantia`       varchar(8)      NOT NULL,
     `nombre_fase`           varchar(100)    NOT NULL,
     `objetivos_especificos` text            NOT NULL,
@@ -698,6 +698,7 @@ CREATE TABLE IF NOT EXISTS `plan_de_trabajo` (
 -- Filtros para la tabla `actividad`
 --
 ALTER TABLE `actividad`
+    ADD CONSTRAINT `fk_actividad_id_plan_de_trab_plan_de_trabajo_id` FOREIGN KEY (`id_plan_de_trab`) REFERENCES `plan_de_trabajo` (`id`), 
     ADD CONSTRAINT `fk_actividad_codigo_fase_fase_codigo` FOREIGN KEY (`codigo_fase`) REFERENCES `fase` (`codigo`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
@@ -725,7 +726,7 @@ ALTER TABLE `estado`
 --
 ALTER TABLE `fase`
     ADD CONSTRAINT `fk_fase_codigo_pasantia_tipo_pasantia_codigo` FOREIGN KEY (`codigo_pasantia`) REFERENCES `tipo_pasantia` (`codigo`) ON UPDATE CASCADE,
-    ADD CONSTRAINT `fk_fase_id_estudiante_estudiante_usbid` FOREIGN KEY (`id_estudiante`) REFERENCES `usuario` (`usbid`),
+    ADD CONSTRAINT `fk_fase_id_plan_de_trab_plan_de_trabajo_id` FOREIGN KEY (`id_plan_de_trab`) REFERENCES `plan_de_trabajo` (`id`); 
 
 --
 -- Filtros para la tabla `jurado`
