@@ -142,20 +142,33 @@ def registrar_estudiante():
             ##################################################
 def plan_trabajo():
 
-    import ast 
+    import ast
 
     #Buscamos los datos del plan de trabajo si los hay
     ConsultaDatosPlan = dbSPE(dbSPE.plan_de_trabajo.id_estudiante==auth.user.username)
 
     #Si no los hay, lo creamos
-    if ConsultaDatosPlan.isempty():
-        dbSPE.plan_de_trabajo.insert(id_estudiante=auth.user.username)
-        ConsultaDatosPlan = dbSPE(dbSPE.plan_de_trabajo.id_estudiante==auth.user.username)
+    # if ConsultaDatosPlan.isempty():
+    #     dbSPE.plan_de_trabajo.insert(id_estudiante=auth.user.username)
+    #     ConsultaDatosPlan = dbSPE(dbSPE.plan_de_trabajo.id_estudiante==auth.user.username)
 
     #Obtenemos los datos
-    DatosCurriculum = ConsultaDatosCurriculum.select()[0]    
+    #DatosCurriculum = ConsultaDatosCurriculum.select()[0]
 
-    return dict(message="Plan de Trabajo")
+
+    #Viene la parte de OBTENER las actividades ya cargadas
+
+
+    #Generamos el SQLFORM
+    datos_plan_de_trabajo = SQLFORM.factory(
+        Field('objetivo_fase' ,label='Objetivo específico de la fase',required=True,
+                default = 'Objetivo 1'),
+        formstyle='bootstrap3_stacked',
+        submit_button=T('ENVIAR PLAN DE TRABAJO')
+    )
+
+    return dict(message="Plan de Trabajo",
+                form1=datos_plan_de_trabajo)
 
 
             ##################################################
@@ -182,7 +195,7 @@ def llenar_curriculum():
     else:
         electivas = ast.literal_eval(DatosCurriculum.electiva)
         electivas.sort()
-            
+
     #Buscamos los cursos a mostrar en pantalla
     if DatosCurriculum.cursos == None:
         cursos = []
