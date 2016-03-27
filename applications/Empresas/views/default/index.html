@@ -1,4 +1,4 @@
-{{left_sidebar_enabled,right_sidebar_enabled=False,('message' in globals())}}
+{{left_sidebar_enabled=False,right_sidebar_enabled=False,('message' in globals())}}
 {{extend 'layout.html'}}
 
 {{if 'message' in globals():}}
@@ -8,7 +8,7 @@
 
     {{else:}}
 
-        <div class="col-md-5">
+        {{block left_sidebar}}
           <p class='title'>{{=message}}</p>
              <div class='content'>
              <p class='subtitle'>Bienvenido</p>
@@ -19,22 +19,21 @@
           <a href={{=URL(a='SPE',c='default',f='index')}}>
               <button class='success'>Miembros USB</button>
           </a>
-        </div>
-        <div class="col-md-6">
-              <div class="row">
-                  <p><b>Empresa pública o privada</b>, si es primera vez que visita el sistema debe completar el formulario de Registro
-                    <a href={{=URL(c="empresa",f="registrar_empresa")}}><b>aqui</b>.</a></p>
-              </div>
-              <div class="row">
-                <div class=img>
-                    <a href="https://www.aportes.usb.ve/Aportes/">
-                      {{=IMG(_src=URL('static','images/aportes.gif'),alt="aportes")}}
-                    </a>
-                </div>
-              </div>
-              <br><br><br>
-              <br>
-        </div>
+        {{end}}
+        
+          <div class="row">
+              <p><b>Empresa pública o privada</b>, si es primera vez que visita el sistema debe completar el formulario de Registro
+                <a href={{=URL(c="empresa",f="registrar_empresa")}}><b>aqui</b>.</a></p>
+          </div>
+          <div class="row">
+            <div>
+                <a href="https://www.aportes.usb.ve/Aportes/">
+                  {{=IMG(_class='img-responsive', _src=URL('static','images/aportes.gif'),alt="aportes", _width="100%")}}
+                </a>
+            </div>
+          </div>
+          <br><br><br>
+          <br>
 
         {{block right_sidebar}}
             {{=form}}
