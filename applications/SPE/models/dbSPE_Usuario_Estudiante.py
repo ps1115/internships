@@ -2,16 +2,15 @@
 
 # Estudiante
 dbSPE.define_table('usuario_estudiante',
-                Field('usbid_usuario','string',required=True, requires=[IS_LENGTH(524),IS_NOT_EMPTY(error_message='Campo Obligatorio'),IS_NOT_IN_DB(dbSPE, 'estudiante.usbid_usuario',error_message=T('Login No Disponible'))], ondelete='CASCADE', notnull=True, unique=True,label='Login'),
-                Field('carnet','string',required=True, requires=[IS_LENGTH(8)]),
-                Field('cohorte','string', requires=[IS_LENGTH(2)]),
-                Field('carrera','string', requires=[IS_LENGTH(4)]),
-                Field('estudiante_sede','string', requires=[IS_LENGTH(11)]),
-                Field('email_sec','string',required=True, requires=[IS_LENGTH(254)]),
-                Field('telf_hab','string', requires=[IS_LENGTH(20),IS_MATCH('^\+[0-9]*$|^[0-9]*$',error_message=T('Solo se permiten numeros y el signo +'))]),
-                Field('telf_cel','string', requires=[IS_LENGTH(20),IS_MATCH('^\+[0-9]*$|^[0-9]*$',error_message=T('Solo se permiten numeros y el signo +'))]),
-                Field('direccion','text'),
-                Field('estudiante_sede','string', requires=[IS_LENGTH(1)]),
+                Field('usbid_usuario', requires=[IS_NOT_EMPTY(), IS_MATCH('[0-9][0-9]-[0-9]{5}','USBID Inválido')], unique=True, label="USBID"),
+                Field('carrera', requires=[IS_NOT_EMPTY(),IS_IN_DB(dbSPE,dbSPE.carrera,'%(nombre)s',zero="Seleccione", error_message='Carrera Inválida')], label="Carrera"),
+                Field('cohorte', requires=IS_NOT_EMPTY(error_message='Ingrese cohorte'), type='integer', label="Cohorte"),
+                Field('estudiante_sede', label="Sede",requires=IS_IN_SET(['Sartenejas','Litoral'],error_message='Elija una Sede'), default='Sartenejas'),
+                Field('email_sec', label="Correo Eléctronico", requires=IS_EMAIL(error_message='Correo Electrónico Inválido')),
+                Field('telf_hab', label="Teléfono de Habitación"),
+                Field('telf_cel', label="Teléfono celular"),
+                Field('direccion', label="Dirección de Habitación"),
+                Field('sexo', label="Sexo", requires=IS_IN_SET(['M','F'], error_message="Indique Sexo")),
                 primarykey=['usbid_usuario'],
                 format='%(carnet)s'
-               )
+                )
