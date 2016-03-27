@@ -1,36 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Proceso que genera un codigo de verificacion y se lo envia a un correo
-def enviar_Correo_Verificacion(correo):
-    import string
-    import random
-    from random import randint
-
-    resultado = False
-
-    size = randint(4,11)
-    i = 0
-    codigoGenerado = ''
-
-    for i in range(0,size):
-                codigoGenerado += random.choice(string.lowercase + string.uppercase + string.digits)
-
-    dbSPE.correo_Por_Verificar.insert(correo = correo,codigo = codigoGenerado)
-
-    if mail:
-        if mail.send(to=[correo],
-            subject=T('Activacion'),
-            message= T('Codigo De Activacion ') + codigoGenerado):
-                response.flash = T('email sent sucessfully.')
-                resultado = True
-        else:
-            response.flash = T('fail to send email sorry!')
-    else:
-        response.flash = T('Unable to send the email : email parameters not defined')
-    return resultado
-
 # Proceso de registro en el cual un tutor solicita un registro a una empresa
 def solicitar_registro_tutor():
+    dbSPE.tutor_industrial.email.requires += [IS_NOT_IN_DB(dbSPE, 'empresa.log',error_message=T('Correo No Disponible'))]
     # Agregamos los campos en el orden deseado, comenzamos con el login y el password
     fields =[
        dbSPE.tutor_industrial.email,

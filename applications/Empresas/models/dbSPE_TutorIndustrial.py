@@ -21,8 +21,8 @@ dbSPE.define_table('tutor_industrial',
                     format='%(email)s %(nombre)s %(apellido)s')
 
 # Validadores
-
-dbSPE.tutor_industrial.email.requires=[IS_EMAIL(error_message=T('Este no es un correo valido'))]
+dbSPE.tutor_industrial.email.requires= [IS_NOT_IN_DB(dbSPE, 'tutor_industrial.email',error_message=T('Correo No Disponible'))]
+dbSPE.tutor_industrial.email.requires+=[IS_EMAIL(error_message=T('Este no es un correo valido'))]
 dbSPE.tutor_industrial.email.requires+=[IS_LENGTH(512)]
 dbSPE.tutor_industrial.email.requires+=[IS_NOT_EMPTY(error_message='Campo Obligatorio')]
 

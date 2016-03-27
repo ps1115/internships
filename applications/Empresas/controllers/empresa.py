@@ -1,38 +1,8 @@
 # -*- coding: utf-8 -*-
 
-def enviar_Correo_Verificacion(correo):
-    import string
-    import random
-    from random import randint
-
-    resultado = False
-
-    size = randint(4,11)
-    i = 0
-    codigoGenerado = ''
-
-    for i in range(0,size):
-                codigoGenerado += random.choice(string.lowercase + string.uppercase + string.digits)
-
-    dbSPE.correo_Por_Verificar.insert(correo = correo,codigo = codigoGenerado)
-
-    if mail:
-        if mail.send(to=[correo],
-            subject=T('Activacion'),
-            message= T('Codigo De Activacion ') + codigoGenerado):
-                response.flash = T('email sent sucessfully.')
-                resultado = True
-        else:
-            response.flash = T('fail to send email sorry!')
-    else:
-        response.flash = T('Unable to send the email : email parameters not defined')
-    return resultado
-
 # Proceso de registro de empresa por medio de la opcion Empresa -> Registrarse, en el Index
 def registrar_empresa():
-
-
-
+    dbSPE.empresa.log.requires += [IS_NOT_IN_DB(dbSPE, 'tutor_industrial.email',error_message=T('Login No Disponible'))]
     # Agregamos los campos en el orden deseado, comenzamos con el login y el password
     fields = [dbSPE.empresa.log,dbSPE.empresa.password]
     # Agregamos un campo extra de comfirm password el cual debera tener el mismo valor que el password para ser aceptado
@@ -134,6 +104,7 @@ def registrar_empresa():
         return response.render('empresa/registrarEmpresa/registrar_empresa.html',message=T("Registrar Empresa"),form=form)
 
 def registrar_tutor_industrial():
+    dbSPE.tutor_industrial.email.requires += [IS_NOT_IN_DB(dbSPE, 'empresa.log',error_message=T('Correo No Disponible'))]
     # Agregamos los campos en el orden deseado, comenzamos con el login y el password
     fields =[
        dbSPE.tutor_industrial.email,

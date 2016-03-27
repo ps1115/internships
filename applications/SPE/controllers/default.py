@@ -169,22 +169,13 @@ def correo_no_verificado(usbid):
 #Reenvia la verificacion del correo
 def resendVerificationEmail():
 
-    correo_usuario = obtener_correo(auth.user.username)
-    correoVerificarSet = dbSPE(dbSPE.correo_Por_Verificar.correo == correo_usuario).select()
+    correoVerificarSet = dbSPE(dbSPE.correo_Por_Verificar.correo == request.vars.correo).select()
 
-    codigoGenerado = correoVerificarSet[0].codigo
+    reenviar_Correo_Verificacion(request.vars.correo)
 
-    if mail:
-        if mail.send(to=[correo_usuario],
-            subject=T('Activacion'),
-            message= 'Codigo De Activacion ' + codigoGenerado):
-                response.flash = 'email sent sucessfully.'
-                resultado = True
-        else:
-            response.flash = 'fail to send email sorry!'
-    else:
-        response.flash = 'Unable to send the email : email parameters not defined'
-    return response.render('default/codigoReenviado.html',message=T("Verificacion de Correo"),vars=dict(correo=correo_usuario))
+    redirect(URL(c='default',f='verifyEmail',
+        vars=dict(correo=request.vars.correo,resend= T("El Correo ha sido reenviado"),
+        message=T("Verificacion de Correo"))))
 
 #Verifica el correo
 def verifyEmail():
@@ -207,7 +198,10 @@ def verifyEmail():
             #auth.login_bare(request.vars.correo,contrasena)
             redirect(URL(c='default',f='index'))
 
-    return response.render('default/codigoVerificacion.html',message=T("Verificacion de Correo"),form=form,vars=dict(correo=correo_usuario))
+    return response.render('default/codigoVerificacion.html',
+    message=T("Verificacion de Correo"),
+    resend= T("El Correo ha sido reenviado"),    
+    form=form,vars=dict(correo=correo_usuario))
 
 
 @cache.action()

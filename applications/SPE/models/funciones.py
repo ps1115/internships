@@ -58,6 +58,24 @@ def enviar_Correo_Verificacion(correo):
         response.flash = T('Unable to send the email : email parameters not defined')
     return resultado
 
+def reenviar_Correo_Verificacion(correo):
+
+    correoVerificarSet = dbSPE(dbSPE.correo_Por_Verificar.correo == request.vars.correo).select()
+
+    codigoGenerado = correoVerificarSet[0].codigo
+
+    if mail:
+        if mail.send(to=[request.vars.correo],
+            subject=T('Activacion'),
+            message= 'Codigo De Activacion ' + codigoGenerado):
+                response.flash = 'email sent sucessfully.'
+                resultado = True
+        else:
+            response.flash = 'fail to send email sorry!'
+    else:
+        response.flash = 'Unable to send the email : email parameters not defined'
+
+
 def obtener_correo(usbid):
     usuario = dbSPE(dbSPE.usuario.usbid == usbid).select()[0]
     if usuario.tipo == "Docente":

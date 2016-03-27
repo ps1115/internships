@@ -1,0 +1,36 @@
+{{extend 'layout.html'}}
+
+{{if auth.is_logged_in():}}
+<p class='title'>Bienvenido {{=auth.user.first_name}}</p>
+{{pass}}
+<p class='subtitle'> {{=message}}</p>
+<span class="help-block">* Datos Obligatorios</span><br>
+<div class="row">
+  {{=form.custom.begin}}
+  <div class="col-xs-4">
+     <i class="fa fa-briefcase fa-pull-right"></i><b>* Usbid:</b>
+     <div>{{=form_profesor.custom.widget.usbid_usuario}}</div>
+     <i class="fa fa-briefcase fa-pull-right"></i><b>* Dependencia:</b>
+     <div>{{=form_profesor.custom.widget.dependencia}}</div>
+     <i class="fa fa-globe fa-pull-right"></i><b>* Dedicacion:</b>
+     <div>{{=form_profesor.custom.widget.dedicacion}}</div>
+     <i class="fa fa-map-o fa-pull-right"></i> <b>* Categoria:</b>
+     <div>{{=form_profesor.custom.widget.categoria}}</div>
+   </div>
+   <div class="col-xs-4">
+      <i class="fa fa-briefcase fa-pull-right"></i> <b>* Correo Electronico:</b>
+      <div>{{=form_profesor.custom.widget.email_sec}}</div>
+      <span class="help-block">Utiliza el correo que uses frecuentemente</span>
+      <i class="fa fa-briefcase fa-pull-right"></i> <b>Telefono Habitacion:</b>
+      <div>{{=form_profesor.custom.widget.telf}}</div>
+      <i class="fa fa-globe fa-pull-right"></i> <b>Telefono Celular:</b>
+      <div>{{=form_profesor.custom.widget.celular}}</div>
+    </div>
+    <div class="col-md-4 col-md-offset-4">
+      {{=form.custom.submit}}
+    </div>
+      {{=form.custom.end}}
+</div>
+<div class="row">
+  <br><br><br><br>
+</div>
