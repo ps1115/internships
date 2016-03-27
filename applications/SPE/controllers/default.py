@@ -99,21 +99,23 @@ def login_cas():
             )
 
             auth.login_bare(usbid,clave)
-            redirect(URL(c='default',f='registrar', vars=dict(usuario=usuario)))
+            redirect(URL(c='default',f='registrar', vars=dict(usuario=usuario,usbid=usbid)))
 
         else:
             #Como el usuario ya esta registrado, buscamos sus datos y lo logueamos.
             datosUsuario = dbSPE(tablaUsuario.usbid==usbid).select()[0]
             clave        = datosUsuario.llave
 
-            auth.login_bare(usbid,clave)
-
-            #Si el usuario no ha actualizado sus datos
+            # Caso 1: El usuario no ha registrado sus datos
             if verificar_datos(usuario,usbid).isempty():
                 redirect(URL(c='default',f='registrar', vars=dict(usuario=usuario)))
+            # Caso 2: El usuario no ha verificado su correo
             elif correo_no_verificado(usbid):
                 redirect(URL(c='default',f='verifyEmail'))
+            # Caso 3: El usuario ha cumplido con los pasos necesarios por lo que
+            # puede iniciar sesion
             else:
+                auth.login_bare(usbid,clave)
                 #Deberiamos redireccionar a un "home" dependiendo del tipo de usuario
                 redirect('index')
 
@@ -146,7 +148,7 @@ def registrar():
 
     if usuario['tipo'] == "Docente":
         #Enviar al registro del profesor
-        pass
+        redirect(URL(c='profesor',f='registrar_profesor', vars=dict(usuario=usuario)))
     elif usuario['tipo'] == "Administrativo":
         pass
     elif usuario['tipo'] in ["Pregrado","Postgrado"]:
@@ -225,6 +227,3 @@ def call():
     supports xml, json, xmlrpc, jsonrpc, amfrpc, rss, csv
     """
     return service()
-
-def registrar_profesor():
-    return response.render('default/registrar_profesor.html')
