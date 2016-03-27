@@ -160,16 +160,29 @@ def plan_trabajo():
 
 
     #Generamos el SQLFORM
-    datos_plan_de_trabajo = SQLFORM.factory(
-        Field('objetivo_fase' ,label='Objetivo específico de la fase',required=True,
-                default = 'Objetivo 1'),
+    datos_fase = SQLFORM.factory(
+        Field('numero_fase' ,label='Fase',required=True,
+                default = 'Fase 1'),
+        Field('objetivo_fase' ,label='Objetivo específico de la fase',
+                required=True, default = 'Objetivo 1'),
         formstyle='bootstrap3_stacked',
-        submit_button=T('ENVIAR PLAN DE TRABAJO')
+        submit_button=T('AGREGAR FASE')
+    )
+
+    datos_actividad = SQLFORM.factory(
+        Field('descripcion_actividad' ,label='Descripción de la actividad',
+                required=True, default = 'Descripción 1'),
+        Field('duracion_actividad' ,label='Duración de la actividad',required=True,
+                default = '1'),
+        formstyle='bootstrap3_stacked',
+        submit_button=T('AGREGAR ACTIVIDAD')
     )
 
     return dict(message="Plan de Trabajo",
-                form1=datos_plan_de_trabajo)
+                form1=datos_fase,
+                form2=datos_actividad)
 
+    response.flash = T("¡Bienvenido!")
 
             ##################################################
             #              llenar_curriculum()               #
