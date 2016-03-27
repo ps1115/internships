@@ -98,7 +98,7 @@ def login_cas():
                 llave    = clave
             )
 
-            auth.login_bare(usbid,clave)
+            # auth.login_bare(usbid,clave)
             redirect(URL(c='default',f='registrar', vars=dict(usuario=usuario,usbid=usbid)))
 
         else:
@@ -108,7 +108,7 @@ def login_cas():
 
             # Caso 1: El usuario no ha registrado sus datos
             if verificar_datos(usuario,usbid).isempty():
-                redirect(URL(c='default',f='registrar', vars=dict(usuario=usuario)))
+                redirect(URL(c='default',f='registrar', vars=dict(usuario=usuario,usbid=usbid)))
             # Caso 2: El usuario no ha verificado su correo
             elif correo_no_verificado(usbid):
                 redirect(URL(c='default',f='verifyEmail'))
@@ -148,11 +148,11 @@ def registrar():
 
     if usuario['tipo'] == "Docente":
         #Enviar al registro del profesor
-        redirect(URL(c='profesor',f='registrar_profesor', vars=dict(usuario=usuario)))
+        redirect(URL(c='profesor',f='registrar_profesor', vars=dict(usuario=usuario,usbid=request.vars.usbid)))
     elif usuario['tipo'] == "Administrativo":
         pass
     elif usuario['tipo'] in ["Pregrado","Postgrado"]:
-        redirect(URL(c='estudiante',f='registrar_estudiante', vars=dict(usuario=usuario)))
+        redirect(URL(c='estudiante',f='registrar_estudiante', vars=dict(usuario=usuario,usbid=request.vars.usbid)))
     elif usuario['tipo'] in ["Empleado","Organizacion","Egresado"]:
         pass
 

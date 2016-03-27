@@ -135,6 +135,7 @@ def registrar_estudiante():
 
     #Llenamos el formulario con el default
     dbSPE.usuario_estudiante.usbid_usuario.default  = request.vars.usbid
+    dbSPE.usuario_estudiante.usbid_usuario.writable  = False
     dbSPE.usuario_estudiante.carrera.requires = IS_IN_DB(dbSPE,dbSPE.carrera,'%(nombre)s',zero="Seleccione", error_message='Carrera Inválida')
     dbSPE.usuario_estudiante.carrera.default  = usuario['carrera']
 
