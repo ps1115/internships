@@ -171,7 +171,7 @@ def plan_trabajo():
             id_estudiante=auth.user.username, 
             id_tutor_industrial='77@gmail.com',
             id_tutor_academico='77', 
-            codigo_pasantia='PS1115')
+            codigo_pasantia='PS1110')
         ConsultaDatosPlan = dbSPE(dbSPE.plan_de_trabajo.id_estudiante==auth.user.username)
 
     #Obtenemos los datos
