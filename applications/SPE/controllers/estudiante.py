@@ -147,7 +147,7 @@ def registrar_estudiante():
 
     if form_estudiante.process().accepted:
         enviar_Correo_Verificacion(form_estudiante.vars.email_sec)
-        redirect(URL(c='default',f='verifyEmail'))
+        redirect(URL(c='default',f='verifyEmail',vars=dict(correo=form_estudiante.vars.email_sec)))
 
     return dict(message='Por favor actualiza tus datos para continuar',form=form_estudiante)
 

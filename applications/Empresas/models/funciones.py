@@ -44,3 +44,11 @@ def reenviar_Correo_Verificacion(correo):
             response.flash = 'fail to send email sorry!'
     else:
         response.flash = 'Unable to send the email : email parameters not defined'
+
+def captcha_field(request=request):
+    from gluon.tools import Recaptcha2
+    w = lambda x,y: Recaptcha2(request,
+                              '6Lcg5hoTAAAAADfqPDXf4htFpyjqkBGRID3KiLEP',
+                              '6Lcg5hoTAAAAANYiBEtWC1NSG5nEMZcHMgC4_eIT')
+
+    return Field('captcha', 'string', widget=w, default='ok')
