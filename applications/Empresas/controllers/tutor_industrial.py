@@ -1,5 +1,34 @@
 # -*- coding: utf-8 -*-
 
+# Proceso que genera un codigo de verificacion y se lo envia a un correo
+def enviar_Correo_Verificacion(correo):
+    import string
+    import random
+    from random import randint
+
+    resultado = False
+
+    size = randint(4,11)
+    i = 0
+    codigoGenerado = ''
+
+    for i in range(0,size):
+                codigoGenerado += random.choice(string.lowercase + string.uppercase + string.digits)
+
+    dbSPE.correo_Por_Verificar.insert(correo = correo,codigo = codigoGenerado)
+
+    if mail:
+        if mail.send(to=[correo],
+            subject=T('Activacion'),
+            message= T('Codigo De Activacion ') + codigoGenerado):
+                response.flash = T('email sent sucessfully.')
+                resultado = True
+        else:
+            response.flash = T('fail to send email sorry!')
+    else:
+        response.flash = T('Unable to send the email : email parameters not defined')
+    return resultado
+
 # Proceso de registro en el cual un tutor solicita un registro a una empresa
 def solicitar_registro_tutor():
     # Agregamos los campos en el orden deseado, comenzamos con el login y el password
@@ -23,6 +52,7 @@ def solicitar_registro_tutor():
         dbSPE.tutor_industrial.departamento,
         dbSPE.tutor_industrial.id_pais,
         dbSPE.tutor_industrial.id_estado,
+        dbSPE.tutor_industrial.id_universidad,
         dbSPE.tutor_industrial.direccion,
         dbSPE.tutor_industrial.telefono
     ]
@@ -46,6 +76,7 @@ def solicitar_registro_tutor():
             'direccion':T('Direccion del tutor industrial'),
             'id_pais':T('Pais en el que se encuentra domiciliado el tutor industrial'),
             'id_estado':T('Estado en el que se encuentra domiciliado el tutor industrial'),
+            'id_universidad':T('Universidad de la cual egreso el tutor'),
             'telefono':T('Numerico telefonico del tutor industrial')
            })
     # Caso 1: El form se lleno de manera correcta asi que registramos al tutor y procedemos a la pagina de exito
@@ -60,12 +91,14 @@ def solicitar_registro_tutor():
             password = request.vars.password,
             pregunta_secreta = request.vars.pregunta_secreta,
             respuesta_pregunta_secreta = request.vars.respuesta_pregunta_secreta,
-            id_empresa = request.vars.id_empresa, # Cableado mientras se resuelven problemas
+            id_empresa = request.vars.id_empresa,
             profesion = request.vars.profesion,
             cargo = request.vars.cargo,
             departamento = request.vars.departamento,
             direccion = request.vars.direccion,
-            id_estado = None, #Estara asi hasta que se implemente la tabla estado
+            id_estado = request.vars.id_estado,
+            id_pais = request.vars.id_pais,
+            id_universidad = request.vars.id_universidad,
             telefono = request.vars.telefono)
 
         #Insertamos en la tabla user de Web2py
@@ -78,6 +111,20 @@ def solicitar_registro_tutor():
             user_Type  = 'tutor_industrial'
         )
 
+        enviar_Correo_Verificacion(request.vars.email)
+
+        empresaSet = dbSPE(dbSPE.empresa.id == request.vars.id_empresa).select()
+        empresa = empresaSet[0].nombre
+
+        paisSet = dbSPE(dbSPE.pais.id == request.vars.id_pais).select()
+        pais = paisSet[0].nombre
+
+        estadoSet = dbSPE(dbSPE.estado.id == request.vars.id_estado).select()
+        estado = estadoSet[0].nombre
+
+        universidadSet = dbSPE(dbSPE.universidad.id == request.vars.id_universidad).select()
+        universidad = universidadSet[0].nombre
+
         # Mensaje de exito
         response.flash = T("Registro Exitoso")
         # Nos dirigimos a la pagina de exito
@@ -87,12 +134,14 @@ def solicitar_registro_tutor():
                                nombre = request.vars.nombre,
                                apellido = request.vars.apellido,
                                ci = request.vars.ci,
-                               id_empresa = request.vars.id_empresa, # Cableado mientras se resuelven problemas
+                               empresa = empresa, # Cableado mientras se resuelven problemas
                                profesion = request.vars.profesion,
                                cargo = request.vars.cargo,
                                departamento = request.vars.departamento,
                                direccion = request.vars.direccion,
-                               id_estado = None, #Estara asi hasta que se implemente la tabla estado
+                               estado = estado, #Estara asi hasta que se implemente la tabla estado
+                               pais = pais, #Estara asi hasta que se implemente la tabla estado
+                               universidad = universidad,
                                telefono = request.vars.telefono)
     # Caso 2: El form no se lleno de manera correcta asi que recargamos la pagina
     else:

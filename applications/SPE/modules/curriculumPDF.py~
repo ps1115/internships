@@ -1,0 +1,30 @@
+from reportlab.platypus   import *
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.rl_config  import defaultPageSize
+from reportlab.lib.units  import inch, mm
+from reportlab.lib.enums  import TA_LEFT, TA_RIGHT, TA_CENTER, TA_JUSTIFY
+from reportlab.lib        import colors
+from uuid                 import uuid4
+from cgi                  import escape
+import os
+
+def curriculum_en_pdf(ruta,nombreUsuario):
+
+    print 'Aqui estoyyyyyy'
+    print nombreUsuario
+    ConsultaDatosCurriculum = dbSPE(dbSPE.curriculum.usbid==nombreUsuario)
+    title = "This The Doc Title"
+    heading = "First Paragraph"
+    text = 'bla '* 10000
+
+    #Creamos el camino con la ruta y el hash con el que se nombrara el pdf
+    nombreArchivo = os.path.join(ruta,'private',str(uuid4()))
+    styles = getSampleStyleSheet()
+    doc = SimpleDocTemplate(nombreArchivo)
+    story = []
+    story.append(Paragraph(escape(title),styles["Title"]))
+    story.append(Paragraph(escape(heading),styles["Heading2"]))
+    story.append(Paragraph(escape(text),styles["Normal"]))
+    story.append(Spacer(1,2*inch))
+    doc.build(story)
+    return nombreArchivo
