@@ -1,7 +1,38 @@
 # -*- coding: utf-8 -*-
 
+def enviar_Correo_Verificacion(correo):
+    import string
+    import random
+    from random import randint
+
+    resultado = False
+
+    size = randint(4,11)
+    i = 0
+    codigoGenerado = ''
+
+    for i in range(0,size):
+                codigoGenerado += random.choice(string.lowercase + string.uppercase + string.digits)
+
+    dbSPE.correo_Por_Verificar.insert(correo = correo,codigo = codigoGenerado)
+
+    if mail:
+        if mail.send(to=[correo],
+            subject=T('Activacion'),
+            message= T('Codigo De Activacion ') + codigoGenerado):
+                response.flash = T('email sent sucessfully.')
+                resultado = True
+        else:
+            response.flash = T('fail to send email sorry!')
+    else:
+        response.flash = T('Unable to send the email : email parameters not defined')
+    return resultado
+
 # Proceso de registro de empresa por medio de la opcion Empresa -> Registrarse, en el Index
 def registrar_empresa():
+
+
+
     # Agregamos los campos en el orden deseado, comenzamos con el login y el password
     fields = [dbSPE.empresa.log,dbSPE.empresa.password]
     # Agregamos un campo extra de comfirm password el cual debera tener el mismo valor que el password para ser aceptado
@@ -14,6 +45,7 @@ def registrar_empresa():
         dbSPE.empresa.nombre,
         dbSPE.empresa.id_pais,
         dbSPE.empresa.id_estado,
+        dbSPE.empresa.id_area_laboral,
         dbSPE.empresa.direccion,
         dbSPE.empresa.pag_web,
         dbSPE.empresa.descripcion,
@@ -33,6 +65,7 @@ def registrar_empresa():
             'nombre':T('Nombre comercial de la empresa'),
             'id_pais':T('Pais en el que se encuentra la empresa'),
             'id_estado':T('Estado del pais en el que se encuentra'),
+            'id_area_laboral':T('Area Laboral de la Empresa'),
             'direccion':T('Direccion de las instalaciones de la empresa'),
             'pag_web':T('Pagina Web de la empresa'),
             'descripcion':T('Descripcion breve de la empresa, su vision y sus funciones'),
@@ -50,6 +83,7 @@ def registrar_empresa():
                              nombre = request.vars.nombre,
                              id_pais = request.vars.id_pais,
                              id_estado = request.vars.id_estado,
+                             id_area_laboral = request.vars.id_area_laboral,
                              direccion = request.vars.direccion,
                              pag_web = request.vars.pag_web,
                              descripcion = request.vars.descripcion,
@@ -57,13 +91,24 @@ def registrar_empresa():
                              contacto_RRHH = request.vars.contacto_RRHH)
 
         #Insertamos en la tabla User de Web2py, para el login
-        result = db.auth_user.insert(
-            username   = request.vars.log,
-            first_name = request.vars.nombre,
-            password   = db.auth_user.password.validate(request.vars.password)[0],
-            email      = request.vars.contacto_RRHH,
-            user_Type  = 'empresa'
-        )
+
+        auth.get_or_create_user({
+            "username":request.vars.log,
+            "first_name":request.vars.nombre,
+            "password":db.auth_user.password.validate(request.vars.password)[0],
+            "email":request.vars.contacto_RRHH,
+            "user_Type":'empresa'})
+
+        enviar_Correo_Verificacion(request.vars.log)
+
+        paisSet = dbSPE(dbSPE.pais.id == request.vars.id_pais).select()
+        pais = paisSet[0].nombre
+
+        estadoSet = dbSPE(dbSPE.estado.id == request.vars.id_estado).select()
+        estado = estadoSet[0].nombre
+
+        arealaboralSet = dbSPE(dbSPE.area_laboral.id == request.vars.id_area_laboral).select()
+        area_laboral = arealaboralSet[0].nombre
 
         # Mensaje de exito
         response.flash = T("Registro Exitoso")
@@ -73,8 +118,9 @@ def registrar_empresa():
                                log=request.vars.log,
                                nombre=request.vars.nombre,
                                direccion=request.vars.direccion,
-                               id_pais = request.vars.id_pais,
-                               id_estado = request.vars.id_estado,
+                               pais = pais,
+                               estado = estado,
+                               area_laboral = area_laboral,
                                pag_web=request.vars.pag_web,
                                descripcion=request.vars.descripcion,
                                telefono=request.vars.telefono,
@@ -107,6 +153,7 @@ def registrar_tutor_industrial():
         dbSPE.tutor_industrial.direccion,
         dbSPE.tutor_industrial.id_pais,
         dbSPE.tutor_industrial.id_estado,
+        dbSPE.tutor_industrial.id_universidad,
         dbSPE.tutor_industrial.telefono
     ]
 
@@ -128,7 +175,9 @@ def registrar_tutor_industrial():
             'cargo':T('Cargo que ocupa en la empresa'),
             'departamento':T('Departamento de la empresa en la que trabaja'),
             'direccion':T('Direccion del tutor industrial'),
+            'id_pais':T('Pais en el que se encuentra domiciliado el tutor industrial'),
             'id_estado':T('Estado en el que se encuentra domiciliado el tutor industrial'),
+            'id_universidad':T('Universidad de la cual egreso el tutor'),
             'telefono':T('Numerico telefonico del tutor industrial')
            })
     # Caso 1: El form se lleno de manera correcta asi que registramos al tutor y procedemos a la pagina de exito
@@ -145,12 +194,14 @@ def registrar_tutor_industrial():
             password = request.vars.password,
             pregunta_secreta = request.vars.pregunta_secreta,
             respuesta_pregunta_secreta = request.vars.respuesta_pregunta_secreta,
-            id_empresa = empresaRegistradora.id, # Cableado mientras se resuelven problemas
+            id_empresa = empresaRegistradora.id,
             profesion = request.vars.profesion,
             cargo = request.vars.cargo,
             departamento = request.vars.departamento,
             direccion = request.vars.direccion,
-            id_estado = request.vars.id_estado, #Estara asi hasta que se implemente la tabla estado
+            id_pais = request.vars.id_pais,
+            id_estado = request.vars.id_estado,
+            id_universidad = request.vars.id_universidad,
             telefono = request.vars.telefono)
 
         #Insertamos en la tabla user de Web2py
@@ -163,6 +214,17 @@ def registrar_tutor_industrial():
             user_Type  = 'tutor_industrial'
         )
 
+        enviar_Correo_Verificacion(request.vars.email)
+
+        paisSet = dbSPE(dbSPE.pais.id == request.vars.id_pais).select()
+        pais = paisSet[0].nombre
+
+        estadoSet = dbSPE(dbSPE.estado.id == request.vars.id_estado).select()
+        estado = estadoSet[0].nombre
+
+        universidadSet = dbSPE(dbSPE.universidad.id == request.vars.id_universidad).select()
+        universidad = universidadSet[0].nombre
+
         # Mensaje de exito
         response.flash = T("Registro Exitoso")
         # Nos dirigimos a la pagina de exito
@@ -172,12 +234,14 @@ def registrar_tutor_industrial():
                                nombre = request.vars.nombre,
                                apellido = request.vars.apellido,
                                ci = request.vars.ci,
-                               id_empresa = empresaRegistradora.id, # Cableado mientras se resuelven problemas
+                               empresa = empresaRegistradora.nombre, # Cableado mientras se resuelven problemas
                                profesion = request.vars.profesion,
                                cargo = request.vars.cargo,
                                departamento = request.vars.departamento,
                                direccion = request.vars.direccion,
-                               id_estado = None, #Estara asi hasta que se implemente la tabla estado
+                               pais = pais,
+                               estado = estado,
+                               universidad = universidad,
                                telefono = request.vars.telefono)
     # Caso 2: El form no se lleno de manera correcta asi que recargamos la pagina
     else:

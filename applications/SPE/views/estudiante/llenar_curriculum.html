@@ -89,5 +89,13 @@
   </div>
   <div class="container col-md-2 form-group">
       <br><br>
-      <button type="submit" class="btn btn-default">Guardar Curriculum</button>
+      {{if electivas != []:}}
+      <a href={{=URL('estudiante','generar_curriculum')}}>
+      <button type="submit" class="btn btn-default">Generar Curriculum</button>
+      </a>      
+      {{else:}}
+      <a href={{=URL('estudiante','llenar_curriculum')}}>
+      <button type="submit" class="btn btn-default">Generar Curriculum</button>
+      </a>  
+      {{pass}}    
   </div>

@@ -1,0 +1,47 @@
+{{left_sidebar_enabled,right_sidebar_enabled=False,('message' in globals())}}
+{{extend 'layout.html'}}
+
+{{if 'message' in globals():}}
+
+    {{if auth.is_logged_in():}}
+        {{redirect(URL('home'))}}
+
+    {{else:}}
+
+        <div class="col-xs-5">
+          <p class='title'>{{=message}}</p>
+             <div class='content'>
+             <p class='subtitle'>Bienvenido</p>
+                 <br></br>
+             </div>
+          ¿No representas una empresa?
+            <br></br>
+          <a href={{=URL(a='SPE',c='default',f='index')}}>
+              <button class='success'>Miembros USB</button>
+          </a>
+        </div>
+        <div class="col-xs-6">
+              <div class="row">
+                  <p><b>El Codigo le ha sido reenviado</b>.</p>
+              </div>
+              <div class="row">
+                <div class=img>
+                </div>
+              </div>
+              <br><br><br>
+              <br>
+        </div>
+
+        {{block right_sidebar}}
+            <br><br><br>
+            </div>
+            <br><br><br>
+        {{end}}
+
+    {{pass}}
+
+    {{elif 'content' in globals():}}
+    {{=content}}
+    {{else:}}
+    {{=BEAUTIFY(response._vars)}}
+{{pass}}
