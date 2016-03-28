@@ -111,7 +111,9 @@ def login_cas():
                 redirect(URL(c='default',f='registrar', vars=dict(usuario=usuario,usbid=usbid)))
             # Caso 2: El usuario no ha verificado su correo
             elif correo_no_verificado(usbid):
-                redirect(URL(c='default',f='verifyEmail'))
+                obtener_correo(usbid)
+                correo_sec = obtener_correo(usbid)
+                redirect(URL(c='default',f='verifyEmail',vars=dict(correo=correo_sec)))
             # Caso 3: El usuario ha cumplido con los pasos necesarios por lo que
             # puede iniciar sesion
             else:
@@ -201,7 +203,7 @@ def verifyEmail():
 
     return response.render('default/codigoVerificacion.html',
     message=T("Verificacion de Correo"),
-    resend= T("El Correo ha sido reenviado"),
+    resend= request.vars.resend,
     form=form,vars=dict(correo=correo_usuario))
 
 

@@ -51,7 +51,7 @@ def registrar_profesor():
                             celular = request.vars.celular,
                             activo = 1)
 
-        redirect(URL(c='default',f='verifyEmail'))
+        redirect(URL(c='default',f='verifyEmail', vars=dict(correo=request.vars.email_sec)))
 
     return response.render('profesor/registrar_profesor.html',
         message='Por favor actualiza tus datos para continuar',
