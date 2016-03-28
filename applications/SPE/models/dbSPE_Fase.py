@@ -4,7 +4,7 @@
 dbSPE.define_table('fase',
                 Field('codigo','id'),
                 Field('id_plan_de_trab','string',required=True, requires=[IS_LENGTH(254)]),
-                Field('codigo_pasantia','string',required=True, requires=[IS_LENGTH(8)]),
+                Field('codigo_pasantia','string', requires=[IS_LENGTH(8)]),
                 Field('nombre_fase','string',required=True, requires=[IS_LENGTH(100)]),
                 Field('objetivos_especificos','text',required=True),
                 primarykey=['codigo'],

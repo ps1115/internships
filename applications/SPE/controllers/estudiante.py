@@ -145,18 +145,35 @@ def plan_trabajo():
     import ast
 
     #Buscamos los datos del plan de trabajo si los hay
-    ConsultaDatosPlan = dbSPE(dbSPE.plan_de_trabajo.id_estudiante==auth.user.username)
+    ConsultaDatosPlan       = dbSPE(dbSPE.plan_de_trabajo.id_estudiante==auth.user.username)
+    # ConsultaDatosPasantia   = dbSPE(dbSPE.pasantia.id_estudiante==auth.user.username)
+    # DatosPasantia           = ConsultaDatosPasantia.select()
+
 
     #Si no los hay, lo creamos
-    # if ConsultaDatosPlan.isempty():
-    #     dbSPE.plan_de_trabajo.insert(id_estudiante=auth.user.username)
-    #     ConsultaDatosPlan = dbSPE(dbSPE.plan_de_trabajo.id_estudiante==auth.user.username)
+    if ConsultaDatosPlan.isempty():
+        dbSPE.plan_de_trabajo.insert(id_estudiante=auth.user.username, id_tutor_industrial='77@gmail.com',
+                                     id_tutor_academico='77', codigo_pasantia='PS1115')
+        ConsultaDatosPlan = dbSPE(dbSPE.plan_de_trabajo.id_estudiante==auth.user.username)
 
     #Obtenemos los datos
-    #DatosCurriculum = ConsultaDatosCurriculum.select()[0]
-
+    DatosPlan = ConsultaDatosPlan.select()[0]
+    print DatosPlan.id
+    DatosActividad = dbSPE(dbSPE.actividad.id_plan_de_trab==dbSPE.plan_de_trabajo.id)
+    print DatosPlan
+    #print DatosActividad
 
     #Viene la parte de OBTENER las actividades ya cargadas
+
+    if DatosActividad.isempty():
+        actividad = []
+    else:
+        DatosActividad = dbSPE(dbSPE.actividad.id_plan_de_trab==dbSPE.plan_de_trabajo.id).select()[0]
+        if DatosActividad.descripcion == None:
+            actividad = []
+        else:
+            actividad = ast.literal_eval(DatosActividad.descripcion)
+            actividad.sort()
 
 
     #Generamos el SQLFORM
@@ -173,14 +190,15 @@ def plan_trabajo():
         Field('descripcion_actividad' ,label='Descripción de la actividad',
                 required=True, default = 'Descripción 1'),
         Field('duracion_actividad' ,label='Duración de la actividad',required=True,
-                default = '1'),
+                default = '1 semana'),
         formstyle='bootstrap3_stacked',
         submit_button=T('AGREGAR ACTIVIDAD')
     )
 
     return dict(message="Plan de Trabajo",
                 form1=datos_fase,
-                form2=datos_actividad)
+                form2=datos_actividad,
+                actividad=actividad)
 
     response.flash = T("¡Bienvenido!")
 

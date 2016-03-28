@@ -33,6 +33,8 @@
 'Administrative Interface': 'Interfaz Administrativa',
 'Administrator Password:': 'Contraseña del Administrador:',
 'Agregar': 'Agregar',
+'AGREGAR ACTIVIDAD': 'AGREGAR ACTIVIDAD',
+'AGREGAR FASE': 'AGREGAR FASE',
 'Ajax Recipes': 'Recetas AJAX',
 'An error occured, please %s the page': 'Ha ocurrido un error, por favor %s la página',
 'And': 'Y',
