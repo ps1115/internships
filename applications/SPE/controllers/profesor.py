@@ -7,26 +7,23 @@ def registrar_profesor():
     usuario =  ast.literal_eval(request.vars['usuario'])
 
     #Llenamos el formulario con el default
-    dbSPE.usuario_profesor.usbid_usuario.default  = request.vars.usuario.usbid
-
+    dbSPE.usuario_profesor.usbid_usuario.default  = request.vars.usbid
 
     # Agregamos el resto de los campos
-    fields += [
+    fields = [
         dbSPE.usuario_profesor.usbid_usuario,
         dbSPE.usuario_profesor.dependencia,
         dbSPE.usuario_profesor.dedicacion,
         dbSPE.usuario_profesor.categoria,
         dbSPE.usuario_profesor.email_sec,
         dbSPE.usuario_profesor.telf,
-        dbSPE.usuario_profesor.celular,
-        dbSPE.usuario_profesor.activo
+        dbSPE.usuario_profesor.celular
         ]
     # Generamos el SQLFORM utilizando los campos
     form_profesor = SQLFORM.factory(
     captcha_field(),
     *fields,
     formstyle='bootstrap3_stacked',
-    submit_button='Submit',
     separator=': ',
     submit_button="Actualizar Datos",
     buttons=['submit'],
@@ -41,11 +38,11 @@ def registrar_profesor():
     )
 
     if form_profesor.process().accepted:
-        enviar_Correo_Verificacion(form_estudiante.vars.email_sec)
+        enviar_Correo_Verificacion(form_profesor.vars.email_sec)
 
         # Registramos la empresa
         dbSPE.usuario_profesor.insert(
-                            usbid_usuario = request.vars.usbid_usuario,
+                            usbid_usuario = request.vars.usbid,
                             dependencia = request.vars.dependencia,
                             dedicacion = request.vars.dedicacion,
                             categoria = request.vars.categoria,
@@ -56,9 +53,9 @@ def registrar_profesor():
 
         redirect(URL(c='default',f='verifyEmail'))
 
-    return dict(message='Por favor actualiza tus datos para continuar',form=form_profesor)
-
-    return response.render('profesor/registrar_profesor.html')
+    return response.render('profesor/registrar_profesor.html',
+        message='Por favor actualiza tus datos para continuar',
+        form_profesor=form_profesor)
 
 def justificar_retiro_profesor():
     # Este query debe ser remplazado por el correcto

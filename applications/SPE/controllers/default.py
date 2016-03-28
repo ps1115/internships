@@ -152,6 +152,7 @@ def registrar():
     elif usuario['tipo'] == "Administrativo":
         pass
     elif usuario['tipo'] in ["Pregrado","Postgrado"]:
+        #redirect(URL(c='profesor',f='registrar_profesor', vars=dict(usuario=usuario,usbid=request.vars.usbid)))
         redirect(URL(c='estudiante',f='registrar_estudiante', vars=dict(usuario=usuario,usbid=request.vars.usbid)))
     elif usuario['tipo'] in ["Empleado","Organizacion","Egresado"]:
         pass
@@ -186,7 +187,7 @@ def verifyEmail():
                            )
     form.add_button(T('Send Email Again'), URL(c='default',f='resendVerificationEmail',vars=dict(correo=request.vars.correo)))
 
-    correo_usuario = obtener_correo(auth.user.username)
+    correo_usuario = request.vars.correo
 
     if form.process().accepted:
         # Buscamos el id de la empresa
@@ -200,7 +201,7 @@ def verifyEmail():
 
     return response.render('default/codigoVerificacion.html',
     message=T("Verificacion de Correo"),
-    resend= T("El Correo ha sido reenviado"),    
+    resend= T("El Correo ha sido reenviado"),
     form=form,vars=dict(correo=correo_usuario))
 
 
