@@ -59,20 +59,11 @@ def resendVerificationEmail():
 
     correoVerificarSet = dbSPE(dbSPE.correo_Por_Verificar.correo == request.vars.correo).select()
 
-    codigoGenerado = correoVerificarSet[0].codigo
+    reenviar_Correo_Verificacion(request.vars.correo)
 
-    if mail:
-        if mail.send(to=[request.vars.correo],
-            subject=T('Activacion'),
-            message= 'Codigo De Activacion ' + codigoGenerado):
-                response.flash = 'email sent sucessfully.'
-                resultado = True
-        else:
-            response.flash = 'fail to send email sorry!'
-    else:
-        response.flash = 'Unable to send the email : email parameters not defined'
-    return response.render('default/codigoReenviado.html',message=T("Verificacion de Correo"),vars=dict(correo=request.vars.login))
-
+    redirect(URL(c='default',f='verifyEmail',
+        vars=dict(correo=request.vars.correo,resend= T("El Correo ha sido reenviado"),
+        message=T("Verificacion de Correo"))))
 
 def verifyEmail():
     form = SQLFORM.factory(
@@ -81,8 +72,11 @@ def verifyEmail():
                 formstyle='bootstrap3_stacked'
                            )
 
-    contrasenaSet = dbSPE(dbSPE.empresa.log == request.vars.correo).select()
+    form.add_button(T('Send Email Again'), URL(c='default',f='resendVerificationEmail'
+        ,vars=dict(correo=request.vars.correo)))
 
+    contrasenaSet = dbSPE(dbSPE.empresa.log == request.vars.correo).select()
+    # Si no se encuentra en la tabla de empresas, deben estar en la tabla de correo
     if not (contrasenaSet):
         contrasenaSet = dbSPE(dbSPE.tutor_industrial.email == request.vars.correo).select()
     contrasena = contrasenaSet[0].password
@@ -96,7 +90,9 @@ def verifyEmail():
             dbSPE(dbSPE.correo_Por_Verificar.correo == request.vars.correo).delete()
             auth.login_bare(request.vars.correo,contrasena)
             redirect(URL(c='default',f='home'))
-    return response.render('default/codigoVerificacion.html',message=T("Verificacion de Correo"),form=form,vars=dict(correo=request.vars.login))
+    return response.render('default/codigoVerificacion.html',
+        message=T("Verificacion de Correo"),resend= request.vars.resend,
+        form=form,vars=dict(correo=request.vars.login))
 
 
 def validar_credenciales(form):

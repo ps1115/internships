@@ -9,6 +9,9 @@
     {{else:}}
         <div class="row">
             <p class='title'>{{=message}}</p>
+            {{if resend:}}
+                <p><font color="red">{{=resend}}</font></p>
+            {{pass}}
         </div>
             {{=form.custom.begin}}
                 <div class="row">
@@ -22,8 +25,8 @@
                         <a data-toggle="popover" title={{=T('Help')}} data-content="Por su seguridad se le ha enviado una clave de verificación que debe ingresar para activar su cuenta, así constatamos que es una empresa o tutor industrial legítimo. Si no ha recibido el correo pulse pulse 'Reenviar Correo'.">
                         <i class="fa fa-question-circle fa-2x" style="color:#3e3f3a"></i>
                         </a>
-                    </div>       
-                </div>     
+                    </div>
+                </div>
                 <br>
                 <div class="row">
                     <div class="row col-md-8">
@@ -32,8 +35,8 @@
                             {{=A(T('Send Email Again'), _class='btn btn-default',_href=URL  (c='default',f='resendVerificationEmail',vars=dict(correo=request.vars.correo)))}}
                         </div>
                     </div>
+
                 </div>
-                
             {{=form.custom.end}}
             <br><br><br>
             <br>
@@ -56,6 +59,6 @@
 
 <script>
     $(document).ready(function(){
-        $('[data-toggle="popover"]').popover();   
+        $('[data-toggle="popover"]').popover();
     });
 </script>

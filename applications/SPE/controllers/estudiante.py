@@ -139,7 +139,6 @@ def registrar_estudiante():
     dbSPE.usuario_estudiante.carrera.requires = IS_IN_DB(dbSPE,dbSPE.carrera,'%(nombre)s',zero="Seleccione", error_message='Carrera Inválida')
     dbSPE.usuario_estudiante.carrera.default  = usuario['carrera']
 
-
     form_estudiante = SQLFORM(
                     dbSPE.usuario_estudiante,
                     formstyle='bootstrap3_stacked',
