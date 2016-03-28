@@ -160,20 +160,24 @@ def plan_trabajo():
     DatosPlan = ConsultaDatosPlan.select()[0]
     print DatosPlan.id
     DatosActividad = dbSPE(dbSPE.actividad.id_plan_de_trab==dbSPE.plan_de_trabajo.id)
-    print DatosPlan
-    #print DatosActividad
 
     #Viene la parte de OBTENER las actividades ya cargadas
 
     if DatosActividad.isempty():
+        print "Es vacio"
         actividad = []
+        duracion = []
     else:
+        print "No es vacio"
         DatosActividad = dbSPE(dbSPE.actividad.id_plan_de_trab==dbSPE.plan_de_trabajo.id).select()[0]
-        if DatosActividad.descripcion == None:
+        if DatosActividad.descripcion == None & DatosActividad.tiempo_estimado == None:
             actividad = []
+            duracion = []
         else:
             actividad = ast.literal_eval(DatosActividad.descripcion)
             actividad.sort()
+            duracion = ast.literal_eval(DatosActividad.tiempo_estimado)
+            duracion.sort()
 
 
     #Generamos el SQLFORM
