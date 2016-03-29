@@ -36,7 +36,31 @@ def guardar_imagen(image, imagename=None,path=None):
             dest_file.close()
     return imagename
 
-def enviar_Correo_Verificacion(correo):
+def enviar_Correo_Verificacion(correo,codigoGenerado):
+
+    if mail:
+        mensaje1 = T("Su registro en el SPE ha sido exitoso, pero para poder utilizar" +
+        " las funcionalidades del sistema debemos verificar que su la dirección " +
+        "de correo electrónico suministrada es la correcta\n\n")
+        mensaje2 = T("Cuando intente iniciar sesion en el sistema se le solicitara " +
+        "el siguiente codigo:\n\n")
+        mensaje3 = T('  Codigo De Activación ') + "'" + codigoGenerado + "' \n\n"
+        mensaje4 = T("Una vez introducido el codigo su cuenta sera activada y podra " +
+        "disfrutar nuestros servicios\n\n")
+        mensaje5 = T("Este correo se ha enviado de manera automatica por el " +
+        "Sistema Empresarial de Pasantias de la Universidad Simón Bolívar.\n\n")
+        if mail.send(to=[correo],
+            subject=T('Activacion'),
+            message= (mensaje1 + mensaje2 + mensaje3 + mensaje4 + mensaje5)):
+                response.flash = T('email sent sucessfully.')
+                resultado = True
+        else:
+            response.flash = T('fail to send email sorry!')
+    else:
+        response.flash = T('Unable to send the email : email parameters not defined')
+    return resultado
+
+def generar_Correo_Verificacion(correo):
     import string
     import random
     from random import randint
@@ -52,17 +76,7 @@ def enviar_Correo_Verificacion(correo):
 
     dbSPE.correo_Por_Verificar.insert(correo = correo,codigo = codigoGenerado)
 
-    if mail:
-        if mail.send(to=[correo],
-            subject=T('Activacion'),
-            message= T('Codigo De Activacion ') + codigoGenerado):
-                response.flash = T('email sent sucessfully.')
-                resultado = True
-        else:
-            response.flash = T('fail to send email sorry!')
-    else:
-        response.flash = T('Unable to send the email : email parameters not defined')
-    return resultado
+    enviar_Correo_Verificacion(correo,codigoGenerado)
 
 def reenviar_Correo_Verificacion(correo):
 
@@ -70,16 +84,7 @@ def reenviar_Correo_Verificacion(correo):
 
     codigoGenerado = correoVerificarSet[0].codigo
 
-    if mail:
-        if mail.send(to=[request.vars.correo],
-            subject=T('Activacion'),
-            message= 'Codigo De Activacion ' + codigoGenerado):
-                response.flash = 'email sent sucessfully.'
-                resultado = True
-        else:
-            response.flash = 'fail to send email sorry!'
-    else:
-        response.flash = 'Unable to send the email : email parameters not defined'
+    enviar_Correo_Verificacion(correo,codigoGenerado)
 
 
 def obtener_correo(usbid):
