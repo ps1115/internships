@@ -436,7 +436,7 @@
 'Search': 'Buscar',
 'Sede': 'Sede',
 'Semantic': 'Semántica',
-'Send Email Again': 'Send Email Again',
+'Send Email Again': 'Reenviar correo',
 'Services': 'Servicios',
 'session expired': 'sesión expirada',
 'Sexo': 'Sexo',
