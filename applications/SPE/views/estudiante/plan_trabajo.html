@@ -9,17 +9,40 @@
   <div class="container col-md-5 form-group">
   {{=form1}}
   </div>
-    <div class="container col-md-5 form-group">
-  {{=form2}}
-  {{items =actividad}}
-  <ul class="list">
-    {{for item in items:}}<li>{{=item}}</li>{{pass}}
-  </ul>
+  <div class="container col-md-5 form-group">
+  {{=form2.custom.begin}}
+  <b>{{=form2.custom.label.seleccione_fase}}</b>
+  {{=form2.custom.widget.seleccione_fase}}
+  <br>
+  <b>{{=form2.custom.label.descripcion_actividad}}</b>
+  {{=form2.custom.widget.descripcion_actividad}}
+  <br>
+  <div class="container col-md-5 form-group">
+  <b>{{=form2.custom.label.sem_inicio}}</b>
+  {{=form2.custom.widget.sem_inicio}}
+  <br>
+  </div>
+  <div class="container col-md-5 form-group">
+  <b>{{=form2.custom.label.sem_fin}}</b>
+  {{=form2.custom.widget.sem_fin}}
+  <br>
+  </div>
   </div>
 </div>
+<div class="container col-md-offset-5 form-group">
+<span class="input-group-btn">
+    <button class="btn btn-default" type="submit">AGREGAR ACTIVIDAD</button>
+  </span>
+</div>
+  {{=form2.custom.end}}
 
 <div class="row">
-
+  {{items =actividad}}
+  <ul class="list">
+    <div class="container col-md-4 form-group">{{for item in items:}}<li>{{=item.descripcion}}</li>{{pass}}</div>
+    <div class="container col-md-4 form-group">{{for item in items:}}<li>{{=item.semana_inicio}}</li>{{pass}}</div>
+    <div class="container col-md-4 form-group">{{for item in items:}}<li>{{=item.semana_fin}}</li>{{pass}}</div>
+  </ul>
 </div>
 
 
@@ -30,5 +53,3 @@
     <br><br><br><br>
 </div>
 
-
-datos_actividad

@@ -151,15 +151,16 @@ def registrar_estudiante():
 
     return dict(message='Por favor actualiza tus datos para continuar',form=form_estudiante)
 
+            ##################################################
+            #                   plan_trabajo()               #
+            ##################################################
+
 def plan_trabajo():
 
     import ast
 
     #Buscamos los datos del plan de trabajo si los hay
     ConsultaDatosPlan       = dbSPE(dbSPE.plan_de_trabajo.id_estudiante==auth.user.username)
-    # ConsultaDatosPasantia   = dbSPE(dbSPE.pasantia.id_estudiante==auth.user.username)
-    # DatosPasantia           = ConsultaDatosPasantia.select()
-
 
     #Si no los hay, lo creamos
     if ConsultaDatosPlan.isempty():
@@ -172,44 +173,45 @@ def plan_trabajo():
 
     #Obtenemos los datos
     DatosPlan = ConsultaDatosPlan.select()[0]
-    print DatosPlan.id
-    ConsultaDatosActividad = dbSPE(dbSPE.actividad.id_plan_de_trab==dbSPE.plan_de_trabajo.id)
+    ConsultaDatosActividad = dbSPE(dbSPE.actividad.id_plan_de_trab==DatosPlan.id)
 
     #Viene la parte de OBTENER las actividades ya cargadas
 
     if ConsultaDatosActividad.isempty():
-        print "Es vacio"
         actividad = []
         inicio = []
         fin = []
     else:
-        print "No es vacio"
         DatosActividad = ConsultaDatosActividad.select()[0]
-        if DatosActividad.descripcion == None and DatosActividad.semana_inicio== None and DatosActividad.semana_fin== None:
-            actividad = []
-            inicio = []
-            fin = []
-        else:
-            actividad = ast.literal_eval(DatosActividad.descripcion)
-            inicio = ast.literal_eval(DatosActividad.semana_inicio)
-            fin = ast.literal_eval(DatosActividad.semana_fin)
+        actividad = DatosActividad.descripcion
+        inicio = DatosActividad.semana_inicio
+        fin = DatosActividad.semana_fin
 
 
     ConsultaDatosFase = dbSPE(dbSPE.fase.id_plan_de_trab==DatosPlan.id)
 
     if ConsultaDatosFase.isempty():
-        print "Es vacio fase"
         fases_nombre = []
         fases_obj    = []
     else:
-        print "No es vacio fase"
         DatosFase = ConsultaDatosFase.select()[0]
-        # if DatosFase.nombre_fase == None and DatosActividad.objetivos_especificos == None:
-        #     fases_nombre = []
-        #     fases_obj    = []
-        # else:
         fases_nombre = DatosFase.nombre_fase
         fases_obj    = DatosFase.objetivos_especificos
+
+    semanas=[]
+    pas_codigo = DatosPlan.codigo_pasantia
+    if re.match('E[T,P][-]*(1420)',pas_codigo):
+        num = 7
+    elif re.match('E[T,P][-]*(2420)',pas_codigo):
+        num = 13
+    else:
+        num = 21
+
+    for i in range(1,num):
+        if i < 10:
+            semanas.append("semana 0"+str(i))
+        else:
+            semanas.append("semana "+str(i))
 
     #Generamos el SQLFORM
     datos_fase = SQLFORM.factory(
@@ -228,53 +230,62 @@ def plan_trabajo():
         Field('descripcion_actividad' ,label='Descripción de la actividad',
                 required=True, default = 'Descripción 1'),
         Field('sem_inicio' ,label='Semana de inicio de la actividad',required=True,
-                default = 'semana 1'),
+                requires=IS_IN_SET(semanas, zero="Seleccione")),
         Field('sem_fin' ,label='Semana final de la actividad',required=True,
-                default = 'semana 1'),
+                requires=IS_IN_SET(semanas, zero="Seleccione")),
         formstyle='bootstrap3_stacked',
-        submit_button=T('AGREGAR ACTIVIDAD')
+        submit_button=T('AGREGAR ACTIVIDAD'),
+        buttons=['submit'] 
     )
 
     if datos_fase.process(formname="datos_fase").accepted:
-        print "."
     #     #Insertamos la fase.
         if (datos_fase.vars.nombre_fase  != '') and (datos_fase.vars.objetivo_fase  != ''):
             fases_nombre = datos_fase.vars.nombre_fase
             fases_obj = datos_fase.vars.objetivo_fase
-            print fases_nombre
-            print fases_obj
-
             dbSPE.fase.update_or_insert(
                 id_plan_de_trab = DatosPlan.id,
                 codigo_pasantia = DatosPlan.codigo_pasantia,
                 nombre_fase     = datos_fase.vars.nombre_fase,
                 objetivos_especificos = datos_fase.vars.objetivo_fase)
 
+            redirect(URL('estudiante', 'plan_trabajo'))
+
+    Datos_act_fase = ''
+
     if datos_actividad.process(formname="datos_actividad").accepted:
-        print "."
-    #     #Insertamos la actividad.
+
+        #Insertamos la actividad.
         if ((datos_actividad.vars.descripcion_actividad  != '') and (datos_actividad.vars.sem_inicio  != '')
         and (datos_actividad.vars.sem_fin  != '')):
-            actividad = datos_actividad.vars.descripcion_actividad
-            inicio = datos_actividad.vars.sem_inicio
-            fin = datos_actividad.vars.sem_fin
-            print inicio
-            print fin
-            print actividad
-            ConsultaDatosActividad.update(descripcion=str(actividad))
-            ConsultaDatosActividad.update(semana_inicio=str(inicio))
-            ConsultaDatosActividad.update(semana_fin=str(fin))
-            dbSPE.actividad.update_or_insert(
-                codigo_fase=DatosFase.codigo,
-                descripcion=datos_actividad.vars.descripcion_actividad,
-                semana_inicio=datos_actividad.vars.sem_inicio,
-                semana_fin=datos_actividad.vars.sem_fin,
-                id_plan_de_trab=DatosPlan.id)
+            if datos_actividad.vars.sem_inicio <= datos_actividad.vars.sem_fin :
+
+                Consulta_act_fase = dbSPE(dbSPE.actividad.codigo_fase==int(datos_actividad.vars.seleccione_fase))
+                Datos_act_fase = Consulta_act_fase.select()
+                print 'aqui'
+                for dato in Datos_act_fase :
+                    print dato.descripcion
+                    print dato.codigo_fase
+                    print ' '
+
+                actividad = datos_actividad.vars.descripcion_actividad
+                inicio = datos_actividad.vars.sem_inicio
+                fin = datos_actividad.vars.sem_fin
+                dbSPE.actividad.update_or_insert(
+                    codigo_fase=datos_actividad.vars.seleccione_fase,
+                    descripcion=datos_actividad.vars.descripcion_actividad,
+                    semana_inicio=datos_actividad.vars.sem_inicio,
+                    semana_fin=datos_actividad.vars.sem_fin,
+                    id_plan_de_trab=DatosPlan.id)
+
+                redirect(URL('estudiante', 'plan_trabajo'))
+            else:
+                response.flash = 'La semana final de la actividad debe ser mayor a la semana inicial de la misma'
 
     return dict(message="Plan de Trabajo",
                 form1=datos_fase,
                 form2=datos_actividad,
-                actividad=actividad,
+                actividad=Datos_act_fase,
                 inicio=inicio,
                 fin=fin,
                 fases_nombre=fases_nombre,
