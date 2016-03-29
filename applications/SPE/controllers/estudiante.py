@@ -152,8 +152,116 @@ def registrar_estudiante():
     return dict(message='Por favor actualiza tus datos para continuar',form=form_estudiante)
 
 def plan_trabajo():
-    return dict(message="Plan de Trabajo")
 
+    import ast
+
+    #Buscamos los datos del plan de trabajo si los hay
+    ConsultaDatosPlan       = dbSPE(dbSPE.plan_de_trabajo.id_estudiante==auth.user.username)
+    # ConsultaDatosPasantia   = dbSPE(dbSPE.pasantia.id_estudiante==auth.user.username)
+    # DatosPasantia           = ConsultaDatosPasantia.select()
+
+
+    #Si no los hay, lo creamos
+    if ConsultaDatosPlan.isempty():
+        dbSPE.plan_de_trabajo.insert(
+            id_estudiante=auth.user.username,
+            id_tutor_industrial='77@gmail.com',
+            id_tutor_academico='77',
+            codigo_pasantia='PS1110')
+        ConsultaDatosPlan = dbSPE(dbSPE.plan_de_trabajo.id_estudiante==auth.user.username)
+
+    #Obtenemos los datos
+    DatosPlan = ConsultaDatosPlan.select()[0]
+    print DatosPlan.id
+    ConsultaDatosActividad = dbSPE(dbSPE.actividad.id_plan_de_trab==dbSPE.plan_de_trabajo.id)
+
+    #Viene la parte de OBTENER las actividades ya cargadas
+
+    if ConsultaDatosActividad.isempty():
+        print "Es vacio"
+        actividad = []
+        duracion = []
+    else:
+        print "No es vacio"
+        DatosActividad = ConsultaDatosActividad.select()[0]
+        if DatosActividad.descripcion == None and DatosActividad.tiempo_estimado == None:
+            actividad = []
+            duracion = []
+        else:
+            actividad = ast.literal_eval(DatosActividad.descripcion)
+            actividad.sort()
+            duracion = ast.literal_eval(DatosActividad.tiempo_estimado)
+            duracion.sort()
+
+
+    ConsultaDatosFase = dbSPE(dbSPE.fase.id_plan_de_trab==DatosPlan.id)
+
+    if ConsultaDatosFase.isempty():
+        print "Es vacio fase"
+        fases_nombre = []
+        fases_obj    = []
+    else:
+        print "No es vacio fase"
+        DatosFase = ConsultaDatosFase.select()[0]
+        if DatosFase.nombre_fase == None and DatosActividad.objetivos_especificos == None:
+            fases_nombre = []
+            fases_obj    = []
+        else:
+            fases_nombre = ast.literal_eval(DatosFase.nombre_fase)
+            fases_nombre.sort()
+            fases_obj = ast.literal_eval(DatosActividad.objetivos_especificos)
+            fases_obj.sort()
+
+    #Generamos el SQLFORM
+    datos_fase = SQLFORM.factory(
+        Field('nombre_fase' ,label='Fase',required=True,
+                default = 'Fase Reconocimiento'),
+        Field('objetivo_fase' ,label='Objetivo específico de la fase',
+                required=True, default = 'Objetivo de la fase actual'),
+        formstyle='bootstrap3_stacked',
+        submit_button=T('AGREGAR FASE')
+    )
+
+    datos_actividad = SQLFORM.factory(
+        Field('descripcion_actividad' ,label='Descripción de la actividad',
+                required=True, default = 'Descripción 1'),
+        Field('duracion_actividad' ,label='Duración de la actividad',required=True,
+                default = '1 semana'),
+        formstyle='bootstrap3_stacked',
+        submit_button=T('AGREGAR ACTIVIDAD')
+    )
+
+    if datos_fase.process(formname="datos_fase").accepted:
+        print "."
+    #     #Insertamos la fase.
+        if (datos_fase.vars.nombre_fase  != '') and (datos_fase.vars.objetivo_fase  != ''):
+            fases_nombre.append(datos_fase.vars.nombre_fase)
+            fases_obj.append(datos_fase.vars.objetivo_fase)
+            print fases_nombre
+            print fases_obj
+
+            dbSPE.fase.insert(
+                id_plan_de_trab=DatosPlan.id,
+                codigo_pasantia=DatosPlan.codigo_pasantia,
+                nombre_fase=datos_fase.vars.nombre_fase,
+                objetivos_especificos=datos_fase.vars.objetivo_fase)
+
+    if datos_actividad.process(formname="datos_actividad").accepted:
+        print "."
+    #     #Insertamos la actividad.
+        if (datos_actividad.vars.descripcion_actividad  != '') and (datos_actividad.vars.duracion_actividad  != ''):
+            actividad.append(datos_actividad.vars.descripcion_actividad)
+            duracion.append(datos_actividad.vars.duracion_actividad)
+            print duracion
+            print actividad
+            # ConsultaDatosActividad.update(descripcion=str(actividad))
+
+    return dict(message="Plan de Trabajo",
+                form1=datos_fase,
+                form2=datos_actividad,
+                actividad=actividad)
+
+    response.flash = T("¡Bienvenido!")
 
             ##################################################
             #              llenar_curriculum()               #
