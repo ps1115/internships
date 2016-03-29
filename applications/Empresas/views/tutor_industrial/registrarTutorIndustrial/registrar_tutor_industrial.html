@@ -1,145 +1,147 @@
 {{('message' in globals())}}
 {{extend 'layout.html'}}
-<head>
-    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
-</head>
+
 {{if 'message' in globals():}}
-<div class='content'>
+<div class='container'>
     <div class='title'>
         {{=message}}
     </div>
     <br>
-    {{=form.custom.begin}}
-        <div class='col-md-4'>
-            <div class="panel-group">
-                <div class="panel panel-warning">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
-                            <a data-toggle="collapse" href="#personal">
-                                <i class="fa fa-users fa-pull-right"></i>
-                                Datos personales
-                            </a>
-                        </h3>
+        {{=form.custom.begin}}
+        <div class="row">
+            <div class='col-md-4'>
+                <div class="panel-group">
+                    <div class="panel panel-warning">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                <a data-toggle="collapse" href="#personal">
+                                    <i class="fa fa-users fa-pull-right"></i>
+                                    Datos personales
+                                </a>
+                            </h3>
+                        </div>
+                        <div id="personal" class="panel-collapse collapse in panel-body">
+                            <i class="fa fa-at fa-pull-right"></i>
+                            <label for='no_table_email'>{{=form.custom.label.email}}</label>
+                            {{=form.custom.widget.email.update(_placeholder="ejemplo@ejemplo.com")}}
+                            <br>
+                            <i class="fa fa-user fa-pull-right"></i>
+                            <label for='no_table_nombre'>{{=form.custom.label.nombre}}</label>
+                            {{=form.custom.widget.nombre.update(_placeholder="Nombre del tutor industrial")}}
+                            <br>
+                            <label for='no_table_apellido'>{{=form.custom.label.apellido}}</label>
+                            {{=form.custom.widget.apellido.update(_placeholder="Apellido del tutor industrial")}}
+                            <br>
+                            <label for='no_table_ci'>{{=form.custom.label.ci}} o Pasaporte</label>
+                            {{=form.custom.widget.ci.update(_placeholder="Identificación del tutor industrial")}}
+                            <br>
+                            <i class="fa fa-phone fa-pull-right"></i>
+                            <label for='no_table_telefono'>{{=form.custom.label.telefono}}</label>
+                            {{=form.custom.widget.telefono.update(_placeholder="+582125555555")}}
+                            <br>
+                        </div>
                     </div>
-                    <div id="personal" class="panel-collapse collapse in panel-body">
-                        <i class="fa fa-at fa-pull-right"></i>
-                        <label for='no_table_email'>{{=form.custom.label.email}}</label>
-                        {{=form.custom.widget.email.update(_placeholder="ejemplo@ejemplo.com")}}
-                        <br>
-                        <i class="fa fa-user fa-pull-right"></i>
-                        <label for='no_table_nombre'>{{=form.custom.label.nombre}}</label>
-                        {{=form.custom.widget.nombre.update(_placeholder="Nombre del tutor industrial")}}
-                        <br>
-                        <label for='no_table_apellido'>{{=form.custom.label.apellido}}</label>
-                        {{=form.custom.widget.apellido.update(_placeholder="Apellido del tutor industrial")}}
-                        <br>
-                        <label for='no_table_ci'>{{=form.custom.label.ci}} o Pasaporte</label>
-                        {{=form.custom.widget.ci.update(_placeholder="Identificación del tutor industrial")}}
-                        <br>
-                        <i class="fa fa-phone fa-pull-right"></i>
-                        <label for='no_table_telefono'>{{=form.custom.label.telefono}}</label>
-                        {{=form.custom.widget.telefono.update(_placeholder="+582125555555")}}
-                        <br>
-                    </div>
+                    <br>
                 </div>
-                <br>
             </div>
-        </div>
 
-        <div class='col-md-4'>
-            <div class="panel-group">
-                <div class="panel panel-warning">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
-                            <a data-toggle="collapse" href="#password">
-                                <i class="fa fa-asterisk fa-pull-right"></i>
-                                Contraseña y recuperación
-                            </a>
-                        </h3>
+            <div class='col-md-4'>
+                <div class="panel-group">
+                    <div class="panel panel-warning">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                <a data-toggle="collapse" href="#password">
+                                    <i class="fa fa-asterisk fa-pull-right"></i>
+                                    Contraseña y recuperación
+                                </a>
+                            </h3>
+                        </div>
+                        <div id="password" class="panel-collapse collapse in panel-body">
+                            <i class="fa fa-lock fa-pull-right"></i>
+                            <label for='no_table_password'>{{=form.custom.label.password}}</label>
+                            {{=form.custom.widget.password}}
+                            <br>
+                            <label for='no_table_confirm_Password'>{{=form.custom.label.comfirm_Password}}</label>
+                            {{=form.custom.widget.comfirm_Password}}
+                            <br>
+                            <i class="fa fa-unlock-alt fa-pull-right"></i>
+                            <label for='no_table_pregunta_secreta'>{{=form.custom.label.pregunta_secreta}}</label>
+                            {{=form.custom.widget.pregunta_secreta.update(_placeholder="Ej: ¿Cuál es el nombre de tu mascota?")}}
+                            <br>
+                            <label for='no_table_respuesta_pregunta_secreta'>
+                            {{=form.custom.label.respuesta_pregunta_secreta}}
+                            </label>
+                            {{=form.custom.widget.respuesta_pregunta_secreta.update(_placeholder="Ej: Scooby")}}
+                            <br>
+                        </div>
                     </div>
-                    <div id="password" class="panel-collapse collapse in panel-body">
-                        <i class="fa fa-lock fa-pull-right"></i>
-                        <label for='no_table_password'>{{=form.custom.label.password}}</label>
-                        {{=form.custom.widget.password}}
-                        <br>
-                        <label for='no_table_confirm_Password'>{{=form.custom.label.comfirm_Password}}</label>
-                        {{=form.custom.widget.comfirm_Password}}
-                        <br>
-                        <i class="fa fa-unlock-alt fa-pull-right"></i>
-                        <label for='no_table_pregunta_secreta'>{{=form.custom.label.pregunta_secreta}}</label>
-                        {{=form.custom.widget.pregunta_secreta.update(_placeholder="Ej: ¿Cuál es el nombre de tu mascota?")}}
-                        <br>
-                        <label for='no_table_respuesta_pregunta_secreta'>
-                        {{=form.custom.label.respuesta_pregunta_secreta}}
-                        </label>
-                        {{=form.custom.widget.respuesta_pregunta_secreta.update(_placeholder="Ej: Scooby")}}
-                        <br>
+                    <div class="panel panel-warning">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                <a data-toggle="collapse" href="#profesional">
+                                    <i class="fa fa-briefcase fa-pull-right"></i>
+                                    Datos profesionales
+                                </a>
+                            </h3>
+                        </div>
+                        <div id="profesional" class="panel-collapse collapse in panel-body">
+                            <label for='no_table_profesion'>{{=form.custom.label.id_empresa}}</label>
+                            {{=form.custom.widget.id_empresa.update(_placeholder="Ej: Empresas Polar C.A.")}}
+                            <br>
+                            <label for='no_table_profesion'>{{=form.custom.label.profesion}}</label>
+                            {{=form.custom.widget.profesion.update(_placeholder="Ej: Ing. Computación")}}
+                            <br>
+                            <label for='no_table_cargo'>{{=form.custom.label.cargo}}</label>
+                            {{=form.custom.widget.cargo.update(_placeholder="Ej: Administrador de redes")}}
+                            <br>
+                            <label for='no_table_departamento'>{{=form.custom.label.departamento}}</label>
+                            {{=form.custom.widget.departamento.update(_placeholder="Ej: Tecnología de la información")}}
+                            <br>
+                            <label for='no_table_universidad'>{{=form.custom.label.id_universidad}}</label>
+                            {{=form.custom.widget.id_universidad.update(_placeholder="Universidad Simon Bolivar")}}
+                            <br>
+                        </div>
                     </div>
                 </div>
-                <div class="panel panel-warning">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
-                            <a data-toggle="collapse" href="#profesional">
-                                <i class="fa fa-briefcase fa-pull-right"></i>
-                                Datos profesionales
-                            </a>
-                        </h3>
-                    </div>
-                    <div id="profesional" class="panel-collapse collapse in panel-body">
-                        <label for='no_table_profesion'>{{=form.custom.label.id_empresa}}</label>
-                        {{=form.custom.widget.id_empresa.update(_placeholder="Ej: Empresas Polar C.A.")}}
-                        <br>
-                        {{pass}}
-                        <label for='no_table_profesion'>{{=form.custom.label.profesion}}</label>
-                        {{=form.custom.widget.profesion.update(_placeholder="Ej: Ing. Computación")}}
-                        <br>
-                        <label for='no_table_cargo'>{{=form.custom.label.cargo}}</label>
-                        {{=form.custom.widget.cargo.update(_placeholder="Ej: Administrador de redes")}}
-                        <br>
-                        <label for='no_table_departamento'>{{=form.custom.label.departamento}}</label>
-                        {{=form.custom.widget.departamento.update(_placeholder="Ej: Tecnología de la información")}}
-                        <br>
-                        <label for='no_table_universidad'>{{=form.custom.label.id_universidad}}</label>
-                        {{=form.custom.widget.id_universidad.update(_placeholder="Asesoria Juridica")}}
-                        <br>
-                    </div>
-                </div>
+                <br><br><br>
             </div>
-            <br><br><br>
-        </div>
 
-        <div class='col-md-4'>
-            <div class="panel-group">
-                <div class="panel panel-warning">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
-                            <a data-toggle="collapse" href="#location">
-                                <i class="fa fa-location-arrow fa-pull-right"></i>
-                                Ubicación
-                            </a>
-                        </h3>
-                    </div>
-                    <div id="location" class="panel-collapse collapse in panel-body">
-                        <i class="fa fa-globe fa-pull-right"></i>
-                        <label for='no_table_id_pais'>{{=form.custom.label.id_pais}}</label>
-                        {{=form.custom.widget.id_pais}}
-                        <br>
-                        <i class="fa fa-map-o fa-pull-right"></i>
-                        <label for='no_table_id_estado'>{{=form.custom.label.id_estado}}</label>
-                        {{=form.custom.widget.id_estado}}
-                        <br>
-                        <i class="fa fa-map-marker fa-pull-right"></i>
-                        <label for='no_table_direccion'>{{=form.custom.label.direccion}}</label>
-                        {{=form.custom.widget.direccion.update(_placeholder="Ej: Ciudad xxxx, Av. xxxx, Calle xxxx...")}}
-                        <br>
+            <div class='col-md-4'>
+                <div class="panel-group">
+                    <div class="panel panel-warning">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                <a data-toggle="collapse" href="#location">
+                                    <i class="fa fa-location-arrow fa-pull-right"></i>
+                                    Ubicación
+                                </a>
+                            </h3>
+                        </div>
+                        <div id="location" class="panel-collapse collapse in panel-body">
+                            <i class="fa fa-globe fa-pull-right"></i>
+                            <label for='no_table_id_pais'>{{=form.custom.label.id_pais}}</label>
+                            {{=form.custom.widget.id_pais}}
+                            <br>
+                            <i class="fa fa-map-o fa-pull-right"></i>
+                            <label for='no_table_id_estado'>{{=form.custom.label.id_estado}}</label>
+                            {{=form.custom.widget.id_estado}}
+                            <br>
+                            <i class="fa fa-map-marker fa-pull-right"></i>
+                            <label for='no_table_direccion'>{{=form.custom.label.direccion}}</label>
+                            {{=form.custom.widget.direccion.update(_placeholder="Ej: Ciudad xxxx, Av. xxxx, Calle xxxx...")}}
+                            <br>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class='pull-right'>
-            {{=form.custom.submit}}
-            <br><br><br><br>
+                <div class="pull-right">
+                    {{=form.custom.widget.captcha}}
+                    <br>
+                </div>
+            <div class="pull-right">
+                {{=form.custom.submit}}
             </div>
         </div>
+    </div>
     {{=form.custom.end}}
 
 </div>

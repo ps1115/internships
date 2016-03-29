@@ -98,22 +98,26 @@ def login_cas():
                 llave    = clave
             )
 
-            auth.login_bare(usbid,clave)
-            redirect(URL(c='default',f='registrar', vars=dict(usuario=usuario)))
+            # auth.login_bare(usbid,clave)
+            redirect(URL(c='default',f='registrar', vars=dict(usuario=usuario,usbid=usbid)))
 
         else:
             #Como el usuario ya esta registrado, buscamos sus datos y lo logueamos.
             datosUsuario = dbSPE(tablaUsuario.usbid==usbid).select()[0]
             clave        = datosUsuario.llave
 
-            auth.login_bare(usbid,clave)
-
-            #Si el usuario no ha actualizado sus datos
+            # Caso 1: El usuario no ha registrado sus datos
             if verificar_datos(usuario,usbid).isempty():
-                redirect(URL(c='default',f='registrar', vars=dict(usuario=usuario)))
+                redirect(URL(c='default',f='registrar', vars=dict(usuario=usuario,usbid=usbid)))
+            # Caso 2: El usuario no ha verificado su correo
             elif correo_no_verificado(usbid):
-                redirect(URL(c='default',f='verifyEmail'))
+                obtener_correo(usbid)
+                correo_sec = obtener_correo(usbid)
+                redirect(URL(c='default',f='verifyEmail',vars=dict(correo=correo_sec)))
+            # Caso 3: El usuario ha cumplido con los pasos necesarios por lo que
+            # puede iniciar sesion
             else:
+                auth.login_bare(usbid,clave)
                 #Deberiamos redireccionar a un "home" dependiendo del tipo de usuario
                 redirect('index')
 
@@ -146,11 +150,11 @@ def registrar():
 
     if usuario['tipo'] == "Docente":
         #Enviar al registro del profesor
-        pass
+        redirect(URL(c='profesor',f='registrar_profesor', vars=dict(usuario=usuario,usbid=request.vars.usbid)))
     elif usuario['tipo'] == "Administrativo":
         pass
     elif usuario['tipo'] in ["Pregrado","Postgrado"]:
-        redirect(URL(c='estudiante',f='registrar_estudiante', vars=dict(usuario=usuario)))
+        redirect(URL(c='estudiante',f='registrar_estudiante', vars=dict(usuario=usuario,usbid=request.vars.usbid)))
     elif usuario['tipo'] in ["Empleado","Organizacion","Egresado"]:
         pass
 
@@ -167,22 +171,13 @@ def correo_no_verificado(usbid):
 #Reenvia la verificacion del correo
 def resendVerificationEmail():
 
-    correo_usuario = obtener_correo(auth.user.username)
-    correoVerificarSet = dbSPE(dbSPE.correo_Por_Verificar.correo == correo_usuario).select()
+    correoVerificarSet = dbSPE(dbSPE.correo_Por_Verificar.correo == request.vars.correo).select()
 
-    codigoGenerado = correoVerificarSet[0].codigo
+    reenviar_Correo_Verificacion(request.vars.correo)
 
-    if mail:
-        if mail.send(to=[correo_usuario],
-            subject=T('Activacion'),
-            message= 'Codigo De Activacion ' + codigoGenerado):
-                response.flash = 'email sent sucessfully.'
-                resultado = True
-        else:
-            response.flash = 'fail to send email sorry!'
-    else:
-        response.flash = 'Unable to send the email : email parameters not defined'
-    return response.render('default/codigoReenviado.html',message=T("Verificacion de Correo"),vars=dict(correo=correo_usuario))
+    redirect(URL(c='default',f='verifyEmail',
+        vars=dict(correo=request.vars.correo,resend= T("El Correo ha sido reenviado"),
+        message=T("Verificacion de Correo"))))
 
 #Verifica el correo
 def verifyEmail():
@@ -193,7 +188,7 @@ def verifyEmail():
                            )
     form.add_button(T('Send Email Again'), URL(c='default',f='resendVerificationEmail',vars=dict(correo=request.vars.correo)))
 
-    correo_usuario = obtener_correo(auth.user.username)
+    correo_usuario = request.vars.correo
 
     if form.process().accepted:
         # Buscamos el id de la empresa
@@ -205,7 +200,10 @@ def verifyEmail():
             #auth.login_bare(request.vars.correo,contrasena)
             redirect(URL(c='default',f='index'))
 
-    return response.render('default/codigoVerificacion.html',message=T("Verificacion de Correo"),form=form,vars=dict(correo=correo_usuario))
+    return response.render('default/codigoVerificacion.html',
+    message=T("Verificacion de Correo"),
+    resend= request.vars.resend,
+    form=form,vars=dict(correo=correo_usuario))
 
 
 @cache.action()
@@ -225,6 +223,3 @@ def call():
     supports xml, json, xmlrpc, jsonrpc, amfrpc, rss, csv
     """
     return service()
-
-def registrar_profesor():
-    return response.render('default/registrar_profesor.html')

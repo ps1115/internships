@@ -553,9 +553,9 @@ CREATE TABLE IF NOT EXISTS `tutor_industrial` (
     `pregunta_secreta`          varchar(254)    NOT NULL,
     `respuesta_pregunta_secreta`varchar(254)    NOT NULL,
     `id_empresa`                integer		    NOT NULL,
+    `id_universidad`			int(11)			NOT NULL,
     `profesion`                 varchar(50)     NOT NULL,
     `cargo`                     varchar(50)     NOT NULL,
-    `id_universidad`            int(11)         NOT NULL,
     `departamento`              varchar(50)     NOT NULL,
     `direccion`                 varchar(254)    NOT NULL,
     `id_pais`                 	int(2)          DEFAULT NULL,
@@ -716,7 +716,6 @@ CREATE TABLE IF NOT EXISTS `plan_de_trabajo` (
 ALTER TABLE `empresa`
     ADD CONSTRAINT `fk_empresa_id_area_laboral_area_laboral_id` FOREIGN KEY (`id_area_laboral`) REFERENCES `area_laboral` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
-
 --
 -- Filtros para la tabla `actividad`
 --
@@ -847,7 +846,6 @@ ALTER TABLE `curriculum`
 --
 ALTER TABLE `universidad`
     ADD CONSTRAINT `fk_universidad_id_pais_pais_id` FOREIGN KEY (`id_pais`) REFERENCES `pais` (`id`);
-
 
 --
 -- Filtros para la tabla `plan de trabajo

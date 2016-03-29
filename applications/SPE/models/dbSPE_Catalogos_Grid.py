@@ -19,12 +19,6 @@ import datetime
 #                 Field('sede', requires=[IS_NOT_EMPTY(), IS_IN_SET(['Sartenejas','Litoral'], error_message='Sede Inválida')], label="Sede", default='Sartenejas'),
 #                 Field('coordinacion', requires=IS_NOT_EMPTY(), label="Coordinación"))
 
-dbSPE.define_table('departamento',
-                Field('nombre', requires=IS_NOT_EMPTY(), default='', label="Nombre del Departamento"),
-                Field('id_division', requires=IS_NOT_EMPTY(), default='0', label='Identificador de División'),
-                Field('email_dep', requires=IS_EMAIL('Correo Electrónico Inválido'),label='Correo Electrónico del Departamento'),
-                Field('sede', requires=[IS_NOT_EMPTY(), IS_IN_SET(['Sartenejas','Litoral'],error_message='Sede Inválida')], label='Sede', default='Sartenejas'))
-
 # dbSPE.define_table('usuario_profesor',
 #                 Field('usbid_usuario', requires=[IS_NOT_EMPTY(), IS_MATCH('[0-9][0-9]-[0-9]{5}','USBID Inválido')], label='USBID', unique=True),
 #                 Field('dependencia', requires=IS_NOT_EMPTY(), label='Dependencia'),

@@ -134,10 +134,10 @@ def registrar_estudiante():
     usuario =  ast.literal_eval(request.vars['usuario'])
 
     #Llenamos el formulario con el default
-    dbSPE.usuario_estudiante.usbid_usuario.default  = auth.user.username
+    dbSPE.usuario_estudiante.usbid_usuario.default  = request.vars.usbid
+    dbSPE.usuario_estudiante.usbid_usuario.writable  = False
     dbSPE.usuario_estudiante.carrera.requires = IS_IN_DB(dbSPE,dbSPE.carrera,'%(nombre)s',zero="Seleccione", error_message='Carrera Inválida')
     dbSPE.usuario_estudiante.carrera.default  = usuario['carrera']
-
 
     form_estudiante = SQLFORM(
                     dbSPE.usuario_estudiante,
@@ -147,14 +147,10 @@ def registrar_estudiante():
 
     if form_estudiante.process().accepted:
         enviar_Correo_Verificacion(form_estudiante.vars.email_sec)
-        redirect(URL(c='default',f='verifyEmail'))
+        redirect(URL(c='default',f='verifyEmail',vars=dict(correo=form_estudiante.vars.email_sec)))
 
     return dict(message='Por favor actualiza tus datos para continuar',form=form_estudiante)
 
-
-            ##################################################
-            #                  plan_trabajo()                #
-            ##################################################
 def plan_trabajo():
 
     import ast
@@ -168,9 +164,9 @@ def plan_trabajo():
     #Si no los hay, lo creamos
     if ConsultaDatosPlan.isempty():
         dbSPE.plan_de_trabajo.insert(
-            id_estudiante=auth.user.username, 
+            id_estudiante=auth.user.username,
             id_tutor_industrial='77@gmail.com',
-            id_tutor_academico='77', 
+            id_tutor_academico='77',
             codigo_pasantia='PS1110')
         ConsultaDatosPlan = dbSPE(dbSPE.plan_de_trabajo.id_estudiante==auth.user.username)
 
@@ -244,10 +240,10 @@ def plan_trabajo():
             print fases_nombre
             print fases_obj
 
-            dbSPE.fase.insert( 
+            dbSPE.fase.insert(
                 id_plan_de_trab=DatosPlan.id,
-                codigo_pasantia=DatosPlan.codigo_pasantia, 
-                nombre_fase=datos_fase.vars.nombre_fase, 
+                codigo_pasantia=DatosPlan.codigo_pasantia,
+                nombre_fase=datos_fase.vars.nombre_fase,
                 objetivos_especificos=datos_fase.vars.objetivo_fase)
 
     if datos_actividad.process(formname="datos_actividad").accepted:
