@@ -24,9 +24,4 @@ VALUES
 INSERT INTO `pasantiasnuevo`.`estado`
 (`nombre`,`id_pais`)
 VALUES
-('Aragua',1);
-
-INSERT INTO `pasantiasnuevo`.`estado`
-(`nombre`,`id_pais`)
-VALUES
 ('Florida',2);

@@ -12,9 +12,9 @@ response.title = request.application.replace('_',' ').title()
 response.subtitle = ''
 
 ## read more at http://dev.w3.org/html5/markup/meta.name.html
-response.meta.author = 'Your Name <you@example.com>'
-response.meta.description = 'a cool new app'
-response.meta.keywords = 'web2py, python, framework'
+response.meta.author = 'Universidad Simón Bolívar'
+response.meta.description = 'Sistema de Pasantías Empresariales'
+response.meta.keywords = 'pasantías, USB, empresa'
 response.meta.generator = 'Web2py Web Framework'
 
 ## your http://google.com/analytics id
@@ -25,7 +25,7 @@ response.google_analytics_id = None
 #########################################################################
 
 response.menu = [
-    ('Inicio', False, URL(a= 'Empresas',c='default', f='index'), [])
+    (SPAN(' ', _class='fa fa-home fa-lg'), False, URL(a= 'Empresas',c='default', f='index'))
 ]
 
 DEVELOPMENT_MENU = True
@@ -33,13 +33,14 @@ DEVELOPMENT_MENU = True
 # Menu de autenticacion
 
 if auth.is_logged_in():
-    texto_principal = "Bienvenido " + auth.user.first_name
+    texto_principal = auth.user.first_name
 else:
     texto_principal = "Bienvenido"
 
 menu_autenticado = [
     (texto_principal,False, '#',[
-        ("Cerrar Sesion",False,URL('default','logout'))
+        ("Su Perfil", False, '#'),
+        (SPAN(' Cerrar Sesión', _class='fa fa-sign-out'), False, URL('default','logout'))
     ])
 ]
 #########################################################################
@@ -58,20 +59,20 @@ def _():
         if auth.user.user_Type == 'empresa':
 
             response.menu += [
-                ('Empresa',False,"#",[
-                    ('¿Qué puede obtener tu empresa?',False,"#"),
-                    ('Solicitudes de pasantes',False,"#"),
-                    ('Registrar tutor industrial',False,URL(c='empresa', f='registrar_tutor_industrial')),
-                    ('Gestionar Registro Empresarial',False,"#")
-                    ])
+                ('Solicitudes de pasantes',False,"#",[
+                    ('Agregar solicitud', False, "#")
+                    ]),
+                ('Tutores Industriales',False,"#",[
+                    ('Sus tutores industriales', False, "#"),
+                    ('Registrar tutor industrial', False, URL(c='empresa', f='registrar_tutor_industrial')),
+                    ]),
+                ('Reportes', False, "#")
             ]
         # Caso 2: El usuario es un tutor industrial
         elif auth.user.user_Type == 'tutor_industrial':
             response.menu += [
-                ('Tutor Industrial',False,"#",[
-                    ('¿Qué es un tutor industrial?',False,"#"),
-                    ('Consultar Pasantias',False,"#")
-                    ])
+                ('Solicitudes de pasantes',False,"#"),
+                ('Pasantías',False,"#"),
             ]
     # Entradas del menu si el usuario NO esta autenticado
     else:

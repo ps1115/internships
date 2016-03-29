@@ -73,7 +73,6 @@ def login_cas():
         #buscandolo en la tabla de usuario.
         primeravez = dbSPE(tablaUsuario.usbid==usbid)
 
-        print primeravez
         if primeravez.isempty():
             #Si es primera vez que ingresa al sistema
             clave   = random_key()         #Se genera una clave automatica
@@ -99,20 +98,26 @@ def login_cas():
                 llave    = clave
             )
 
-            auth.login_bare(usbid,clave)
-            redirect(URL(c='default',f='registrar', vars=dict(usuario=usuario)))
+            # auth.login_bare(usbid,clave)
+            redirect(URL(c='default',f='registrar', vars=dict(usuario=usuario,usbid=usbid)))
 
         else:
             #Como el usuario ya esta registrado, buscamos sus datos y lo logueamos.
             datosUsuario = dbSPE(tablaUsuario.usbid==usbid).select()[0]
             clave        = datosUsuario.llave
 
-            auth.login_bare(usbid,clave)
-
-            #Si el usuario no ha actualizado sus datos
-            if verificar_datos(usuario).isempty():
-                redirect(URL(c='default',f='registrar', vars=dict(usuario=usuario)))
+            # Caso 1: El usuario no ha registrado sus datos
+            if verificar_datos(usuario,usbid).isempty():
+                redirect(URL(c='default',f='registrar', vars=dict(usuario=usuario,usbid=usbid)))
+            # Caso 2: El usuario no ha verificado su correo
+            elif correo_no_verificado(usbid):
+                obtener_correo(usbid)
+                correo_sec = obtener_correo(usbid)
+                redirect(URL(c='default',f='verifyEmail',vars=dict(correo=correo_sec)))
+            # Caso 3: El usuario ha cumplido con los pasos necesarios por lo que
+            # puede iniciar sesion
             else:
+                auth.login_bare(usbid,clave)
                 #Deberiamos redireccionar a un "home" dependiendo del tipo de usuario
                 redirect('index')
 
@@ -122,10 +127,9 @@ def logout():
     url = 'http://secure.dst.usb.ve/logout'
     auth.logout(next=url)
 
-def verificar_datos(usuario):
+def verificar_datos(usuario,usbid):
 
     consulta = None
-    usbid = usuario.get('usbid')
 
     if usuario['tipo'] == "Docente":
         consulta = dbSPE(dbSPE.usuario_profesor.usbid_usuario==usbid)
@@ -136,27 +140,72 @@ def verificar_datos(usuario):
     elif usuario['tipo'] in ["Empleado","Organizacion","Egresado"]:
         pass
 
-    print "consulta " + str(consulta)
     return consulta
 
 def registrar():
-        #Aqui estan las variables obtenidas por el CAS
-        usuario = request.vars['usuario']
-        print(auth.is_logged_in())
 
-        #temporal
-        return dict(message=T(usuario))
+    import ast
+    #Aqui estan las variables obtenidas por el CAS
+    usuario =  ast.literal_eval(request.vars['usuario'])
 
-        if usuario['tipo'] == "Docente":
-            #Codigo para registrar docente
-            pass
-        elif usuario['tipo'] == "Administrativo":
-            pass
-        elif usuario['tipo'] in ["Pregrado","Postgrado"]:
-            #Codigo para registar usuario
-            pass
-        elif usuario['tipo'] in ["Empleado","Organizacion","Egresado"]:
-            pass
+    if usuario['tipo'] == "Docente":
+        #Enviar al registro del profesor
+        redirect(URL(c='profesor',f='registrar_profesor', vars=dict(usuario=usuario,usbid=request.vars.usbid)))
+    elif usuario['tipo'] == "Administrativo":
+        pass
+    elif usuario['tipo'] in ["Pregrado","Postgrado"]:
+        #redirect(URL(c='profesor',f='registrar_profesor', vars=dict(usuario=usuario,usbid=request.vars.usbid)))
+        redirect(URL(c='estudiante',f='registrar_estudiante', vars=dict(usuario=usuario,usbid=request.vars.usbid)))
+    elif usuario['tipo'] in ["Empleado","Organizacion","Egresado"]:
+        pass
+
+    return dict(message=usuario)
+
+#Comprueba si el usuario no ha verificado su correo
+def correo_no_verificado(usbid):
+
+    correoUsuario = obtener_correo(usbid)
+    buscarCorreo  = dbSPE(dbSPE.correo_Por_Verificar.correo==correoUsuario)
+
+    return not(buscarCorreo.isempty())
+
+#Reenvia la verificacion del correo
+def resendVerificationEmail():
+
+    correoVerificarSet = dbSPE(dbSPE.correo_Por_Verificar.correo == request.vars.correo).select()
+
+    reenviar_Correo_Verificacion(request.vars.correo)
+
+    redirect(URL(c='default',f='verifyEmail',
+        vars=dict(correo=request.vars.correo,resend= T("El Correo ha sido reenviado"),
+        message=T("Verificacion de Correo"))))
+
+#Verifica el correo
+def verifyEmail():
+    form = SQLFORM.factory(
+        Field('codigo', label=T('Codigo De Verificacion'), required=True,
+                requires=IS_NOT_EMPTY(error_message=T('Este campo es necesario'))),
+                formstyle='bootstrap3_stacked'
+                           )
+    form.add_button(T('Send Email Again'), URL(c='default',f='resendVerificationEmail',vars=dict(correo=request.vars.correo)))
+
+    correo_usuario = request.vars.correo
+
+    if form.process().accepted:
+        # Buscamos el id de la empresa
+        correoVerificarSet = dbSPE(dbSPE.correo_Por_Verificar.correo == correo_usuario).select()[0]
+        if correoVerificarSet.codigo != request.vars.codigo:
+            response.flash = T("Codigo incorrecto")
+        else:
+            dbSPE(dbSPE.correo_Por_Verificar.correo == correo_usuario).delete()
+            #auth.login_bare(request.vars.correo,contrasena)
+            redirect(URL(c='default',f='index'))
+
+    return response.render('default/codigoVerificacion.html',
+    message=T("Verificacion de Correo"),
+    resend= request.vars.resend,
+    form=form,vars=dict(correo=correo_usuario))
+
 
 @cache.action()
 def download():
@@ -175,6 +224,3 @@ def call():
     supports xml, json, xmlrpc, jsonrpc, amfrpc, rss, csv
     """
     return service()
-
-def registrar_profesor():
-    return response.render('default/registrar_profesor.html')

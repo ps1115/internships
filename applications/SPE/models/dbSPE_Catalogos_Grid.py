@@ -19,12 +19,6 @@ import datetime
 #                 Field('sede', requires=[IS_NOT_EMPTY(), IS_IN_SET(['Sartenejas','Litoral'], error_message='Sede Inválida')], label="Sede", default='Sartenejas'),
 #                 Field('coordinacion', requires=IS_NOT_EMPTY(), label="Coordinación"))
 
-dbSPE.define_table('departamento',
-                Field('nombre', requires=IS_NOT_EMPTY(), default='', label="Nombre del Departamento"),
-                Field('id_division', requires=IS_NOT_EMPTY(), default='0', label='Identificador de División'),
-                Field('email_dep', requires=IS_EMAIL('Correo Electrónico Inválido'),label='Correo Electrónico del Departamento'),
-                Field('sede', requires=[IS_NOT_EMPTY(), IS_IN_SET(['Sartenejas','Litoral'],error_message='Sede Inválida')], label='Sede', default='Sartenejas'))
-
 # dbSPE.define_table('usuario_profesor',
 #                 Field('usbid_usuario', requires=[IS_NOT_EMPTY(), IS_MATCH('[0-9][0-9]-[0-9]{5}','USBID Inválido')], label='USBID', unique=True),
 #                 Field('dependencia', requires=IS_NOT_EMPTY(), label='Dependencia'),
@@ -36,7 +30,7 @@ dbSPE.define_table('departamento',
 #                 Field('activo', requires=[IS_NOT_EMPTY(), IS_IN_SET(['0','1'],error_message='Valor no Permitido')], default='1', label='Activo'))
 
 dbSPE.define_table('empresa',
-                Field('loglog', requires=IS_NOT_EMPTY(), label='Usuario', unique=True),
+                Field('log', requires=IS_NOT_EMPTY(), label='Usuario', unique=True),
                 Field('password', requires=IS_NOT_EMPTY(), label='Clave', type='password'),
                 Field('pregunta_secreta', requires=IS_NOT_EMPTY(), label='Pregunta Secreta'),
                 Field('respuesta_pregunta_secreta', requires=IS_NOT_EMPTY(), label='Respuesta a Pregunta Secreta'),
@@ -52,7 +46,7 @@ dbSPE.define_table('empresa',
                 Field('ultimaModificacion', type='datetime',requires=[IS_NOT_EMPTY(),IS_DATETIME(format='%Y-%m-%d %H:%M:%S')], readable=False, writable=False, default=datetime.datetime.now()))
 
 
-
+"""
 dbSPE.define_table("evento"
                ,Field("codigo", type="id", readable=False, writable=False)
                ,Field("nombre", label="Nombre del Evento", requires=IS_NOT_EMPTY(),unique=True)
@@ -68,26 +62,39 @@ dbSPE.define_table("sub_evento"
                ,Field("nombre_sub_evento", label="Nombre del Sub Evento", requires=IS_NOT_EMPTY())
                ,Field("fecha_inicio", label="Fecha de Inicio", type="date", requires=[IS_NOT_EMPTY(),IS_DATE(format='%Y/%m/%d')])
                ,Field("fecha_fin", label="Fecha de Finalización", type="date", requires=[IS_NOT_EMPTY(),IS_DATE(format='%Y/%m/%d')]))
+"""
 
+dbSPE.define_table("periodo"
+                  ,Field('nombre',label="Nombre del Periodo", notnull=True, unique=True)
+                  ,Field('fecha_inicio', label="Fecha de Inicio", type='date',requires=[IS_NOT_EMPTY(),IS_DATE(format='%Y/%m/%d')])
+                  ,Field('fecha_fin', label="Fecha de Fin", type='date',requires=[IS_NOT_EMPTY(),IS_DATE(format='%Y/%m/%d')])
+                  ,Field('periodo_activo', represent=lambda x, row: (dict({1:"Activo",0:"No Activo"}))[x],label="Situación", requires=IS_IN_SET({1:'activo',0:'no activo'})))
 
 dbSPE.define_table("semana_muerta"
-               ,Field("nombre_supra_evento_afectado", label="Nombre de Evento", type="string",  requires=IS_IN_DB(dbSPE,'sub_evento.nombre_supra_evento', error_message='Evento no Existe'))
-               ,Field("nombre_sub_evento_afectado", label="Nombre de Sub Evento", type="string",  requires=IS_IN_DB(dbSPE,'sub_evento.nombre_sub_evento', error_message='Subevento no Existe'))
+               ,Field("codigo_periodo_afectado", represent=lambda x, row: (dbSPE(dbSPE.periodo.id==x)).select().first().nombre,label="Nombre de Periodo", type="integer",  requires=IS_IN_DB(dbSPE,'periodo.id', '%(nombre)s',error_message='Periodo no Existe'), notnull=True)
                ,Field("numero_semana", type="integer",label="Numero de Semana", requires=IS_NOT_EMPTY())
                ,Field("fecha_ini", label="Fecha de Inicio", type="date", requires=[IS_NOT_EMPTY(),IS_DATE(format='%Y/%m/%d')])
                ,Field("fecha_fini", label="Fecha de Finalización", type="date", requires=[IS_NOT_EMPTY(),IS_DATE(format='%Y/%m/%d')]))
-
-
+"""
+dbSPE.define_table('usuario'
+                  ,Field('usbid')
+                  ,Field('nombre')
+                  ,Field('apellido')
+                  ,Field('ci')
+                  ,Field('tipo')
+                  ,Field('foto')
+                  ,Field('llave'))
+"""
 dbSPE.define_table("rol_sistema"
-               ,Field("usbid", label="USBID", requires=[IS_NOT_EMPTY(),IS_MATCH('[0-9][0-9]-[0-9]{5}','USBID Inválido')], unique=True)
+               ,Field("usbid", label="USBID", requires=IS_IN_DB(dbSPE,'usuario.usbid', '%(nombre)s',error_message='Division no Existe'), unique=True)
                ,Field("nombre", label="Nombre del Usuario", requires=IS_NOT_EMPTY())
                ,Field("apellido", label="Apellido del Usuario",requires=IS_NOT_EMPTY())
                ,Field("rol", label="Nombre del Rol", requires=IS_NOT_EMPTY(), unique=True)
-               ,Field("sede", label="Sede", requires=[IS_NOT_EMPTY(), IS_IN_SET(['Sartenejas','Litoral'],error_message='Sede Inválida')], default="Sartenejas"))
+               ,Field("sede", label="Sede", requires=IS_IN_SET(['Sartenejas','Litoral'],error_message='Sede Inválida'),notnull=True, default="Sartenejas"))
 
 dbSPE.define_table("calculo_pago"
-               , Field("id_categoria",label="Categoría", requires=IS_NOT_EMPTY(),type="integer")
-               , Field("id_tipo_pasantia",label="Tipo de Pasantía",requires=IS_NOT_EMPTY())
-               , Field("id_pais",label="País",requires=IS_NOT_EMPTY(),type="integer")
+               , Field("id_categoria",represent=lambda x, row: (dbSPE(dbSPE.categoria.id==x)).select().first().nombre,label="Categoría", requires=IS_IN_DB(dbSPE,'categoria.id', '%(nombre)s',error_message='Categoria no existe'),type="integer")
+               , Field("id_tipo_pasantia",represent=lambda x, row: (dbSPE(dbSPE.tipo_pasantia.codigo==x)).select().first().nombre,label="Tipo de Pasantía",requires=IS_IN_DB(dbSPE,'tipo_pasantia.codigo', '%(nombre)s',error_message='Tipo de Pasantía no existe'), notnull=True)
+               , Field("id_pais",represent=lambda x, row: (dbSPE(dbSPE.pais.id==x)).select().first().nombre,label="País",requires=IS_IN_DB(dbSPE,'pais.id', '%(nombre)s',error_message='País no existe'), notnull=True,type="reference pais.id")
                , Field("monto",requires=IS_NOT_EMPTY(),type="double", label="Monto de Pago")
                ,Field("fecha", label="Fecha", type="date",requires=[IS_NOT_EMPTY(),IS_DATE(format='%Y/%m/%d')]))

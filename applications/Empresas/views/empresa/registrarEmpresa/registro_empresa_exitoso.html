@@ -1,17 +1,13 @@
 {{('message' in globals())}}
 {{extend 'layout.html'}}
 
-<head>
-    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
-</head>
-
 {{if 'message' in globals():}}
 <p class='title'>{{=message}}</p>
 <div class='content'>
     <div class="row">
-        <div class="col-xs-4">
+        <div class="col-md-4">
             <div class="panel-group" id="accordionTwo">
-                <div class="panel panel-default">
+                <div class="panel panel-warning">
                     <div class="panel-heading">
                         <h3 class="panel-title">
                             <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionTwo" href="#collapseFour">
@@ -23,6 +19,15 @@
                         <div class="list-group">
                             <p class="list-group-item">Nombre : {{=nombre}} </p>
                             <p class="list-group-item">Login : {{=log}} </p>
+                            {{if 'area_laboral':}}
+                                <p class="list-group-item">Area Laboral : {{=area_laboral}} </p>
+                            {{pass}}
+                            {{if 'pais':}}
+                                <p class="list-group-item">Pais : {{=pais}} </p>
+                            {{pass}}
+                            {{if 'estado':}}
+                                <p class="list-group-item">Estado : {{=estado}} </p>
+                            {{pass}}
                             {{if 'telefono':}}
                                 <p class="list-group-item">Teléfono : {{=telefono}} </p>
                             {{pass}}
@@ -41,7 +46,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xs-4">
+        <div class="col-md-4">
             <br></br>
             <h3 align="center">{{=result}} <i class="fa fa-thumbs-o-up"></i></h3>
             <br></br>
@@ -51,9 +56,9 @@
                 <i class="fa fa-envelope-o fa-5x"></i>
             </p>
         </div>
-        <div class="col-xs-4" align="left">
+        <div class="col-md-4" align="left">
             <div class="panel-group" id="accordionTwo2">
-                <div class="panel panel-default">
+                <div class="panel panel-warning">
                     <div class="panel-heading">
                         <h3 class="panel-title">
                             <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionTwo2" href="#collapseFour2">

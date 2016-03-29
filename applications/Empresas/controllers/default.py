@@ -34,7 +34,6 @@ def user():
     return dict(form=auth())
 
 def login():
-
     formulario_login = SQLFORM.factory(
                             Field('login', label=T('Usuario o Correo Electronico'), required=True,
                                     requires=[IS_MATCH('^[a-zA-Z0-9.@_\\-]',error_message=T('Usuario o correo invalido.'))]),
@@ -43,13 +42,58 @@ def login():
                            formstyle='bootstrap3_stacked'
                            )
 
-
     if formulario_login.process(onvalidation=validar_credenciales).accepted:
-        auth.login_bare(request.vars.login,request.vars.password)
-        redirect(URL(c='default',f='home'))
+        # Buscamos el id de la empresa
+        correoVerificarSet = dbSPE(dbSPE.correo_Por_Verificar.correo == request.vars.login).select()
+        if correoVerificarSet:
+            redirect(URL(c='default',f='verifyEmail',vars=dict(correo=request.vars.login)))
+        else:
+            auth.login_bare(request.vars.login,request.vars.password)
+            redirect(URL(c='default',f='home'))
+            response.flash = T("Inicio Exitoso")
     else:
         response.flash = T("Usuario o Contraseña invalida.")
     return formulario_login
+
+def resendVerificationEmail():
+
+    correoVerificarSet = dbSPE(dbSPE.correo_Por_Verificar.correo == request.vars.correo).select()
+
+    reenviar_Correo_Verificacion(request.vars.correo)
+
+    redirect(URL(c='default',f='verifyEmail',
+        vars=dict(correo=request.vars.correo,resend= T("El Correo ha sido reenviado"),
+        message=T("Verificacion de Correo"))))
+
+def verifyEmail():
+    form = SQLFORM.factory(
+        Field('codigo', label=T('Codigo De Verificacion'), required=True,
+                requires=IS_NOT_EMPTY(error_message=T('Este campo es necesario'))),
+                formstyle='bootstrap3_stacked'
+                           )
+
+    form.add_button(T('Send Email Again'), URL(c='default',f='resendVerificationEmail'
+        ,vars=dict(correo=request.vars.correo)))
+
+    contrasenaSet = dbSPE(dbSPE.empresa.log == request.vars.correo).select()
+    # Si no se encuentra en la tabla de empresas, deben estar en la tabla de correo
+    if not (contrasenaSet):
+        contrasenaSet = dbSPE(dbSPE.tutor_industrial.email == request.vars.correo).select()
+    contrasena = contrasenaSet[0].password
+
+    if form.process().accepted:
+        # Buscamos el id de la empresa
+        correoVerificarSet = dbSPE(dbSPE.correo_Por_Verificar.correo == request.vars.correo).select()
+        if correoVerificarSet[0].codigo != request.vars.codigo:
+            response.flash = T("Codigo incorrecto")
+        else:
+            dbSPE(dbSPE.correo_Por_Verificar.correo == request.vars.correo).delete()
+            auth.login_bare(request.vars.correo,contrasena)
+            redirect(URL(c='default',f='home'))
+    return response.render('default/codigoVerificacion.html',
+        message=T("Verificacion de Correo"),resend= request.vars.resend,
+        form=form,vars=dict(correo=request.vars.login))
+
 
 def validar_credenciales(form):
     #Si es empresa, busco en la tabla por login
@@ -72,7 +116,6 @@ def logout():
     auth.logout(next=url)
 
 def home():
-    response.flash = T("Inicio Exitoso")
     return response.render('default/home.html')
 
 @cache.action()
