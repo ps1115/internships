@@ -174,3 +174,25 @@ def retirar_pasantia():
             response.flash = 'Error'
 
     return dict(form=form)
+
+def permiso_evaluacion():
+    form = SQLFORM.factory(
+        Field('defensa', label='Fecha de la defensa', required=True, requires=IS_DATE(format=T('%d-%m-%Y'), error_message='Formato: dd-mm-yyyy')),
+        Field('justificacion', label='Justificacion', required=True, requires=IS_LENGTH(minsize=1, error_message='no puede estar vacio')),
+        Field('fechas', label='Fechas propuestas', type='text')
+        )
+
+    if form.process().accepted:
+        dbSPE.permiso.insert(
+            fecha = request.now,
+            codigo_seguridad = random_key(),
+            tipo_permiso = 'evaluacion',
+            fecha_propuesta = form.vars.defensa,
+            justificacion = form.vars.justificacion,
+            fechas_propuestas = form.vars.fechas
+            )
+        response.flash = 'Permiso solicitado'
+    elif form.errors:
+        response.flash = 'Error'
+
+    return dict(form=form)
