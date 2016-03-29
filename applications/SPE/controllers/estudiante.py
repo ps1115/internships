@@ -163,7 +163,7 @@ def plan_trabajo():
 
     #Si no los hay, lo creamos
     if ConsultaDatosPlan.isempty():
-        dbSPE.plan_de_trabajo.insert(
+        dbSPE.plan_de_trabajo.update_or_insert(
             id_estudiante=auth.user.username,
             id_tutor_industrial='77@gmail.com',
             id_tutor_academico='77',
@@ -180,18 +180,22 @@ def plan_trabajo():
     if ConsultaDatosActividad.isempty():
         print "Es vacio"
         actividad = []
-        duracion = []
+        inicio = []
+        fin = []
     else:
         print "No es vacio"
         DatosActividad = ConsultaDatosActividad.select()[0]
-        if DatosActividad.descripcion == None and DatosActividad.tiempo_estimado == None:
+        if DatosActividad.descripcion == None and DatosActividad.semana_inicio== None and DatosActividad.semana_fin== None:
             actividad = []
-            duracion = []
+            inicio = []
+            fin = []
         else:
             actividad = ast.literal_eval(DatosActividad.descripcion)
             actividad.sort()
-            duracion = ast.literal_eval(DatosActividad.tiempo_estimado)
-            duracion.sort()
+            inicio = ast.literal_eval(DatosActividad.semana_inicio)
+            inicio.sort()
+            fin = ast.literal_eval(DatosActividad.semana_fin)
+            fin.sort()
 
 
     ConsultaDatosFase = dbSPE(dbSPE.fase.id_plan_de_trab==DatosPlan.id)
@@ -225,8 +229,10 @@ def plan_trabajo():
     datos_actividad = SQLFORM.factory(
         Field('descripcion_actividad' ,label='Descripción de la actividad',
                 required=True, default = 'Descripción 1'),
-        Field('duracion_actividad' ,label='Duración de la actividad',required=True,
-                default = '1 semana'),
+        Field('sem_inicio' ,label='Semana de inicio de la actividad',required=True,
+                default = 'semana 1'),
+        Field('sem_fin' ,label='Semana final de la actividad',required=True,
+                default = 'semana 1'),
         formstyle='bootstrap3_stacked',
         submit_button=T('AGREGAR ACTIVIDAD')
     )
@@ -240,7 +246,7 @@ def plan_trabajo():
             print fases_nombre
             print fases_obj
 
-            dbSPE.fase.insert(
+            dbSPE.fase.update_or_insert(
                 id_plan_de_trab=DatosPlan.id,
                 codigo_pasantia=DatosPlan.codigo_pasantia,
                 nombre_fase=datos_fase.vars.nombre_fase,
@@ -249,19 +255,33 @@ def plan_trabajo():
     if datos_actividad.process(formname="datos_actividad").accepted:
         print "."
     #     #Insertamos la actividad.
-        if (datos_actividad.vars.descripcion_actividad  != '') and (datos_actividad.vars.duracion_actividad  != ''):
+        if ((datos_actividad.vars.descripcion_actividad  != '') and (datos_actividad.vars.sem_inicio  != '')
+        and (datos_actividad.vars.sem_fin  != '')):
             actividad.append(datos_actividad.vars.descripcion_actividad)
-            duracion.append(datos_actividad.vars.duracion_actividad)
-            print duracion
+            inicio.append(datos_actividad.vars.sem_inicio)
+            fin.append(datos_actividad.vars.sem_fin)
+            print inicio
+            print fin
             print actividad
-            # ConsultaDatosActividad.update(descripcion=str(actividad))
+            ConsultaDatosActividad.update(descripcion=str(actividad))
+            ConsultaDatosActividad.update(semana_inicio=str(inicio))
+            ConsultaDatosActividad.update(semana_fin=str(fin))
+            dbSPE.actividad.update_or_insert(
+                codigo_fase=DatosFase.codigo,
+                descripcion=datos_actividad.vars.descripcion_actividad,
+                semana_inicio=datos_actividad.vars.sem_inicio,
+                semana_fin=datos_actividad.vars.sem_fin,
+                id_plan_de_trab=DatosPlan.id)
 
     return dict(message="Plan de Trabajo",
                 form1=datos_fase,
                 form2=datos_actividad,
-                actividad=actividad)
+                actividad=actividad,
+                inicio=inicio,
+                fin=fin,
+                fases_nombre=fases_nombre,
+                fases_obj=fases_obj)
 
-    response.flash = T("¡Bienvenido!")
 
             ##################################################
             #              llenar_curriculum()               #
