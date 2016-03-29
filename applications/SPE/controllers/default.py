@@ -10,6 +10,13 @@
 
 from usbutils import get_ldap_data, random_key
 
+def reroute():
+    """
+    Funcion utilizada para que nos lleve al index aunque estemos en la pagina
+    por defecto de web2py
+    """
+    redirect(URL('index'))
+
 def index():
     """
     example action using the internationalization operator T and flash
@@ -113,7 +120,7 @@ def login_cas():
             elif correo_no_verificado(usbid):
                 obtener_correo(usbid)
                 correo_sec = obtener_correo(usbid)
-                redirect(URL(c='default',f='verifyEmail',vars=dict(correo=correo_sec)))
+                redirect(URL(c='default',f='verifyEmail',vars=dict(usbid=usbid,correo=correo_sec)))
             # Caso 3: El usuario ha cumplido con los pasos necesarios por lo que
             # puede iniciar sesion
             else:
@@ -177,8 +184,9 @@ def resendVerificationEmail():
     reenviar_Correo_Verificacion(request.vars.correo)
 
     redirect(URL(c='default',f='verifyEmail',
-        vars=dict(correo=request.vars.correo,resend= T("El Correo ha sido reenviado"),
-        message=T("Verificacion de Correo"))))
+        vars=dict(usbid=request.vars.usbid,correo=request.vars.correo,
+            resend= T("El Correo ha sido reenviado"),
+            message=T("Verificacion de Correo"))))
 
 #Verifica el correo
 def verifyEmail():
@@ -187,7 +195,8 @@ def verifyEmail():
                 requires=IS_NOT_EMPTY(error_message=T('Este campo es necesario'))),
                 formstyle='bootstrap3_stacked'
                            )
-    form.add_button(T('Send Email Again'), URL(c='default',f='resendVerificationEmail',vars=dict(correo=request.vars.correo)))
+    form.add_button(T('Send Email Again'), URL(c='default',f='resendVerificationEmail',
+        vars=dict(usbid=request.vars.usbid,correo=request.vars.correo)))
 
     correo_usuario = request.vars.correo
 
@@ -198,13 +207,14 @@ def verifyEmail():
             response.flash = T("Codigo incorrecto")
         else:
             dbSPE(dbSPE.correo_Por_Verificar.correo == correo_usuario).delete()
-            #auth.login_bare(request.vars.correo,contrasena)
+            usuarioUSB = dbSPE(dbSPE.usuario.usbid==request.vars.usbid).select()[0]
+            auth.login_bare(request.vars.usbid,usuarioUSB.llave)
             redirect(URL(c='default',f='index'))
 
     return response.render('default/codigoVerificacion.html',
     message=T("Verificacion de Correo"),
     resend= request.vars.resend,
-    form=form,vars=dict(correo=correo_usuario))
+    form=form,vars=dict(usbid=request.vars.usbid,correo=correo_usuario))
 
 
 @cache.action()
