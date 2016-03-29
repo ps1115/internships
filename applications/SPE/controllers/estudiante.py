@@ -191,11 +191,8 @@ def plan_trabajo():
             fin = []
         else:
             actividad = ast.literal_eval(DatosActividad.descripcion)
-            actividad.sort()
             inicio = ast.literal_eval(DatosActividad.semana_inicio)
-            inicio.sort()
             fin = ast.literal_eval(DatosActividad.semana_fin)
-            fin.sort()
 
 
     ConsultaDatosFase = dbSPE(dbSPE.fase.id_plan_de_trab==DatosPlan.id)
@@ -207,14 +204,12 @@ def plan_trabajo():
     else:
         print "No es vacio fase"
         DatosFase = ConsultaDatosFase.select()[0]
-        if DatosFase.nombre_fase == None and DatosActividad.objetivos_especificos == None:
-            fases_nombre = []
-            fases_obj    = []
-        else:
-            fases_nombre = ast.literal_eval(DatosFase.nombre_fase)
-            fases_nombre.sort()
-            fases_obj = ast.literal_eval(DatosActividad.objetivos_especificos)
-            fases_obj.sort()
+        # if DatosFase.nombre_fase == None and DatosActividad.objetivos_especificos == None:
+        #     fases_nombre = []
+        #     fases_obj    = []
+        # else:
+        fases_nombre = DatosFase.nombre_fase
+        fases_obj    = DatosFase.objetivos_especificos
 
     #Generamos el SQLFORM
     datos_fase = SQLFORM.factory(
@@ -227,6 +222,9 @@ def plan_trabajo():
     )
 
     datos_actividad = SQLFORM.factory(
+        Field('seleccione_fase',label='Seleccione una fase',
+                        requires=IS_IN_DB(dbSPE(dbSPE.fase.id_plan_de_trab == DatosPlan.id),dbSPE.fase,
+                        '%(nombre_fase)s',zero="Seleccione")),
         Field('descripcion_actividad' ,label='Descripción de la actividad',
                 required=True, default = 'Descripción 1'),
         Field('sem_inicio' ,label='Semana de inicio de la actividad',required=True,
@@ -241,25 +239,25 @@ def plan_trabajo():
         print "."
     #     #Insertamos la fase.
         if (datos_fase.vars.nombre_fase  != '') and (datos_fase.vars.objetivo_fase  != ''):
-            fases_nombre.append(datos_fase.vars.nombre_fase)
-            fases_obj.append(datos_fase.vars.objetivo_fase)
+            fases_nombre = datos_fase.vars.nombre_fase
+            fases_obj = datos_fase.vars.objetivo_fase
             print fases_nombre
             print fases_obj
 
             dbSPE.fase.update_or_insert(
-                id_plan_de_trab=DatosPlan.id,
-                codigo_pasantia=DatosPlan.codigo_pasantia,
-                nombre_fase=datos_fase.vars.nombre_fase,
-                objetivos_especificos=datos_fase.vars.objetivo_fase)
+                id_plan_de_trab = DatosPlan.id,
+                codigo_pasantia = DatosPlan.codigo_pasantia,
+                nombre_fase     = datos_fase.vars.nombre_fase,
+                objetivos_especificos = datos_fase.vars.objetivo_fase)
 
     if datos_actividad.process(formname="datos_actividad").accepted:
         print "."
     #     #Insertamos la actividad.
         if ((datos_actividad.vars.descripcion_actividad  != '') and (datos_actividad.vars.sem_inicio  != '')
         and (datos_actividad.vars.sem_fin  != '')):
-            actividad.append(datos_actividad.vars.descripcion_actividad)
-            inicio.append(datos_actividad.vars.sem_inicio)
-            fin.append(datos_actividad.vars.sem_fin)
+            actividad = datos_actividad.vars.descripcion_actividad
+            inicio = datos_actividad.vars.sem_inicio
+            fin = datos_actividad.vars.sem_fin
             print inicio
             print fin
             print actividad
