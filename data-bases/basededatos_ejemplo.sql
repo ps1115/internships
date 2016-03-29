@@ -112,6 +112,8 @@ VALUES
 'cdlais@usb.ve',
 'Sartenejas');
 
+-- Coordinaciones
+
 INSERT INTO `pasantiasnuevo`.`coordinacion`
 (`nombre`,
 `usbid`,
@@ -121,6 +123,7 @@ VALUES
 'coord-comp@usb.ve',
 'Sartenejas');
 
+-- Carreras
 
 INSERT INTO `pasantiasnuevo`.`carrera`
 (`codigo`,
@@ -134,4 +137,3 @@ VALUES
 'Larga',
 'Sartenejas',
 '1');
-

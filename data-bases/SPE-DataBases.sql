@@ -476,7 +476,6 @@ CREATE TABLE IF NOT EXISTS `solicitud_pasante` (
 
 -- --------------------------------------------------------
 
---
 -- Semanas Muertas en un evento
 --
 
