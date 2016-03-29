@@ -94,13 +94,15 @@ def especificar_configuraciones():
     return dict()
 
 def roles():
-    grid = SQLFORM.grid(dbSPE.rol_sistema,user_signature=False)
+    grid = SQLFORM.grid(dbSPE.rol_sistema,user_signature=False, csv=False)
     return grid
 
+#SQLFORM.smartgrid(db.parent,linked_tables=['child'])
 def montos():
-    grid = SQLFORM.grid(dbSPE.calculo_pago, deletable=False, editable=False, user_signature=False)
+    grid = SQLFORM.grid(dbSPE.calculo_pago, csv=False, deletable=False, user_signature=False)
     return grid
 
+"""
 def eventos():
     grid = SQLFORM.grid(dbSPE.evento,user_signature=False,
                         deletable=False,
@@ -113,6 +115,13 @@ def sub_evento():
         ,deletable=False
         ,csv=False
         )
+    return grid
+"""
+
+def periodos():
+    grid = SQLFORM.grid(dbSPE.periodo,user_signature=False,
+                        deletable=False,
+                       csv=False)
     return grid
 
 def semana_muerta():

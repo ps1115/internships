@@ -15,6 +15,10 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
 
+DROP SCHEMA IF EXISTS pasantiasNuevo;
+CREATE SCHEMA pasantiasNuevo;
+USE pasantiasNuevo;
+
 --
 -- Base de datos: `pasantiasNuevo`
 --
@@ -35,7 +39,8 @@ CREATE TABLE IF NOT EXISTS `actividad` (
     PRIMARY KEY (`id`),
 	KEY `fk_actividad_codigo_fase_fase_codigo` (`codigo_fase`),
 	KEY `fk_actividad_id_plan_de_trab_plan_de_trabajo_id` (`id_plan_de_trab`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=103942 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
 
 
 -- --------------------------------------------------------
@@ -70,7 +75,7 @@ CREATE TABLE IF NOT EXISTS `carrera` (
     `id`            bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     PRIMARY KEY (`codigo`,`id`),
     UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=33 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -95,7 +100,7 @@ CREATE TABLE IF NOT EXISTS `categoria` (
     `id`        int(11)     NOT NULL AUTO_INCREMENT,
     `nombre`    varchar(20) NOT NULL,
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -109,7 +114,7 @@ CREATE TABLE IF NOT EXISTS `contenido_mensajes` (
     `mensaje`   varchar(500)    NOT NULL,
     `asunto`    varchar(80)     NOT NULL,
     PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -118,10 +123,23 @@ CREATE TABLE IF NOT EXISTS `contenido_mensajes` (
 --
 
 CREATE TABLE IF NOT EXISTS `coordinacion` (
-    `nombre`    varchar(100)    NOT NULL,
-    `usbid`     varchar(30)     NOT NULL,
-    `sede`      varchar(20)     NOT NULL,
-    PRIMARY KEY (`nombre`)
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`nombre` VARCHAR(100) NOT NULL,
+	`usbid` VARCHAR(30) NOT NULL,
+	`sede` VARCHAR(20) NOT NULL,
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Estructura de tabla para la tabla `correo_por_verificar`
+--
+
+
+CREATE TABLE `correo_por_verificar` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`correo` VARCHAR(80) NOT NULL,
+	`codigo` VARCHAR(45) NOT NULL,
+	PRIMARY KEY (`id`, `correo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -146,7 +164,7 @@ CREATE TABLE IF NOT EXISTS `dedicacion` (
     `id`        int(11)     NOT NULL AUTO_INCREMENT,
     `nombre`    varchar(20) NOT NULL,
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -162,7 +180,7 @@ CREATE TABLE IF NOT EXISTS `departamento` (
     `sede`          varchar(20)     NOT NULL,
     PRIMARY KEY (`id`),
     KEY `fk_departamento_id_division_id` (`id_division`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=30 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -174,7 +192,7 @@ CREATE TABLE IF NOT EXISTS `division` (
     `id`        int(11)     NOT NULL AUTO_INCREMENT,
     `nombre`    varchar(50) NOT NULL DEFAULT ' ',
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -234,7 +252,7 @@ CREATE TABLE IF NOT EXISTS `error` (
     `USBID`     varchar(254)    NOT NULL,
     `fecha`     timestamp       NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`id_error`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2550 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -248,7 +266,11 @@ CREATE TABLE IF NOT EXISTS `estado` (
     `id_pais`   int(11)     NOT NULL,
     PRIMARY KEY (`id`),
     KEY `fk_estado_id_pais_pais_id` (`id_pais`)
+<<<<<<< HEAD
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=25 ;
+=======
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+>>>>>>> origin/devel
 
 -- --------------------------------------------------------
 
@@ -279,7 +301,7 @@ CREATE TABLE IF NOT EXISTS `fase` (
     PRIMARY KEY (`codigo`),
     KEY `fk_fase_id_plan_de_trab_plan_de_trabajo_id` (`id_plan_de_trab`),
     KEY `fk_fase_codigo_pasantia_tipo_pasantia_codigo` (`codigo_pasantia`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=52165 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -305,7 +327,7 @@ CREATE TABLE IF NOT EXISTS `log` (
     `fecha`         timestamp       NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `usbid_usuario` varchar(254)    NOT NULL,
     PRIMARY KEY (`id_log`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=440647 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -383,7 +405,7 @@ CREATE TABLE IF NOT EXISTS `permiso` (
     `observaciones_cctds`   text,
     `status`                varchar(10) DEFAULT 'Pendiente',
     PRIMARY KEY (`codigo`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2609 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -408,7 +430,7 @@ CREATE TABLE IF NOT EXISTS `preinscripcion` (
     KEY `fk_preinscripcion_id_region_region_id` (`id_region`),
     KEY `fk_preinscripcion_id_estado_estado_id` (`id_estado`),
     KEY `fk_preinscripcion_codigo_tipo_pasantia_codigo` (`codigo`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3065 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -420,7 +442,7 @@ CREATE TABLE IF NOT EXISTS `region` (
     `id`        int(10)         NOT NULL AUTO_INCREMENT,
     `nombre`    varchar(255)    NOT NULL,
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -472,7 +494,11 @@ CREATE TABLE IF NOT EXISTS `solicitud_pasante` (
     PRIMARY KEY (`codigo`),
     KEY `fk_solicitud_pasante_carrera_carrea_codigo` (`id_carrera`),
     KEY `fk_solicitud_pasante_id_empresa_empresa_log` (`id_empresa`)
+<<<<<<< HEAD
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1227 ;
+=======
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+>>>>>>> origin/devel
 
 -- --------------------------------------------------------
 
@@ -510,7 +536,7 @@ CREATE TABLE IF NOT EXISTS `trimestre` (
     `codigo` int(4)         NOT NULL AUTO_INCREMENT,
     `nombre` varchar(30)    NOT NULL,
     PRIMARY KEY (`codigo`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -556,6 +582,7 @@ CREATE TABLE IF NOT EXISTS `tutor_industrial` (
     `id_universidad`			int(11)			NOT NULL,
     `profesion`                 varchar(50)     NOT NULL,
     `cargo`                     varchar(50)     NOT NULL,
+    `id_universidad`            int(11)         NOT NULL,
     `departamento`              varchar(50)     NOT NULL,
     `direccion`                 varchar(254)    NOT NULL,
     `id_pais`                 	int(2)          DEFAULT NULL,
@@ -568,6 +595,7 @@ CREATE TABLE IF NOT EXISTS `tutor_industrial` (
     KEY `fk_tutor_industrial_pais` (`id_pais`),
     KEY `fk_tutor_industrial_id_empresa_empresa_log` (`id_empresa`),
     KEY `fk_tutor_industrial_id_universidad_universidad_id` (`id_universidad`)
+<<<<<<< HEAD
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -581,10 +609,28 @@ CREATE TABLE IF NOT EXISTS `universidad` (
     `id_pais`   int(11)         NOT NULL,
     PRIMARY KEY (`id`),
     KEY `fk_universidad_id_pais_pais_id` (`id_pais`)
+=======
+>>>>>>> origin/devel
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
+<<<<<<< HEAD
+=======
+--
+-- Estructura de tabla para la tabla `universidad`
+--
+CREATE TABLE IF NOT EXISTS `universidad` (
+    `id`        int(11)         NOT NULL AUTO_INCREMENT,
+    `nombre`    varchar(254)    NOT NULL,
+    `id_pais`   int(11)         NOT NULL,
+    PRIMARY KEY (`id`),
+    KEY `fk_universidad_id_pais_pais_id` (`id_pais`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+>>>>>>> origin/devel
 
 --
 -- Estructura de tabla para la tabla `area_laboral`
