@@ -64,8 +64,8 @@ def _():
             ('Llenar Curriculum',False,URL('estudiante','llenar_curriculum')),
             ('Plan de Trabajo',False,URL('estudiante','plan_trabajo')),
             ('Retirar Pasantía',False,URL('estudiante','retirar_pasantia')),
-            ('Solicitar permiso de inscripción extemporánea',False,"#"),
-            ('Solicitar permiso de evaluación extemporánea',False,"#")
+            ('Solicitar permiso de inscripción extemporánea',False,URL('estudiante', 'permiso_inscripcion')),
+            ('Solicitar permiso de evaluación extemporánea',False,URL('estudiante', 'permiso_evaluacion'))
             ]),
         ('Profesor',False,"#",[
             ('Registrarse',False,URL('default','registrar_profesor')),
