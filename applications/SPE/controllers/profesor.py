@@ -20,7 +20,7 @@ def justificar_retiro_profesor():
             pasantia = dbSPE((dbSPE.pasantia.codigo==request.args[0]) &
                 (dbSPE.pasantia.anio==request.args[1]) &
                 (dbSPE.pasantia.periodo==request.args[2]) &
-                (dbSPE.pasantia.id_tutor_academico==auth_user.username)
+                (dbSPE.pasantia.id_tutor_academico==auth.user.username)
                 )
 
             pasantia.update(motivo_retiro_tutor_academico = request.vars.motivo_retiro_tutor_academico)
@@ -31,7 +31,7 @@ def justificar_retiro_profesor():
             response.flash = 'Error'
 
     else:
-        pasantias = dbSPE((dbSPE.pasantia.id_estudiante==auth_user.username) &
+        pasantias = dbSPE((dbSPE.pasantia.id_estudiante==auth.user.username) &
             (dbSPE.pasantia.motivo_retiro_estudiante!=None)
         )
 
