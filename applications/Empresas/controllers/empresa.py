@@ -189,7 +189,7 @@ def registrar_tutor_industrial():
             user_Type  = 'tutor_industrial'
         )
 
-        enviar_Correo_Verificacion(request.vars.email)
+        generar_Correo_Verificacion(request.vars.email)
 
         paisSet = dbSPE(dbSPE.pais.id == request.vars.id_pais).select()
         pais = paisSet[0].nombre

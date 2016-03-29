@@ -39,7 +39,7 @@ def registrar_profesor():
     )
 
     if form_profesor.process().accepted:
-        enviar_Correo_Verificacion(form_profesor.vars.email_sec)
+        generar_Correo_Verificacion(form_profesor.vars.email_sec)
 
         # Registramos la empresa
         dbSPE.usuario_profesor.insert(
