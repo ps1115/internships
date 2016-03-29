@@ -11,4 +11,3 @@ dbSPE.define_table('actividad',
                 primarykey=['id'],
                 format='%(id)s  %(codigo_fase)s  %(descripcion)s  %(tiempo_estimado)s  %(id_plan_de_trab)s'
                )
-

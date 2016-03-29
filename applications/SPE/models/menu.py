@@ -25,7 +25,7 @@ response.google_analytics_id = None
 #########################################################################
 
 response.menu = [
-    (T('Inicio'), False, URL('default', 'index'), [])
+    (SPAN(' ', _class='fa fa-home fa-lg'), False, URL(c='default', f='index'))
 ]
 
 DEVELOPMENT_MENU = True
@@ -41,7 +41,7 @@ else:
 
 menu_autenticado = [
     (texto_principal,False, '#',[
-        ("Cerrar Sesion",False,URL('default','logout'))
+        (SPAN(' Cerrar Sesión', _class='fa fa-sign-out'), False, URL('default','logout'))
     ])
 ]
 

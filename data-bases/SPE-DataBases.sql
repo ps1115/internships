@@ -476,7 +476,6 @@ CREATE TABLE IF NOT EXISTS `solicitud_pasante` (
 
 -- --------------------------------------------------------
 
---
 -- Semanas Muertas en un evento
 --
 
@@ -843,6 +842,12 @@ ALTER TABLE `curriculum`
 
 --
 -- Filtros para la tabla `universidad`
+--
+ALTER TABLE `universidad`
+    ADD CONSTRAINT `fk_universidad_id_pais_pais_id` FOREIGN KEY (`id_pais`) REFERENCES `pais` (`id`);
+
+--
+-- Filtros para la tabla `curriculum`
 --
 ALTER TABLE `universidad`
     ADD CONSTRAINT `fk_universidad_id_pais_pais_id` FOREIGN KEY (`id_pais`) REFERENCES `pais` (`id`);
