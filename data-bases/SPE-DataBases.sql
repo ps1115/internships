@@ -122,10 +122,11 @@ CREATE TABLE IF NOT EXISTS `contenido_mensajes` (
 --
 
 CREATE TABLE IF NOT EXISTS `coordinacion` (
-    `nombre`    varchar(100)    NOT NULL,
-    `usbid`     varchar(30)     NOT NULL,
-    `sede`      varchar(20)     NOT NULL,
-    PRIMARY KEY (`nombre`)
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`nombre` VARCHAR(100) NOT NULL,
+	`usbid` VARCHAR(30) NOT NULL,
+	`sede` VARCHAR(20) NOT NULL,
+	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --

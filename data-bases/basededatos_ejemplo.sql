@@ -108,7 +108,7 @@ INSERT INTO `pasantiasnuevo`.`departamento`
 `sede`)
 VALUES
 ('Ciencias de la Informacion',
-1,
+5,
 'cdlais@usb.ve',
 'Sartenejas');
 

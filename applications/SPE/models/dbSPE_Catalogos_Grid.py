@@ -44,23 +44,6 @@ dbSPE.define_table('departamento',
 #                 Field('celular', requires=IS_NOT_EMPTY(), label='Teléfono Celular'),
 #                 Field('activo', requires=[IS_NOT_EMPTY(), IS_IN_SET(['0','1'],error_message='Valor no Permitido')], default='1', label='Activo'))
 
-dbSPE.define_table('empresa',
-                Field('log', requires=IS_NOT_EMPTY(), label='Usuario', unique=True),
-                Field('password', requires=IS_NOT_EMPTY(), label='Clave', type='password'),
-                Field('pregunta_secreta', requires=IS_NOT_EMPTY(), label='Pregunta secreta'),
-                Field('respuesta_pregunta_secreta', requires=IS_NOT_EMPTY(), label='Respuesta a pregunta secreta'),
-                Field('nombre', requires=IS_NOT_EMPTY(), label='Nombre de la empresa'),
-                Field('direccion', requires=IS_NOT_EMPTY(), label='Dirección de la empresa'),
-                Field('pag_web', requires=[IS_NOT_EMPTY(),IS_URL(error_message='URL inválida')], label='Sitio web de la empresa'),
-                Field('descripcion', requires=IS_NOT_EMPTY(), label='Descripción de la empresa'),
-                Field('telefono', requires=IS_NOT_EMPTY(), label='Teléfono de contacto de la empresa'),
-                Field('contacto_RRHH', requires=IS_NOT_EMPTY(), label='Teléfono de la sección de recursos humanos'),
-                Field('intentos', type='integer', default='0',readable=False, writable=False, requires=IS_NOT_EMPTY()),
-                Field('habilitado', type='integer', default='1',readable=False, writable=False, requires=IS_NOT_EMPTY()),
-                Field('fechaCreacion', type='datetime',requires=[IS_NOT_EMPTY(),IS_DATETIME(format='%Y-%m-%d %H:%M:%S')], readable=False, writable=False, default=datetime.datetime.now()),
-                Field('ultimaModificacion', type='datetime',requires=[IS_NOT_EMPTY(),IS_DATETIME(format='%Y-%m-%d %H:%M:%S')], readable=False, writable=False, default=datetime.datetime.now()))
-
-
 """
 dbSPE.define_table("evento"
                ,Field("codigo", type="id", readable=False, writable=False)
