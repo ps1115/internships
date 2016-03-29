@@ -137,3 +137,61 @@ VALUES
 'Larga',
 'Sartenejas',
 '1');
+
+-- Tipos de Pasantias
+
+INSERT INTO `pasantiasnuevo`.`tipo_pasantia`
+(`codigo`,
+`nombre`)
+VALUES
+('0100',
+'Sartenejas Corta');
+
+INSERT INTO `pasantiasnuevo`.`tipo_pasantia`
+(`codigo`,
+`nombre`)
+VALUES
+('0130',
+'Sartenejas Mediana');
+
+INSERT INTO `pasantiasnuevo`.`tipo_pasantia`
+(`codigo`,
+`nombre`)
+VALUES
+('0160',
+'Sartenejas Larga');
+
+INSERT INTO `pasantiasnuevo`.`tipo_pasantia`
+(`codigo`,
+`nombre`)
+VALUES
+('0190',
+'Sartenejas Caso Especial');
+
+INSERT INTO `pasantiasnuevo`.`tipo_pasantia`
+(`codigo`,
+`nombre`)
+VALUES
+('0200',
+'Litoral Corta');
+
+INSERT INTO `pasantiasnuevo`.`tipo_pasantia`
+(`codigo`,
+`nombre`)
+VALUES
+('0230',
+'Litoral Mediana');
+
+INSERT INTO `pasantiasnuevo`.`tipo_pasantia`
+(`codigo`,
+`nombre`)
+VALUES
+('0260',
+'Litoral Larga');
+
+INSERT INTO `pasantiasnuevo`.`tipo_pasantia`
+(`codigo`,
+`nombre`)
+VALUES
+('0290',
+'Litoral Caso Especial');
