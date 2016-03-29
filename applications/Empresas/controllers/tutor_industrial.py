@@ -85,7 +85,7 @@ def solicitar_registro_tutor():
             user_Type  = 'tutor_industrial'
         )
 
-        enviar_Correo_Verificacion(request.vars.email)
+        generar_Correo_Verificacion(request.vars.email)
 
         empresaSet = dbSPE(dbSPE.empresa.id == request.vars.id_empresa).select()
         empresa = empresaSet[0].nombre
