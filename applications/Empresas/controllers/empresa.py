@@ -178,50 +178,70 @@ def registrar_tutor_industrial():
 
 def justificar_retiro_empresa():
     # Argumentos son: codigo, año, periodo(nombre)
-    if len(request.args)==3:
-
-        r = dbSPE(dbSPE.pasantia.codigo==request.args[0]).select(dbSPE.pasantia.motivo_retiro_tutor_industrial)
-        print r
-        if r != 'NULL':
-            redirect(URL(c ='default', f='index'))
-
+    pasantia=None
+    if len(request.args)==4:
+        pasantia = dbSPE((dbSPE.pasantia.codigo==request.args[0]) &
+                (dbSPE.pasantia.anio==request.args[1]) &
+                (dbSPE.pasantia.periodo==request.args[2]) &
+                (dbSPE.pasantia.id_estudiante==request.args[3]) 
+                ).select()[0]
         field =[dbSPE.pasantia.motivo_retiro_tutor_industrial]
         form = SQLFORM.factory(
             *field,submit_button='Subir Carta',
             separator=': ',
             buttons=['submit'],
+            type='text',
             col3 = {'motivo':T('Motivo justificativo')}
             )
         if form.process().accepted:
-            # Falta refinar este query con año, periodo e id_estudiante
-            busqueda = dbSPE(dbSPE.pasantia.codigo==request.args[0])
-            busqueda.update(motivo_retiro_tutor_industrial = request.vars.motivo_retiro_tutor_industrial)
-            redirect(URL(c ='default', f='index'))
+            pasantia = dbSPE((dbSPE.pasantia.codigo==request.args[0]) &
+                (dbSPE.pasantia.anio==request.args[1]) &
+                (dbSPE.pasantia.periodo==request.args[2]) &
+                (dbSPE.pasantia.id_estudiante==request.args[3]) 
+                )
+            pasantia.update(motivo_retiro_tutor_industrial = request.vars.motivo_retiro_tutor_industrial)
+            response.flash = 'Actualizado el motivo'
+            redirect(URL('justificacion_retiro_empresa/'+request.args[0]+'/'+request.args[1]+'/'+request.args[2]+'/'+request.args[3]))
 
         elif form.errors:
             response.flash = 'Error'
 
     else:
-        # Este query debe ser remplazado por el correcto
-        # Buscar las pasantias segun el id del usuario(estudiante)
-        pasantias = dbSPE(dbSPE.pasantia.periodo == 77)
-        pasantia = pasantias.select()[0]
+        pasantias = dbSPE((dbSPE.pasantia.id_tutor_industrial==auth.user.username) &
+            (dbSPE.pasantia.motivo_retiro_estudiante!=None)
+        )
 
         opciones = []
+        periodos = {}
         for p in pasantias.select():
             periodo = dbSPE.periodo(p.periodo)
-            opciones.append('['+p.codigo+'] '+periodo.nombre+' '+str(p.anio)+' '+p.titulo)
+            periodos[periodo.nombre] = p.periodo
+            datos_estudiante = dbSPE(dbSPE.usuario_estudiante.usbid_usuario==p.id_estudiante).select()[0]
+            opciones.append('['+p.codigo+'] '+periodo.nombre+' '+str(p.anio)+' '+p.titulo+' '+datos_estudiante.nombre+' '+datos_estudiante.apellido+' '+datos_estudiante.usbid)
 
         form = SQLFORM.factory(
             Field('pasantia', requires = IS_IN_SET(opciones)),submit_button='Buscar')
-
         if form.process().accepted:
             # Datos: codigo, periodo(nombre), año
             datos = form.vars.pasantia.split()
             datos[0] = datos[0][1:-1]
-            redirect(URL('justificar_retiro_empresa/'+datos[0]+'/'+datos[2]+'/'+datos[1]))
+            pasantia = dbSPE((dbSPE.pasantia.codigo==datos[0]) &
+                (dbSPE.pasantia.anio==datos[2]) &
+                (dbSPE.pasantia.periodo==periodos[datos[1]]) &
+                (dbSPE.pasantia.id_estudiante==datos[6]) 
+                )
+            redirect(URL('justificar_retiro_empresa/'+datos[0]+'/'+datos[2]+'/'+str(periodos[datos[1]])+'/'+datos[6]))
 
         elif form.errors:
             response.flash = 'Error'
 
-    return dict(form=form)
+    return dict(form=form,pasantia=pasantia)
+
+def justificacion_retiro_empresa():
+    pasantia = dbSPE((dbSPE.pasantia.codigo==request.args[0]) &
+                (dbSPE.pasantia.anio==request.args[1]) &
+                (dbSPE.pasantia.periodo==request.args[2]) &
+                (dbSPE.pasantia.id_estudiante==request.args[3])
+                ).select()[0]
+    estudiante = dbSPE(dbSPE.usuario_estudiante.usbid_usuario==request.args[3]).select()[0]
+    return dict(pasantia=pasantia,estudiante=estudiante)
