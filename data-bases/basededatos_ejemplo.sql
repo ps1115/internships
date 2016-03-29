@@ -112,4 +112,26 @@ VALUES
 'cdlais@usb.ve',
 'Sartenejas');
 
+INSERT INTO `pasantiasnuevo`.`coordinacion`
+(`nombre`,
+`usbid`,
+`sede`)
+VALUES
+('Coordinacion De Ing. De Computacion',
+'coord-comp@usb.ve',
+'Sartenejas');
+
+
+INSERT INTO `pasantiasnuevo`.`carrera`
+(`codigo`,
+`nombre`,
+`duracion`,
+`sede`,
+`coordinacion`)
+VALUES
+('0800',
+'Ing. De Computacion',
+'Larga',
+'Sartenejas',
+'1');
 
