@@ -11,3 +11,4 @@ logs/
 applications/SPE/errors/
 applications/SPE/sessions/
 applications/admin/sessions/
+*~

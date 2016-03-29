@@ -135,7 +135,9 @@ def registrar_estudiante():
 
     #Llenamos el formulario con el default
     dbSPE.usuario_estudiante.usbid_usuario.default  = request.vars.usbid
+    dbSPE.usuario_estudiante.carnet.default  = request.vars.usbid
     dbSPE.usuario_estudiante.usbid_usuario.writable  = False
+    dbSPE.usuario_estudiante.carnet.writable  = False
     dbSPE.usuario_estudiante.carrera.requires = IS_IN_DB(dbSPE,dbSPE.carrera,'%(nombre)s',zero="Seleccione", error_message='Carrera Inválida')
     dbSPE.usuario_estudiante.carrera.default  = usuario['carrera']
 
@@ -146,7 +148,7 @@ def registrar_estudiante():
                     )
 
     if form_estudiante.process().accepted:
-        enviar_Correo_Verificacion(form_estudiante.vars.email_sec)
+        generar_Correo_Verificacion(form_estudiante.vars.email_sec)
         redirect(URL(c='default',f='verifyEmail',vars=dict(correo=form_estudiante.vars.email_sec)))
 
     return dict(message='Por favor actualiza tus datos para continuar',form=form_estudiante)

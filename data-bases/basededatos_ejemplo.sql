@@ -108,8 +108,98 @@ INSERT INTO `pasantiasnuevo`.`departamento`
 `sede`)
 VALUES
 ('Ciencias de la Informacion',
+<<<<<<< HEAD
 5,
 'cdlais@usb.ve',
 'Sartenejas');
 
 
+=======
+1,
+'cdlais@usb.ve',
+'Sartenejas');
+
+-- Coordinaciones
+
+INSERT INTO `pasantiasnuevo`.`coordinacion`
+(`nombre`,
+`usbid`,
+`sede`)
+VALUES
+('Coordinacion De Ing. De Computacion',
+'coord-comp@usb.ve',
+'Sartenejas');
+
+-- Carreras
+
+INSERT INTO `pasantiasnuevo`.`carrera`
+(`codigo`,
+`nombre`,
+`duracion`,
+`sede`,
+`coordinacion`)
+VALUES
+('0800',
+'Ing. De Computacion',
+'Larga',
+'Sartenejas',
+'1');
+
+-- Tipos de Pasantias
+
+INSERT INTO `pasantiasnuevo`.`tipo_pasantia`
+(`codigo`,
+`nombre`)
+VALUES
+('0100',
+'Sartenejas Corta');
+
+INSERT INTO `pasantiasnuevo`.`tipo_pasantia`
+(`codigo`,
+`nombre`)
+VALUES
+('0130',
+'Sartenejas Mediana');
+
+INSERT INTO `pasantiasnuevo`.`tipo_pasantia`
+(`codigo`,
+`nombre`)
+VALUES
+('0160',
+'Sartenejas Larga');
+
+INSERT INTO `pasantiasnuevo`.`tipo_pasantia`
+(`codigo`,
+`nombre`)
+VALUES
+('0190',
+'Sartenejas Caso Especial');
+
+INSERT INTO `pasantiasnuevo`.`tipo_pasantia`
+(`codigo`,
+`nombre`)
+VALUES
+('0200',
+'Litoral Corta');
+
+INSERT INTO `pasantiasnuevo`.`tipo_pasantia`
+(`codigo`,
+`nombre`)
+VALUES
+('0230',
+'Litoral Mediana');
+
+INSERT INTO `pasantiasnuevo`.`tipo_pasantia`
+(`codigo`,
+`nombre`)
+VALUES
+('0260',
+'Litoral Larga');
+
+INSERT INTO `pasantiasnuevo`.`tipo_pasantia`
+(`codigo`,
+`nombre`)
+VALUES
+('0290',
+'Litoral Caso Especial');
+>>>>>>> origin/devel

@@ -25,7 +25,7 @@ response.google_analytics_id = None
 #########################################################################
 
 response.menu = [
-    (T('Inicio'), False, URL('default', 'index'), [])
+    (SPAN(' ', _class='fa fa-home fa-lg'), False, URL(c='default', f='index'))
 ]
 
 DEVELOPMENT_MENU = True
@@ -41,7 +41,7 @@ else:
 
 menu_autenticado = [
     (texto_principal,False, '#',[
-        ("Cerrar Sesion",False,URL('default','logout'))
+        (SPAN(' Cerrar Sesión', _class='fa fa-sign-out'), False, URL('default','logout'))
     ])
 ]
 
@@ -67,10 +67,13 @@ def _():
                 ('Solicitar permiso de evaluación extemporánea',False,"#")
                 ])]
         elif auth.user.user_Type == 'Docente':
-            response.menu += [('Profesor',False,"#",[
-                ('Consultar pasantías',False,"#"),
-                ('Evaluar Pasantía',False,"#")
-                ])]
+            response.menu += [
+            ('Profesor',False,"#",[
+                ('Registrarse',False,URL('default','registrar_profesor')),
+                ('Evaluar Pasantía',False,"#"),
+                ('Retiro Pasantia',False,URL('profesor','justificar_retiro_profesor'))
+                ])
+                ]
         elif auth.user.user_Type == 'Administrativo':
             response.menu += [('Administrador',False,"#",[
                 ('Gestionar Catálogos',False,URL('catalogos_grid','gestion_cct2'))
@@ -78,13 +81,11 @@ def _():
         else:
             pass
     else:
-        response.menu += [
+        response.menu += [ #Coloque esto porque el cas no me funciona
             (T('Iniciar Sesion'),False,'#',[
                 (T('Miembro USB'),False,"https://secure.dst.usb.ve/login?service=http%3A%2F%2F127.0.0.1%3A8000%2FSPE%2Fdefault%2Flogin_cas"),
                 (T('Empresa'),False,URL(a='Empresas',c='default',f='index'))
                 ]),
-            ('Profesor',False,"#",[
-                ('Registrarse',False,URL('default','registrar_profesor'))]),
             ('Administrador',False,"#",[
                 ('Gestionar Catálogos',False,URL('catalogos_grid','gestion_cct2'))
                 ]),

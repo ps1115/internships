@@ -72,7 +72,8 @@ def _():
         elif auth.user.user_Type == 'tutor_industrial':
             response.menu += [
                 ('Solicitudes de pasantes',False,"#"),
-                ('Pasantías',False,"#"),
+                ('Consultar Pasantias',False,"#"),
+                ('Justificar Retiro Pasantia',False,URL('tutor_industrial','justificar_retiro_empresa'))
             ]
     # Entradas del menu si el usuario NO esta autenticado
     else:
