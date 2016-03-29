@@ -196,3 +196,21 @@ def permiso_evaluacion():
         response.flash = 'Error'
 
     return dict(form=form)
+
+def permiso_inscripcion():
+    form = SQLFORM.factory(
+        Field('justificacion', label='Justificacion', required=True, requires=IS_LENGTH(minsize=1, error_message='no puede estar vacio')),
+        )
+
+    if form.process().accepted:
+        dbSPE.permiso.insert(
+            fecha = request.now,
+            codigo_seguridad = random_key(),
+            tipo_permiso = 'inscripcion',
+            justificacion = form.vars.justificacion,
+            )
+        response.flash = 'Permiso solicitado'
+    elif form.errors:
+        response.flash = 'Error'
+
+    return dict(form=form)
