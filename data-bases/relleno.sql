@@ -1,5 +1,6 @@
 
--- INSERT INTO periodo VALUES (77, 'abril-septiembre');
+INSERT INTO periodo VALUES (77, 'abril-septiembre', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,0);
+INSERT INTO periodo VALUES (79, 'octubre-marzo', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,0);
 
 INSERT INTO tipo_pasantia VALUES ('PS1115', 'Pasantia prueba');
 INSERT INTO tipo_pasantia VALUES ('PS1110', 'Otra Pasantia prueba');
@@ -16,19 +17,21 @@ INSERT INTO empresa
 
 INSERT INTO tutor_academico VALUES ('77');
 
-INSERT INTO tutor_industrial
-   VALUES (77, '77@gmail.com', NULL, NULL, NULL, NULL, 'soy', 'jogs', 77,
-      'vago', 'Senior vago', 12, 'nada', 'Narnia', NULL, NULL, '777-7777',
-      0, 1
+INSERT INTO pais
+   VALUES (25,'la nada'
       );
 
 INSERT INTO universidad
    VALUES (12,'ujs', 25
       );
 
-INSERT INTO pais
-   VALUES (25,'la nada'
+
+INSERT INTO tutor_industrial
+   VALUES (77, '77@gmail.com', NULL, NULL, NULL, NULL, 'soy', 'jogs', 77,
+      12, 'vago', 'Senior vago', 'nada', 'Narnia', NULL, NULL, '777-7777',
+      0, 1
       );
+
 
 INSERT INTO pasantia
    VALUES ('PS1115', 77, 2016, '2016-03-10', 'seguridad',
