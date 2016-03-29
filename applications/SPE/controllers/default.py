@@ -154,6 +154,7 @@ def registrar():
     elif usuario['tipo'] == "Administrativo":
         pass
     elif usuario['tipo'] in ["Pregrado","Postgrado"]:
+        #redirect(URL(c='profesor',f='registrar_profesor', vars=dict(usuario=usuario,usbid=request.vars.usbid)))
         redirect(URL(c='estudiante',f='registrar_estudiante', vars=dict(usuario=usuario,usbid=request.vars.usbid)))
     elif usuario['tipo'] in ["Empleado","Organizacion","Egresado"]:
         pass
