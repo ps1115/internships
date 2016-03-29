@@ -137,7 +137,7 @@ def retirar_pasantia():
             pasantia = dbSPE((dbSPE.pasantia.codigo==request.args[0]) &
                 (dbSPE.pasantia.anio==request.args[1]) &
                 (dbSPE.pasantia.periodo==request.args[2]) &
-                (dbSPE.pasantia.id_estudiante==auth.user.username)
+                (dbSPE.pasantia.id_estudiante==auth_user.username)
                 )
 
             pasantia.update(motivo_retiro_estudiante=form.vars.motivo)
@@ -150,7 +150,7 @@ def retirar_pasantia():
     else:
         # Este query debe ser remplazado por el correcto
         # Buscar las pasantias segun el id del usuario(estudiante)
-        pasantias = dbSPE(dbSPE.pasantia.id_estudiante == auth.user.username)
+        pasantias = dbSPE(dbSPE.pasantia.id_estudiante == auth_user.username)
         # pasantia = pasantias.select()[0]
 
         opciones = []

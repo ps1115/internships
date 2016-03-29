@@ -180,6 +180,11 @@ def justificar_retiro_empresa():
     # Argumentos son: codigo, año, periodo(nombre)
     if len(request.args)==3:
 
+        r = dbSPE(dbSPE.pasantia.codigo==request.args[0]).select(dbSPE.pasantia.motivo_retiro_tutor_industrial)
+        print r
+        if r != 'NULL':
+            redirect(URL(c ='default', f='index'))
+
         field =[dbSPE.pasantia.motivo_retiro_tutor_industrial]
         form = SQLFORM.factory(
             *field,submit_button='Subir Carta',
@@ -191,8 +196,7 @@ def justificar_retiro_empresa():
             # Falta refinar este query con año, periodo e id_estudiante
             busqueda = dbSPE(dbSPE.pasantia.codigo==request.args[0])
             busqueda.update(motivo_retiro_tutor_industrial = request.vars.motivo_retiro_tutor_industrial)
-            response.flash = 'Actualizado el motivo'
-            redirect(URL('justificar_retiro_empresa'))
+            redirect(URL(c ='default', f='index'))
 
         elif form.errors:
             response.flash = 'Error'
@@ -209,7 +213,7 @@ def justificar_retiro_empresa():
             opciones.append('['+p.codigo+'] '+periodo.nombre+' '+str(p.anio)+' '+p.titulo)
 
         form = SQLFORM.factory(
-            Field('pasantia', requires = IS_IN_SET(opciones)))
+            Field('pasantia', requires = IS_IN_SET(opciones)),submit_button='Buscar')
 
         if form.process().accepted:
             # Datos: codigo, periodo(nombre), año
