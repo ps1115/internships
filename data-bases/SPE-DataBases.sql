@@ -476,6 +476,7 @@ CREATE TABLE IF NOT EXISTS `solicitud_pasante` (
 
 -- --------------------------------------------------------
 
+--
 -- Semanas Muertas en un evento
 --
 
@@ -552,9 +553,9 @@ CREATE TABLE IF NOT EXISTS `tutor_industrial` (
     `pregunta_secreta`          varchar(254)    NOT NULL,
     `respuesta_pregunta_secreta`varchar(254)    NOT NULL,
     `id_empresa`                integer		    NOT NULL,
-    `id_universidad`			int(11)			NOT NULL,
     `profesion`                 varchar(50)     NOT NULL,
     `cargo`                     varchar(50)     NOT NULL,
+    `id_universidad`            int(11)         NOT NULL,
     `departamento`              varchar(50)     NOT NULL,
     `direccion`                 varchar(254)    NOT NULL,
     `id_pais`                 	int(2)          DEFAULT NULL,
@@ -842,12 +843,6 @@ ALTER TABLE `curriculum`
 
 --
 -- Filtros para la tabla `universidad`
---
-ALTER TABLE `universidad`
-    ADD CONSTRAINT `fk_universidad_id_pais_pais_id` FOREIGN KEY (`id_pais`) REFERENCES `pais` (`id`);
-
---
--- Filtros para la tabla `curriculum`
 --
 ALTER TABLE `universidad`
     ADD CONSTRAINT `fk_universidad_id_pais_pais_id` FOREIGN KEY (`id_pais`) REFERENCES `pais` (`id`);
