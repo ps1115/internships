@@ -11,4 +11,3 @@ dbSPE.define_table('curriculum',
                 primarykey=['usbid'],
                 format='%(usbid)s  %(electiva)s  %(cursos)s  %(conocimientos)s  %(idiomas)s  %(aficiones)s'
                )
-

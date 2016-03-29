@@ -29,12 +29,14 @@ CREATE TABLE IF NOT EXISTS `actividad` (
     `id`                int(11)     NOT NULL AUTO_INCREMENT,
     `codigo_fase`       int(11)     DEFAULT NULL,
     `descripcion`       text        NOT NULL,
-    `tiempo_estimado`   varchar(20) NOT NULL,
+    `semana_inicio`     varchar(20) NOT NULL,
+    `semana_fin`        varchar(20) NOT NULL,
     `id_plan_de_trab`   int(11)     NOT NULL,
     PRIMARY KEY (`id`),
 	KEY `fk_actividad_codigo_fase_fase_codigo` (`codigo_fase`),
 	KEY `fk_actividad_id_plan_de_trab_plan_de_trabajo_id` (`id_plan_de_trab`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=103942 ;
+
 
 -- --------------------------------------------------------
 
@@ -551,9 +553,9 @@ CREATE TABLE IF NOT EXISTS `tutor_industrial` (
     `pregunta_secreta`          varchar(254)    NOT NULL,
     `respuesta_pregunta_secreta`varchar(254)    NOT NULL,
     `id_empresa`                integer		    NOT NULL,
+    `id_universidad`			int(11)			NOT NULL,
     `profesion`                 varchar(50)     NOT NULL,
     `cargo`                     varchar(50)     NOT NULL,
-    `id_universidad`            int(11)         NOT NULL,
     `departamento`              varchar(50)     NOT NULL,
     `direccion`                 varchar(254)    NOT NULL,
     `id_pais`                 	int(2)          DEFAULT NULL,
@@ -714,10 +716,10 @@ CREATE TABLE IF NOT EXISTS `plan_de_trabajo` (
 ALTER TABLE `empresa`
     ADD CONSTRAINT `fk_empresa_id_area_laboral_area_laboral_id` FOREIGN KEY (`id_area_laboral`) REFERENCES `area_laboral` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
-
 --
 -- Filtros para la tabla `actividad`
 --
+
 ALTER TABLE `actividad`
     ADD CONSTRAINT `fk_actividad_id_plan_de_trab_plan_de_trabajo_id` FOREIGN KEY (`id_plan_de_trab`) REFERENCES `plan_de_trabajo` (`id`),
     ADD CONSTRAINT `fk_actividad_codigo_fase_fase_codigo` FOREIGN KEY (`codigo_fase`) REFERENCES `fase` (`codigo`) ON DELETE CASCADE ON UPDATE CASCADE;
@@ -845,12 +847,10 @@ ALTER TABLE `curriculum`
 ALTER TABLE `universidad`
     ADD CONSTRAINT `fk_universidad_id_pais_pais_id` FOREIGN KEY (`id_pais`) REFERENCES `pais` (`id`);
 
-
 --
--- Filtros para la tabla `curriculum`
+-- Filtros para la tabla `plan de trabajo
 --
 ALTER TABLE `plan_de_trabajo`
-
     ADD CONSTRAINT `fk_plan_de_trabajo_id_estudiante_usuario_usbid` FOREIGN KEY (`id_estudiante`) REFERENCES `usuario` (`usbid`),
     ADD CONSTRAINT `fk_plan_de_trabajo_id_tutor_industrial_tutor_industrial_email` FOREIGN KEY (`id_tutor_industrial`) REFERENCES `tutor_industrial` (`email`),
     ADD CONSTRAINT `fk_plan_de_trabajo_id_tutor_academico_usuario_usbid` FOREIGN KEY (`id_tutor_academico`) REFERENCES `usuario`(`usbid`),
