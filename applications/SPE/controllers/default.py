@@ -10,6 +10,13 @@
 
 from usbutils import get_ldap_data, random_key
 
+def reroute():
+    """
+    Funcion utilizada para que nos lleve al index aunque estemos en la pagina
+    por defecto de web2py
+    """
+    redirect(URL('index'))
+
 def index():
     """
     example action using the internationalization operator T and flash
