@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+'''
 # Departamento
 dbSPE.define_table('departamento',
                 Field('nombre','string', requires=IS_NOT_EMPTY(), default='', label="Nombre del Departamento"),
@@ -12,3 +12,4 @@ dbSPE.define_table('departamento',
 dbSPE.departamento.email_dep.requires=[IS_EMAIL(error_message=T('Este no es un correo valido'))]
 dbSPE.departamento.email_dep.requires+=[IS_LENGTH(100)]
 dbSPE.departamento.email_dep.requires+=[IS_NOT_EMPTY(error_message='Campo Obligatorio')]
+'''

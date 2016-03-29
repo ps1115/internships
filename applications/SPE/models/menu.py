@@ -67,10 +67,13 @@ def _():
                 ('Solicitar permiso de evaluación extemporánea',False,"#")
                 ])]
         elif auth.user.user_Type == 'Docente':
-            response.menu += [('Profesor',False,"#",[
-                ('Consultar pasantías',False,"#"),
-                ('Evaluar Pasantía',False,"#")
-                ])]
+            response.menu += [
+            ('Profesor',False,"#",[
+                ('Registrarse',False,URL('default','registrar_profesor')),
+                ('Evaluar Pasantía',False,"#"),
+                ('Retiro Pasantia',False,URL('profesor','justificar_retiro_profesor'))
+                ])
+                ]
         elif auth.user.user_Type == 'Administrativo':
             response.menu += [('Administrador',False,"#",[
                 ('Gestionar Catálogos',False,URL('catalogos_grid','gestion_cct2'))
@@ -82,19 +85,6 @@ def _():
             (T('Iniciar Sesion'),False,'#',[
                 (T('Miembro USB'),False,"https://secure.dst.usb.ve/login?service=http%3A%2F%2F127.0.0.1%3A8000%2FSPE%2Fdefault%2Flogin_cas"),
                 (T('Empresa'),False,URL(a='Empresas',c='default',f='index'))
-                ]),
-            ('Estudiante',False,"#",[
-                ('Agregar Preinscripcion',False,URL('estudiante','agregar_preinscripcion')),
-                ('Llenar Curriculum',False,URL('estudiante','llenar_curriculum')),
-                ('Plan de Trabajo',False,URL('estudiante','plan_trabajo')),
-                ('Retirar Pasantía',False,URL('estudiante','retirar_pasantia')),
-                ('Solicitar permiso de inscripción extemporánea',False,"#"),
-                ('Solicitar permiso de evaluación extemporánea',False,"#")
-                ]),
-            ('Profesor',False,"#",[
-                ('Registrarse',False,URL('default','registrar_profesor')),
-                ('Evaluar Pasantía',False,"#"),
-                ('Retiro Pasantia',False,URL('profesor','justificar_retiro_profesor'))
                 ]),
             ('Administrador',False,"#",[
                 ('Gestionar Catálogos',False,URL('catalogos_grid','gestion_cct2'))
