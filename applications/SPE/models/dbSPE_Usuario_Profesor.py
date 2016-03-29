@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-dbSPE.define_table('dedicacion', Field('nombre'))
-dbSPE.define_table('categoria', Field('nombre'))
 # Estudiante
 dbSPE.define_table('usuario_profesor',
                 Field('usbid_usuario','string', requires=[IS_NOT_EMPTY(), IS_MATCH('[0-9][0-9]-[0-9]{5}','USBID Inválido'),IS_NOT_IN_DB(dbSPE, 'usuario_profesor.usbid_usuario',error_message=T('Usuario ya existe'))], label='USBID', ondelete='CASCADE', notnull=True,unique=True),
@@ -10,10 +8,9 @@ dbSPE.define_table('usuario_profesor',
                 Field('email_sec', 'string',requires=[IS_NOT_EMPTY(), IS_EMAIL(error_message='Correo Electrónico Inválido')], label='Correo Electrónico'),
                 Field('telf', 'string',requires=[IS_LENGTH(20)], label='Teléfono de Habitación'),
                 Field('celular', 'string',requires=[IS_LENGTH(20)], label='Teléfono Celular'),
-                Field('activo', 'integer',represent=lambda x, row: (dict({1:"Activo",0:"No Activo"}))[x],requires=IS_IN_SET({1:'activo',0:'no activo'}),error_message='Valor no Permitido'), default='1', label='Activo'),
+                Field('activo', 'integer',represent=lambda x, row: (dict({1:"Activo",0:"No Activo"}))[x],requires=IS_IN_SET({1:'activo',0:'no activo'}), default='1', label='Activo'),
                 primarykey=['usbid_usuario'],
-                format='%(carnet)s'
-                )
+                format='%(usbid_usuario)s')
 
 dbSPE.usuario_profesor.usbid_usuario.readable = True
 dbSPE.usuario_profesor.usbid_usuario.writable = False

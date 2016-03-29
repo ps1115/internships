@@ -70,7 +70,6 @@ dbSPE.define_table("periodo"
                   ,Field('fecha_fin', label="Fecha de Fin", type='date',requires=[IS_NOT_EMPTY(),IS_DATE(format='%Y/%m/%d')])
                   ,Field('periodo_activo', represent=lambda x, row: (dict({1:"Activo",0:"No Activo"}))[x],label="Situación", requires=IS_IN_SET({1:'activo',0:'no activo'})))
 
-
 dbSPE.define_table("semana_muerta"
                ,Field("codigo_periodo_afectado", represent=lambda x, row: (dbSPE(dbSPE.periodo.id==x)).select().first().nombre,label="Nombre de Periodo", type="integer",  requires=IS_IN_DB(dbSPE,'periodo.id', '%(nombre)s',error_message='Periodo no Existe'), notnull=True)
                ,Field("numero_semana", type="integer",label="Numero de Semana", requires=IS_NOT_EMPTY())
