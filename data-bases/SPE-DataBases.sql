@@ -17,6 +17,7 @@ SET time_zone = "+00:00";
 
 DROP SCHEMA IF EXISTS pasantiasNuevo;
 CREATE SCHEMA pasantiasNuevo;
+USE pasantiasNuevo;
 
 --
 -- Base de datos: `pasantiasNuevo`
