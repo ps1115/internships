@@ -80,8 +80,8 @@ def _():
     else:
         response.menu += [
             (T('Iniciar Sesion'),False,'#',[
-                (T('Miembro USB'),False,"#"),
-                (T('Empresa'),False,'#')
+                (T('Miembro USB'),False,"https://secure.dst.usb.ve/login?service=http%3A%2F%2F127.0.0.1%3A8000%2FSPE%2Fdefault%2Flogin_cas"),
+                (T('Empresa'),False,URL(a='Empresas',c='default',f='index'))
                 ]),
             ('Profesor',False,"#",[
                 ('Registrarse',False,URL('default','registrar_profesor'))]),

@@ -12,3 +12,4 @@ dbSPE.define_table('usuario',
                 primarykey=['usbid'],
                 format='%(usbid)s %(nombre)s'
                )
+

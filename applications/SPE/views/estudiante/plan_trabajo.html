@@ -2,49 +2,33 @@
 {{extend 'layout.html'}}
 
 <p class='title'>{{=message}}</p>
-<p class='subtitle'>Agregue una a una las actividades de su plan de trabajo <p>
+<p class='subtitle'>Agregue de forma individual cada actividad perteneciente a cada fase de su plan de trabajo<br>
+  Todos los campos son obligatorios</p>
 
-  <form role="form">
-    <div class="container col-md-10 form-group">
-      <p class="subtitle">Actividad</p>
-      <div class="row">
-        <div class="col-xs-2">
-        <label for="ex1">Fase:</label>
-          <select class="form-control" id="codpas">
-            <option>Inicio</option>
-            <option>Desarrollo</option>
-            <option>Cierre</option>
-          </select>
-        </div>
-        <div class="col-xs-3">
-          <label for="ex2">Fecha Inicio</label>
-          <input class="form-control" id="ex2" type="date">
-        </div>
-        <div class="col-xs-3">
-          <label for="ex2">Fecha Finalizacion</label>
-          <input class="form-control" id="ex2" type="date">
-        </div>
+<div class="row">
+  <div class="container col-md-5 form-group">
+  {{=form1}}
+  </div>
+    <div class="container col-md-5 form-group">
+  {{=form2}}
+  {{items =actividad}}
+  <ul class="list">
+    {{for item in items:}}<li>{{=item}}</li>{{pass}}
+  </ul>
+  </div>
+</div>
 
-        <div class="col-xs-2">
-          <label for="ex2">Tiempo Estimado</label>
-          <input class="form-control" id="ex2" type="text">
-        </div>
-      </div>
-      <div class="row">
-          <div class="col-md-10 form-group">
-              <br>
-             <label for="text">Descripcion</label>
-             <input type="text" class="form-control">
-          </div>
-      </div>
-      <div class="row">
-        <div class="col-md-10 form-group">
-          <button type="submit" class="btn btn-default">Argregar Actividad</button>
-          <br><br><br>
-        </div>
-      </div>
-    </div>
-    <div class="container col-md-2 form-group">
-        <button type="sucess" class="btn btn-default">Enviar Plan de Trabajo</button>
-    </div>
-  </form>
+<div class="row">
+
+</div>
+
+
+
+<div class="container col-md-offset-10 form-group">
+    <br><br>
+    <button type="submit" class="btn btn-default">ENVIAR PLAN DE TRABAJO</button>
+    <br><br><br><br>
+</div>
+
+
+datos_actividad
