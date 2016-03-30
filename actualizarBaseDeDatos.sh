@@ -1,1 +1,1 @@
-mysql --protocol=tcp -h localhost -P3306 -u spe2016 --password=root pasantiasnuevo < $1
+mysql --protocol=tcp -h localhost -P3306 -u root --password=spe2016 pasantiasnuevo < $1
