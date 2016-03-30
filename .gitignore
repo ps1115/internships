@@ -9,6 +9,7 @@ __pycache__/
 scripts/*
 logs/
 applications/SPE/errors/
+applications/SPE/databases/
 applications/SPE/sessions/
 applications/admin/sessions/
 *~

@@ -1,0 +1,23 @@
+{{extend 'layout.html'}}
+
+<div class="col-xs-4">
+  Información relevante para el usuario
+</div>
+<div class="col-xs-4">
+  <h3>Carta de motivo del tutor industrial</h3>
+  <form>
+     <div class="form-group">
+        <h4>Nombre</h4>
+        {{=formulario1}}
+        <h4>Carnet</h4>
+        {{=formulario2}}
+        <h4>Fecha</h4>
+        {{=formulario3}}
+        <h4>Motivo</h4>
+        {{=formulario4}}
+    </div>
+    <button type="submit" class="btn btn-default">Subir carta motivo</button>
+  </form>
+</div>
+<div class="col-xs-4">
+</div>

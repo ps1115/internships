@@ -63,15 +63,15 @@ def _():
                 ('Llenar Curriculum',False,URL('estudiante','llenar_curriculum')),
                 ('Plan de Trabajo',False,URL('estudiante','plan_trabajo')),
                 ('Retirar Pasantía',False,URL('estudiante','retirar_pasantia')),
-                ('Solicitar permiso de inscripción extemporánea',False,"#"),
-                ('Solicitar permiso de evaluación extemporánea',False,"#")
+                ('Solicitar permiso de inscripción extemporánea',False,URL('estudiante', 'permiso_inscripcion')),
+                ('Solicitar permiso de evaluación extemporánea',False,URL('estudiante', 'permiso_evaluacion'))
                 ])]
         elif auth.user.user_Type == 'Docente':
             response.menu += [
             ('Profesor',False,"#",[
                 ('Registrarse',False,URL('default','registrar_profesor')),
                 ('Evaluar Pasantía',False,"#"),
-                ('Retiro Pasantia',False,URL('profesor','justificar_retiro_profesor'))
+                ('Justificar Retiro Pasante',False,URL('profesor','justificar_retiro_profesor'))
                 ])
                 ]
         elif auth.user.user_Type == 'Administrativo':

@@ -42,6 +42,7 @@ CREATE TABLE IF NOT EXISTS `actividad` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 
+
 -- --------------------------------------------------------
 
 --
@@ -576,7 +577,6 @@ CREATE TABLE IF NOT EXISTS `tutor_industrial` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
-
 --
 -- Estructura de tabla para la tabla `universidad`
 --
@@ -589,8 +589,6 @@ CREATE TABLE IF NOT EXISTS `universidad` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
-
-
 --
 -- Estructura de tabla para la tabla `area_laboral`
 --

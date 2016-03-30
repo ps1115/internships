@@ -56,7 +56,11 @@ success!
 timestamp: 2016-03-12T21:41:15.339351
 ALTER TABLE auth_user ADD username CHAR(128);
 success!
+<<<<<<< HEAD
 timestamp: 2016-03-15T20:14:54.438435
+=======
+timestamp: 2016-03-15T02:23:20.738883
+>>>>>>> syq
 ALTER TABLE auth_user ADD user_type CHAR(512);
 success!
 success!
@@ -81,3 +85,113 @@ success!
 success!
 success!
 success!
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+=======
+>>>>>>> origin/hexacode_plan_de_trabajo2
+success!
+success!
+success!
+success!
+success!
+success!
+<<<<<<< HEAD
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+>>>>>>> syq
+=======
+=======
+>>>>>>> origin/devel
+>>>>>>> origin/hexacode_plan_de_trabajo2

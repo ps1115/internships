@@ -140,58 +140,99 @@ VALUES
 
 -- Tipos de Pasantias
 
-INSERT INTO `pasantiasnuevo`.`tipo_pasantia`
-(`codigo`,
-`nombre`)
-VALUES
-('0100',
-'Sartenejas Corta');
+INSERT INTO tipo_pasantia VALUES ('EP-3420', 'Pasantia larga');
+INSERT INTO tipo_pasantia VALUES ('EP-1420', 'Pasantia intermedia');
+INSERT INTO tipo_pasantia VALUES ('ET-2420', 'Pasantia intermedia');
 
-INSERT INTO `pasantiasnuevo`.`tipo_pasantia`
-(`codigo`,
-`nombre`)
-VALUES
-('0130',
-'Sartenejas Mediana');
+-- Periodos
 
-INSERT INTO `pasantiasnuevo`.`tipo_pasantia`
-(`codigo`,
-`nombre`)
-VALUES
-('0160',
-'Sartenejas Larga');
+INSERT INTO periodo VALUES (77, 'Abril-Septiembre, 2016', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,0);
+INSERT INTO periodo VALUES (78, 'Octubre-Marzo, 2016', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,0);
+INSERT INTO periodo VALUES (79, 'Julio-Septiembre, 2016', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,0);
 
-INSERT INTO `pasantiasnuevo`.`tipo_pasantia`
-(`codigo`,
-`nombre`)
-VALUES
-('0190',
-'Sartenejas Caso Especial');
+-- Empresas
 
-INSERT INTO `pasantiasnuevo`.`tipo_pasantia`
-(`codigo`,
-`nombre`)
-VALUES
-('0200',
-'Litoral Corta');
+INSERT INTO empresa
+   VALUES (77, 'pmendoza@empresaspolar.com', 'password', 'Nombre mascota', 'Balto', 'Empresas Polar', NULL, NULL,
+      NULL, 'Los Cortijos', NULL, 'Alimentos y bebidas', NULL, NULL, 0, 1,
+      CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+      );
 
-INSERT INTO `pasantiasnuevo`.`tipo_pasantia`
-(`codigo`,
-`nombre`)
-VALUES
-('0230',
-'Litoral Mediana');
+INSERT INTO usuario
+   VALUES ('77', 'Juan Carlos', 'Medina Perez', NULL, NULL, NULL,NULL);
 
-INSERT INTO `pasantiasnuevo`.`tipo_pasantia`
-(`codigo`,
-`nombre`)
-VALUES
-('0260',
-'Litoral Larga');
+-- Tutores Academicos
 
-INSERT INTO `pasantiasnuevo`.`tipo_pasantia`
-(`codigo`,
-`nombre`)
+INSERT INTO tutor_academico VALUES ('77');
+
+-- Tutores Industriales
+INSERT INTO `pasantiasnuevo`.`tutor_industrial`
+(`id`,
+`email`,
+`nombre`,
+`apellido`,
+`ci`,
+`password`,
+`pregunta_secreta`,
+`respuesta_pregunta_secreta`,
+`id_empresa`,
+`profesion`,
+`cargo`,
+`id_universidad`,
+`departamento`,
+`direccion`,
+`id_pais`,
+`id_estado`,
+`telefono`,
+`intentos`,
+`habilitado`)
 VALUES
-('0290',
-'Litoral Caso Especial');
+(<{id: }>,
+<{email: }>,
+<{nombre: }>,
+<{apellido: }>,
+<{ci: }>,
+<{password: }>,
+<{pregunta_secreta: }>,
+<{respuesta_pregunta_secreta: }>,
+<{id_empresa: }>,
+<{profesion: }>,
+<{cargo: }>,
+<{id_universidad: }>,
+<{departamento: }>,
+<{direccion: }>,
+<{id_pais: }>,
+<{id_estado: }>,
+<{telefono: }>,
+<{intentos: 0}>,
+<{habilitado: 1}>);
+
+INSERT INTO tutor_industrial
+   VALUES ('plopez@gmail.com', NULL, NULL, NULL, NULL, 'Nombre suegra', 'Marisa', 77,
+      1, 'Ingeniero', 'Jefe de departamento', 'Desarrollo', 'Los Cortijos', NULL, NULL, '0424-1518824',
+      0, 1
+      );
+
+-- Pasantias
+
+INSERT INTO pasantia
+   VALUES ('EP-3420', 77, 2016, '2016-03-10', '325698kjsa',
+      'Análisis de pruebas mediante el uso de redes neurales', 'Sistemas de informacion',
+      'Principios de pruebas', 'si', 'Pruebas optimas', 0, 0, 0,
+      '2016-03-10', 78,  2017, 0, 'no mencion', '2016-03-10', 'en curso',
+      'plopez@gmail.com', NULL, '77', '77', NULL, NULL, NULL, NULL, NULL
+      );
+INSERT INTO pasantia
+   VALUES ('EP-1420', 77, 2016, '2016-03-10', 'sdio7hij2',
+      'Análisis de pruebas mediante el uso de redes neurales', 'Sistemas de informacion',
+      'Principios de pruebas', 'si', 'Pruebas optimas', 0, 0, 0,
+      '2016-03-10', 78,  2017, 0, 'no mencion', '2016-03-10', 'en curso',
+      'plopez@gmail.com', NULL, '77', '77', NULL, NULL, NULL, NULL, NULL
+      );
+INSERT INTO pasantia
+   VALUES ('ET-2420', 78, 2016, '2016-03-10', 'sdj2323',
+      'Análisis de pruebas mediante el uso de redes neurales', 'Sistemas de informacion',
+      'Principios de pruebas', 'si', 'Pruebas optimas', 0, 0, 0,
+      '2016-03-10', 78,  2017, 0, 'no mencion', '2016-03-10', 'en curso',
+      'plopez@gmail.com', NULL, '77', '77', NULL, NULL, NULL, NULL, NULL
+      );
