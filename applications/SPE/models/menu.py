@@ -12,9 +12,9 @@ response.title = request.application.replace('_',' ').title()
 response.subtitle = ''
 
 ## read more at http://dev.w3.org/html5/markup/meta.name.html
-response.meta.author = 'Your Name <you@example.com>'
-response.meta.description = 'a cool new app'
-response.meta.keywords = 'web2py, python, framework'
+response.meta.author = 'Universidad Simón Bolívar'
+response.meta.description = 'Sistema de Pasantías Empresariales'
+response.meta.keywords = 'pasantías, USB, empresa'
 response.meta.generator = 'Web2py Web Framework'
 
 ## your http://google.com/analytics id
@@ -82,7 +82,7 @@ def _():
     else:
         response.menu += [ #Coloque esto porque el cas no me funciona
             (T('Iniciar Sesion'),False,'#',[
-                (T('Miembro USB'),False,"https://secure.dst.usb.ve/login?service=https%3A%2F%2Fprosigue.dex.usb.ve%2FSPE%2Fdefault%2Flogin_cas"),
+                (T('Miembro USB'),False,"https://secure.dst.usb.ve/login?service=http%3A%2F%2F127.0.0.1%3A8000%2FSPE%2Fdefault%2Flogin_cas"),
                 (T('Empresa'),False,URL(a='Empresas',c='default',f='index'))
                 ]),
             ('Administrador',False,"#",[
