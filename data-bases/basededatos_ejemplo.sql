@@ -144,6 +144,8 @@ INSERT INTO tipo_pasantia VALUES ('EP-3420', 'Pasantia larga');
 INSERT INTO tipo_pasantia VALUES ('EP-1420', 'Pasantia intermedia');
 INSERT INTO tipo_pasantia VALUES ('ET-2420', 'Pasantia intermedia');
 
+/*
+
 -- Periodos
 
 INSERT INTO periodo VALUES (77, 'Abril-Septiembre, 2016', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,0);
@@ -236,3 +238,5 @@ INSERT INTO pasantia
       '2016-03-10', 78,  2017, 0, 'no mencion', '2016-03-10', 'en curso',
       'plopez@gmail.com', NULL, '77', '77', NULL, NULL, NULL, NULL, NULL
       );
+
+*/
