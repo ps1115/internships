@@ -455,12 +455,7 @@ CREATE TABLE IF NOT EXISTS `rol_sistema` (
 CREATE TABLE IF NOT EXISTS `solicita_permiso` (
     `usbid_estudiante`  varchar(8)  NOT NULL,
     `codigo_permiso`    int(11)     NOT NULL,
-    `codigo_pasantia`   varchar(8)  NOT NULL DEFAULT ' ',
-    `id_periodo`        int(10)     NOT NULL DEFAULT '0',
-    `anio`              int(11)     NOT NULL DEFAULT '0',
-    PRIMARY KEY (`usbid_estudiante`,`codigo_permiso`,`codigo_pasantia`,`id_periodo`,`anio`),
-    KEY `fk_solicita_permiso_codigo_pasantia_tipo_pasantia_codigo` (`codigo_pasantia`),
-    KEY `fk_solicita_permiso_id_periodo_periodo_id` (`id_periodo`),
+    PRIMARY KEY (`usbid_estudiante`,`codigo_permiso`),
     KEY `fk_solicita_permiso_codigo_permiso_permiso_codigo` (`codigo_permiso`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -792,9 +787,7 @@ ALTER TABLE `rol_sistema`
 -- Filtros para la tabla `solicita_permiso`
 --
 ALTER TABLE `solicita_permiso`
-    ADD CONSTRAINT `fk_solicita_permiso_codigo_pasantia_tipo_pasantia_codigo` FOREIGN KEY (`codigo_pasantia`) REFERENCES `tipo_pasantia` (`codigo`),
     ADD CONSTRAINT `fk_solicita_permiso_codigo_permiso_permiso_codigo` FOREIGN KEY (`codigo_permiso`) REFERENCES `permiso` (`codigo`) ON DELETE CASCADE ON UPDATE CASCADE,
-    ADD CONSTRAINT `fk_solicita_permiso_id_periodo_periodo_id` FOREIGN KEY (`id_periodo`) REFERENCES `periodo` (`id`) ON UPDATE CASCADE,
     ADD CONSTRAINT `fk_solicita_permiso_usbid_estudiante_usuario_usbid` FOREIGN KEY (`usbid_estudiante`) REFERENCES `usuario` (`usbid`);
 
 --
