@@ -142,7 +142,6 @@ CREATE TABLE `correo_por_verificar` (
 	PRIMARY KEY (`id`, `correo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-
 -- --------------------------------------------------------
 
 --
@@ -481,7 +480,6 @@ CREATE TABLE IF NOT EXISTS `solicitud_pasante` (
     KEY `fk_solicitud_pasante_id_empresa_empresa_log` (`id_empresa`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-
 -- --------------------------------------------------------
 
 --
@@ -561,7 +559,6 @@ CREATE TABLE IF NOT EXISTS `tutor_industrial` (
     `pregunta_secreta`          varchar(254)    NOT NULL,
     `respuesta_pregunta_secreta`varchar(254)    NOT NULL,
     `id_empresa`                integer		    NOT NULL,
-    `id_universidad`			int(11)			NOT NULL,
     `profesion`                 varchar(50)     NOT NULL,
     `cargo`                     varchar(50)     NOT NULL,
     `departamento`              varchar(50)     NOT NULL,
@@ -579,7 +576,6 @@ CREATE TABLE IF NOT EXISTS `tutor_industrial` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
-
 --
 -- Estructura de tabla para la tabla `universidad`
 --
@@ -592,22 +588,6 @@ CREATE TABLE IF NOT EXISTS `universidad` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
-
-
---
--- Estructura de tabla para la tabla `universidad`
---
-CREATE TABLE IF NOT EXISTS `universidad` (
-    `id`        int(11)         NOT NULL AUTO_INCREMENT,
-    `nombre`    varchar(254)    NOT NULL,
-    `id_pais`   int(11)         NOT NULL,
-    PRIMARY KEY (`id`),
-    KEY `fk_universidad_id_pais_pais_id` (`id_pais`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
-
 --
 -- Estructura de tabla para la tabla `area_laboral`
 --

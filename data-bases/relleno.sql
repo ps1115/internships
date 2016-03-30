@@ -8,9 +8,17 @@ INSERT INTO tipo_pasantia VALUES ('EP-1420', 'Pasantia intermedia');
 INSERT INTO tipo_pasantia VALUES ('ET-2420', 'Pasantia intermedia');
 
 
+INSERT INTO carrera VALUES ('0800', 'Carrera', 'Larga', 'Sartenejas', 'Carreristica', 1);
+
+-- INSERT INTO usuario
+--    VALUES ('11-10053', 'Estudiante', 'Estudioso', NULL, NULL, NULL,NULL
+--       );
+
 INSERT INTO usuario
    VALUES ('77', 'Juan Carlos', 'Medina Perez', NULL, NULL, NULL,NULL);
 
+
+INSERT INTO usuario_estudiante VALUES ('11-10053', '11-10053', NULL, NULL, NULL, 'algo@gmail.com', NULL, NULL, 'Ningun lado', 'M');
 
 INSERT INTO empresa
    VALUES (77, 'pmendoza@empresaspolar.com', 'password', 'Nombre mascota', 'Balto', 'Empresas Polar', NULL, NULL,
