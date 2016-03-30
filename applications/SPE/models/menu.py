@@ -41,7 +41,7 @@ else:
 
 menu_autenticado = [
     (texto_principal,False, '#',[
-        (SPAN(' Cerrar Sesión', _class='fa fa-sign-out'), False, URL('default','logout'))
+        (SPAN(' Cerrar Sesión', _class='fa fa-sign-out'), False, URL(c='default',f='logout'))
     ])
 ]
 

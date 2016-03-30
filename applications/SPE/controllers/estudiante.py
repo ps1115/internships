@@ -29,7 +29,7 @@ def agregar_preinscripcion():
                 default  = DatosEstudiante.email_sec),
         Field('telf_hab',label='Teléfono Habitación',required=True,
                 default = DatosEstudiante.telf_hab),
-        submit_button='Guardar datos',
+        submit_button='Actualizar datos',
         buttons=['submit'],
         formstyle='bootstrap3_stacked'
     )
@@ -97,7 +97,7 @@ def agregar_preinscripcion():
                 id_estado     = datos_pasantia.vars.id,
                 cod_seguridad = random_key()
                 )
-        redirect(URL('estudiante', 'agregar_preinscripcion'))
+        redirect(URL('estudiante', 'finalizar_preinscripcion'))
 
     return dict(message="Preinscripcion",form1=datos_personales,form2=datos_pasantia,form3=datos_perfil)
 
@@ -237,7 +237,7 @@ def plan_trabajo():
                 requires=IS_IN_SET(semanas, zero="Seleccione")),
         formstyle='bootstrap3_stacked',
         submit_button=T('AGREGAR ACTIVIDAD'),
-        buttons=['submit'] 
+        buttons=['submit']
     )
 
     if datos_fase.process(formname="datos_fase").accepted:
