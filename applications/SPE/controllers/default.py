@@ -52,8 +52,8 @@ def login_cas():
         #redirect(URL('error'))
         pass
     try:
-        import urllib2
-        #ssl._create_default_https_context = ssl._create_unverified_context
+        import urllib2, ssl
+        ssl._create_default_https_context = ssl._create_unverified_context
         url = "https://secure.dst.usb.ve/validate?ticket="+\
               request.vars.getfirst('ticket') +\
               "&service=https%3A%2F%2Fprosigue.dex.usb.ve%2FSPE%2Fdefault%2Flogin_cas"
