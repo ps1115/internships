@@ -389,6 +389,7 @@ CREATE TABLE IF NOT EXISTS `permiso` (
     `justificacion`         text        NOT NULL,
     `observaciones_cctds`   text,
     `status`                varchar(10) DEFAULT 'Pendiente',
+    `fechas_propuestas`     text,
     PRIMARY KEY (`codigo`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
