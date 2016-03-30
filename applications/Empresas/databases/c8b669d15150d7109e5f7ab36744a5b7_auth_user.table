@@ -98,6 +98,7 @@ I8
 sg7
 S'CHAR(512)'
 p26
+<<<<<<< HEAD
 sg9
 I00
 sg10
@@ -114,46 +115,15 @@ I4
 sg7
 S'CHAR(512)'
 p29
-sg9
-I00
-sg10
-g11
-ssS'password'
-p30
-(dp31
-g4
-I512
-sg5
-I00
-sg6
-I6
-sg7
-S'CHAR(512)'
-p32
-sg9
-I00
-sg10
-S'password'
-p33
-ssS'registration_key'
-p34
-(dp35
-g4
-I512
-sg5
-I00
-sg6
-I7
-sg7
-S'CHAR(512)'
-p36
+=======
+>>>>>>> syq
 sg9
 I00
 sg10
 g11
 ssS'id'
-p37
-(dp38
+p27
+(dp28
 g4
 I512
 sg5
@@ -162,7 +132,88 @@ sg6
 I1
 sg7
 S'INTEGER PRIMARY KEY AUTOINCREMENT'
+p29
+sg9
+I00
+sg10
+S'id'
+p30
+ssS'password'
+<<<<<<< HEAD
+p30
+(dp31
+=======
+p31
+(dp32
+>>>>>>> syq
+g4
+I512
+sg5
+I00
+sg6
+I6
+sg7
+S'CHAR(512)'
+<<<<<<< HEAD
+p32
+=======
+p33
+>>>>>>> syq
+sg9
+I00
+sg10
+S'password'
+<<<<<<< HEAD
+p33
+ssS'registration_key'
+p34
+(dp35
+=======
+p34
+ssS'registration_key'
+p35
+(dp36
+>>>>>>> syq
+g4
+I512
+sg5
+I00
+sg6
+I7
+sg7
+S'CHAR(512)'
+<<<<<<< HEAD
+p36
+=======
+p37
+>>>>>>> syq
+sg9
+I00
+sg10
+g11
+<<<<<<< HEAD
+ssS'id'
+p37
+(dp38
+=======
+ssS'email'
+p38
+(dp39
+>>>>>>> syq
+g4
+I512
+sg5
+I00
+sg6
+I1
+sg7
+<<<<<<< HEAD
+S'INTEGER PRIMARY KEY AUTOINCREMENT'
 p39
+=======
+S'CHAR(512)'
+p40
+>>>>>>> syq
 sg9
 I00
 sg10

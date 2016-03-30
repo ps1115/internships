@@ -1,0 +1,34 @@
+{{extend "layout.html"}}
+<div class="col-xs-2">
+</div>
+<div class="col-xs-6">
+	<p>
+		<h3 style="margin-bottom: 25px;">Justificación retiro de pasantía</h3>
+	</p>
+	<p>
+		<h4>Datos del estudiante</h4>
+	</p>
+	<p>
+	Nombre: {{=estudiante.nombre}} {{=estudiante.apellido}}
+	</p>
+	<p>
+	Carnet: {{=estudiante.usbid}}
+	</p>
+	<p>
+		<h4>Datos de la pasantía</h4>
+	</p>
+	<p>
+		{{=pasantia.titulo}}
+	</p>
+	<p>
+	Período: {{=pasantia.periodo}} - {{=pasantia.anio}}
+	</p>
+	<p>
+		<h4>Motivo del retiro</h4>
+	</p>
+	<p>
+		{{=pasantia.motivo_retiro_tutor_industrial}}
+	</p>
+</div>
+<div class="col-xs-4">
+</div>

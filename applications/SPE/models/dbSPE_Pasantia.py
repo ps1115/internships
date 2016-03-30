@@ -27,9 +27,13 @@ dbSPE.define_table('pasantia',
    Field('id_tutor_academico'),
    Field('retirar'),
    Field('obtencion_pasantia'),
-   Field('motivo_retiro_tutor_industrial'),
-   Field('motivo_retiro_tutor_academico'),
-   Field('motivo_retiro_estudiante'),
+   Field('motivo_retiro_tutor_industrial','text',label=T('Motivo')),
+   Field('motivo_retiro_tutor_academico','text',label=T('Motivo')),
+   Field('motivo_retiro_estudiante','text',label=T('Motivo')),
    primarykey=['codigo','id_estudiante','anio','periodo'],
    format = '%(codigo)s %(periodo)s'
    )
+
+dbSPE.pasantia.motivo_retiro_tutor_industrial.requires+=[IS_NOT_EMPTY(error_message='Campo Obligatorio')]
+dbSPE.pasantia.motivo_retiro_tutor_academico.requires+=[IS_NOT_EMPTY(error_message='Campo Obligatorio')]
+dbSPE.pasantia.motivo_retiro_estudiante.requires+=[IS_NOT_EMPTY(error_message='Campo Obligatorio')]

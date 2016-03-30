@@ -4,9 +4,17 @@ INSERT INTO periodo VALUES (77, 'abril-septiembre,2016',CURRENT_TIMESTAMP, CURRE
 -- INSERT INTO tipo_pasantia VALUES ('PS1115', 'Pasantia prueba');
 INSERT INTO tipo_pasantia VALUES ('PS1110', 'Otra Pasantia prueba');
 
+INSERT INTO carrera VALUES ('0800', 'Carrera', 'Larga', 'Sartenejas', 'Carreristica', 1);
+
+-- INSERT INTO usuario
+--    VALUES ('11-10053', 'Estudiante', 'Estudioso', NULL, NULL, NULL,NULL
+--       );
+
 INSERT INTO usuario
    VALUES ('77', 'Estudiante', 'Estudioso', NULL, NULL, NULL,NULL
       );
+
+INSERT INTO usuario_estudiante VALUES ('11-10053', '11-10053', NULL, NULL, NULL, 'algo@gmail.com', NULL, NULL, 'Ningun lado', 'M');
 
 INSERT INTO empresa
    VALUES (77, 'log', 'password', 'quien?', 'yo', 'Empresa', 1, NULL, NUll,

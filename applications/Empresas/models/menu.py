@@ -71,9 +71,11 @@ def _():
         # Caso 2: El usuario es un tutor industrial
         elif auth.user.user_Type == 'tutor_industrial':
             response.menu += [
-                ('Solicitudes de pasantes',False,"#"),
-                ('Consultar Pasantias',False,"#"),
-                ('Justificar Retiro Pasantia',False,URL('tutor_industrial','justificar_retiro_empresa'))
+                ('Tutor Industrial',False,"#",[
+                    ('¿Qué es un tutor industrial?',False,"#"),
+                    ('Consultar Pasantias',False,"#"),
+                    ('Justificar Retiro Pasante',False,URL('empresa','justificar_retiro_empresa'))
+                    ])
             ]
     # Entradas del menu si el usuario NO esta autenticado
     else:
@@ -87,7 +89,8 @@ def _():
         response.menu += [
             ('Tutor Industrial',False,"#",[
                 ('¿Qué es un tutor industrial?',False,"#"),
-                ('Registrarse',False,URL(c='tutor_industrial', f='solicitar_registro_tutor'))
+                ('Registrarse',False,URL(c='tutor_industrial', f='solicitar_registro_tutor')),
+                ('Justificar Retiro Pasante',False,URL('empresa','justificar_retiro_empresa'))
                 ])
         ]
 
