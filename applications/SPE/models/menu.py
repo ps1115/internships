@@ -82,7 +82,7 @@ def _():
     else:
         response.menu += [ #Coloque esto porque el cas no me funciona
             (T('Iniciar Sesion'),False,'#',[
-                (T('Miembro USB'),False,"https://secure.dst.usb.ve/login?service=http%3A%2F%2F127.0.0.1%3A8000%2FSPE%2Fdefault%2Flogin_cas"),
+                (T('Miembro USB'),False,"https://secure.dst.usb.ve/login?service=https%3A%2F%2Fprosigue.dex.usb.ve%2FSPE%2Fdefault%2Flogin_cas"),
                 (T('Empresa'),False,URL(a='Empresas',c='default',f='index'))
                 ]),
             ('Administrador',False,"#",[
