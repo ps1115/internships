@@ -9,5 +9,6 @@ dbSPE.define_table('permiso',
    Field('justificacion'),
    Field('observacion_cctds'),
    Field('status'),
-   Field('fechas_propuestas')
+   Field('fechas_propuestas'),
+   primarykey=['codigo']
    )
