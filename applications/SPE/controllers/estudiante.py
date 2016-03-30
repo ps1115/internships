@@ -183,7 +183,6 @@ def plan_trabajo():
     ConsultaDatosActividad = dbSPE(dbSPE.actividad.id_plan_de_trab==DatosPlan.id)
 
     #Viene la parte de OBTENER las actividades ya cargadas
-    # print 'Actividad 2 es: ' + str(actividad)
     if ConsultaDatosActividad.isempty():
         actividad = []
         inicio = []
@@ -193,10 +192,9 @@ def plan_trabajo():
         actividad = DatosActividad.descripcion
         inicio = DatosActividad.semana_inicio
         fin = DatosActividad.semana_fin
-    print 'Actividad 3 es: ' + str(actividad)
+    # print 'Actividad 3 es: ' + str(actividad)
 
     ConsultaDatosFase = dbSPE(dbSPE.fase.id_plan_de_trab==DatosPlan.id)
-    print 'Actividad es: ' + str(actividad)
     if ConsultaDatosFase.isempty():
         fases_nombre = []
         fases_obj    = []
@@ -255,15 +253,8 @@ def plan_trabajo():
                 nombre_fase     = datos_fase.vars.nombre_fase,
                 objetivos_especificos = datos_fase.vars.objetivo_fase)
 
-            redirect(URL('estudiante', 'plan_trabajo'))
-
-    # Consulta_act_fase = dbSPE(dbSPE.actividad.codigo_fase==0)
-    # Datos_act_fase = Consulta_act_fase.select()
-    # print 'actividades de la fase afuera de IF'
-    # for dato in Datos_act_fase :
-    #     print dato.descripcion
-    #     print dato.codigo_fase
-    #     print ' '
+            response.flash = 'La fase ha sido agregada exitosamente'
+            redirect(URL(c='estudiante', f='plan_trabajo'))
 
     if datos_actividad.process(formname="datos_actividad").accepted:
 
@@ -273,16 +264,6 @@ def plan_trabajo():
 
                 Consulta_act_fase = dbSPE(dbSPE.actividad.codigo_fase==int(datos_actividad.vars.seleccione_fase))
                 Datos_act_fase = Consulta_act_fase.select()
-                # actividad.append(datos_actividad.vars.descripcion_actividad)
-                # print 'aqui entro a las actividades de la fase'
-                # for dato in Datos_act_fase :
-                #     print dato.descripcion
-                #     print dato.codigo_fase
-                #     print ' '
-
-                # print 'Actividad es: ' + str(actividad)
-                # inicio = datos_actividad.vars.sem_inicio
-                # fin = datos_actividad.vars.sem_fin
                 dbSPE.actividad.update_or_insert(
                     codigo_fase=datos_actividad.vars.seleccione_fase,
                     descripcion=datos_actividad.vars.descripcion_actividad,
@@ -290,18 +271,36 @@ def plan_trabajo():
                     semana_fin=datos_actividad.vars.sem_fin,
                     id_plan_de_trab=DatosPlan.id)
 
-                redirect(URL(c='estudiante',f='plan_trabajo',vars=dict(actividad=actividad)))
+                response.flash = 'La actividad ha sido agregada exitosamente'
+                redirect(URL(c='estudiante',f='plan_trabajo'))
             else:
                 response.flash = 'La semana final de la actividad debe ser mayor a la semana inicial de la misma'
 
     return dict(message="Plan de Trabajo",
                 form1=datos_fase,
                 form2=datos_actividad)
-                # actividad=actividad,
-                # inicio=inicio,
-                # fin=fin,
-                # fases_nombre=fases_nombre,
-                # fases_obj=fases_obj)
+
+def mostrar_plan():
+
+    import ast
+
+    #Buscamos los datos del plan de trabajo si los hay
+    ConsultaPlan = (dbSPE(dbSPE.plan_de_trabajo.id_estudiante==auth.user.username))
+    if ConsultaPlan.isempty():
+        response.flash = 'No posees Plan de Trabajo para mostrar'
+        redirect(URL('estudiante', 'plan_trabajo'))
+    else:
+        Plan = ConsultaPlan.select()[0]
+        Cod_fase = (dbSPE(dbSPE.fase.id_plan_de_trab==Plan.id)).select()
+        for fila in Cod_fase:
+            print fila.nombre_fase, ' su objetivo es: ', fila.objetivos_especificos
+            fas_act = (dbSPE(dbSPE.actividad.codigo_fase==fila.codigo)).select()
+            for row in fas_act:
+                print 'Actividad: ', row.descripcion, ', inicia en la ',row.semana_inicio, 'y termina en la ', row.semana_fin
+            print ''
+            print ''
+
+    return dict(message="Plan de Trabajo",Cod_fase= Cod_fase)
 
 
             ##################################################

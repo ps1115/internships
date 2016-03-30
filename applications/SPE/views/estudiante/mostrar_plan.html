@@ -1,0 +1,51 @@
+{{('message' in globals())}}
+{{extend 'layout.html'}}
+
+<p class='title'>{{=message}}</p>
+
+<div class="row">
+
+{{ConsultaPlan = (dbSPE(dbSPE.plan_de_trabajo.id_estudiante==auth.user.username))}}
+    {{if ConsultaPlan.isempty():}}
+        {{response.flash = 'No posees Plan de Trabajo para mostrar'}}
+        {{redirect(URL('estudiante', 'plan_trabajo'))}}
+    {{else:}}
+        {{Plan = ConsultaPlan.select()[0]}}
+        {{Cod_fase = (dbSPE(dbSPE.fase.id_plan_de_trab==Plan.id)).select()}}
+        {{for fila in Cod_fase:}}
+            <ol class=subtitle>
+            <b>{{=fila.nombre_fase}}</b> su objetivo es: {{=fila.objetivos_especificos}}
+            {{fas_act = (dbSPE(dbSPE.actividad.codigo_fase==fila.codigo)).select()}}
+            <br>
+            <ul style="list-style-type:none"><h5>
+            <div class="container col-md-3 form-group" >
+                <b> Actividad </b>
+            </div>
+            <div class="container col-md-2 form-group" >
+                <b> Inicio </b>
+            </div>
+            <div class="container col-md-7 form-group" >
+               	<b> Fin </b>
+            </div>
+            {{for row in fas_act:}}
+            	<li><h5>
+            	<div class="container col-md-3 form-group" >
+                	{{=row.descripcion}} 
+                </div>
+                <div class="container col-md-2 form-group" >
+                	{{=row.semana_inicio}}
+                </div>
+                <div class="container col-md-7 form-group" >
+                	{{=row.semana_fin}}
+                </div>
+                </h5></li>
+            {{pass}}
+            </ul></h5></ol>
+            {{print ''}}
+            {{print ''}}
+
+        {{pass}}
+
+    {{pass}}
+
+</div>
