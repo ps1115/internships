@@ -6,7 +6,7 @@ dbSPE.define_table('carrera',
                 Field('nombre','string',required=True,unique=True, requires=[IS_LENGTH(100)], label='Nombre'),
                 Field('duracion','string',required=True, requires=IS_IN_SET(['Larga','Corta']), label="Duración", notnull=True),
                 Field('sede','string', requires=IS_IN_SET(['Sartenejas','Litoral'],zero=None), label="Sede", notnull=True),
-                Field('coordinacion','reference coordinacion', label="Coordinación"),
+                Field('coordinacion', label="Coordinación", required=True),
                 primarykey=['codigo'],
                 format='%(codigo)s %(nombre)s'
                )
