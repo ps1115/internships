@@ -44,7 +44,7 @@ def login():
 
     if formulario_login.process(onvalidation=validar_credenciales).accepted:
         # Buscamos el id de la empresa
-        correoVerificarSet = dbSPE(dbSPE.correo_Por_Verificar.correo == request.vars.login).select()
+        correoVerificarSet = dbSPE(dbSPE.correo_por_verificar.correo == request.vars.login).select()
         if correoVerificarSet:
             redirect(URL(c='default',f='verifyEmail',vars=dict(correo=request.vars.login)))
         else:
@@ -57,7 +57,7 @@ def login():
 
 def resendVerificationEmail():
 
-    correoVerificarSet = dbSPE(dbSPE.correo_Por_Verificar.correo == request.vars.correo).select()
+    correoVerificarSet = dbSPE(dbSPE.correo_por_verificar.correo == request.vars.correo).select()
 
     reenviar_Correo_Verificacion(request.vars.correo)
 
@@ -83,11 +83,11 @@ def verifyEmail():
 
     if form.process().accepted:
         # Buscamos el id de la empresa
-        correoVerificarSet = dbSPE(dbSPE.correo_Por_Verificar.correo == request.vars.correo).select()
+        correoVerificarSet = dbSPE(dbSPE.correo_por_verificar.correo == request.vars.correo).select()
         if correoVerificarSet[0].codigo != request.vars.codigo:
             response.flash = T("Codigo incorrecto")
         else:
-            dbSPE(dbSPE.correo_Por_Verificar.correo == request.vars.correo).delete()
+            dbSPE(dbSPE.correo_por_verificar.correo == request.vars.correo).delete()
             auth.login_bare(request.vars.correo,contrasena)
             redirect(URL(c='default',f='home'))
     return response.render('default/codigoVerificacion.html',

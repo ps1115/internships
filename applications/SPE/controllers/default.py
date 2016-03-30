@@ -172,14 +172,14 @@ def registrar():
 def correo_no_verificado(usbid):
 
     correoUsuario = obtener_correo(usbid)
-    buscarCorreo  = dbSPE(dbSPE.correo_Por_Verificar.correo==correoUsuario)
+    buscarCorreo  = dbSPE(dbSPE.correo_por_verificar.correo==correoUsuario)
 
     return not(buscarCorreo.isempty())
 
 #Reenvia la verificacion del correo
 def resendVerificationEmail():
 
-    correoVerificarSet = dbSPE(dbSPE.correo_Por_Verificar.correo == request.vars.correo).select()
+    correoVerificarSet = dbSPE(dbSPE.correo_por_verificar.correo == request.vars.correo).select()
 
     reenviar_Correo_Verificacion(request.vars.correo)
 
@@ -202,11 +202,11 @@ def verifyEmail():
 
     if form.process().accepted:
         # Buscamos el id de la empresa
-        correoVerificarSet = dbSPE(dbSPE.correo_Por_Verificar.correo == correo_usuario).select()[0]
+        correoVerificarSet = dbSPE(dbSPE.correo_por_verificar.correo == correo_usuario).select()[0]
         if correoVerificarSet.codigo != request.vars.codigo:
             response.flash = T("Codigo incorrecto")
         else:
-            dbSPE(dbSPE.correo_Por_Verificar.correo == correo_usuario).delete()
+            dbSPE(dbSPE.correo_por_verificar.correo == correo_usuario).delete()
             usuarioUSB = dbSPE(dbSPE.usuario.usbid==request.vars.usbid).select()[0]
             auth.login_bare(request.vars.usbid,usuarioUSB.llave)
             redirect(URL(c='default',f='index'))

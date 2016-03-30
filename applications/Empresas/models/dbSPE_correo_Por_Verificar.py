@@ -13,4 +13,4 @@ dbSPE.define_table('correo_por_verificar',
                 Field('codigo','string',required=True,ondelete='CASCADE',
                     notnull=True, unique=True,label='Pais'),format='%(correo)s - %(codigo)s')
 
-dbSPE.correo_Por_Verificar.correo.requires=[IS_EMAIL(error_message=T('Este no es un correo valido'))]
+dbSPE.correo_por_verificar.correo.requires=[IS_EMAIL(error_message=T('Este no es un correo valido'))]
