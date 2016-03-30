@@ -429,6 +429,9 @@ def generar_curriculum():
 
 def retirar_pasantia():
     pasantias = dbSPE((dbSPE.pasantia.id_estudiante == auth.user.username) & (dbSPE.pasantia.status=='en curso'))
+    if pasantias.isempty():
+        response.flash = 'No posees pasantia para retirar'
+        redirect(URL('default', 'index'))
     pasantia = pasantias.select()[0]
     field =[dbSPE.pasantia.motivo_retiro_estudiante]
     form = SQLFORM.factory(

@@ -54,7 +54,6 @@ def _():
     app = request.application
     ctr = request.controller
     # useful links to internal and external resources
-<<<<<<< HEAD
 
     # Entradas del menu si el usuario esta autenticado
     if auth.is_logged_in():
@@ -64,15 +63,15 @@ def _():
                 ('Llenar Curriculum',False,URL('estudiante','llenar_curriculum')),
                 ('Plan de Trabajo',False,URL('estudiante','plan_trabajo')),
                 ('Retirar Pasantía',False,URL('estudiante','retirar_pasantia')),
-                ('Solicitar permiso de inscripción extemporánea',False,"#"),
-                ('Solicitar permiso de evaluación extemporánea',False,"#")
+                ('Solicitar permiso de inscripción extemporánea',False,URL('estudiante', 'permiso_inscripcion')),
+                ('Solicitar permiso de evaluación extemporánea',False,URL('estudiante', 'permiso_evaluacion'))
                 ])]
         elif auth.user.user_Type == 'Docente':
             response.menu += [
             ('Profesor',False,"#",[
                 ('Registrarse',False,URL('default','registrar_profesor')),
                 ('Evaluar Pasantía',False,"#"),
-                ('Retiro Pasantia',False,URL('profesor','justificar_retiro_profesor'))
+                ('Justificar Retiro Pasante',False,URL('profesor','justificar_retiro_profesor'))
                 ])
                 ]
         elif auth.user.user_Type == 'Administrativo':
@@ -93,33 +92,6 @@ def _():
             ('Coordinador',False,"#",[
                 ('Especificar Configuraciones',False,URL('catalogos_grid','especificar_configuraciones'))
                 ])
-=======
-    response.menu += [
-        (T('Iniciar Sesion'),False,'#',[
-            (T('Miembro USB'),False,"#"),
-            (T('Empresa'),False,'#')
-            ]),
-        ('Estudiante',False,"#",[
-            ('Agregar Preinscripcion',False,URL('estudiante','agregar_preinscripcion')),
-            ('Llenar Curriculum',False,URL('estudiante','llenar_curriculum')),
-            ('Plan de Trabajo',False,URL('estudiante','plan_trabajo')),
-            ('Retirar Pasantía',False,URL('estudiante','retirar_pasantia')),
-            ('Solicitar permiso de inscripción extemporánea',False,URL('estudiante', 'permiso_inscripcion')),
-            ('Solicitar permiso de evaluación extemporánea',False,URL('estudiante', 'permiso_evaluacion'))
-            ]),
-        ('Profesor',False,"#",[
-            ('Registrarse',False,URL('default','registrar_profesor')),
-            ('Consultar pasantías',False,"#"),
-            ('Evaluar Pasantía',False,"#"),
-            ('Justificar Retiro Pasante',False,URL('profesor','justificar_retiro_profesor'))
-            ]),
-        ('Administrador',False,"#",[
-            ('Gestionar Catálogos',False,URL('catalogos_grid','gestion_cct2'))
-            ]),
-        ('Coordinador',False,"#",[
-            ('Especificar Configuraciones',False,URL('catalogos_grid','especificar_configuraciones'))
-            ])
->>>>>>> syq
         ]
 
 if DEVELOPMENT_MENU: _()
