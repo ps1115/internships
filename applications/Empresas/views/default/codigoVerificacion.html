@@ -32,7 +32,7 @@
                     <div class="row col-md-8">
                         {{=form.custom.submit}}
                         <div class="right">
-                            {{=A(T('Send Email Again'), _class='btn btn-default',_href=URL  (c='default',f='resendVerificationEmail',vars=dict(correo=request.vars.correo)))}}
+                            {{=A(T('Send Email Again'), _class='btn btn-default',_href=URL  (c='default',f='resendVerificationEmail',vars=dict(correo=request.vars.correo,usbid=request.vars.usbid)))}}
                         </div>
                     </div>
 

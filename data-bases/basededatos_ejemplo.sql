@@ -108,13 +108,6 @@ INSERT INTO `pasantiasnuevo`.`departamento`
 `sede`)
 VALUES
 ('Ciencias de la Informacion',
-<<<<<<< HEAD
-5,
-'cdlais@usb.ve',
-'Sartenejas');
-
-
-=======
 1,
 'cdlais@usb.ve',
 'Sartenejas');
@@ -202,4 +195,3 @@ INSERT INTO `pasantiasnuevo`.`tipo_pasantia`
 VALUES
 ('0290',
 'Litoral Caso Especial');
->>>>>>> origin/devel
