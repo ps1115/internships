@@ -10,13 +10,13 @@ def captcha_field(request=request):
 
 
 def tiene_foto(usbid):
-    import requests
+    import requests, os
 
     query =  dbSPE(dbSPE.usuario.usbid==usbid)
     foto  = query.select()[0].foto
-    path = 'http://127.0.0.1/SPE/static/profile_pictures/' + str(foto)
-    r = requests.head(path)
-    return dict(check=(r.status_code == requests.codes.ok),path=foto)
+    path = 'applications/SPE/static/profile_pictures/' + str(foto)
+
+    return dict(check=(os.path.exists(path)),path=foto)
 
 def validar_foto(form):
     if form.vars.image is not None:
