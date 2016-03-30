@@ -7,7 +7,7 @@
 	codigo VARCHAR(45) NOT NULL,
 '''
 
-dbSPE.define_table('correo_Por_Verificar',
+dbSPE.define_table('correo_por_verificar',
                 Field('correo','string',required=True,ondelete='CASCADE',
                     notnull=True, unique=True,label='Pais'),
                 Field('codigo','string',required=True,ondelete='CASCADE',
