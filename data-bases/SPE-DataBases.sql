@@ -142,17 +142,6 @@ CREATE TABLE `correo_por_verificar` (
 	PRIMARY KEY (`id`, `correo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Estructura de tabla para la tabla `correo_por_verificar`
---
-
-
-CREATE TABLE `correo_por_verificar` (
-	`id` INT(11) NOT NULL AUTO_INCREMENT,
-	`correo` VARCHAR(80) NOT NULL,
-	`codigo` VARCHAR(45) NOT NULL,
-	PRIMARY KEY (`id`, `correo`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -266,11 +255,7 @@ CREATE TABLE IF NOT EXISTS `estado` (
     `id_pais`   int(11)     NOT NULL,
     PRIMARY KEY (`id`),
     KEY `fk_estado_id_pais_pais_id` (`id_pais`)
-<<<<<<< HEAD
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=25 ;
-=======
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
->>>>>>> origin/devel
 
 -- --------------------------------------------------------
 
@@ -494,11 +479,8 @@ CREATE TABLE IF NOT EXISTS `solicitud_pasante` (
     PRIMARY KEY (`codigo`),
     KEY `fk_solicitud_pasante_carrera_carrea_codigo` (`id_carrera`),
     KEY `fk_solicitud_pasante_id_empresa_empresa_log` (`id_empresa`)
-<<<<<<< HEAD
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1227 ;
-=======
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
->>>>>>> origin/devel
+
 
 -- --------------------------------------------------------
 
@@ -582,7 +564,6 @@ CREATE TABLE IF NOT EXISTS `tutor_industrial` (
     `id_universidad`			int(11)			NOT NULL,
     `profesion`                 varchar(50)     NOT NULL,
     `cargo`                     varchar(50)     NOT NULL,
-    `id_universidad`            int(11)         NOT NULL,
     `departamento`              varchar(50)     NOT NULL,
     `direccion`                 varchar(254)    NOT NULL,
     `id_pais`                 	int(2)          DEFAULT NULL,
@@ -595,7 +576,6 @@ CREATE TABLE IF NOT EXISTS `tutor_industrial` (
     KEY `fk_tutor_industrial_pais` (`id_pais`),
     KEY `fk_tutor_industrial_id_empresa_empresa_log` (`id_empresa`),
     KEY `fk_tutor_industrial_id_universidad_universidad_id` (`id_universidad`)
-<<<<<<< HEAD
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -609,14 +589,11 @@ CREATE TABLE IF NOT EXISTS `universidad` (
     `id_pais`   int(11)         NOT NULL,
     PRIMARY KEY (`id`),
     KEY `fk_universidad_id_pais_pais_id` (`id_pais`)
-=======
->>>>>>> origin/devel
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
-<<<<<<< HEAD
-=======
+
 --
 -- Estructura de tabla para la tabla `universidad`
 --
@@ -630,7 +607,6 @@ CREATE TABLE IF NOT EXISTS `universidad` (
 
 -- --------------------------------------------------------
 
->>>>>>> origin/devel
 
 --
 -- Estructura de tabla para la tabla `area_laboral`
