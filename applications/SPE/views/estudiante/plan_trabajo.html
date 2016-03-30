@@ -6,16 +6,34 @@
   Todos los campos son obligatorios</p>
 
 <div class="row">
+
   <div class="container col-md-5 form-group">
-  {{=form1}}
+  {{=form1.custom.begin}}
+  <b>{{=form1.custom.label.nombre_fase}}</b>
+  {{=form1.custom.widget.nombre_fase}}
+  <span class="help-block">Escriba el nombre de su fase</span>
+  <br>
+  <b>{{=form1.custom.label.objetivo_fase}}</b>
+  {{=form1.custom.widget.objetivo_fase}}
+  <span class="help-block">Escriba el objetivo de su fase</span>
+  <br>
+  <div class="container col-md-4 form-group">
+  <span class="input-group-btn">
+      <button class="btn btn-default" type="submit">AGREGAR FASE</button>
+    </span>
   </div>
+  {{=form1.custom.end}}
+  </div>
+
   <div class="container col-md-5 form-group">
   {{=form2.custom.begin}}
   <b>{{=form2.custom.label.seleccione_fase}}</b>
   {{=form2.custom.widget.seleccione_fase}}
+  <span class="help-block">Debe seleccionar una fase para agregarle una actividad</span>
   <br>
   <b>{{=form2.custom.label.descripcion_actividad}}</b>
   {{=form2.custom.widget.descripcion_actividad}}
+  <span class="help-block">Escriba la descripción de la actividad a agregar</span>
   <br>
   <div class="container col-md-5 form-group">
   <b>{{=form2.custom.label.sem_inicio}}</b>
@@ -25,9 +43,9 @@
   <div class="container col-md-5 form-group">
   <b>{{=form2.custom.label.sem_fin}}</b>
   {{=form2.custom.widget.sem_fin}}
-  <br>
   </div>
   </div>
+
 </div>
 <div class="container col-md-offset-5 form-group">
 <span class="input-group-btn">
@@ -36,20 +54,9 @@
 </div>
   {{=form2.custom.end}}
 
-<div class="row">
-  {{items =actividad}}
-  <ul class="list">
-    <div class="container col-md-4 form-group">{{for item in items:}}<li>{{=item.descripcion}}</li>{{pass}}</div>
-    <div class="container col-md-4 form-group">{{for item in items:}}<li>{{=item.semana_inicio}}</li>{{pass}}</div>
-    <div class="container col-md-4 form-group">{{for item in items:}}<li>{{=item.semana_fin}}</li>{{pass}}</div>
-  </ul>
-</div>
-
-
-
 <div class="container col-md-offset-10 form-group">
     <br><br>
-    <button type="submit" class="btn btn-default">ENVIAR PLAN DE TRABAJO</button>
+    <button type="submit" class="btn btn-default">VISUALIZAR PLAN DE TRABAJO</button>
     <br><br><br><br>
 </div>
 

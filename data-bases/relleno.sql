@@ -56,3 +56,12 @@ INSERT INTO pasantia
       '2016-03-10', 78,  2017, 0, 'no mencion', '2016-03-10', 'en curso',
       'plopez@gmail.com', NULL, '77', '77', NULL, NULL, NULL, NULL, NULL
       );
+INSERT INTO pasantia
+   VALUES ('EP-3420', 77, 2016, '2016-03-10', '325698kjsa',
+      'Análisis de pruebas mediante el uso de redes neurales', 'Sistemas de informacion',
+      'Principios de pruebas', 'si', 'Pruebas optimas', 0, 0, 0,
+      '2016-03-10', 78,  2017, 0, 'no mencion', '2016-03-10', 'en curso',
+      'plopez@gmail.com', NULL, '11-10576', '77', NULL, NULL, NULL, NULL, NULL
+      );
+
+

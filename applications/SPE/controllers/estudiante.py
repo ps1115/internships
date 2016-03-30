@@ -163,14 +163,19 @@ def plan_trabajo():
 
     #Buscamos los datos del plan de trabajo si los hay
     ConsultaDatosPlan       = dbSPE(dbSPE.plan_de_trabajo.id_estudiante==auth.user.username)
+    ConsultaDatosPasantia   = dbSPE(dbSPE.pasantia.id_estudiante==auth.user.username)
+    if ConsultaDatosPasantia.isempty():
+        response.flash = 'Disculpe, no puede crear un plan de trabajo debido a que no tiene inscrita una pasantia'
+    else:
+        DatosPasantia = ConsultaDatosPasantia.select()[0]
 
     #Si no los hay, lo creamos
     if ConsultaDatosPlan.isempty():
         dbSPE.plan_de_trabajo.update_or_insert(
             id_estudiante=auth.user.username,
-            id_tutor_industrial='77@gmail.com',
-            id_tutor_academico='77',
-            codigo_pasantia='PS1110')
+            id_tutor_industrial=DatosPasantia.id_tutor_industrial,
+            id_tutor_academico=DatosPasantia.id_tutor_academico,
+            codigo_pasantia=DatosPasantia.codigo)
         ConsultaDatosPlan = dbSPE(dbSPE.plan_de_trabajo.id_estudiante==auth.user.username)
 
     #Obtenemos los datos
@@ -178,7 +183,7 @@ def plan_trabajo():
     ConsultaDatosActividad = dbSPE(dbSPE.actividad.id_plan_de_trab==DatosPlan.id)
 
     #Viene la parte de OBTENER las actividades ya cargadas
-
+    # print 'Actividad 2 es: ' + str(actividad)
     if ConsultaDatosActividad.isempty():
         actividad = []
         inicio = []
@@ -188,10 +193,10 @@ def plan_trabajo():
         actividad = DatosActividad.descripcion
         inicio = DatosActividad.semana_inicio
         fin = DatosActividad.semana_fin
-
+    print 'Actividad 3 es: ' + str(actividad)
 
     ConsultaDatosFase = dbSPE(dbSPE.fase.id_plan_de_trab==DatosPlan.id)
-
+    print 'Actividad es: ' + str(actividad)
     if ConsultaDatosFase.isempty():
         fases_nombre = []
         fases_obj    = []
@@ -217,10 +222,9 @@ def plan_trabajo():
 
     #Generamos el SQLFORM
     datos_fase = SQLFORM.factory(
-        Field('nombre_fase' ,label='Fase',required=True,
-                default = 'Fase Reconocimiento'),
+        Field('nombre_fase' ,label='Fase',required=True),
         Field('objetivo_fase' ,label='Objetivo específico de la fase',
-                required=True, default = 'Objetivo de la fase actual'),
+                required=True),
         formstyle='bootstrap3_stacked',
         submit_button=T('AGREGAR FASE')
     )
@@ -230,7 +234,7 @@ def plan_trabajo():
                         requires=IS_IN_DB(dbSPE(dbSPE.fase.id_plan_de_trab == DatosPlan.id),dbSPE.fase,
                         '%(nombre_fase)s',zero="Seleccione")),
         Field('descripcion_actividad' ,label='Descripción de la actividad',
-                required=True, default = 'Descripción 1'),
+                required=True),
         Field('sem_inicio' ,label='Semana de inicio de la actividad',required=True,
                 requires=IS_IN_SET(semanas, zero="Seleccione")),
         Field('sem_fin' ,label='Semana final de la actividad',required=True,
@@ -253,26 +257,32 @@ def plan_trabajo():
 
             redirect(URL('estudiante', 'plan_trabajo'))
 
-    Datos_act_fase = ''
+    # Consulta_act_fase = dbSPE(dbSPE.actividad.codigo_fase==0)
+    # Datos_act_fase = Consulta_act_fase.select()
+    # print 'actividades de la fase afuera de IF'
+    # for dato in Datos_act_fase :
+    #     print dato.descripcion
+    #     print dato.codigo_fase
+    #     print ' '
 
     if datos_actividad.process(formname="datos_actividad").accepted:
 
         #Insertamos la actividad.
-        if ((datos_actividad.vars.descripcion_actividad  != '') and (datos_actividad.vars.sem_inicio  != '')
-        and (datos_actividad.vars.sem_fin  != '')):
+        if (datos_actividad.vars.descripcion_actividad  != ''):
             if datos_actividad.vars.sem_inicio <= datos_actividad.vars.sem_fin :
 
                 Consulta_act_fase = dbSPE(dbSPE.actividad.codigo_fase==int(datos_actividad.vars.seleccione_fase))
                 Datos_act_fase = Consulta_act_fase.select()
-                print 'aqui'
-                for dato in Datos_act_fase :
-                    print dato.descripcion
-                    print dato.codigo_fase
-                    print ' '
+                # actividad.append(datos_actividad.vars.descripcion_actividad)
+                # print 'aqui entro a las actividades de la fase'
+                # for dato in Datos_act_fase :
+                #     print dato.descripcion
+                #     print dato.codigo_fase
+                #     print ' '
 
-                actividad = datos_actividad.vars.descripcion_actividad
-                inicio = datos_actividad.vars.sem_inicio
-                fin = datos_actividad.vars.sem_fin
+                # print 'Actividad es: ' + str(actividad)
+                # inicio = datos_actividad.vars.sem_inicio
+                # fin = datos_actividad.vars.sem_fin
                 dbSPE.actividad.update_or_insert(
                     codigo_fase=datos_actividad.vars.seleccione_fase,
                     descripcion=datos_actividad.vars.descripcion_actividad,
@@ -280,18 +290,18 @@ def plan_trabajo():
                     semana_fin=datos_actividad.vars.sem_fin,
                     id_plan_de_trab=DatosPlan.id)
 
-                redirect(URL('estudiante', 'plan_trabajo'))
+                redirect(URL(c='estudiante',f='plan_trabajo',vars=dict(actividad=actividad)))
             else:
                 response.flash = 'La semana final de la actividad debe ser mayor a la semana inicial de la misma'
 
     return dict(message="Plan de Trabajo",
                 form1=datos_fase,
-                form2=datos_actividad,
-                actividad=Datos_act_fase,
-                inicio=inicio,
-                fin=fin,
-                fases_nombre=fases_nombre,
-                fases_obj=fases_obj)
+                form2=datos_actividad)
+                # actividad=actividad,
+                # inicio=inicio,
+                # fin=fin,
+                # fases_nombre=fases_nombre,
+                # fases_obj=fases_obj)
 
 
             ##################################################
