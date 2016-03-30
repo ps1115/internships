@@ -142,18 +142,6 @@ CREATE TABLE `correo_por_verificar` (
 	PRIMARY KEY (`id`, `correo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Estructura de tabla para la tabla `correo_por_verificar`
---
-
-
-CREATE TABLE `correo_por_verificar` (
-	`id` INT(11) NOT NULL AUTO_INCREMENT,
-	`correo` VARCHAR(80) NOT NULL,
-	`codigo` VARCHAR(45) NOT NULL,
-	PRIMARY KEY (`id`, `correo`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
 -- --------------------------------------------------------
 
 --
