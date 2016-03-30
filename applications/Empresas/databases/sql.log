@@ -86,6 +86,7 @@ success!
 success!
 success!
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 success!
 success!
@@ -134,12 +135,15 @@ success!
 success!
 success!
 success!
+=======
+>>>>>>> origin/hexacode_plan_de_trabajo2
 success!
 success!
 success!
 success!
 success!
 success!
+<<<<<<< HEAD
 success!
 success!
 success!
@@ -187,3 +191,7 @@ success!
 success!
 success!
 >>>>>>> syq
+=======
+=======
+>>>>>>> origin/devel
+>>>>>>> origin/hexacode_plan_de_trabajo2
