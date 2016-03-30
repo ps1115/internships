@@ -25,7 +25,7 @@ response.google_analytics_id = None
 #########################################################################
 
 response.menu = [
-    (SPAN(' ', _class='fa fa-home fa-lg'), False, URL(a= 'Empresas',c='default', f='index'))
+    (SPAN('Inicio', _class='fa fa-home fa-lg'), False, URL(a= 'Empresas',c='default', f='index'))
 ]
 
 DEVELOPMENT_MENU = True
