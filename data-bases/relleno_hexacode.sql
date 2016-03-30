@@ -11,7 +11,6 @@ INSERT INTO tipo_pasantia VALUES ('ET-2420', 'Pasantia intermedia');
 INSERT INTO usuario
    VALUES ('77', 'Juan Carlos', 'Medina Perez', NULL, NULL, NULL,NULL);
 
-
 INSERT INTO empresa
    VALUES (77, 'pmendoza@empresaspolar.com', 'password', 'Nombre mascota', 'Balto', 'Empresas Polar', NULL, NULL,
       NULL, 'Los Cortijos', NULL, 'Alimentos y bebidas', NULL, NULL, 0, 1,
@@ -30,7 +29,7 @@ INSERT INTO universidad VALUES (12,'Universidad Simon Bolivar',25);
 
 INSERT INTO tutor_industrial
    VALUES (77, 'plopez@gmail.com', NULL, NULL, NULL, NULL, 'Nombre suegra', 'Marisa', 77,
-      12, 'Ingeniero', 'Jefe de departamento', 'Desarrollo', 'Los Cortijos', NULL, NULL, '0424-1518824',
+      'Ingeniero', 'Jefe de departamento', 12, 'Desarrollo', 'Los Cortijos', NULL, NULL, '0424-1518824',
       0, 1
       );
 
@@ -55,4 +54,11 @@ INSERT INTO pasantia
       'Principios de pruebas', 'si', 'Pruebas optimas', 0, 0, 0,
       '2016-03-10', 78,  2017, 0, 'no mencion', '2016-03-10', 'en curso',
       'plopez@gmail.com', NULL, '77', '77', NULL, NULL, NULL, NULL, NULL
+      );
+INSERT INTO pasantia
+   VALUES ('EP-3420', 77, 2016, '2016-03-10', '325698kjsa',
+      'Análisis de pruebas mediante el uso de redes neurales', 'Sistemas de informacion',
+      'Principios de pruebas', 'si', 'Pruebas optimas', 0, 0, 0,
+      '2016-03-10', 78,  2017, 0, 'no mencion', '2016-03-10', 'en curso',
+      'plopez@gmail.com', NULL, '11-10576', '77', NULL, NULL, NULL, NULL, NULL
       );
