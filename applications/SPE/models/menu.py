@@ -69,7 +69,6 @@ def _():
         elif auth.user.user_Type == 'Docente':
             response.menu += [
             ('Profesor',False,"#",[
-                ('Registrarse',False,URL('default','registrar_profesor')),
                 ('Evaluar Pasantía',False,"#"),
                 ('Justificar Retiro Pasante',False,URL('profesor','justificar_retiro_profesor'))
                 ])

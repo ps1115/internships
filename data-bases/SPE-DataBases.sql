@@ -15,8 +15,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
 
-DROP SCHEMA IF EXISTS pasantiasnuevo;
-CREATE SCHEMA pasantiasnuevo;
+CREATE SCHEMA IF NOT EXISTS pasantiasnuevo;
 USE pasantiasnuevo;
 
 --
@@ -29,6 +28,7 @@ USE pasantiasnuevo;
 -- Estructura de tabla para la tabla `actividad`
 --
 
+DROP TABLE IF EXISTS `actividad`;
 CREATE TABLE IF NOT EXISTS `actividad` (
     `id`                int(11)     NOT NULL AUTO_INCREMENT,
     `codigo_fase`       int(11)     DEFAULT NULL,
@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `actividad` (
 --
 -- Estructura de tabla para la tabla `calculo_pago`
 --
-
+DROP TABLE IF EXISTS `calculo_pago`;
 CREATE TABLE IF NOT EXISTS `calculo_pago` (
     `id`                int(11)     NOT NULL AUTO_INCREMENT,
     `id_categoria`      int(11)     NOT NULL,
