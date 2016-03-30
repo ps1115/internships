@@ -1,3 +1,5 @@
+USE pasantiasnuevo;
+
 -- Paises
 
 INSERT INTO `pasantiasnuevo`.`pais`
