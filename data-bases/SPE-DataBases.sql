@@ -15,12 +15,12 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
 
-DROP SCHEMA IF EXISTS pasantiasNuevo;
-CREATE SCHEMA pasantiasNuevo;
-USE pasantiasNuevo;
+DROP SCHEMA IF EXISTS pasantiasnuevo;
+CREATE SCHEMA pasantiasnuevo;
+USE pasantiasnuevo;
 
 --
--- Base de datos: `pasantiasNuevo`
+-- Base de datos: `pasantiasnuevo`
 --
 
 -- --------------------------------------------------------
