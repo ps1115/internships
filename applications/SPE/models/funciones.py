@@ -3,8 +3,8 @@
 def captcha_field(request=request):
     from gluon.tools import Recaptcha2
     w = lambda x,y: Recaptcha2(request,
-                              '6Lcg5hoTAAAAADfqPDXf4htFpyjqkBGRID3KiLEP',
-                              '6Lcg5hoTAAAAANYiBEtWC1NSG5nEMZcHMgC4_eIT')
+                              '6LeFHBwTAAAAAAgmUVpEbEz0NpYaJBIYYw709HIZ',
+                              '6LeFHBwTAAAAANvgDFc2Dy257hQ8nux3ZgvdgS8Q')
 
     return Field('captcha', 'string', widget=w, default='ok')
 
