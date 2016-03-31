@@ -163,7 +163,7 @@ def justificar_retiro_empresa():
         for p in pasantias.select():
             periodo = dbSPE.periodo(p.periodo)
             periodos[periodo.nombre] = p.periodo
-            datos_estudiante = dbSPE(dbSPE.usuario_estudiante.usbid_usuario==p.id_estudiante).select()[0]
+            datos_estudiante = dbSPE(dbSPE.usuario.usbid==p.id_estudiante).select()[0]
             opciones.append('['+p.codigo+'] '+periodo.nombre+' '+str(p.anio)+' '+p.titulo+' '+datos_estudiante.nombre+' '+datos_estudiante.apellido+' '+datos_estudiante.usbid)
 
         form = SQLFORM.factory(
@@ -190,5 +190,5 @@ def justificacion_retiro_empresa():
                 (dbSPE.pasantia.periodo==request.args[2]) &
                 (dbSPE.pasantia.id_estudiante==request.args[3])
                 ).select()[0]
-    estudiante = dbSPE(dbSPE.usuario_estudiante.usbid_usuario==request.args[3]).select()[0]
+    estudiante = dbSPE(dbSPE.usuario.usbid==request.args[3]).select()[0]
     return dict(pasantia=pasantia,estudiante=estudiante)
