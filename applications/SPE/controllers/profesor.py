@@ -92,13 +92,13 @@ def justificar_retiro_profesor():
 
         opciones = []
         periodos = {}
-        pasantias = {}
+        pasantias2 = {}
         for p in pasantias.select():
             periodo = dbSPE.periodo(p.periodo)
             periodos[periodo.nombre] = p.periodo
             datos_estudiante = dbSPE(dbSPE.usuario.usbid==p.id_estudiante).select()[0]
             opciones.append('['+p.codigo+'] '+periodo.nombre+' '+str(p.anio)+' '+p.titulo+' '+datos_estudiante.nombre+' '+datos_estudiante.apellido+' '+datos_estudiante.usbid)
-            pasantias[opciones[-1]] = p
+            pasantias2[opciones[-1]] = p
 
         form = SQLFORM.factory(
             Field('pasantia', requires = IS_IN_SET(opciones)),submit_button='Buscar')
@@ -106,7 +106,7 @@ def justificar_retiro_profesor():
             # Datos: codigo, periodo(nombre), año
             # datos = form.vars.pasantia.split()
             # datos[0] = datos[0][1:-1]
-            pasantia = pasantias[form.vars.pasantia]
+            pasantia = pasantias2[form.vars.pasantia]
             redirect(URL('justificar_retiro_profesor/'+pasantia.codigo+'/'+pasantia.anio+'/'+pasantia.periodo+'/'+pasantia.id_estudiante))
 
         elif form.errors:
