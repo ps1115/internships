@@ -13,7 +13,7 @@ dbSPE.define_table('usuario_profesor',
                 format='%(usbid_usuario)s')
 
 dbSPE.usuario_profesor.usbid_usuario.readable = True
-dbSPE.usuario_profesor.usbid_usuario.writable = False
+dbSPE.usuario_profesor.usbid_usuario.writable = True
 
 dbSPE.usuario_profesor.activo.readable = False
 dbSPE.usuario_profesor.activo.writable = False

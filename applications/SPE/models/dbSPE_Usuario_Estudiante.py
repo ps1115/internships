@@ -15,3 +15,6 @@ dbSPE.define_table('usuario_estudiante',
                 primarykey=['usbid_usuario'],
                 format='%(carnet)s'
                 )
+
+
+dbSPE.usuario_estudiante.usbid_usuario.represent = lambda x, row: (dbSPE(dbSPE.usuario.usbid==x)).select().first().nombre
