@@ -295,7 +295,7 @@ INSERT INTO `pasantiasnuevo`.`departamento` (`id`,`nombre`,`id_division`,`email_
                                  'mc-usb@usb.ve',
                                  'Sartenejas');
 INSERT INTO `pasantiasnuevo`.`departamento` (`id`,`nombre`,`id_division`,`email_dep`,`sede`) 
-VALUES (5, 'Departamento de Termodinámica y Fenómenos de Transferencia',
+VALUES (5, 'Departamento de Termodinámica',
                                  3,
                                  'teryfem@usb.ve',
                                  'Sartenejas');
@@ -305,7 +305,7 @@ INSERT INTO `pasantiasnuevo`.`departamento` (`id`,`nombre`,`id_division`,`email_
                                  'dep-ec@usb.ve',
                                  'Sartenejas');
 INSERT INTO `pasantiasnuevo`.`departamento` (`id`,`nombre`,`id_division`,`email_dep`,`sede`) 
- VALUES (7, 'Departamento de Conversión y Transporte de Energía',
+ VALUES (7, 'Departamento de Conversión de Energía',
                                  3,
                                  'dep-ct@usb.ve',
                                  'Sartenejas');
@@ -320,7 +320,7 @@ INSERT INTO `pasantiasnuevo`.`departamento` (`id`,`nombre`,`id_division`,`email_
                                  'dep-mt@usb.ve',
                                  'Sartenejas');
 INSERT INTO `pasantiasnuevo`.`departamento` (`id`,`nombre`,`id_division`,`email_dep`,`sede`) 
- VALUES (10, 'Departamento de Computación y Tecnología de Información',
+ VALUES (10, 'Departamento de Computación',
                                  3,
                                  'dep-ci@ldc.usb.ve',
                                  'Sartenejas');
@@ -330,7 +330,7 @@ INSERT INTO `pasantiasnuevo`.`departamento` (`id`,`nombre`,`id_division`,`email_
                                  'dep-gc@usb.ve',
                                  'Sartenejas');
 INSERT INTO `pasantiasnuevo`.`departamento` (`id`,`nombre`,`id_division`,`email_dep`,`sede`) 
- VALUES (12, 'Departamento de Cómputo Científico y Estadística',
+ VALUES (12, 'Departamento de Cómputo Científico',
                                  3,
                                  'usb-cce@usb.ve ',
                                  'Sartenejas');
