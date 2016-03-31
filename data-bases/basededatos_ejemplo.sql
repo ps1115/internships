@@ -417,7 +417,7 @@ INSERT INTO `pasantiasnuevo`.`carrera`
  `sede`,
  `coordinacion`,
  `id`) VALUES ('1800', 'Ingeniería de Telecomunicaciones', 'Larga',
-                        'Sartenejas', 10', 10);
+                        'Sartenejas', 10, 10);
 INSERT INTO `pasantiasnuevo`.`carrera`
 (`codigo`,
  `nombre`,
@@ -441,7 +441,7 @@ INSERT INTO `pasantiasnuevo`.`carrera`
  `sede`,
  `coordinacion`,
  `id`) VALUES ('1000', 'Licenciatura en Física', 'Larga',
-                        'Sartenejas', 13', 13);
+                        'Sartenejas', 13, 13);
 INSERT INTO `pasantiasnuevo`.`carrera`
 (`codigo`,
  `nombre`,
