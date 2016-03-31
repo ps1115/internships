@@ -160,24 +160,22 @@ def justificar_retiro_empresa():
 
         opciones = []
         periodos = {}
+        pasantias = {}
         for p in pasantias.select():
             periodo = dbSPE.periodo(p.periodo)
             periodos[periodo.nombre] = p.periodo
             datos_estudiante = dbSPE(dbSPE.usuario.usbid==p.id_estudiante).select()[0]
             opciones.append('['+p.codigo+'] '+periodo.nombre+' '+str(p.anio)+' '+p.titulo+' '+datos_estudiante.nombre+' '+datos_estudiante.apellido+' '+datos_estudiante.usbid)
+            pasantias[opciones[-1]] = p
 
         form = SQLFORM.factory(
             Field('pasantia', requires = IS_IN_SET(opciones)),submit_button='Buscar')
         if form.process().accepted:
             # Datos: codigo, periodo(nombre), año
-            datos = form.vars.pasantia.split()
-            datos[0] = datos[0][1:-1]
-            pasantia = dbSPE((dbSPE.pasantia.codigo==datos[0]) &
-                (dbSPE.pasantia.anio==datos[2]) &
-                (dbSPE.pasantia.periodo==periodos[datos[1]]) &
-                (dbSPE.pasantia.id_estudiante==datos[6])
-                )
-            redirect(URL('justificar_retiro_empresa/'+datos[0]+'/'+datos[2]+'/'+str(periodos[datos[1]])+'/'+datos[6]))
+            # datos = form.vars.pasantia.split()
+            # datos[0] = datos[0][1:-1]
+            pasantia = pasantias[form.vars.pasantia]
+            redirect(URL('justificar_retiro_empresa/'+pasantia.codigo+'/'+pasantia.anio+'/'+pasantia.periodo+'/'+pasantia.id_estudiante))
 
         elif form.errors:
             response.flash = 'Error'
