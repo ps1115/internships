@@ -107,7 +107,7 @@ def justificar_retiro_profesor():
             # datos = form.vars.pasantia.split()
             # datos[0] = datos[0][1:-1]
             pasantia = pasantias2[form.vars.pasantia]
-            redirect(URL('justificar_retiro_profesor/'+pasantia.codigo+'/'+pasantia.anio+'/'+pasantia.periodo+'/'+pasantia.id_estudiante))
+            redirect(URL('justificar_retiro_profesor/'+str(pasantia.codigo)+'/'+str(pasantia.anio)+'/'+str(pasantia.periodo)+'/'+str(pasantia.id_estudiante)))
 
         elif form.errors:
             response.flash = 'Error'
