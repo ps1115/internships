@@ -2,7 +2,7 @@
 
 # Estudiante
 dbSPE.define_table('usuario_estudiante',
-                Field('usbid_usuario','string',required=True, requires=[IS_LENGTH(524),IS_NOT_EMPTY(error_message='Campo Obligatorio'),IS_NOT_IN_DB(dbSPE, 'usuario_estudiante.usbid_usuario',error_message=T('Usuario ya existe'))], ondelete='CASCADE', notnull=True, unique=True,label='Nombre de Usuario'),
+                Field('usbid_usuario','string',required=True, ondelete='CASCADE', notnull=True, unique=True,label='Nombre de Usuario'),
                 Field('carnet','string',required=True, requires=[IS_LENGTH(8),IS_MATCH('[0-9]{2}-[0-9]{5}',error_message=T('Solo se permiten numeros y el signo +'))], label="Carnet", unique=True),
                 Field('cohorte', requires=[IS_LENGTH(2),IS_NOT_EMPTY(error_message='Ingrese cohorte')], label="Cohorte"),
                 Field('carrera','string', requires=IS_IN_DB(dbSPE,'carrera.codigo', '%(nombre)s',error_message='Carrera no Existe'),label="Carrera"),
@@ -16,5 +16,5 @@ dbSPE.define_table('usuario_estudiante',
                 format='%(carnet)s'
                 )
 
-
-dbSPE.usuario_estudiante.usbid_usuario.represent = lambda x, row: (dbSPE(dbSPE.usuario.usbid==x)).select().first().nombre
+dbSPE.usuario_estudiante.usbid_usuario.requires=IS_IN_DB(dbSPE, 'usuario.usbid', '%(nombre)s',error_message='Estudiante no registrado')
+#dbSPE.usuario_estudiante.usbid_usuario.represent = lambda x, row: (dbSPE(dbSPE.usuario.usbid==x)).select().first().nombre
