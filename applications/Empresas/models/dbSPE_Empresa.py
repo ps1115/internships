@@ -65,3 +65,6 @@ dbSPE.empresa.habilitado.requires=IS_IN_SET({1:'Activo',0:'No Activo'},zero=None
 
 dbSPE.empresa.telefono.requires=[IS_LENGTH(512)]
 dbSPE.empresa.telefono.requires+=[IS_MATCH('^\+[0-9]*$|^[0-9]*$',error_message=T('Solo se permiten numeros y el signo +'))]
+
+dbSPE.empresa.fechaCreacion.writable=False
+dbSPE.empresa.ultimaModificacion.writable=False
