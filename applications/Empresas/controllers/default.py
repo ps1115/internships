@@ -66,20 +66,20 @@ def login():
                     "user_Type":'empresa'})
                 generar_Correo_Verificacion(usuarioBuscado.log)
             # Si no encontramos la empresa, buscamos en los tutores industriales
-        elif not usuarioBuscadoSet:
-                usuarioBuscadoSet = dbSPE(dbSPE.empresa.log == request.vars.login).select()
-                # Si el usuario no se encuentra lo generamos
-                if usuarioBuscadoSet:
-                    usuarioBuscado = usuarioBuscadoSet[0]
-                    #Insertamos en la tabla user de Web2py
-                    auth.get_or_create_user({
-                        "first_name":usuarioBuscado.nombre,
-                        "last_name":usuarioBuscado.apellido,
-                        "username":usuarioBuscado.email,
-                        "password":db.auth_user.password.validate(usuarioBuscado.password)[0],
-                        "email":usuarioBuscado.email,
-                        "user_Type":'tutor_industrial'})
-                    generar_Correo_Verificacion(usuarioBuscado.email)
+            elif not usuarioBuscadoSet:
+                    usuarioBuscadoSet = dbSPE(dbSPE.tutor_industrial.email == request.vars.login).select()
+                    # Si el usuario no se encuentra lo generamos
+                    if usuarioBuscadoSet:
+                        usuarioBuscado = usuarioBuscadoSet[0]
+                        #Insertamos en la tabla user de Web2py
+                        auth.get_or_create_user({
+                            "first_name":usuarioBuscado.nombre,
+                            "last_name":usuarioBuscado.apellido,
+                            "username":usuarioBuscado.email,
+                            "password":db.auth_user.password.validate(usuarioBuscado.password)[0],
+                            "email":usuarioBuscado.email,
+                            "user_Type":'tutor_industrial'})
+                        generar_Correo_Verificacion(usuarioBuscado.email)
         # Buscamos el id de la empresa
         correoVerificarSet = dbSPE(dbSPE.correo_por_verificar.correo == request.vars.login).select()
         if correoVerificarSet:
