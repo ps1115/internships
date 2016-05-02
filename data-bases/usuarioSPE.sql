@@ -28,7 +28,7 @@ START TRANSACTION;
 
 	-- Permiso para obtener los procedimientos
 
-	GRANT SELECT ON `mysql`.`proc` TO 'alistweb'@'%';
+	GRANT SELECT ON `mysql`.`proc` TO 'spe'@'%';
 	
 	-- Para mostrar el usuario, en los privilegios sale la N como si el usuario no los
 	-- tuviese pero esto es porque solo los tiene para una base de datos en especifico
