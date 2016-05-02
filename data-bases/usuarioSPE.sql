@@ -8,7 +8,7 @@ START TRANSACTION;
 	-- El alist_development se cambiara por el nombre que tenga la
 	-- base de datos con la cual corra la aplicacion
 	
-	CREATE USER 'spe'@'%' IDENTIFIED BY 'spe'; 
+	CREATE USER 'spe'@'%' IDENTIFIED BY 'spe2016'; 
 	
 	-- Permiso para obtener filas de las tablas
 	
@@ -25,6 +25,10 @@ START TRANSACTION;
 	-- Permiso para ejecutar funciones o procedimientos
 	
 	GRANT EXECUTE ON spe.* TO 'spe'@'%';
+
+	-- Permiso para obtener los procedimientos
+
+	GRANT SELECT ON `mysql`.`proc` TO 'alistweb'@'%';
 	
 	-- Para mostrar el usuario, en los privilegios sale la N como si el usuario no los
 	-- tuviese pero esto es porque solo los tiene para una base de datos en especifico
