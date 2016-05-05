@@ -22,11 +22,19 @@
 
 {{block right_sidebar}}
 <div class="container">
-  <div class='title'> Iniciar Sesión</div>
+  <div class="title"> Iniciar Sesión</div>
     <br>
+    <!--
     <a href="https://secure.dst.usb.ve/login?service=https%3A%2F%2Fprosigue.dex.usb.ve%2FSPE%2Fdefault%2Flogin_cas">
       <button class='success'>Miembro USB</button>
     </a>
+-->
+
+    <a href="https://secure.dst.usb.ve/login?service=http%3A%2F%2F127.0.0.1%3A8000%2FSPE%2Fdefault%2Flogin_cas">
+      <button class='success'>Miembro USB</button>
+    </a>
+
+
     <a href={{=URL(a='Empresas',c='default',f='index')}}>
       <button class='success'>Empresas</button>
     </a>

@@ -57,7 +57,7 @@ def _():
 
     # Entradas del menu si el usuario esta autenticado
     if auth.is_logged_in():
-        if auth.user.user_Type == 'Pregrado' or auth.user.user_Type == 'Postgrado':
+        if esEstudiante(auth.user.username):
             response.menu += [('Estudiante',False,"#",[
                 ('Agregar Preinscripcion',False,URL('estudiante','agregar_preinscripcion')),
                 ('Llenar Curriculum',False,URL('estudiante','llenar_curriculum')),
@@ -66,19 +66,17 @@ def _():
                 ('Solicitar permiso de inscripción extemporánea',False,URL('estudiante', 'permiso_inscripcion')),
                 ('Solicitar permiso de evaluación extemporánea',False,URL('estudiante', 'permiso_evaluacion'))
                 ])]
-        elif auth.user.user_Type == 'Docente':
+        if esProfesor(auth.user.username):
             response.menu += [
             ('Profesor',False,"#",[
                 ('Evaluar Pasantía',False,"#"),
                 ('Justificar Retiro Pasante',False,URL('profesor','justificar_retiro_profesor'))
                 ])
                 ]
-        elif auth.user.user_Type == 'Administrativo':
+        if auth.user.user_Type == 'Administrativo':
             response.menu += [('Administrador',False,"#",[
                 ('Gestionar Catálogos',False,URL('catalogos_grid','gestion_cct2'))
                 ])]
-        else:
-            pass
     else:
         response.menu += [ #Coloque esto porque el cas no me funciona
             (T('Iniciar Sesion'),False,'#',[

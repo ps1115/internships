@@ -1,31 +1,33 @@
+USE spe;
+
 -- Paises
 
-INSERT INTO `pasantiasnuevo`.`pais`
+INSERT INTO `pais`
 (`nombre`)
 VALUES ('Venezuela');
 
-INSERT INTO `pasantiasnuevo`.`pais`
+INSERT INTO `pais`
 (`nombre`)
 VALUES ('U.S.A.');
 
 -- Estados
 
-INSERT INTO `pasantiasnuevo`.`estado`
+INSERT INTO `estado`
 (`nombre`,`id_pais`)
 VALUES
 ('Distrito Capital',1);
 
-INSERT INTO `pasantiasnuevo`.`estado`
+INSERT INTO `estado`
 (`nombre`,`id_pais`)
 VALUES
 ('Miranda',1);
 
-INSERT INTO `pasantiasnuevo`.`estado`
+INSERT INTO `estado`
 (`nombre`,`id_pais`)
 VALUES
 ('Aragua',1);
 
-INSERT INTO `pasantiasnuevo`.`estado`
+INSERT INTO `estado`
 (`nombre`,`id_pais`)
 VALUES
 ('Florida',2);
@@ -33,22 +35,22 @@ VALUES
 
 -- Areas Laborales
 
-INSERT INTO `pasantiasnuevo`.`area_laboral`
+INSERT INTO `area_laboral`
 (`nombre`,`descripcion`)
 VALUES
 ('Informatica','Consultoria, desarrollo de software,etc');
 
-INSERT INTO `pasantiasnuevo`.`area_laboral`
+INSERT INTO `area_laboral`
 (`nombre`,`descripcion`)
 VALUES
 ('Legal','Asesoria legal, resolucion de casos');
 
-INSERT INTO `pasantiasnuevo`.`area_laboral`
+INSERT INTO `area_laboral`
 (`nombre`,`descripcion`)
 VALUES
 ('Electricidad','Instalaciones electricas');
 
-INSERT INTO `pasantiasnuevo`.`area_laboral`
+INSERT INTO `area_laboral`
 (`nombre`,`descripcion`)
 VALUES
 ('Arquitectura','Diseño de planos');
@@ -56,22 +58,22 @@ VALUES
 
 -- Universidades
 
-INSERT INTO `pasantiasnuevo`.`universidad`
+INSERT INTO `universidad`
 (`nombre`,`id_pais`)
 VALUES
 ('Universidad Simón Bolívar',1);
 
-INSERT INTO `pasantiasnuevo`.`universidad`
+INSERT INTO `universidad`
 (`nombre`,`id_pais`)
 VALUES
 ('Universidad Católica Andrés Bello',1);
 
-INSERT INTO `pasantiasnuevo`.`universidad`
+INSERT INTO `universidad`
 (`nombre`,`id_pais`)
 VALUES
 ('Universidad Metropolitana',1);
 
-INSERT INTO `pasantiasnuevo`.`universidad`
+INSERT INTO `universidad`
 (`nombre`,`id_pais`)
 VALUES
 ('Universidad De Florida',2);
@@ -79,18 +81,18 @@ VALUES
 
 -- Categorias
 
-INSERT INTO `pasantiasnuevo`.`categoria`
+INSERT INTO `categoria`
 (`id`,`nombre`) VALUES (1,"asociado");
-INSERT INTO `pasantiasnuevo`.`categoria`
+INSERT INTO `categoria`
 (`id`,`nombre`) VALUES (2,"titular");
-INSERT INTO `pasantiasnuevo`.`categoria`
+INSERT INTO `categoria`
 (`id`,`nombre`) VALUES (3,"agregado");
-INSERT INTO `pasantiasnuevo`.`categoria`
+INSERT INTO `categoria`
 (`id`,`nombre`) VALUES (4,"asistente");
 
 -- Coordinaciones
 
-INSERT INTO `pasantiasnuevo`.`coordinacion`
+INSERT INTO `coordinacion`
 (`id`,
 `nombre`,
 `usbid`,
@@ -100,7 +102,7 @@ VALUES
          , '00-11111'
          , 'Sartenejas');
 
-INSERT INTO `pasantiasnuevo`.`coordinacion`
+INSERT INTO `coordinacion`
 (`id`,
 `nombre`,
 `usbid`,
@@ -111,7 +113,7 @@ INSERT INTO `pasantiasnuevo`.`coordinacion`
          , 'Sartenejas');
 
 
-INSERT INTO `pasantiasnuevo`.`coordinacion`
+INSERT INTO `coordinacion`
 (`id`,
 `nombre`,
 `usbid`,
@@ -120,7 +122,7 @@ INSERT INTO `pasantiasnuevo`.`coordinacion`
          , '00-11113'
          , 'Sartenejas');
 
-INSERT INTO `pasantiasnuevo`.`coordinacion`
+INSERT INTO `coordinacion`
 (`id`,
 `nombre`,
 `usbid`,
@@ -129,7 +131,7 @@ INSERT INTO `pasantiasnuevo`.`coordinacion`
          , '00-11114'
          , 'Sartenejas');
 
-INSERT INTO `pasantiasnuevo`.`coordinacion`
+INSERT INTO `coordinacion`
 (`id`,
 `nombre`,
 `usbid`,
@@ -138,7 +140,7 @@ INSERT INTO `pasantiasnuevo`.`coordinacion`
          , '00-11115'
          , 'Sartenejas');
 
-INSERT INTO `pasantiasnuevo`.`coordinacion`
+INSERT INTO `coordinacion`
 (`id`,
 `nombre`,
 `usbid`,
@@ -148,7 +150,7 @@ INSERT INTO `pasantiasnuevo`.`coordinacion`
          , 'Sartenejas');
 
 
-INSERT INTO `pasantiasnuevo`.`coordinacion`
+INSERT INTO `coordinacion`
 (`id`,
 `nombre`,
 `usbid`,
@@ -157,7 +159,7 @@ INSERT INTO `pasantiasnuevo`.`coordinacion`
          , '00-11108'
          , 'Sartenejas');
 
-INSERT INTO `pasantiasnuevo`.`coordinacion`
+INSERT INTO `coordinacion`
 (`id`,
 `nombre`,
 `usbid`,
@@ -167,7 +169,7 @@ INSERT INTO `pasantiasnuevo`.`coordinacion`
          , 'Sartenejas');
 
 
-INSERT INTO `pasantiasnuevo`.`coordinacion`
+INSERT INTO `coordinacion`
 (`id`,
 `nombre`,
 `usbid`,
@@ -176,7 +178,7 @@ INSERT INTO `pasantiasnuevo`.`coordinacion`
          , '11-11118'
          , 'Sartenejas');
 
-INSERT INTO `pasantiasnuevo`.`coordinacion`
+INSERT INTO `coordinacion`
 (`id`,
 `nombre`,
 `usbid`,
@@ -186,7 +188,7 @@ INSERT INTO `pasantiasnuevo`.`coordinacion`
          , 'Sartenejas');
 
 
-INSERT INTO `pasantiasnuevo`.`coordinacion`
+INSERT INTO `coordinacion`
 (`id`,
 `nombre`,
 `usbid`,
@@ -195,7 +197,7 @@ INSERT INTO `pasantiasnuevo`.`coordinacion`
          , '11-11119'
          , 'Sartenejas');
 
-INSERT INTO `pasantiasnuevo`.`coordinacion`
+INSERT INTO `coordinacion`
 (`id`,
 `nombre`,
 `usbid`,
@@ -204,7 +206,7 @@ INSERT INTO `pasantiasnuevo`.`coordinacion`
          , '11-11100'
          , 'Sartenejas');
 
-INSERT INTO `pasantiasnuevo`.`coordinacion`
+INSERT INTO `coordinacion`
 (`id`,
 `nombre`,
 `usbid`,
@@ -213,7 +215,7 @@ INSERT INTO `pasantiasnuevo`.`coordinacion`
          , '11-11000'
          , 'Sartenejas');
 
-INSERT INTO `pasantiasnuevo`.`coordinacion`
+INSERT INTO `coordinacion`
 (`id`,
 `nombre`,
 `usbid`,
@@ -222,7 +224,7 @@ INSERT INTO `pasantiasnuevo`.`coordinacion`
          , '11-10000'
          , 'Sartenejas');
 
-INSERT INTO `pasantiasnuevo`.`coordinacion`
+INSERT INTO `coordinacion`
 (`id`,
 `nombre`,
 `usbid`,
@@ -231,7 +233,7 @@ INSERT INTO `pasantiasnuevo`.`coordinacion`
          , '11-10003'
          , 'Sartenejas');
 
-INSERT INTO `pasantiasnuevo`.`coordinacion`
+INSERT INTO `coordinacion`
 (`id`,
 `nombre`,
 `usbid`,
@@ -240,7 +242,7 @@ INSERT INTO `pasantiasnuevo`.`coordinacion`
          , '11-10004'
          , 'Sartenejas');
 
-INSERT INTO `pasantiasnuevo`.`coordinacion`
+INSERT INTO `coordinacion`
 (`id`,
 `nombre`,
 `usbid`,
@@ -249,7 +251,7 @@ INSERT INTO `pasantiasnuevo`.`coordinacion`
          , '11-10005'
          , 'Sartenejas');
 
-INSERT INTO `pasantiasnuevo`.`coordinacion`
+INSERT INTO `coordinacion`
 (`id`,
 `nombre`,
 `usbid`,
@@ -260,76 +262,76 @@ INSERT INTO `pasantiasnuevo`.`coordinacion`
 
 -- Dedicaciones  
 
-INSERT INTO `pasantiasnuevo`.`dedicacion` (`id`,`nombre`)
+INSERT INTO `dedicacion` (`id`,`nombre`)
 VALUES (1, 'exclusiva');
-INSERT INTO `pasantiasnuevo`.`dedicacion` (`id`,`nombre`) VALUES (2, 'Tiempo integral');
-INSERT INTO `pasantiasnuevo`.`dedicacion` (`id`,`nombre`) VALUES (3, 'Tiempo parcial');
+INSERT INTO `dedicacion` (`id`,`nombre`) VALUES (2, 'Tiempo integral');
+INSERT INTO `dedicacion` (`id`,`nombre`) VALUES (3, 'Tiempo parcial');
 
 -- Divisiones
 
-INSERT INTO `pasantiasnuevo`.`division` (`id`,`nombre`) VALUES (1, 'División de Ciencias Sociales y Humanidades');
-INSERT INTO `pasantiasnuevo`.`division` (`id`,`nombre`) VALUES (2, 'División de Ciencias Biológicas');
-INSERT INTO `pasantiasnuevo`.`division` (`id`,`nombre`) VALUES (3, 'División de Ciencias Físicas y Matemáticas');
+INSERT INTO `division` (`id`,`nombre`) VALUES (1, 'División de Ciencias Sociales y Humanidades');
+INSERT INTO `division` (`id`,`nombre`) VALUES (2, 'División de Ciencias Biológicas');
+INSERT INTO `division` (`id`,`nombre`) VALUES (3, 'División de Ciencias Físicas y Matemáticas');
 
 
 -- Departamentos
 
-INSERT INTO `pasantiasnuevo`.`departamento` (`id`,`nombre`,`id_division`,`email_dep`,`sede`) 
+INSERT INTO `departamento` (`id`,`nombre`,`id_division`,`email_dep`,`sede`) 
 VALUES (1, 'Departamento. de Matemáticas Puras y Aplicadas',
                                  3,
                                  'dep-ma@usb.ve',
                                  'Sartenejas');
-INSERT INTO `pasantiasnuevo`.`departamento` (`id`,`nombre`,`id_division`,`email_dep`,`sede`)  
+INSERT INTO `departamento` (`id`,`nombre`,`id_division`,`email_dep`,`sede`)  
 VALUES (2, 'Departamento de Física',
                                  3,
                                  'dep-fs@usb.ve ',
                                  'Sartenejas');
-INSERT INTO `pasantiasnuevo`.`departamento` (`id`,`nombre`,`id_division`,`email_dep`,`sede`)  
+INSERT INTO `departamento` (`id`,`nombre`,`id_division`,`email_dep`,`sede`)  
 VALUES (3, 'Departamento de Química',
                                  3,
                                  'dep-qm@usb.ve',
                                  'Sartenejas');
-INSERT INTO `pasantiasnuevo`.`departamento` (`id`,`nombre`,`id_division`,`email_dep`,`sede`) 
+INSERT INTO `departamento` (`id`,`nombre`,`id_division`,`email_dep`,`sede`) 
  VALUES (4, 'Departamento de Mecánica',
                                  3,
                                  'mc-usb@usb.ve',
                                  'Sartenejas');
-INSERT INTO `pasantiasnuevo`.`departamento` (`id`,`nombre`,`id_division`,`email_dep`,`sede`) 
+INSERT INTO `departamento` (`id`,`nombre`,`id_division`,`email_dep`,`sede`) 
 VALUES (5, 'Departamento de Termodinámica',
                                  3,
                                  'teryfem@usb.ve',
                                  'Sartenejas');
-INSERT INTO `pasantiasnuevo`.`departamento` (`id`,`nombre`,`id_division`,`email_dep`,`sede`) 
+INSERT INTO `departamento` (`id`,`nombre`,`id_division`,`email_dep`,`sede`) 
  VALUES (6, 'Departamento de Electrónica y Circuitos',
                                  3,
                                  'dep-ec@usb.ve',
                                  'Sartenejas');
-INSERT INTO `pasantiasnuevo`.`departamento` (`id`,`nombre`,`id_division`,`email_dep`,`sede`) 
+INSERT INTO `departamento` (`id`,`nombre`,`id_division`,`email_dep`,`sede`) 
  VALUES (7, 'Departamento de Conversión de Energía',
                                  3,
                                  'dep-ct@usb.ve',
                                  'Sartenejas');
-INSERT INTO `pasantiasnuevo`.`departamento` (`id`,`nombre`,`id_division`,`email_dep`,`sede`) 
+INSERT INTO `departamento` (`id`,`nombre`,`id_division`,`email_dep`,`sede`) 
  VALUES (8, 'Departamento de Procesos y Sistemas',
                                  3,
                                  'usb-ps@usb.ve',
                                  'Sartenejas');
-INSERT INTO `pasantiasnuevo`.`departamento` (`id`,`nombre`,`id_division`,`email_dep`,`sede`) 
+INSERT INTO `departamento` (`id`,`nombre`,`id_division`,`email_dep`,`sede`) 
  VALUES (9, 'Departamento de Ciencia de los Materiales',
                                  3,
                                  'dep-mt@usb.ve',
                                  'Sartenejas');
-INSERT INTO `pasantiasnuevo`.`departamento` (`id`,`nombre`,`id_division`,`email_dep`,`sede`) 
+INSERT INTO `departamento` (`id`,`nombre`,`id_division`,`email_dep`,`sede`) 
  VALUES (10, 'Departamento de Computación',
                                  3,
                                  'dep-ci@ldc.usb.ve',
                                  'Sartenejas');
-INSERT INTO `pasantiasnuevo`.`departamento` (`id`,`nombre`,`id_division`,`email_dep`,`sede`) 
+INSERT INTO `departamento` (`id`,`nombre`,`id_division`,`email_dep`,`sede`) 
  VALUES (11, 'Departamento de Ciencias de la Tierra',
                                  3,
                                  'dep-gc@usb.ve',
                                  'Sartenejas');
-INSERT INTO `pasantiasnuevo`.`departamento` (`id`,`nombre`,`id_division`,`email_dep`,`sede`) 
+INSERT INTO `departamento` (`id`,`nombre`,`id_division`,`email_dep`,`sede`) 
  VALUES (12, 'Departamento de Cómputo Científico',
                                  3,
                                  'usb-cce@usb.ve ',
@@ -338,7 +340,7 @@ INSERT INTO `pasantiasnuevo`.`departamento` (`id`,`nombre`,`id_division`,`email_
 
 -- Carreras
 
-INSERT INTO `pasantiasnuevo`.`carrera`
+INSERT INTO `carrera`
  (`codigo`,
  `nombre`,
  `duracion`,
@@ -346,7 +348,7 @@ INSERT INTO `pasantiasnuevo`.`carrera`
  `coordinacion`,
  `id`) VALUES ('0100', 'Ingeniería Eléctrica', 'Larga',
                         'Sartenejas', 1, 1);
-INSERT INTO `pasantiasnuevo`.`carrera`
+INSERT INTO `carrera`
  (`codigo`,
  `nombre`,
  `duracion`,
@@ -354,7 +356,7 @@ INSERT INTO `pasantiasnuevo`.`carrera`
  `coordinacion`,
  `id`) VALUES ('0200', 'Ingeniería Mecánica', 'Larga',
                         'Sartenejas', 2, 2);
-INSERT INTO `pasantiasnuevo`.`carrera`
+INSERT INTO `carrera`
  (`codigo`,
  `nombre`,
  `duracion`,
@@ -362,7 +364,7 @@ INSERT INTO `pasantiasnuevo`.`carrera`
  `coordinacion`,
  `id`) VALUES ('0300', 'Ingeniería Química', 'Larga',
                         'Sartenejas', 3, 3);
-INSERT INTO `pasantiasnuevo`.`carrera`
+INSERT INTO `carrera`
 (`codigo`,
  `nombre`,
  `duracion`,
@@ -370,7 +372,7 @@ INSERT INTO `pasantiasnuevo`.`carrera`
  `coordinacion`,
  `id`) VALUES ('0600', 'Ingeniería Electrónica', 'Larga',
                         'Sartenejas', 4, 4);
-INSERT INTO `pasantiasnuevo`.`carrera`
+INSERT INTO `carrera`
 (`codigo`,
  `nombre`,
  `duracion`,
@@ -378,7 +380,7 @@ INSERT INTO `pasantiasnuevo`.`carrera`
  `coordinacion`,
  `id`) VALUES ('1500', 'Ingeniería de Materiales', 'Larga',
                         'Sartenejas', 5, 5);
-INSERT INTO `pasantiasnuevo`.`carrera`
+INSERT INTO `carrera`
 (`codigo`,
  `nombre`,
  `duracion`,
@@ -386,7 +388,7 @@ INSERT INTO `pasantiasnuevo`.`carrera`
  `coordinacion`,
  `id`) VALUES ('0800', 'Ingeniería de la Computación', 'Larga',
                         'Sartenejas', 6, 6);
-INSERT INTO `pasantiasnuevo`.`carrera`
+INSERT INTO `carrera`
 (`codigo`,
  `nombre`,
  `duracion`,
@@ -394,7 +396,7 @@ INSERT INTO `pasantiasnuevo`.`carrera`
  `coordinacion`,
  `id`) VALUES ('1200', 'Ingeniería Geofísica', 'Larga',
                         'Sartenejas', 7, 7);
-INSERT INTO `pasantiasnuevo`.`carrera`
+INSERT INTO `carrera`
 (`codigo`,
  `nombre`,
  `duracion`,
@@ -402,7 +404,7 @@ INSERT INTO `pasantiasnuevo`.`carrera`
  `coordinacion`,
  `id`) VALUES ('1700', 'Ingeniería de Producción', 'Larga',
                         'Sartenejas', 8, 8);
-INSERT INTO `pasantiasnuevo`.`carrera`
+INSERT INTO `carrera`
 (`codigo`,
  `nombre`,
  `duracion`,
@@ -410,7 +412,7 @@ INSERT INTO `pasantiasnuevo`.`carrera`
  `coordinacion`,
  `id`) VALUES ('4000', 'Ingeniería de Mantenimiento', 'Litoral',
                         'Sartenejas', 9, 9);
-INSERT INTO `pasantiasnuevo`.`carrera`
+INSERT INTO `carrera`
 (`codigo`,
  `nombre`,
  `duracion`,
@@ -418,7 +420,7 @@ INSERT INTO `pasantiasnuevo`.`carrera`
  `coordinacion`,
  `id`) VALUES ('1800', 'Ingeniería de Telecomunicaciones', 'Larga',
                         'Sartenejas', 10, 10);
-INSERT INTO `pasantiasnuevo`.`carrera`
+INSERT INTO `carrera`
 (`codigo`,
  `nombre`,
  `duracion`,
@@ -426,7 +428,7 @@ INSERT INTO `pasantiasnuevo`.`carrera`
  `coordinacion`,
  `id`) VALUES ('0400', 'Licenciatura en Química', 'Larga',
                         'Sartenejas', 11, 11);
-INSERT INTO `pasantiasnuevo`.`carrera`
+INSERT INTO `carrera`
 (`codigo`,
  `nombre`,
  `duracion`,
@@ -434,7 +436,7 @@ INSERT INTO `pasantiasnuevo`.`carrera`
  `coordinacion`,
  `id`) VALUES ('0500', 'Licenciatura en Matemáticas', 'Larga',
                         'Sartenejas', 12, 12);
-INSERT INTO `pasantiasnuevo`.`carrera`
+INSERT INTO `carrera`
 (`codigo`,
  `nombre`,
  `duracion`,
@@ -442,7 +444,7 @@ INSERT INTO `pasantiasnuevo`.`carrera`
  `coordinacion`,
  `id`) VALUES ('1000', 'Licenciatura en Física', 'Larga',
                         'Sartenejas', 13, 13);
-INSERT INTO `pasantiasnuevo`.`carrera`
+INSERT INTO `carrera`
 (`codigo`,
  `nombre`,
  `duracion`,
@@ -450,7 +452,7 @@ INSERT INTO `pasantiasnuevo`.`carrera`
  `coordinacion`,
  `id`) VALUES ('1900', 'Licenciatura en Biología', 'Larga',
                         'Sartenejas', 14, 14);
-INSERT INTO `pasantiasnuevo`.`carrera`
+INSERT INTO `carrera`
 (`codigo`,
  `nombre`,
  `duracion`,
@@ -458,7 +460,7 @@ INSERT INTO `pasantiasnuevo`.`carrera`
  `coordinacion`,
  `id`) VALUES ('0700', 'Arquitectura', 'Larga',
                         'Sartenejas', 15, 15);
-INSERT INTO `pasantiasnuevo`.`carrera`
+INSERT INTO `carrera`
 (`codigo`,
  `nombre`,
  `duracion`,
@@ -466,7 +468,7 @@ INSERT INTO `pasantiasnuevo`.`carrera`
  `coordinacion`,
  `id`) VALUES ('1100', 'Urbanismo', 'Larga',
                         'Sartenejas', 16, 16);
-INSERT INTO `pasantiasnuevo`.`carrera`
+INSERT INTO `carrera`
 (`codigo`,
  `nombre`,
  `duracion`,
@@ -474,7 +476,7 @@ INSERT INTO `pasantiasnuevo`.`carrera`
  `coordinacion`,
  `id`) VALUES ('3200', 'Licenciatura en Comercio Internacional', 'Larga',
                         'Sartenejas', 17, 17);
-INSERT INTO `pasantiasnuevo`.`carrera`
+INSERT INTO `carrera`
 (`codigo`,
  `nombre`,
  `duracion`,
@@ -486,24 +488,24 @@ INSERT INTO `pasantiasnuevo`.`carrera`
 
 -- Tipos de Pasantias
 
-INSERT INTO `pasantiasnuevo`.`tipo_pasantia`(
+INSERT INTO `tipo_pasantia`(
 `codigo`,`nombre`) VALUES ('EP-3420', 'Pasantia larga');
 
-INSERT INTO `pasantiasnuevo`.`tipo_pasantia`(
+INSERT INTO `tipo_pasantia`(
 `codigo`,`nombre`) VALUES ('EP-1420', 'Pasantia intermedia');
 
-INSERT INTO `pasantiasnuevo`.`tipo_pasantia`(
+INSERT INTO `tipo_pasantia`(
 `codigo`,`nombre`) VALUES ('ET-2420', 'Pasantia intermedia');
 
 -- Periodos
 
-INSERT INTO `pasantiasnuevo`.`periodo` (`id`,`nombre`,`fecha_inicio`,`fecha_fin`,`periodo_activo`) VALUES (77, 'Abril-Septiembre, 2016', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,0);
-INSERT INTO `pasantiasnuevo`.`periodo` (`id`,`nombre`,`fecha_inicio`,`fecha_fin`,`periodo_activo`) VALUES (78, 'Octubre-Marzo, 2016', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,0);
-INSERT INTO `pasantiasnuevo`.`periodo` (`id`,`nombre`,`fecha_inicio`,`fecha_fin`,`periodo_activo`) VALUES (79, 'Julio-Septiembre, 2016', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,0);
+INSERT INTO `periodo` (`id`,`nombre`,`fecha_inicio`,`fecha_fin`,`periodo_activo`) VALUES (77, 'Abril-Septiembre, 2016', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,0);
+INSERT INTO `periodo` (`id`,`nombre`,`fecha_inicio`,`fecha_fin`,`periodo_activo`) VALUES (78, 'Octubre-Marzo, 2016', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,0);
+INSERT INTO `periodo` (`id`,`nombre`,`fecha_inicio`,`fecha_fin`,`periodo_activo`) VALUES (79, 'Julio-Septiembre, 2016', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,0);
 
 -- Empresas
 
-INSERT INTO `pasantiasnuevo`.`empresa`
+INSERT INTO `empresa`
 (`id`,
     `log`,
     `password`,
@@ -533,29 +535,29 @@ VALUES (77, 'log', 'password', 'quien?', 'yo', 'Empresas Polar', 1, NULL, NUll,
 
 -- Usuarios
 
-INSERT INTO `pasantiasnuevo`.`usuario`
+INSERT INTO `usuario`
 (`usbid`,`nombre`,`apellido`,`ci`,`tipo`,`foto`,`llave`)
 VALUES ('12-11402', 'Georvic', 'Tur', NULL, NULL, NULL,NULL
       );
 
-INSERT INTO `pasantiasnuevo`.`usuario`
+INSERT INTO `usuario`
 (`usbid`,`nombre`,`apellido`,`ci`,`tipo`,`foto`,`llave`)
    VALUES ('01-12345', 'Satouru', 'Fujinuma', NULL, NULL, NULL,NULL
       );
 
-INSERT INTO `pasantiasnuevo`.`usuario`
+INSERT INTO `usuario`
 (`usbid`,`nombre`,`apellido`,`ci`,`tipo`,`foto`,`llave`)
    VALUES ('01-14746', 'Jack', 'London', NULL, NULL, NULL,NULL
       );
 
-INSERT INTO `pasantiasnuevo`.`usuario`
+INSERT INTO `usuario`
 (`usbid`,`nombre`,`apellido`,`ci`,`tipo`,`foto`,`llave`)
    VALUES ('01-17746', 'Martin', 'Eden', NULL, NULL, NULL,NULL
       );
 
 -- Usuarios_estudiantes
 
-INSERT INTO `pasantiasnuevo`.`usuario_estudiante`
+INSERT INTO `usuario_estudiante`
 (`usbid_usuario`,`carnet`,`cohorte`,`carrera`,`estudiante_sede`,
 `email_sec`,`telf_hab`,`telf_cel`,`direccion`,`sexo`)
  VALUES ('12-11402', 
@@ -566,7 +568,7 @@ INSERT INTO `pasantiasnuevo`.`usuario_estudiante`
 
 -- Tutores Industriales
 /*
-INSERT INTO `pasantiasnuevo`.`tutor_industrial`
+INSERT INTO `tutor_industrial`
 (`id`,
 `email`,
 `nombre`,
@@ -608,7 +610,7 @@ VALUES
 <{habilitado: 1}>);
 */
 
-INSERT INTO `pasantiasnuevo`.`tutor_industrial`
+INSERT INTO `tutor_industrial`
 (`id`,
 `email`,
 `nombre`,
@@ -635,13 +637,13 @@ INSERT INTO `pasantiasnuevo`.`tutor_industrial`
 
 -- Tutor académico
 
-INSERT INTO `pasantiasnuevo`.`tutor_academico`
+INSERT INTO `tutor_academico`
 (`usbid`)
  VALUES ('01-12345');
 
 -- Pasantias
 
-INSERT INTO `pasantiasnuevo`.`pasantia` 
+INSERT INTO `pasantia` 
 (`codigo`,
     `periodo`,
     `anio`,
@@ -678,7 +680,7 @@ INSERT INTO `pasantiasnuevo`.`pasantia`
       '2016-03-10', 78,  2017, 0, 'no mencion', '2016-03-10', 'en curso',
       'plopez@gmail.com', NULL, '12-11402', '01-12345', NULL, NULL, NULL, NULL, NULL
       );
-INSERT INTO `pasantiasnuevo`.`pasantia` 
+INSERT INTO `pasantia` 
 (`codigo`,
     `periodo`,
     `anio`,
@@ -715,7 +717,7 @@ INSERT INTO `pasantiasnuevo`.`pasantia`
       '2016-03-10', 78,  2017, 0, 'no mencion', '2016-03-10', 'en curso',
       'plopez@gmail.com', NULL,'12-11402', '01-12345', NULL, NULL, NULL, NULL, NULL
       );
-INSERT INTO `pasantiasnuevo`.`pasantia` 
+INSERT INTO `pasantia` 
 (`codigo`,
     `periodo`,
     `anio`,
