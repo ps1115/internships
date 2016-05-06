@@ -9,7 +9,6 @@ def captcha_field(request=request):
 
 
 def tiene_foto(usbid):
-    import requests
     import os
 
     query = dbSPE(dbSPE.usuario.usbid == usbid)
@@ -48,7 +47,8 @@ def enviar_Correo_Verificacion(correo, codigoGenerado):
         "su dirección de correo electrónico suministrada es la correcta\n\n")
         mensaje2 = T("Cuando intente iniciar sesion en el sistema se le " +
         "solicitara  el siguiente codigo:\n\n")
-        mensaje3 = T('  Codigo De Activación ') + "'" + codigoGenerado + "'\n\n"
+        mensaje3 = (T('  Codigo De Activación ') + "'" + codigoGenerado +
+        "'\n\n")
         mensaje4 = T("Una vez introducido el codigo su cuenta sera activada " +
         "y podra disfrutar nuestros servicios\n\n")
         mensaje5 = T("Este correo se ha enviado de manera automatica por el " +
@@ -71,8 +71,6 @@ def generar_Correo_Verificacion(correo):
     import string
     import random
     from random import randint
-
-    resultado = False
 
     size = randint(4, 11)
     i = 0
@@ -98,14 +96,16 @@ def reenviar_Correo_Verificacion(correo):
 
 
 def esProfesor(usbid):
-    usuario = dbSPE(dbSPE.usuario_profesor.usbid_usuario == usbid).select()[0]
+    usuarioAuthSet = (
+        dbSPE(dbSPE.usuario_profesor.usbid_usuario == usbid).select())
     if not usuarioAuthSet:
         return False
     return True
 
 
 def esEstudiante(usbid):
-    usuario = dbSPE(dbSPE.usuario_estudiante.usbid_usuario == usbid).select()
+    usuarioAuthSet = (
+        dbSPE(dbSPE.usuario_estudiante.usbid_usuario == usbid).select())
     if not usuarioAuthSet:
         return False
     return True

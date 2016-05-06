@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 
 DROP SCHEMA IF EXISTS spe;
 CREATE SCHEMA IF NOT EXISTS spe;
-USE pasantiasnuevo;
+USE spe;
 
 --
 -- Base de datos: `pasantiasnuevo`
