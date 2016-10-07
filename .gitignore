@@ -7,8 +7,9 @@ parameters_*
 httpserver.log
 __pycache__/
 scripts/*
-gluon/
 logs/
 applications/SPE/errors/
+applications/SPE/databases/
 applications/SPE/sessions/
 applications/admin/sessions/
+*~

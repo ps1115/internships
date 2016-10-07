@@ -1,0 +1,18 @@
+{{extend "layout.html"}}
+<div class="col-xs-3">
+</div>
+<div class="col-xs-5">
+   {{ if pasantia!=None: }}
+   <p>
+   Periodo: {{=pasantia.periodo}} - {{=pasantia.anio}}
+   </p>
+   <p>
+   Pasantia: {{=pasantia.titulo}}
+   </p>
+   {{ pass }}
+   <p>
+   {{=form}}
+   </p>
+</div>
+<div class="col-xs-4">
+</div>

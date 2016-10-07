@@ -16,12 +16,13 @@ dbSPE.define_table('tutor_industrial',
                     Field('direccion','text',label=T('Direccion Del tutor')),
                     Field('id_pais','reference pais',label=T('Pais')),
                     Field('id_estado','reference estado',label=T('Estado')),
+                    Field('id_universidad','reference universidad',label=T('Universidad')),
                     Field('telefono','string',label=T('Telefono')),
                     format='%(email)s %(nombre)s %(apellido)s')
 
 # Validadores
-
-dbSPE.tutor_industrial.email.requires=[IS_EMAIL(error_message=T('Este no es un correo valido'))]
+dbSPE.tutor_industrial.email.requires= [IS_NOT_IN_DB(dbSPE, 'tutor_industrial.email',error_message=T('Correo No Disponible'))]
+dbSPE.tutor_industrial.email.requires+=[IS_EMAIL(error_message=T('Este no es un correo valido'))]
 dbSPE.tutor_industrial.email.requires+=[IS_LENGTH(512)]
 dbSPE.tutor_industrial.email.requires+=[IS_NOT_EMPTY(error_message='Campo Obligatorio')]
 
@@ -48,6 +49,8 @@ dbSPE.tutor_industrial.id_empresa.requires=IS_IN_DB(dbSPE,dbSPE.empresa.id,'%(lo
 dbSPE.tutor_industrial.id_estado.requires=IS_IN_DB(dbSPE,dbSPE.estado.id,'%(nombre)s',error_message=T('Elija Un Estado Valido'),zero=None)
 
 dbSPE.tutor_industrial.id_pais.requires=IS_IN_DB(dbSPE,dbSPE.pais.id,'%(nombre)s',error_message=T('Elija Un Pais Valido'),zero=None)
+
+dbSPE.tutor_industrial.id_universidad.requires=IS_IN_DB(dbSPE,dbSPE.universidad.id,'%(nombre)s',error_message=T('Elija Una Universidad Valida'),zero=None)
 
 dbSPE.tutor_industrial.telefono.requires=[IS_LENGTH(512)]
 dbSPE.tutor_industrial.telefono.requires+=[IS_MATCH('^\+[0-9]*$|^[0-9]*$',error_message=T('Solo se permiten numeros y el signo +'))]

@@ -9,6 +9,7 @@ dbSPE.define_table('empresa',
                 Field('nombre','string',required=True, notnull=True,label=T('Nombre')),
                 Field('id_pais','reference pais',label=T('Pais')),
                 Field('id_estado','reference estado',label=T('Estado')),
+                Field('id_area_laboral','reference area_laboral',label=T('Area Laboral')),
                 Field('direccion','text',label=T('Direccion De La Empresa')),
                 Field('pag_web','string',label=T('Pagina Web')),
                 Field('descripcion','text',label=T('Descripcion De La Empresa')),
@@ -41,9 +42,11 @@ dbSPE.empresa.respuesta_pregunta_secreta.requires+=[IS_NOT_EMPTY(error_message='
 dbSPE.empresa.nombre.requires=[IS_LENGTH(512)]
 dbSPE.empresa.nombre.requires+=[IS_NOT_EMPTY(error_message=T('Campo Obligatorio'))]
 
-dbSPE.empresa.id_estado.requires=IS_IN_DB(dbSPE,dbSPE.estado.id,'%(nombre)s',error_message=T('Elija Un Estado Valido'),zero=None)
+dbSPE.empresa.id_estado.requires=IS_IN_DB(dbSPE,dbSPE.estado.id,'%(nombre)s',error_message=T('Elija Un Estado Valido'),zero=T('Seleccione ...'))
 
-dbSPE.empresa.id_pais.requires=IS_IN_DB(dbSPE,dbSPE.pais.id,'%(nombre)s',error_message=T('Elija Un Pais Valido'),zero=None)
+dbSPE.empresa.id_area_laboral.requires=IS_IN_DB(dbSPE,dbSPE.area_laboral.id,'%(nombre)s',error_message=T('Elija Una Area Laboral Valida'),zero=T('Seleccione ...'))
+
+dbSPE.empresa.id_pais.requires=IS_IN_DB(dbSPE,dbSPE.pais.id,'%(nombre)s',error_message=T('Elija Un Pais Valido'),zero=T('Seleccione ...'))
 
 
 dbSPE.empresa.pregunta_secreta.requires=[IS_LENGTH(512)]
@@ -58,7 +61,10 @@ dbSPE.empresa.contacto_RRHH.requires+=[IS_EMAIL(error_message=T('Este no es un c
 dbSPE.empresa.contacto_RRHH.requires+=[IS_NOT_EMPTY(error_message='Campo Obligatorio')]
 
 
-dbSPE.empresa.habilitado.requires=[IS_INT_IN_RANGE(0, 2)]
+dbSPE.empresa.habilitado.requires=IS_IN_SET({1:'Activo',0:'No Activo'},zero=None)
 
 dbSPE.empresa.telefono.requires=[IS_LENGTH(512)]
 dbSPE.empresa.telefono.requires+=[IS_MATCH('^\+[0-9]*$|^[0-9]*$',error_message=T('Solo se permiten numeros y el signo +'))]
+
+dbSPE.empresa.fechaCreacion.writable=False
+dbSPE.empresa.ultimaModificacion.writable=False
