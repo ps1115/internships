@@ -1,4 +1,4 @@
-Pillow==3.1.1
+Pillow==7.1.0
 python-ldap==2.4.25
 reportlab==3.3.0
 wheel==0.29.0
